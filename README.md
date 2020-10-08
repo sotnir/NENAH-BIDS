@@ -12,4 +12,5 @@ This project is to streamline a Brain Imaging Data Structure ([BIDS](https://bid
  - The BIDS conversion has been set up using [heudiconv](https://heudiconv.readthedocs.io/en/latest/) (a heuristic-centric DICOM converter), mimicking the tutorial: http://reproducibility.stanford.edu/bids-tutorial-series-part-2a/
 
 ## Relevant Resources
- - [ABCD-ReproNim Course](https://www.abcd-repronim.org/index.html)
+ - [ABCD-ReproNim Course](https://www.abcd-repronim.org/index.html) ([syllabus](https://neurostars.org/)): NIDM at Week 6 - 6th November, 2020
+ - [Neurostars](https://neurostars.org/): forum for BIDS and ABCD-ReproNim discussions
