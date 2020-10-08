@@ -1,2 +1,15 @@
 # NENAH-BIDS
 A collaborate platform for streamlining a BIDS workflow for the NENAH study, on the linux workstation based at University of Southampton.
+
+## Objectives
+This project is to streamline a Brain Imaging Data Structure ([BIDS](https://bids.neuroimaging.io/)) workflow for Neurodevelopmental Trajectories and Neural Correlates in Children with Neonatal Hypoxic-Ischaemic Encephalopathy (NENAH), i.e. to put the NENAH data into a BIDS data structure, for [Quality Assessment](https://mriqc.readthedocs.io/en/latest/) and [customisable preprocessing](https://fmriprep.org/en/stable/), so as to keep track of the data quality continuously and quickly decide on recalls. Potentially, NeuroImaging Data Model ([NIDM](https://f1000research.com/documents/8-1329)) can be included for relevant clinical data, e.g. test scores.
+
+## Tasks
+ - For QA of sMRI (T1w) and fMRI: use [MRIQC](https://mriqc.readthedocs.io/en/stable/)
+ - For dMRI: 
+     - Make a pipeline that is BIDS compatible (fairly simple get data from BIDS /rawdata folder and just use non BIDS /derivatives folder as the output). A lot of what we want to do can be found in [BATMAN](https://mfr.osf.io/render?url=https://osf.io/pm9ba/?direct%26mode=render%26action=download%26mode=render)
+     - Use the QC output that FSL eddy generates, or use eddy_quad. That means that we have to implement the pre-proc pipeline up and until EDDY (which have to be run with slice-to-volume correction), i.e. run eddy with flag that generates qc
+ - The BIDS conversion has been set up using [heudiconv](https://heudiconv.readthedocs.io/en/latest/) (a heuristic-centric DICOM converter), mimicking the tutorial: http://reproducibility.stanford.edu/bids-tutorial-series-part-2a/
+
+## Relevant Resources
+ - [ABCD-ReproNim Course](https://www.abcd-repronim.org/index.html)
