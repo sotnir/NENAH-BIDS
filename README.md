@@ -5,6 +5,7 @@ A collaborate platform for streamlining a BIDS workflow for the NENAH study, on 
 This project is to streamline a Brain Imaging Data Structure ([BIDS](https://bids.neuroimaging.io/)) workflow for Neurodevelopmental Trajectories and Neural Correlates in Children with Neonatal Hypoxic-Ischaemic Encephalopathy (NENAH), i.e. to put the NENAH data into a BIDS data structure, for [Quality Assessment](https://mriqc.readthedocs.io/en/latest/) and [customisable preprocessing](https://fmriprep.org/en/stable/), so as to keep track of the data quality continuously and quickly decide on recalls. Potentially, NeuroImaging Data Model ([NIDM](https://f1000research.com/documents/8-1329)) can be included for relevant clinical data, e.g. test scores.
 
 ## Tasks
+ - Connect to the Soton computer to establish a joint platform for working, where most of the processing will be run
  - For QA of sMRI (T1w) and fMRI: use [MRIQC](https://mriqc.readthedocs.io/en/stable/)
  - For dMRI: 
      - Make a pipeline that is BIDS compatible (fairly simple get data from BIDS /rawdata folder and just use non BIDS /derivatives folder as the output). A lot of what we want to do can be found in [BATMAN](https://mfr.osf.io/render?url=https://osf.io/pm9ba/?direct%26mode=render%26action=download%26mode=render)
