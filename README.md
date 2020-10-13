@@ -2,7 +2,7 @@
 A collaborate platform for streamlining a BIDS workflow for the NENAH study, on the linux workstation based at University of Southampton.
 
 ## Objectives
-This project is to streamline a Brain Imaging Data Structure ([BIDS](https://bids.neuroimaging.io/)) workflow for Neurodevelopmental Trajectories and Neural Correlates in Children with Neonatal Hypoxic-Ischaemic Encephalopathy (NENAH), i.e. to put the NENAH data into a BIDS data structure, for [Quality Assessment](https://mriqc.readthedocs.io/en/latest/) and [customisable preprocessing](https://fmriprep.org/en/stable/), so as to keep track of the data quality continuously and quickly decide on recalls. Potentially, NeuroImaging Data Model ([NIDM](https://f1000research.com/documents/8-1329)) can be included for relevant clinical data, e.g. test scores.
+This project is to streamline a Brain Imaging Data Structure ([BIDS](https://bids.neuroimaging.io/)) workflow for Neurodevelopmental Trajectories and Neural Correlates in Children with Neonatal Hypoxic-Ischaemic Encephalopathy (NENAH), i.e. to put the NENAH data into a BIDS data structure, for [Quality Assessment](https://mriqc.readthedocs.io/en/latest/) and [customisable preprocessing](https://fmriprep.org/en/stable/), so as to keep track of the data quality continuously and quickly decide on recalls. Potentially, NeuroImaging Data Model ([NIDM](http://nidm.nidash.org/)) can be applied to turn BIDS datasets into Semantic-BIDS datasets with relevant clinical data, e.g. test scores.
 
 ## Tasks
  - Connect to the Soton computer to establish a joint platform for working, where most of the processing will be run
@@ -13,6 +13,7 @@ This project is to streamline a Brain Imaging Data Structure ([BIDS](https://bid
  - The BIDS conversion has been set up using [heudiconv](https://heudiconv.readthedocs.io/en/latest/) (a heuristic-centric DICOM converter), mimicking the tutorial: http://reproducibility.stanford.edu/bids-tutorial-series-part-2a/
 
 ## Relevant Resources
+ - [BIDS and the NeuroImaging Data Model (NIDM)](https://f1000research.com/documents/8-1329)
  - [ABCD-ReproNim Course](https://www.abcd-repronim.org/index.html) ([syllabus](https://docs.google.com/document/d/1uStMP9DwdkVMsBVyudLywuz1ucTNttpzqN0UjIKssTA/edit?usp=sharing)): NIDM at [Week 6](https://abcd-repronim.github.io/materials/week-6/) - 6th November, 2020
  - [Neurostars](https://neurostars.org/): forum for BIDS and [ABCD-ReproNim](https://neurostars.org/c/abcd-repronim/232) discussions
  - [Winawer Lab](https://wikis.nyu.edu/display/winawerlab/home) [[Sample Data Pipeline](https://wikis.nyu.edu/display/winawerlab/Sample+Data+Pipeline)]
