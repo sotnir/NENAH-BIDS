@@ -14,6 +14,7 @@ This project is to streamline a Brain Imaging Data Structure ([BIDS](https://bid
 
 ## Relevant Resources
  - [BIDS and the NeuroImaging Data Model (NIDM)](https://f1000research.com/documents/8-1329)
+ - dHCP: [Data Release 2019](https://drive.google.com/file/d/197g9afbg9uzBt04qYYAIhmTOvI3nXrhI/view), [Structural Pipeline](https://github.com/BioMedIA/dhcp-structural-pipeline)
  - [ABCD-ReproNim Course](https://www.abcd-repronim.org/index.html) ([syllabus](https://docs.google.com/document/d/1uStMP9DwdkVMsBVyudLywuz1ucTNttpzqN0UjIKssTA/edit?usp=sharing)): NIDM at [Week 6](https://abcd-repronim.github.io/materials/week-6/) - 6th November, 2020
  - [Neurostars](https://neurostars.org/): forum for BIDS and [ABCD-ReproNim](https://neurostars.org/c/abcd-repronim/232) discussions
  - [Winawer Lab](https://wikis.nyu.edu/display/winawerlab/home) [[Sample Data Pipeline](https://wikis.nyu.edu/display/winawerlab/Sample+Data+Pipeline)]
