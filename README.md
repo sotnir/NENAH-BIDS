@@ -6,8 +6,7 @@ This project is to streamline a Brain Imaging Data Structure ([BIDS](https://bid
 
 ## Tasks
  - Investigate if the Soton computer needs updating
-      - OS update
-      - transfer down to the Minera building
+      - (Follow with iSolution) OS: upgrade to RH8 or RH7
       - have ups power backup and a proper backup
  - <del>Connect to the Soton computer to establish a joint platform for working, where most of the processing will be run</del>
       - The common folder should have neuropaediatrics as a group which then will guide access rules
