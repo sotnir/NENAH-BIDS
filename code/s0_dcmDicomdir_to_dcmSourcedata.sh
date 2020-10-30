@@ -5,7 +5,7 @@
 #
 # Currently needs to be run from main data_BIDS-folder 
 # Input
-# $1 = subject_id (e.g. P4)
+# $1 = subject_id (e.g. P4, NENAH007)
 
 # Exit upon any error
 set -exo pipefail
