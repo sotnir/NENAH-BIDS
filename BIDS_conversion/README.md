@@ -1,5 +1,3 @@
-test
-
 Bash and python scripts for pre-processing, including:
 
  - `nenah_heuristic.py`
