@@ -8,10 +8,11 @@ This project is to streamline a Brain Imaging Data Structure ([BIDS](https://bid
  - <del>Investigate if the Soton computer needs updating</del>
       - <del>have ups power backup and a proper backup</del>
  - <del>Connect to the Soton computer to establish a joint platform for working, where most of the processing will be run</del>
-      - The common folder should have neuropaediatrics as a group which then will guide access rules
- - For QA of sMRI (T1w) and fMRI: use [MRIQC](https://mriqc.readthedocs.io/en/stable/)
+      - <del>The common folder should have neuropaediatrics as a group which then will guide access rules</del>
+ - [MRIQC](https://mriqc.readthedocs.io/en/stable/): For QA of sMRI (T1w) and fMRI
  - For dMRI: 
      - Make a pipeline that is BIDS compatible (fairly simple get data from BIDS /rawdata folder and just use non BIDS /derivatives folder as the output). A lot of what we want to do can be found in [BATMAN](https://mfr.osf.io/render?url=https://osf.io/pm9ba/?direct%26mode=render%26action=download%26mode=render)
+     - Install CUDA 8.0 or 9.1 on the linux workstation
      - Use the QC output that FSL eddy generates, or use eddy_quad. That means that we have to implement the pre-proc pipeline up and until EDDY (which have to be run with slice-to-volume correction), i.e. run eddy with flag that generates qc
  - BIDS conversion: 
      - set up using [heudiconv](https://heudiconv.readthedocs.io/en/latest/) (a heuristic-centric DICOM converter), mimicking the tutorial: http://reproducibility.stanford.edu/bids-tutorial-series-part-2a/
