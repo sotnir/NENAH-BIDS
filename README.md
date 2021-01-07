@@ -4,11 +4,7 @@ A collaborate platform for streamlining a BIDS workflow for the NENAH study, on 
 ## Objectives
 This project is to streamline a Brain Imaging Data Structure ([BIDS](https://bids.neuroimaging.io/)) workflow for Neurodevelopmental Trajectories and Neural Correlates in Children with Neonatal Hypoxic-Ischaemic Encephalopathy (NENAH), i.e. to put the NENAH data into a BIDS data structure, for [Quality Assessment](https://mriqc.readthedocs.io/en/latest/) and [customisable preprocessing](https://fmriprep.org/en/stable/), so as to keep track of the data quality continuously and quickly decide on recalls. Potentially, NeuroImaging Data Model ([NIDM](http://nidm.nidash.org/)) can be applied to turn BIDS datasets into Semantic-BIDS datasets with relevant clinical data, e.g. test scores.
 
-## Tasks
- - <del>Investigate if the Soton computer needs updating</del>
-      - <del>have ups power backup and a proper backup</del>
- - <del>Connect to the Soton computer to establish a joint platform for working, where most of the processing will be run</del>
-      - <del>The common folder should have neuropaediatrics as a group which then will guide access rules</del>
+## Tasks (in transition to Projects/Issues)
  - [MRIQC](https://mriqc.readthedocs.io/en/stable/): For QA of sMRI (T1w) and fMRI
  - For dMRI: 
      - Make a pipeline that is BIDS compatible (fairly simple get data from BIDS /rawdata folder and just use non BIDS /derivatives folder as the output). A lot of what we want to do can be found in [BATMAN](https://mfr.osf.io/render?url=https://osf.io/pm9ba/?direct%26mode=render%26action=download%26mode=render)
@@ -17,7 +13,6 @@ This project is to streamline a Brain Imaging Data Structure ([BIDS](https://bid
  - BIDS conversion: 
      - set up using [heudiconv](https://heudiconv.readthedocs.io/en/latest/) (a heuristic-centric DICOM converter), mimicking the tutorial: http://reproducibility.stanford.edu/bids-tutorial-series-part-2a/
      - decide how to create slice_timing in the json-files
-     - Harmonizing old (Pxxx) and new (NENAHxxx) naming. One subject will need to have one unique ID. To point out the repeat scan, use the session code in the BIDS (e.g. ses-1) to add subfolder under subject folder
 
 ## Relevant Resources
  - [BIDS and the NeuroImaging Data Model (NIDM)](https://f1000research.com/documents/8-1329)
