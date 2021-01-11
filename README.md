@@ -12,7 +12,6 @@ This project is to streamline a Brain Imaging Data Structure ([BIDS](https://bid
      - Use the QC output that FSL eddy generates, or use eddy_quad. That means that we have to implement the pre-proc pipeline up and until EDDY (which have to be run with slice-to-volume correction), i.e. run eddy with flag that generates qc
  - BIDS conversion: 
      - set up using [heudiconv](https://heudiconv.readthedocs.io/en/latest/) (a heuristic-centric DICOM converter), mimicking the tutorial: http://reproducibility.stanford.edu/bids-tutorial-series-part-2a/
-     - decide how to create slice_timing in the json-files
 
 ## Relevant Resources
  - [BIDS and the NeuroImaging Data Model (NIDM)](https://f1000research.com/documents/8-1329)
