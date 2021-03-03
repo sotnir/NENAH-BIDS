@@ -1,3 +1,7 @@
+# Heuristics file
+# Author: Yukai Zou
+# Date: 2021-01-07
+
 import os
 
 
@@ -15,7 +19,6 @@ def infotodict(seqinfo):
     seqitem: run number during scanning
     subindex: sub index within group
     """
-
     # ANATOMY
     t1w = create_key('sub-{subject}/anat/sub-{subject}_run-{item:01d}_T1w')
     

@@ -1,6 +1,6 @@
-# NENAH-BIDS
-A collaborate platform for streamlining a BIDS workflow for the NENAH study, on the linux workstation based at University of Southampton.
+# About this branch
 
+<<<<<<< HEAD
 ## Objectives
 This project is to streamline a Brain Imaging Data Structure ([BIDS](https://bids.neuroimaging.io/)) workflow for Neurodevelopmental Trajectories and Neural Correlates in Children with Neonatal Hypoxic-Ischaemic Encephalopathy (NENAH), i.e. to put the NENAH data into a BIDS data structure, for [Quality Assessment](https://mriqc.readthedocs.io/en/latest/) and [customisable preprocessing](https://fmriprep.org/en/stable/), so as to keep track of the data quality continuously and quickly decide on recalls. Potentially, NeuroImaging Data Model ([NIDM](http://nidm.nidash.org/)) can be applied to turn BIDS datasets into Semantic-BIDS datasets with relevant clinical data, e.g. test scores.
 
@@ -20,3 +20,6 @@ This project is to streamline a Brain Imaging Data Structure ([BIDS](https://bid
  - [Winawer Lab](https://wikis.nyu.edu/display/winawerlab/home) [[Sample Data Pipeline](https://wikis.nyu.edu/display/winawerlab/Sample+Data+Pipeline)]
  - [Iridis: Singularity and Docker](https://hpc.soton.ac.uk/redmine/projects/iridis-5-support/wiki/Docker_and_Singularity), also watch [ABCD-ReproNim Week 3 videos](https://abcd-repronim.github.io/materials/week-3/)
  - [QSIprep](https://qsiprep.readthedocs.io/en/latest/): Preprocessing and analysis of q-space images
+=======
+This is a branch of [NENAH-BIDS](https://github.com/sotnir/NENAH-BIDS), to adapt to the neuroimaging dataset of the [SIMS study](https://www.southampton.ac.uk/scent/sims_study/index.page).
+>>>>>>> 2289ad236ccf76eea2957aa9206858a210cb736b
