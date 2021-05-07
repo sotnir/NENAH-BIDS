@@ -50,7 +50,9 @@ echo -e "# Exclude following from BIDS-validator\n" > $rawdatadir/.bidsignore;
 fi
 
 # we'll be running the Docker containers as yourself, not as root:
-userID=$(id -u):$(id -g)
+userID=$(id -u):neuropediatrics
+# (7 May) Commented out
+# userID=$(id -u):$(id -g)
 
 ###   Get docker images:   ###
 docker pull nipy/heudiconv:latest
