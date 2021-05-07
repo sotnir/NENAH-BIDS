@@ -73,7 +73,7 @@ docker run --name heudiconv_container \
            --volume $rawdatadir:/dataOut \
            nipy/heudiconv \
                -d /dataIn/sub-{subject}/*/*.dcm \
-               -f /code/heudiconv_heuristics/nenah_heuristic.py \
+               -f /code/nenah_heuristic.py \
                -s ${sID} \
                -c dcm2niix \
                -b \
