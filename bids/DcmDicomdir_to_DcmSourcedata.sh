@@ -21,18 +21,6 @@ Options:
 command=$@
 sID=$1
 
-# Define Folders
-# This gobblegook comes from stack overflow as a means to find the directory containing the current function: https://stackoverflow.com/a/246128
-codedir="$( cd "$( dirname "${BASH_SOURCE[0]}" )" >/dev/null 2>&1 && pwd )"
-studydir=`pwd`
-origdcmdir=$studydir/dicomdir;
-dcmdir=$studydir/sourcedata
-scriptname=`basename $0 .sh`
-
-# Arguments
-sID=$1
-logdir=${studydir}/derivatives/preprocessing_logs/sub-${sID}
-
 shift
 while [ $# -gt 0 ]; do
     case "$1" in
@@ -43,9 +31,17 @@ while [ $# -gt 0 ]; do
     shift
 done
 
-if [ ! -d $logFolder ]; then mkdir -p $logFolder; fi
+# Define Folders
+codedir="$( cd "$( dirname "${BASH_SOURCE[0]}" )" >/dev/null 2>&1 && pwd )"
+studydir=`pwd`
+origdcmdir=$studydir/dicomdir;
+dcmdir=$studydir/sourcedata
+scriptname=`basename $0 .sh`
 
-### Start processing ###
+logdir=${studydir}/derivatives/preprocessing_logs/sub-${sID}
+if [ ! -d $logdir ]; then mkdir -p $logdir; fi
+
+################ PROCESSING ################
 
 # Re-arrange DICOMs into sourcedata
 if [ ! -d $dcmFolder ]; then mkdir $dcmFolder; fi
