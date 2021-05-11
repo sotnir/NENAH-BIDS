@@ -8,6 +8,7 @@ usage()
 Conversion of DCMs in /sourcedata into NIfTIs in /rawdata
 1. NIfTI-conversion to BIDS-compliant /rawdata folder
 2. validation of BIDS dataset
+3. Run of MRIQC on structural data
 
 Arguments:
   sID				Subject ID (e.g. NENAHC001) 
@@ -81,11 +82,12 @@ docker run --name heudiconv_container \
                -b \
                -o /dataOut \
                --overwrite \
-           > ${logdir}/sub-${sID}_dcmSourcedatadcm2niftiRawdata.log 2>&1 
+           > $logdir/sub-${sID}_$scriptname.log 2>&1 
            
 # heudiconv makes files read only
 #    We need some files to be writable, eg for defacing
-chmod -R u+wr,g+wr $rawdatadir
+# (11 May) Commented out
+#chmod -R u+wr,g+wr $rawdatadir
 
 ###   Run BIDS validator   ###
 docker run --name BIDSvalidation_container \
@@ -114,7 +116,7 @@ docker run --name mriqc_container \
                --verbose-reports \
                --fft-spikes-detector \
                --participant_label ${sID} \
-           > ${logFolder}/sub-${sID}_mriqc_participant.log 2>&1
+           > $logdir/sub-${sID}_mriqc_participant.log 2>&1
 
 ###   fMRIPprep:   ###
 # fmriprep folder contains the reports and results of 'fmriprep'
