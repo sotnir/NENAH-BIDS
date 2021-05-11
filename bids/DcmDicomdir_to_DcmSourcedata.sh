@@ -45,7 +45,7 @@ if [ ! -d $logdir ]; then mkdir -p $logdir; fi
 ################ PROCESSING ################
 
 # Simple log
-echo "Executing $0 $@ "> ${logdir/sub-${sID}_dcm2sourcedata.log 2>&1 
+echo "Executing $0 $@ "> $logdir/sub-${sID}_dcm2sourcedata.log 2>&1 
 cat $0 >> $logdir/sub-${sID}_$scriptname.log 2>&1 
 
 # Re-arrange DICOMs into sourcedata
