@@ -45,11 +45,11 @@ if [ ! -d $logdir ]; then mkdir -p $logdir; fi
 ################ PROCESSING ################
 
 # Simple log
-echo "Executing $0 $@ "> $logdir/sub-${sID}_dcm2sourcedata.log 2>&1 
+echo "Executing $0 $@ "> $logdir/sub-${sID}_$scriptname.log 2>&1 
 cat $0 >> $logdir/sub-${sID}_$scriptname.log 2>&1 
 
 # Re-arrange DICOMs into sourcedata
-if [ ! -d $dcmFolder ]; then mkdir $dcmFolder; fi
-dcm2niix -b o -r y -w 1 -o $dcmFolder -f sub-$sID/s%2s_%d/%d_%5r.dcm $origdcmFolder/${sID} \
+if [ ! -d $dcmdir ]; then mkdir $dcmdir; fi
+dcm2niix -b o -r y -w 1 -o $dcmdir -f sub-$sID/s%2s_%d/%d_%5r.dcm $origdcmdir/${sID} \
 	>> $logdir/sub-${sID}_$scriptname.log 2>&1 
 
