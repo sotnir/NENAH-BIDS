@@ -51,9 +51,12 @@ echo -e "# Exclude following from BIDS-validator\n" > $rawdatadir/.bidsignore;
 fi
 
 # we'll be running the Docker containers as yourself, not as root:
-userID=$(id -u):neuropediatrics
-# (7 May) Commented out
-# userID=$(id -u):$(id -g)
+userID=$(id -u):$(id -g)
+# (11 May) Commented out
+# userID=$(id -u):neuropediatrics
+# becauase trying to with group neuropediatrics (as above) we get error msg
+# docker: Error response from daemon: unable to find group neuropediatrics: no matching entries in group file.
+
 
 ###   Get docker images:   ###
 docker pull nipy/heudiconv:latest
