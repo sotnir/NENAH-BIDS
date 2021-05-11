@@ -5,11 +5,12 @@ usage()
 {
   base=$(basename "$0")
   echo "usage: $base sID [options]
-"Arrangement of DICOMs into organised folders in /sourcedata folder
-
-Arguments:
+  Arrangement of DICOMs into organised folders in /sourcedata folder
+  
+  Arguments:
   sID				Subject ID (e.g. NENAHC001) 
-Options:
+  
+  Options:
   -h / -help / --help           Print usage.
 "
   exit;
