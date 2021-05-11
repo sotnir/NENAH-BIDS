@@ -5,7 +5,7 @@ usage()
 {
   base=$(basename "$0")
   echo "usage: $base sID [options]
-Arrangement of DICOMs into organised folders in /sourcedata folderConversion of DICOMs to BIDS and validation of BIDS dataset
+"Arrangement of DICOMs into organised folders in /sourcedata folder
 
 Arguments:
   sID				Subject ID (e.g. NENAHC001) 
@@ -49,5 +49,6 @@ cat $0 >> ${logdir}/sub-${sID}_$scriptname.log 2>&1
 
 # Re-arrange DICOMs into sourcedata
 if [ ! -d $dcmFolder ]; then mkdir $dcmFolder; fi
-dcm2niix -b o -r y -w 1 -o $dcmFolder -f sub-$sID/s%2s_%d/%d_%5r.dcm $origdcmFolder/${sID}
+dcm2niix -b o -r y -w 1 -o $dcmFolder -f sub-$sID/s%2s_%d/%d_%5r.dcm $origdcmFolder/${sID} \
+	>> {logdir}/sub-${sID}_$scriptname.log 2>&1 
 
