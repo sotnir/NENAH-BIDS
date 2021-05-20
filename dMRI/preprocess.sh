@@ -13,11 +13,9 @@ Script to preprocess dMRI data
 Arguments:
   sID    Subject ID   (e.g. NENAHC001) 
 Options:
-  -dwi			dMRI AP data (default: sourcedata/sub-sID/dwi/sub-sID_ses-ssID_dir-AP_dwi.nii.gz)
-  -dwiPA	     	dMRI PA data, potentially for TOPUP  (default: sourcedata/sub-sID/dwi/sub-sID_ses-ssID_dir-PA_dwi.nii.gz)
-  -seAP		     	Spin-echo field map AP, for TOPUP (default: sourcedata/sub-sID/fmap/sub-sID_ses-ssID_acq-se_dir-AP_epi.nii.gz)
-  -sePA			Spin-echo field map PA, for TOPUP (default: sourcedata/sub-sID/fmap/sub-sID_ses-ssID_acq-se_dir-PA_epi.nii.gz)
-  -d / -data-dir	<directory>   The directory used to output the preprocessed files (default: derivatives/dMRI/sub-sID)
+  -dwiAP		dMRI AP data (default: rawdata/sub-sID/dwi/sub-sID_dir-AP_run-1_dwi.nii.gz)
+  -dwiPA	     	dMRI PA data (default: rawdata/sub-sID/dwi/sub-sID_dir-PA_run-1_dwi.nii.gz)
+  -d / -data-dir	<directory> The directory used to output the preprocessed files (default: derivatives/dMRI/sub-sID)
   -h / -help / --help	Print usage.
 "
   exit;
@@ -32,10 +30,8 @@ sID=$1
 currdir=`pwd`
 
 # Defaults
-dwi=sourcedata/sub-$sID/dwi/sub-${sID}_ses-${ssID}_dir-AP_dwi.nii.gz
-dwiPA=sourcedata/sub-$sID/dwi/sub-${sID}_ses-${ssID}_dir-PA_dwi.nii.gz
-seAP=sourcedata/sub-$sID/fmap/sub-${sID}_ses-${ssID}_acq-se_dir-AP_epi.nii.gz
-sePA=sourcedata/sub-$sID/fmap/sub-${sID}_ses-${ssID}_acq-se_dir-PA_epi.nii.gz
+dwiAP=rawdata/sub-$sID/dwi/sub-${sID}_dir-AP_run-1_dwi.nii.gz
+dwiPA=rawdata/sub-$sID/dwi/sub-${sID}_dir-PA_run-1_dwi.nii.gz
 datadir=derivatives/dMRI/sub-$sID
 
 # check whether the different tools are set and load parameters
@@ -44,12 +40,8 @@ codedir="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 shift; shift
 while [ $# -gt 0 ]; do
     case "$1" in
- -dwi) shift; dwi=$1; ;;
- -dwiAPsbref) shift; dwiAPsbref=$1; ;;
+ -dwiAP) shift; dwi=$1; ;;
  -dwiPA) shift; dwiPA=$1; ;;
- -dwiPAsbref) shift; dwiPAsbref=$1; ;;
- -seAP) shift; seAP=$1; ;;
- -seAP) shift; sePA=$1; ;;
  -d|-data-dir)  shift; datadir=$1; ;;
  -h|-help|--help) usage; ;;
  -*) echo "$0: Unrecognized option $1" >&2; usage; ;;
@@ -58,21 +50,14 @@ while [ $# -gt 0 ]; do
     shift
 done
 
-# Check if images exist, else put in No_image
-if [ ! -f $dwi ]; then dwi=""; fi
-if [ ! -f $dwiAPsbref ]; then dwiAPsbref=""; fi
+# Check if images exist, else leave blank
+if [ ! -f $dwiAP ]; then dwiAP=""; fi
 if [ ! -f $dwiPA ]; then dwiPA=""; fi
-if [ ! -f $dwiPAsbref ]; then dwiPAsbref=""; fi
-if [ ! -f $seAP ]; then seAP=""; fi
-if [ ! -f $sePA ]; then sePA=""; fi
 
-echo "Registration and sMRI-processing
+echo "dMRI preprocessing
 Subject:       	$sID 
-Session:       	$ssID
-DWI (AP):	$dwi
+DWI (AP):	$dwiAP
 DWI (PA):      	$dwiPA
-SE fMAP (AP):  	$seAP        
-SE fMAP (PA):  	$sePA        
 Directory:     	$datadir 
 $BASH_SOURCE   	$command
 ----------------------------"
@@ -81,45 +66,42 @@ logdir=$datadir/logs
 if [ ! -d $datadir ];then mkdir -p $datadir; fi
 if [ ! -d $logdir ];then mkdir -p $logdir; fi
 
-echo dMRI preprocessing on subject $sID and session $ssID
+echo dMRI preprocessing subject $sID
 script=`basename $0 .sh`
-echo Executing: $codedir/sMRI/$script.sh $command > ${logdir}/sub-${sID}_ses-${ssID}_sMRI_$script.log 2>&1
-echo "" >> ${logdir}/sub-${sID}_ses-${ssID}_sMRI_$script.log 2>&1
-echo "Printout $script.sh" >> ${logdir}/sub-${sID}_ses-${ssID}_sMRI_$script.log 2>&1
-cat $codedir/$script.sh >> ${logdir}/sub-${sID}_ses-${ssID}_sMRI_$script.log 2>&1
+echo Executing: $codedir/dMRI/$script.sh $command > ${logdir}/sub-${sID}_dMRI_$script.log 2>&1
+echo "" >> ${logdir}/sub-${sID}_dMRI_$script.log 2>&1
+echo "Printout $script.sh" >> ${logdir}/sub-${sID}_dMRI_$script.log 2>&1
+cat $codedir/$script.sh >> ${logdir}/sub-${sID}_dMRI_$script.log 2>&1
 echo
 
 ##################################################################################
-# 0. Copy to files to datadir/preproc (incl .json and bvecs/bvals files if present at original location)
+# 0. Create dMRI mif-file in datadir/preproc (importing .json and bvecs/bvals files)
 
 if [ ! -d $datadir/preproc ]; then mkdir -p $datadir/preproc; fi
 
-filelist="$dwi $dwiAPsbref $dwiPA $dwiPAsbref $seAP $sePA"
+filelist="$dwiAP $dwiPA"
 for file in $filelist; do
     filebase=`basename $file .nii.gz`;
     filedir=`dirname $file`
-    cp $file $filedir/$filebase.json $filedir/$filebase.bval $filedir/$filebase.bvec $datadir/preproc/.
-
+    mrconvert -json_import $filedir/$filebase.json -fslgrad $filedir/$filebase.bvec $filedir/$filebase.bval $filedir/$filebase.nii.gz $datadir/preproc/$filebase.mif.gz
 done
 
 #Then update variables to only refer to filebase names (instead of path/file)
-dwi=`basename $dwi .nii.gz` 
+dwiAP=`basename $dwiAP .nii.gz` 
 dwiPA=`basename $dwiPA .nii.gz`
-seAP=`basename $seAP .nii.gz`
-sePA=`basename $sePA .nii.gz`
 
 
 ##################################################################################
-# 0. Create dwi.mif.gz to work with
+# 0. Create dwi.mif.gz as concatenation of dwiAP and dwiPA. This is the file to work with
 cd $datadir/preproc
 
-if [[ $dwi = "" ]];then
+if [[ $dwiAP = "" ]] || [[ $dwiPA = "" ]]; then
     echo "No dwi data provided";
     exit;
 else
     # Create a dwi.mif.gz-file to work with
     if [ ! -f dwi.mif.gz ]; then
-    mrconvert -json_import $dwi.json -fslgrad $dwi.bvec $dwi.bval $dwi.nii.gz dwi.mif.gz
+	mrcat $dwiAP.mif.gz $dwiPA.mif.gz dwi.mif.gz
     fi
 fi
 
@@ -129,7 +111,7 @@ cd $currdir
 # 1. Do PCA-denoising and Remove Gibbs Ringing Artifacts
 cd $datadir/preproc
 
-# Directory for QC files
+# Directory for MP PCA QC files
 if [ ! -d denoise ]; then mkdir denoise; fi
 
 # Perform PCA-denosing
@@ -142,9 +124,10 @@ if [ ! -f dwi_den.mif.gz ]; then
     echo Check the residuals! Should not contain anatomical structure
 fi
 
-# Directory for QC files
+# Directory for Gibbs QC files
 if [ ! -d unring ]; then mkdir unring; fi
 
+# Perform Gibbs-unringing
 if [ ! -f dwi_den_unr.mif.gz ]; then
     echo Remove Gibbs Ringing Artifacts with mrdegibbs
     # Gibbs 
@@ -160,16 +143,6 @@ cd $currdir
 # 2. TOPUP and EDDY for Motion- and susceptibility distortion correction
 cd $datadir/preproc
 
-if [ ! -f seAP.mif.gz ]; then
-    mrconvert -json_import $seAP.json $seAP.nii.gz seAP.mif.gz
-fi
-if [ ! -f sePA.mif.gz ]; then
-    mrconvert -json_import $sePA.json $sePA.nii.gz sePA.mif.gz
-fi
-if [ ! -f seAPPA.mif.gz ]; then
-    mrcat seAP.mif.gz sePA.mif.gz seAPPA.mif.gz
-fi
-
 # Create b0APPA.mif.gz to go into TOPUP
 if [ ! -f b0APPA.mif.gz ];then
     echo "Create a PErevPE pair of SE images to use with TOPUP
@@ -179,12 +152,7 @@ if [ ! -f b0APPA.mif.gz ];then
     exit;
 fi
 
-
-# Do Topup and Eddy with dwipreproc
-#
-# use b0APPA.mif.gz (i.e. choose the two best b0s - could be placed first in dwiAP and dwiPA
-#
-
+# Do Topup and Eddy with dwipreproc and b0APPA.mif.gz as input
 if [ ! -f dwi_den_unr_eddy.mif.gz ];then
    dwifslpreproc -se_epi b0APPA.mif.gz -rpe_header -align_seepi -nocleanup \
         -topup_options " --iout=field_mag_unwarped" \
@@ -196,7 +164,6 @@ if [ ! -f dwi_den_unr_eddy.mif.gz ];then
 fi
 
 cd $currdir
-
 
 ##################################################################################
 # 3. Mask generation, N4 biasfield correction, meanb0 generation and tensor estimation
@@ -219,26 +186,24 @@ fi
 
 # Do B1-correction. Use ANTs N4
 if [ ! -f  ${dwi}_N4.mif.gz ]; then
-    threads=10;
+    threads=6;
     if [ ! -d N4 ]; then mkdir N4;fi
     dwibiascorrect ants -mask mask.mif.gz -bias N4/bias.mif.gz $dwi.mif.gz ${dwi}_N4.mif.gz
 fi
-
 
 # last file in the processing
 dwipreproclast=${dwi}_N4.mif.gz
 
 cd $currdir
 
-
 ##################################################################################
 ## 3. B0-normalise, create meanb0 and do tensor estimation
 
 cd $datadir
 
-# Create symbolic link to last file in /preproc and copy mask.mif.gz to $datadir
+# Create symbolic links to last file in /preproc and mask.mif.gz and put this in $datadir
 ln -s preproc/$dwipreproclast dwi_preproc.mif.gz
-cp preproc/mask.mif.gz .
+ln -s preproc/mask.mif.gz mask.mif.gz
 dwi=dwi_preproc
 
 # B0-normalisation
