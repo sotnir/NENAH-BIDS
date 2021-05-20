@@ -84,7 +84,7 @@ filelist="$dwiAP $dwiPA"
 for file in $filelist; do
     filebase=`basename $file .nii.gz`;
     filedir=`dirname $file`
-    mrconvert -json_import $filedir/$filebase.json -fslgrad $filedir/$filebase.bvec $filedir/$filebase.bval $filedir/$filebase.nii.gz $datadir/preproc/$filebase.mif.gz
+    mrconvert -force -json_import $filedir/$filebase.json -fslgrad $filedir/$filebase.bvec $filedir/$filebase.bval $filedir/$filebase.nii.gz $datadir/preproc/$filebase.mif.gz
 done
 
 #Then update variables to only refer to filebase names (instead of path/file)
