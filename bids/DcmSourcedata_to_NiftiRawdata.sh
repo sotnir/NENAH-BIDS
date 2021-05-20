@@ -119,6 +119,7 @@ docker run --name mriqc_container \
                --verbose-reports \
                --fft-spikes-detector \
                --participant_label ${sID} \
+	       --no-sub \
            > $logdir/sub-${sID}_mriqc_participant.log 2>&1
 
 ###   fMRIPprep:   ###
