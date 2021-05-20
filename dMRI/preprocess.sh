@@ -14,9 +14,7 @@ Arguments:
   sID    Subject ID   (e.g. NENAHC001) 
 Options:
   -dwi			dMRI AP data (default: sourcedata/sub-sID/dwi/sub-sID_ses-ssID_dir-AP_dwi.nii.gz)
-  -dwiAPsbref	     	dMRI AP SBRef, potentially for registration and  TOPUP  (default: sourcedata/sub-sID/dwi/sub-sID_ses-ssID_dir-AP_sbref.nii.gz)
   -dwiPA	     	dMRI PA data, potentially for TOPUP  (default: sourcedata/sub-sID/dwi/sub-sID_ses-ssID_dir-PA_dwi.nii.gz)
-  -dwiPAsbref	     	dMRI PA SBRef, potentially for registration and TOPUP  (default: sourcedata/sub-sID/dwi/sub-sID_ses-ssID_dir-PA_sbref.nii.gz)
   -seAP		     	Spin-echo field map AP, for TOPUP (default: sourcedata/sub-sID/fmap/sub-sID_ses-ssID_acq-se_dir-AP_epi.nii.gz)
   -sePA			Spin-echo field map PA, for TOPUP (default: sourcedata/sub-sID/fmap/sub-sID_ses-ssID_acq-se_dir-PA_epi.nii.gz)
   -d / -data-dir	<directory>   The directory used to output the preprocessed files (default: derivatives/dMRI/sub-sID)
@@ -36,8 +34,6 @@ currdir=`pwd`
 # Defaults
 dwi=sourcedata/sub-$sID/dwi/sub-${sID}_ses-${ssID}_dir-AP_dwi.nii.gz
 dwiPA=sourcedata/sub-$sID/dwi/sub-${sID}_ses-${ssID}_dir-PA_dwi.nii.gz
-dwiAPsbref=sourcedata/sub-$sID/dwi/sub-${sID}_ses-${ssID}_dir-AP_sbref.nii.gz
-dwiPAsbref=sourcedata/sub-$sID/dwi/sub-${sID}_ses-${ssID}_dir-PA_sbref.nii.gz
 seAP=sourcedata/sub-$sID/fmap/sub-${sID}_ses-${ssID}_acq-se_dir-AP_epi.nii.gz
 sePA=sourcedata/sub-$sID/fmap/sub-${sID}_ses-${ssID}_acq-se_dir-PA_epi.nii.gz
 datadir=derivatives/dMRI/sub-$sID
@@ -74,9 +70,7 @@ echo "Registration and sMRI-processing
 Subject:       	$sID 
 Session:       	$ssID
 DWI (AP):	$dwi
-DWI (AP SBRef): $dwiAPsbref
 DWI (PA):      	$dwiPA
-DWI (PA SBRef):	$dwiPAsbref
 SE fMAP (AP):  	$seAP        
 SE fMAP (PA):  	$sePA        
 Directory:     	$datadir 
@@ -110,9 +104,7 @@ done
 
 #Then update variables to only refer to filebase names (instead of path/file)
 dwi=`basename $dwi .nii.gz` 
-dwiAPsbref=`basename $dwiAPsbref .nii.gz` 
 dwiPA=`basename $dwiPA .nii.gz`
-dwiPAsbref=`basename $dwiPAsbref .nii.gz`
 seAP=`basename $seAP .nii.gz`
 sePA=`basename $sePA .nii.gz`
 
@@ -127,7 +119,7 @@ if [[ $dwi = "" ]];then
 else
     # Create a dwi.mif.gz-file to work with
     if [ ! -f dwi.mif.gz ]; then
- mrconvert -json_import $dwi.json -fslgrad $dwi.bvec $dwi.bval $dwi.nii.gz dwi.mif.gz
+    mrconvert -json_import $dwi.json -fslgrad $dwi.bvec $dwi.bval $dwi.nii.gz dwi.mif.gz
     fi
 fi
 
