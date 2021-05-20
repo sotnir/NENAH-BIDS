@@ -155,7 +155,7 @@ fi
 
 # Do Topup and Eddy with dwipreproc and b0APPA.mif.gz as input
 if [ ! -f dwi_den_unr_eddy.mif.gz ]; then
-	dwifslpreproc -se_epi b0APPA.mif.gz -eddy_slspec $studydir/sequences/slspec_NENAH_64_interleaved_slices.txt -align_seepi -nocleanup \
+	dwifslpreproc -rpe_pair -se_epi b0APPA.mif.gz -eddy_slspec $studydir/sequences/slspec_NENAH_64_interleaved_slices.txt -align_seepi -nocleanup \
 	-topup_options " --iout=field_mag_unwarped" \
 	-eddy_options " --slm=linear --repol --mporder=16 --s2v_niter=10 --s2v_interp=trilinear --s2v_lambda=1 " \
 	-eddyqc_all eddy \
