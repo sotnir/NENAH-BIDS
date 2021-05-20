@@ -180,7 +180,8 @@ if [ ! -f mask.mif.gz ]; then
     dwiextract -bzero $dwi.mif.gz - | mrmath -force -axis 3 - mean meanb0tmp.nii.gz
     bet meanb0tmp meanb0tmp_brain -m -F -R
     # Check result
-    mrview meanb0tmp.nii.gz -roi.load meanb0tmp_brain_mask.nii.gz -roi.opacity 0.5 -mode 2
+    echo Check the results
+    echo "mrview meanb0tmp.nii.gz -roi.load meanb0tmp_brain_mask.nii.gz -roi.opacity 0.5 -mode 2"
     mrconvert meanb0tmp_brain_mask.nii.gz mask.mif.gz
     rm meanb0tmp*
 fi
@@ -219,7 +220,7 @@ if [ ! -f meanb0.nii.gz ]; then
     mrconvert meanb0.mif.gz meanb0.nii.gz
     mrconvert meanb0_brain.mif.gz meanb0_brain.nii.gz
     echo "Visually check the meanb0_brain"
-    mrview meanb0_brain.nii.gz -mode 2
+    echo "mrview meanb0_brain.nii.gz -mode 2"
 fi
 
 # Calculate diffusion tensor and tensor metrics
