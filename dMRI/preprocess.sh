@@ -35,6 +35,7 @@ dwiPA=rawdata/sub-$sID/dwi/sub-${sID}_dir-PA_run-1_dwi.nii.gz
 datadir=derivatives/dMRI/sub-$sID
 
 # check whether the different tools are set and load parameters
+studydir=$currdir;
 codedir="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 
 shift; shift
