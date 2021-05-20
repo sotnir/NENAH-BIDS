@@ -4,7 +4,7 @@
 usage()
 {
   base=$(basename "$0")
-  echo "usage: $base subjectID sessionID [options]
+  echo "usage: $base sID [options]
 Script to preprocess dMRI data 
 1. MP-PCA Denoising and Gibbs Unringing 
 2. TOPUP and EDDY for motion- and susceptebility image distortion correction
@@ -13,14 +13,14 @@ Script to preprocess dMRI data
 Arguments:
   sID    Subject ID   (e.g. NENAHC001) 
 Options:
-  -dwi    dMRI AP data (default: sourcedata/sub-sID/ses-ssID/dwi/sub-sID_ses-ssID_dir-AP_dwi.nii.gz)
-  -dwiAPsbref   dMRI AP SBRef, potentially for registration and  TOPUP  (default: sourcedata/sub-sID/ses-ssID/dwi/sub-sID_ses-ssID_dir-AP_sbref.nii.gz)
-  -dwiPA   dMRI PA data, potentially for TOPUP  (default: sourcedata/sub-sID/ses-ssID/dwi/sub-sID_ses-ssID_dir-PA_dwi.nii.gz)
-  -dwiPAsbref   dMRI PA SBRef, potentially for registration and TOPUP  (default: sourcedata/sub-sID/ses-ssID/dwi/sub-sID_ses-ssID_dir-PA_sbref.nii.gz)
-  -seAP    Spin-echo field map AP, for TOPUP (default: sourcedata/sub-sID/ses-ssID/fmap/sub-sID_ses-ssID_acq-se_dir-AP_epi.nii.gz)
-  -sePA    Spin-echo field map PA, for TOPUP (default: sourcedata/sub-sID/ses-ssID/fmap/sub-sID_ses-ssID_acq-se_dir-PA_epi.nii.gz)
-  -d / -data-dir  <directory>   The directory used to output the preprocessed files (default: derivatives/dMRI/sub-sID/ses-ssID)
-  -h / -help / --help           Print usage.
+  -dwi			dMRI AP data (default: sourcedata/sub-sID/dwi/sub-sID_ses-ssID_dir-AP_dwi.nii.gz)
+  -dwiAPsbref	     	dMRI AP SBRef, potentially for registration and  TOPUP  (default: sourcedata/sub-sID/dwi/sub-sID_ses-ssID_dir-AP_sbref.nii.gz)
+  -dwiPA	     	dMRI PA data, potentially for TOPUP  (default: sourcedata/sub-sID/dwi/sub-sID_ses-ssID_dir-PA_dwi.nii.gz)
+  -dwiPAsbref	     	dMRI PA SBRef, potentially for registration and TOPUP  (default: sourcedata/sub-sID/dwi/sub-sID_ses-ssID_dir-PA_sbref.nii.gz)
+  -seAP		     	Spin-echo field map AP, for TOPUP (default: sourcedata/sub-sID/fmap/sub-sID_ses-ssID_acq-se_dir-AP_epi.nii.gz)
+  -sePA			Spin-echo field map PA, for TOPUP (default: sourcedata/sub-sID/fmap/sub-sID_ses-ssID_acq-se_dir-PA_epi.nii.gz)
+  -d / -data-dir	<directory>   The directory used to output the preprocessed files (default: derivatives/dMRI/sub-sID)
+  -h / -help / --help	Print usage.
 "
   exit;
 }
@@ -34,13 +34,13 @@ sID=$1
 currdir=`pwd`
 
 # Defaults
-dwi=sourcedata/sub-$sID/ses-$ssID/dwi/sub-${sID}_ses-${ssID}_dir-AP_dwi.nii.gz
-dwiPA=sourcedata/sub-$sID/ses-$ssID/dwi/sub-${sID}_ses-${ssID}_dir-PA_dwi.nii.gz
-dwiAPsbref=sourcedata/sub-$sID/ses-$ssID/dwi/sub-${sID}_ses-${ssID}_dir-AP_sbref.nii.gz
-dwiPAsbref=sourcedata/sub-$sID/ses-$ssID/dwi/sub-${sID}_ses-${ssID}_dir-PA_sbref.nii.gz
-seAP=sourcedata/sub-$sID/ses-$ssID/fmap/sub-${sID}_ses-${ssID}_acq-se_dir-AP_epi.nii.gz
-sePA=sourcedata/sub-$sID/ses-$ssID/fmap/sub-${sID}_ses-${ssID}_acq-se_dir-PA_epi.nii.gz
-datadir=derivatives/dMRI/sub-$sID/ses-$ssID
+dwi=sourcedata/sub-$sID/dwi/sub-${sID}_ses-${ssID}_dir-AP_dwi.nii.gz
+dwiPA=sourcedata/sub-$sID/dwi/sub-${sID}_ses-${ssID}_dir-PA_dwi.nii.gz
+dwiAPsbref=sourcedata/sub-$sID/dwi/sub-${sID}_ses-${ssID}_dir-AP_sbref.nii.gz
+dwiPAsbref=sourcedata/sub-$sID/dwi/sub-${sID}_ses-${ssID}_dir-PA_sbref.nii.gz
+seAP=sourcedata/sub-$sID/fmap/sub-${sID}_ses-${ssID}_acq-se_dir-AP_epi.nii.gz
+sePA=sourcedata/sub-$sID/fmap/sub-${sID}_ses-${ssID}_acq-se_dir-PA_epi.nii.gz
+datadir=derivatives/dMRI/sub-$sID
 
 # check whether the different tools are set and load parameters
 codedir="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
@@ -71,16 +71,16 @@ if [ ! -f $seAP ]; then seAP=""; fi
 if [ ! -f $sePA ]; then sePA=""; fi
 
 echo "Registration and sMRI-processing
-Subject:       $sID 
-Session:       $ssID
-DWI (AP):      $dwi
-DWI (APSBRef): $dwiAPsbref
-DWI (PA):      $dwiPA
-DWI (PASBRef): $dwiPAsbref
-SE fMAP (AP):  $seAP        
-SE fMAP (PA):  $sePA        
-Directory:     $datadir 
-$BASH_SOURCE   $command
+Subject:       	$sID 
+Session:       	$ssID
+DWI (AP):	$dwi
+DWI (AP SBRef): $dwiAPsbref
+DWI (PA):      	$dwiPA
+DWI (PA SBRef):	$dwiPAsbref
+SE fMAP (AP):  	$seAP        
+SE fMAP (PA):  	$sePA        
+Directory:     	$datadir 
+$BASH_SOURCE   	$command
 ----------------------------"
 
 logdir=$datadir/logs
