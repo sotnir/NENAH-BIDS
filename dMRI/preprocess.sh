@@ -27,7 +27,7 @@ Options:
 
 ################ ARGUMENTS ################
 
-[ $# -ge 2 ] || { usage; }
+[ $# -ge 1 ] || { usage; }
 command=$@
 sID=$1
 
