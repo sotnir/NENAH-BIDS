@@ -1,5 +1,5 @@
 #!/bin/bash
-# Zagreb Collab dhcp
+# NENAH Study
 #
 usage()
 {
@@ -9,9 +9,9 @@ Script to preprocess dMRI data
 1. MP-PCA Denoising and Gibbs Unringing 
 2. TOPUP and EDDY for motion- and susceptebility image distortion correction
 3. N4 biasfield correction, Normalisation
+
 Arguments:
-  sID    Subject ID (e.g. PK356) 
-  ssID                        Session ID (e.g. MR1)
+  sID    Subject ID   (e.g. NENAHC001) 
 Options:
   -dwi    dMRI AP data (default: sourcedata/sub-sID/ses-ssID/dwi/sub-sID_ses-ssID_dir-AP_dwi.nii.gz)
   -dwiAPsbref   dMRI AP SBRef, potentially for registration and  TOPUP  (default: sourcedata/sub-sID/ses-ssID/dwi/sub-sID_ses-ssID_dir-AP_sbref.nii.gz)
@@ -30,7 +30,6 @@ Options:
 [ $# -ge 2 ] || { usage; }
 command=$@
 sID=$1
-ssID=$2
 
 currdir=`pwd`
 
