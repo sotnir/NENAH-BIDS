@@ -8,7 +8,7 @@ usage()
 Conversion of DCMs in /sourcedata into NIfTIs in /rawdata
 1. NIfTI-conversion to BIDS-compliant /rawdata folder
 2. validation of BIDS dataset
-3. Run of MRIQC on structural data
+3. Run of MRIQC on structural and functional data
 
 Arguments:
   sID				Subject ID (e.g. NENAHC001) 
