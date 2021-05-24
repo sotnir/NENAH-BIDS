@@ -131,7 +131,7 @@ docker run -ti --rm \
     --volume $rawdatadir:/data:ro \
     nipreps/fmriprep \
         /data \
-        /data/derivatives/fmriprep \
+        $studydir/derivatives/fmriprep \
         participant \
         --participant_label ${sID} \
     > $logdir/sub-${sID}_fmriprep_participant.log 2>&1
