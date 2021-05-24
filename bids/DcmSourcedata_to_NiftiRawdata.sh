@@ -63,6 +63,7 @@ docker pull nipy/heudiconv:latest
 docker pull bids/validator:latest
 #docker pull poldracklab/pydeface:latest
 docker pull poldracklab/mriqc:latest
+docker pull nipreps/fmriprep:latest
 
 ################ PROCESSING ################
 
