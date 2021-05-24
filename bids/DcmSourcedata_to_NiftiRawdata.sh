@@ -129,6 +129,7 @@ docker run --name mriqc_container \
 # YZ - code added below for testing
 docker run -ti --rm \
     --volume $rawdatadir:/data:ro \
+    --volume $FREESURFER_HOME/license.txt:/opt/freesurfer/license.txt \
     nipreps/fmriprep \
         /data \
         $studydir/derivatives/fmriprep \
