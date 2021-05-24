@@ -130,7 +130,7 @@ docker run --name mriqc_container \
 docker run -ti --rm \
     --volume $studydir:/data:ro \
     nipreps/fmriprep \
-        /data \
+        /data/rawdata/sub-${sID}/func \
         /data/derivatives/fmriprep \
         participant \
         --participant_label ${sID} \
