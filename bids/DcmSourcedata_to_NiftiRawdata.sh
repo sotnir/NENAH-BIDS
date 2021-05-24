@@ -128,9 +128,9 @@ docker run --name mriqc_container \
 # FL - how should we run this?
 # YZ - code added below for testing
 docker run -ti --rm \
-    --volume $studydir:/data:ro \
+    --volume $rawdatadir:/data:ro \
     nipreps/fmriprep \
-        /data/rawdata/sub-${sID}/func \
+        /data \
         /data/derivatives/fmriprep \
         participant \
         --participant_label ${sID} \
