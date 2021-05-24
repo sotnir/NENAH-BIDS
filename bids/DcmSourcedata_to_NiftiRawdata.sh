@@ -125,3 +125,12 @@ docker run --name mriqc_container \
 ###   fMRIPprep:   ###
 # fmriprep folder contains the reports and results of 'fmriprep'
 # FL - how should we run this?
+# YZ - code added below for testing
+docker run -ti --rm \
+    --volume $studyFolder:/data:ro \
+    nipreps/fmriprep \
+        /data \
+        /data/derivatives/fmriprep \
+        participant \
+        --participant_label ${subjectID} \
+    > $logdir/sub-${sID}_fmriprep_participant.log 2>&1

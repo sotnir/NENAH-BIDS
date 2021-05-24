@@ -46,6 +46,7 @@ docker pull nipy/heudiconv:latest
 docker pull bids/validator:latest
 #docker pull poldracklab/pydeface:latest
 docker pull poldracklab/mriqc:latest
+docker pull nipreps/fmriprep:latest
 
 ###   Extract DICOMs into BIDS:   ###
 # The images were extracted and organized in BIDS format:
@@ -104,3 +105,12 @@ docker run --name mriqc_container \
 ###   fMRIPprep:   ###
 # fmriprep folder contains the reports and results of 'fmriprep'
 # FL - how should we run this?
+# YZ - code added below for testing
+docker run -ti --rm \
+    --volume $studyFolder:/data:ro \
+    nipreps/fmriprep \
+        /data \ 
+        /data/derivatives/fmriprep \
+        participant \
+        --participant_label ${subjectID} \
+    > ${logFolder}/sub-${subjectID}_fmriprep_participant.log 2>&1
