@@ -128,7 +128,7 @@ docker run --name mriqc_container \
 # FL - how should we run this?
 # YZ - code added below for testing
 docker run -ti --rm \
-    --volume $studyFolder:/data:ro \
+    --volume $studydir:/data:ro \
     nipreps/fmriprep \
         /data \
         /data/derivatives/fmriprep \
