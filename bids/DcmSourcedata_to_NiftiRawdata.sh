@@ -133,5 +133,5 @@ docker run -ti --rm \
         /data \
         /data/derivatives/fmriprep \
         participant \
-        --participant_label ${subjectID} \
+        --participant_label ${sID} \
     > $logdir/sub-${sID}_fmriprep_participant.log 2>&1
