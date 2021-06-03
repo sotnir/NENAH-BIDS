@@ -144,8 +144,8 @@ docker run --name mriqc_container \
 # FL - how should we run this?
 # YZ - code added below for testing
 # FL - changed code coher with https://github.com/WinawerLab/SampleData/blob/master/s1_preprocess-data.sh
-echo "now run fmriprep for ${sID} at participant level, output at /derivatives/fmriprep"
-docker run -ti --name fmriprep_container \
+echo "now run fmriprep for ${sID} at participant level, output at /derivatives"
+docker run --name fmriprep_container \
     --user $userID \
     --rm \
     --volume $rawdatadir:/data:ro \
