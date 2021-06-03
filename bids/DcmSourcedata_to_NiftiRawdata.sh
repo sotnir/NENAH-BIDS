@@ -152,7 +152,7 @@ docker run -ti --name fmriprep_container \
     --volume $FREESURFER_HOME/license.txt:/opt/freesurfer/license.txt \
     nipreps/fmriprep \
         /data \
-        $studydir/derivatives/fmriprep \
+        $studydir/derivatives \
         participant \
         --participant_label ${sID} \
     > $logdir/sub-${sID}_fmriprep_participant.log 2>&1
