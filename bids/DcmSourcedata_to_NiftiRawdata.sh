@@ -144,15 +144,16 @@ docker run --name mriqc_container \
 # FL - how should we run this?
 # YZ - code added below for testing
 # FL - changed code coher with https://github.com/WinawerLab/SampleData/blob/master/s1_preprocess-data.sh
-echo "now run fmriprep for ${sID} at participant level, output at /derivatives"
+echo "now run fmriprep for ${sID} at participant level, output at /derivatives/fmriprep"
 docker run --name fmriprep_container \
     --user $userID \
     --rm \
     --volume $rawdatadir:/data:ro \
+    --volume $studydir/derivatives:/out \
     --volume $FREESURFER_HOME/license.txt:/opt/freesurfer/license.txt \
     nipreps/fmriprep \
         /data \
-        $studydir/derivatives \
+        /out/fmriprep \
         participant \
         --participant_label ${sID} \
     > $logdir/sub-${sID}_fmriprep_participant.log 2>&1
