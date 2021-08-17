@@ -1,6 +1,7 @@
 Bash and python scripts for dMRI preprocessing, including:
 
  - `preprocess.sh`
+ - `mrtrix3_export_keyval_json.sh`: a script that calls `mrinfo` from MRtrix3 to extract keyval (e.g. SliceTiming) into json file
 
 Datadir is /derivatives/dMRI/sub-$sID
 
