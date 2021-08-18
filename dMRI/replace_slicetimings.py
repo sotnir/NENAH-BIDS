@@ -25,10 +25,6 @@ with open(json_from_bids) as jsonFile:
     jsonObject = json.load(jsonFile)
     jsonFile.close()
 
-out = jsonObject['SliceTiming']
-
-print(out)
-
 """## Read in json from Syngo DICOM, get SliceTiming"""
 
 # Take input from specified path
@@ -42,13 +38,9 @@ with open(json_from_syngo) as jsonFile:
 
 out_syngo = jsonObject_syngo['SliceTiming']
 
-print(out_syngo)
-
 """## Replace SliceTiming in BIDS with Syngo"""
 
 jsonObject['SliceTiming'] = out_syngo
-
-print(jsonObject)
 
 """## Finally, save as new json file"""
 
@@ -58,8 +50,6 @@ print(jsonObject)
 # https://stackoverflow.com/questions/17055117/python-json-dump-append-to-txt-with-each-variable-on-new-line
 # with open(json_to_write, 'w') as jsonFile:
 filename = str(sys.argv[1]).split('.')[0]
-with open(os.path.join(filename, '_SliceTimings_updated.json'), 'w') as jsonFile:
+with open(filename + '_SliceTimings_updated.json', 'w') as jsonFile:
     json.dump(jsonObject, jsonFile, indent=2)
     jsonFile.close()
-
-# The json file can be accessed at uos-15263: /local/scratch/disk2/research/NENAH_BIDS/rawdata/sub-NENAHC001/dwi
