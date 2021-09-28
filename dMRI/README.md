@@ -1,6 +1,6 @@
 Bash and python scripts for dMRI processing, including:
 
-Essentially follows the BATMAN tutorial
+Essentially follows the [BATMAN tutorial](https://osf.io/pm9ba/)
 
 Datadir is `/derivatives/dMRI/sub-$sID`
 
