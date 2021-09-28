@@ -1,6 +1,7 @@
 Bash and python scripts for dMRI processing, including:
 
 Essentially follows the BATMAN tutorial
+
 Datadir is `/derivatives/dMRI/sub-$sID`
 
 Run scripts in the following order:
@@ -13,6 +14,7 @@ Run scripts in the following order:
 
 
 **preprocess.sh**
+
 Performs:
 1. MP-PCA Denoising and Gibbs Unringing 
 2. TOPUP and EDDY for motion- and susceptebility image distortion correction. 
