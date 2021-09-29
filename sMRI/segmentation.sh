@@ -25,7 +25,7 @@ sID=$1
 
 # Defaults
 currdir=`pwd`
-t1w=derivatives/sMRI/preproc/sub-${sID}/sub-${sID}_desc-process_T1w.nii.gz
+t1w=derivatives/sMRI/preproc/sub-${sID}/sub-${sID}_desc-preproc_T1w.nii.gz
 datadir=derivatives/sMRI/segmentation
 threads=10
 # check whether the different tools are set and load parameters
