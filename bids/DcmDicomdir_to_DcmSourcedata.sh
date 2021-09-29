@@ -50,6 +50,6 @@ cat $0 >> $logdir/sub-${sID}_$scriptname.log 2>&1
 
 # Re-arrange DICOMs into sourcedata
 if [ ! -d $dcmdir ]; then mkdir $dcmdir; fi
-dcm2niix -b o -r y -w 1 -o $dcmdir -f sub-$sID/s%2s_%d_%t/%d_%5r.dcm $origdcmdir/${sID} \
+dcm2niix -b o -r y -w 1 -o $dcmdir -f sub-$sID/%t_s%2s_%d/%d_%5r.dcm $origdcmdir/${sID} \
 	>> $logdir/sub-${sID}_$scriptname.log 2>&1 
 
