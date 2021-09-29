@@ -64,29 +64,10 @@ cat $codedir/$script.sh >> ${logdir}/sub-${sID}_sMRI_$script.log 2>&1
 echo
 
 ##################################################################################
-# 0. Copy to file to datadir 
-if [ ! -d $datadir ]; then mkdir -p $datadir; fi
-
-t1wdir=`dirname $t1w`
-#Then update to refer to filebase names (instead of path/file)
-t1w=`basename $t1w .nii.gz` #sub-${sID}_T1w
-
-# copy all file with t1w as base name to datadir (i.e. .nii.gz and .json files)
-cp $t1wdir/$t1w.* $datadir/.
+# Setup FS SUBJECTS DIR
+export SUBJECTS_DIR=$PWD/$datadir
 
 ##################################################################################
-# 1-x. Here goes all the preprocessing steps needed - Currently NONE
+# Run FreeSurfer
 
-##################################################################################
-# Last step. Finish by creating symbolic link to relevant preprocessed file
-cd $datadir
-
-if [ ! -f sub-${sID}_desc-preproc_T1w.nii.gz ]; then 
-    # create symbolic link to preproc file
-    # FL - there may not be adequate permissions to create symbolic links
-    ln -s $t1w.nii.gz sub-${sID}_desc-preproc_T1w.nii.
-    # then instead copy 
-    #cp $t1w.nii.gz sub-${sID}_desc-preproc_T1w.nii.gz
-fi
-	
-cd $currdir
+recon-all -all -s $sID -i $t1w -threads 10
