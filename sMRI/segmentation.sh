@@ -9,7 +9,8 @@ Perform segmentation on sMRI data using FreeSurfer
 Arguments:
   sID				Subject ID (e.g. NENAH001)
 Options:
-  -T1				T1 image (default: derivatives/sMRI/preproc/sub-sID/sub-sID_desc-process_T1w.nii.gz)
+  -T1	T1 image (default: derivatives/sMRI/preproc/sub-sID/sub-sID_desc-process_T1w.nii.gz)
+  -threads			Nbr of CPU cores/threads for FreeSurfer analysis. (default: threads=10)  
   -d / -data-dir  <directory>   The directory used to output the preprocessed files (default: derivatives/sMRI/segmentation)
   -h / -help / --help           Print usage.
 "
@@ -26,6 +27,7 @@ sID=$1
 currdir=`pwd`
 t1w=derivatives/sMRI/preproc/sub-${sID}/sub-${sID}_desc-process_T1w.nii.gz
 datadir=derivatives/sMRI/segmentation
+threads=10
 # check whether the different tools are set and load parameters
 codedir="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 
@@ -33,6 +35,7 @@ shift
 while [ $# -gt 0 ]; do
     case "$1" in
 	-T1) shift; t1w=$1; ;;
+	-threads) shift; threads=$1; ;;
 	-d|-data-dir)  shift; datadir=$1; ;;
 	-h|-help|--help) usage; ;;
 	-*) echo "$0: Unrecognized option $1" >&2; usage; ;;
@@ -44,9 +47,25 @@ done
 # Check if images exist, else put in No_image
 if [ ! -f $tw1 ]; then tw1=""; fi
 
+# System specific #
+# (These are the same for all studies/subjects):
+# FreeSurfer license path:
+#      We first check whether FREESURFER_LICENSE is an environmnetal variable
+#      If not, we assume the path based on Mac OS organization
+if [ -z "$FREESURFER_LICENSE" ]
+then fsLicense=${FREESURFER_HOME}/license.txt
+else fsLicense="$FREESURFER_LICENSE"
+fi
+[ -r "$fsLicense" ] || {
+    echo "FreeSurfer license (${fsLicense}) not found!"
+    echo "You can set a custom license path by storing it in the environment variable FREESURFER_LICENSE"
+    exit 1
+}
+
 echo "Preprocessing for sMRI data using FreeSurfer
 Subject:       $sID 
 T1:	       $t1w 
+threads:       $threads 
 Directory:     $datadir 
 $BASH_SOURCE   $command
 ----------------------------"
@@ -64,10 +83,6 @@ cat $codedir/$script.sh >> ${logdir}/sub-${sID}_sMRI_$script.log 2>&1
 echo
 
 ##################################################################################
-# Setup FS SUBJECTS DIR
-export SUBJECTS_DIR=$PWD/$datadir
-
-##################################################################################
 # Run FreeSurfer
 
-recon-all -all -s $sID -i $t1w -threads 10
+recon-all -subjid sub-$sID -i $t1w -sd $datadir -threads $threads -all
