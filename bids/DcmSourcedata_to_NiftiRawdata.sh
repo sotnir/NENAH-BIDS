@@ -88,6 +88,7 @@ docker run --name heudiconv_container \
                -b \
                -o /dataOut \
                --overwrite \
+	       --grouping accession_number \
            > $logdir/sub-${sID}_$scriptname.log 2>&1 
            
 # heudiconv makes files read only
