@@ -84,7 +84,7 @@ cd $datadir
 if [ ! -f sub-${sID}_desc-preproc_T1w.nii.gz ]; then 
     # create symbolic link to preproc file
     # FL - there may not be adequate permissions to create symbolic links
-    ln -s $t1w.nii.gz sub-${sID}_desc-preproc_T1w.nii.
+    ln -s $t1w.nii.gz sub-${sID}_desc-preproc_T1w.nii.gz
     # then instead copy 
     #cp $t1w.nii.gz sub-${sID}_desc-preproc_T1w.nii.gz
 fi
