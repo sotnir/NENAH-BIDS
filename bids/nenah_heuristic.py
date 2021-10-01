@@ -29,10 +29,10 @@ def infotodict(seqinfo):
     # FIELDMAP/s
     fmap_se_ap = create_key('sub-{subject}/fmap/sub-{subject}_acq-se_dir-AP_run-{item:01d}_epi')
     fmap_se_pa = create_key('sub-{subject}/fmap/sub-{subject}_acq-se_dir-PA_run-{item:01d}_epi')
-    fmap_gre_ap_mag = create_key('sub-{subject}/fmap/sub-{subject}_acq-gre_dir-AP_run-{item:01d}_magnitude')
-    fmap_gre_ap_phase = create_key('sub-{subject}/fmap/sub-{subject}_acq-gre_dir-AP_run-{item:01d}_phasediff')
+    fmap_gre_mag = create_key('sub-{subject}/fmap/sub-{subject}_acq-gre_run-{item:01d}_magnitude')
+    fmap_gre_phase = create_key('sub-{subject}/fmap/sub-{subject}_acq-gre_run-{item:01d}_phasediff')
     
-    info = {t1w: [], dwi_ap: [], dwi_pa: [], rest_ap: [], fmap_se_ap: [], fmap_se_pa: [], fmap_gre_ap_mag: [], fmap_gre_ap_phase: []}
+    info = {t1w: [], dwi_ap: [], dwi_pa: [], rest_ap: [], fmap_se_ap: [], fmap_se_pa: [], fmap_gre_mag: [], fmap_gre_phase: []}
     
     for idx, s in enumerate(seqinfo):
         
@@ -47,10 +47,10 @@ def infotodict(seqinfo):
         # gre-fieldmap
         if ('gre_field_mapping_3mm' in s.series_description) and (s.image_type[2] == 'M') and ('NORM' in s.image_type):
             # magnitude image
-            info[fmap_gre_ap_mag].append(s.series_id) #     
+            info[fmap_gre_mag].append(s.series_id) #     
         if ('gre_field_mapping_3mm' in s.series_description) and (s.image_type[2] == 'P'):
             # phase image
-            info[fmap_gre_ap_phase].append(s.series_id) #
+            info[fmap_gre_phase].append(s.series_id) #
             
         # se-fieldmap
         if ('ep2d_se_phase_PA_2meas' in s.series_description):
