@@ -116,11 +116,15 @@ if [[ $response = tournier ]]; then
     # Do CSD estimation
     if [ ! -f csd/csd-${response}.mif.gz ]; then
 	echo "Estimating ODFs with CSD"
-	dwi2fod -force -mask $mask.mif.gz csd $dwi csd/${response}_response.txt csd/csd-${response}.mif.gz
+	dwi2fod -force -mask $mask csd $dwi csd/${response}_response.txt csd/csd-${response}.mif.gz
 	echo Check results of ODFs
 	if [[ $visualise = 1 ]]; then
 	    mrview -load meanb0_brain.nii.gz -odf.load_sh csd/csd-${response}.mif.gz -mode 2
 	fi
+    fi
+    # Normalise responce fcns and ODFs
+    if [[ ! -f csd/csd-${response}_norm.mif.gz ]]; then
+	mtnormalise csd/csd-${response}.mif.gz csd/csd-${response}_norm.mif.gz –mask $mask
     fi
 fi
 
@@ -145,6 +149,10 @@ if [[ $response = dhollander ]]; then
 	if [[ $visualise = 1 ]]; then
 	    mrview -load meanb0_brain.nii.gz -odf.load_sh csd/csd-${response}_wm.mif.gz -mode 2;
 	fi
+    fi
+    # Normalise responce fcns and ODFs
+    if [[ ! -f csd/csd-${response}_wm_norm.mif.gz ]]; then
+	mtnormalise csd/csd-${response}_wm.mif.gz csd/csd-${response}_wm_norm.mif.gz csd/csd-${response}_gm.mif.gz csd/csd-${response}_gm_norm.mif.gz csd/csd-${response}_csf.mif.gz csd/csd-${response}_csf_norm.mif.gz –mask $mask
     fi
 fi
 
@@ -171,6 +179,10 @@ if [[ $response = msmt_5tt ]]; then
 	if [[ $visualise = 1 ]]; then
 	    mrview -load meanb0_brain.nii.gz -odf.load_sh csd/csd-${response}_wm.mif.gz -mode 2;
 	fi
+    fi
+    # Normalise responce fcns and ODFs
+    if [[ ! -f csd/csd-${response}_wm_norm.mif.gz ]]; then
+	mtnormalise csd/csd-${response}_wm.mif.gz csd/csd-${response}_wm_norm.mif.gz csd/csd-${response}_gm.mif.gz csd/csd-${response}_gm_norm.mif.gz csd/csd-${response}_csf.mif.gz csd/csd-${response}_csf_norm.mif.gz –mask $mask
     fi
 fi
 
