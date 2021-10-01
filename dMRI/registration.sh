@@ -15,9 +15,8 @@ Arguments:
   sID				Subject ID (e.g. NENAHC012) 
 Options:
   -meanb0			Undistorted brain extracted dMRI mean b0 image  (default: derivatives/dMRI_topupeddy/sub-sID/meanb0_brain.nii.gz)
-  -T1				T1 that has been segmented (FreeSurfer) and will be registered to, should be N4-corrected brain extracted (default: derivatives/sMRI_segmentation-segmentation/sub-sID/ses-ssID/N4/sub-sID_ses-ssID_desc-preproc_T2w.nii.gz)
-  -5TT				5TT image of T2, to use for BBR reg and to be transformed into dMRI space (default: derivatives/sMRI/neonatal-segmentation/sub-sID/ses-ssID/5TT/sub-sID_ses-ssID_desc-preproc_T2w_5TT.nii.gz)
-  -all_label			all_label file from segmentation, to be transformed into dMRI space (default: derivatives/sMRI/neonatal-segmentation/sub-sID/ses-ssID/segmentations/sub-sID_ses-ssID_desc-preproc_T2w_all_labels.nii.gz)
+  -T1				T1 brain masked used in segmentation (FreeSurfer) and will be registered to (default: derivatives/sMRI_segmentation/sub-sID/mri/brain.mgz)
+  -label			label file from segmentation, to be transformed into dMRI space (default: derivatives/sMRI_segmentation/sub-sID/mri/sID_ses-ssID_desc-preproc_T2w_all_labels.nii.gz)
   -all_label_LUT		LUT for all_label file (default: codedir/../label_names/ALBERT/all_labels.txt)
   -label			label file from segmentation, to be transformed into dMRI space (default: derivatives/sMRI/neonatal-segmentation/sub-sID/ses-ssID/segmentations/sub-sID_ses-ssID_desc-preproc_T2w_labels.nii.gz)
   -label_LUT			LUT for label file (default: codedir/../label_names/ALBERT/labels.txt)

@@ -15,7 +15,7 @@ Arguments:
 Options:
   -dwiAP		dMRI AP data (default: rawdata/sub-sID/dwi/sub-sID_dir-AP_run-1_dwi.nii.gz)
   -dwiPA	     	dMRI PA data (default: rawdata/sub-sID/dwi/sub-sID_dir-PA_run-1_dwi.nii.gz)
-  -d / -data-dir	<directory> The directory used to output the preprocessed files (default: derivatives/dMRI/preproc/sub-sID)
+  -d / -data-dir	<directory> The directory used to output the preprocessed files (default: derivatives/dMRI/sub-sID)
   -h / -help / --help	Print usage.
 "
   exit;
@@ -32,7 +32,7 @@ currdir=`pwd`
 # Defaults
 dwiAP=rawdata/sub-$sID/dwi/sub-${sID}_dir-AP_run-1_dwi.nii.gz
 dwiPA=rawdata/sub-$sID/dwi/sub-${sID}_dir-PA_run-1_dwi.nii.gz
-datadir=derivatives/dMRI/preproc/sub-$sID
+datadir=derivatives/dMRI/sub-$sID
 
 # check whether the different tools are set and load parameters
 studydir=$currdir;
