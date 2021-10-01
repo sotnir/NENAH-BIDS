@@ -1,25 +1,21 @@
 #!/bin/bash
-# Zagreb Collab dhcp - PMR
+# NENAH Study
 #
 usage()
 {
   base=$(basename "$0")
-  echo "usage: $base subjectID sessionID [options]
-Rigid-body linear registration of dMRI (meanb0) to sMRI (T2)
-(NOTE - currently BBR registration does not work, to be explored with proper 3D T2w)
+  echo "usage: $base subjectID [options]
+Rigid-body linear registration of dMRI (meanb0) to T1w (NOTE - currently BBR not implemented, should be)
 Then tranformation into dMRI space (by updating headers = no resampling) of
-- T2 (used for segmentation)
-- 5TT image (in T2-space) created from segmentation
+- T1 (that has been used for segmentation)
 - all_labels parcellation image (in T2-space) created from segmentation
 - labels parcellation image (in T2-space) created from segmentation
 
 Arguments:
-  sID				Subject ID (e.g. PMRABC) 
-  ssID                       	Session ID (e.g. MR2)
+  sID				Subject ID (e.g. NENAHC012) 
 Options:
-  -meanb0			Undistorted brain extracted dMRI mean b0 image  (default: derivatives/dMRI/sub-sID/ses-ssID/meanb0_brain.nii.gz)
-  -T2				T2 that has been segmented and will be registered to, should be N4-corrected brain extracted (default: derivatives/sMRI/neonatal-segmentation/sub-sID/ses-ssID/N4/sub-sID_ses-ssID_desc-preproc_T2w.nii.gz)
-  -a / -atlas			Atlas used for segmentation (options ALBERT or MCRIB) (default: ALBERT)
+  -meanb0			Undistorted brain extracted dMRI mean b0 image  (default: derivatives/dMRI_topupeddy/sub-sID/meanb0_brain.nii.gz)
+  -T1				T1 that has been segmented (FreeSurfer) and will be registered to, should be N4-corrected brain extracted (default: derivatives/sMRI_segmentation-segmentation/sub-sID/ses-ssID/N4/sub-sID_ses-ssID_desc-preproc_T2w.nii.gz)
   -5TT				5TT image of T2, to use for BBR reg and to be transformed into dMRI space (default: derivatives/sMRI/neonatal-segmentation/sub-sID/ses-ssID/5TT/sub-sID_ses-ssID_desc-preproc_T2w_5TT.nii.gz)
   -all_label			all_label file from segmentation, to be transformed into dMRI space (default: derivatives/sMRI/neonatal-segmentation/sub-sID/ses-ssID/segmentations/sub-sID_ses-ssID_desc-preproc_T2w_all_labels.nii.gz)
   -all_label_LUT		LUT for all_label file (default: codedir/../label_names/ALBERT/all_labels.txt)
@@ -39,8 +35,7 @@ codedir="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 [ $# -ge 2 ] || { usage; }
 command=$@
 sID=$1
-ssID=$2
-shift; shift
+shift; 
 
 currdir=`pwd`
 
