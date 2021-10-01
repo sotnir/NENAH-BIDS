@@ -96,6 +96,12 @@ docker run --name heudiconv_container \
 # (11 May) Commented out
 #chmod -R u+wr,g+wr $rawdatadir
 
+## FL: 	Either we terminate here!
+## 	and we run corrections scripts/routines like pyhton-scripts for slice_timing seperately followed by BIDS validator
+## 	or put routines here and carry on with BIDS validator afterwards
+
+
+
 ###   Run BIDS validator   ###
 docker run --name BIDSvalidation_container \
            --user $userID \
@@ -159,4 +165,4 @@ docker run --name mriqc_container \
 #        --participant_label ${sID} \
 #    > $logdir/sub-${sID}_fmriprep_participant.log 2>&1
 # FL - Add group level?
-# YZ - only “participant” in the case of fMRIPrep (see BIDS-Apps specification).a
+# YZ - only “participant” in the case of fMRIPrep (see BIDS-Apps specification).
