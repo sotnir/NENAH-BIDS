@@ -76,15 +76,15 @@ cat $codedir/$script.sh >> ${logdir}/sub-${sID}_dMRI_$script.log 2>&1
 echo
 
 ##################################################################################
-# 0. Create dMRI mif-file in datadir/preproc (importing .json and bvecs/bvals files)
+# 0. Create dMRI mif-file in $datadir (importing .json and bvecs/bvals files)
 
-if [ ! -d $datadir/preproc ]; then mkdir -p $datadir/preproc; fi
+if [ ! -d $datadir ]; then mkdir -p $datadir; fi
 
 filelist="$dwiAP $dwiPA"
 for file in $filelist; do
     filebase=`basename $file .nii.gz`;
     filedir=`dirname $file`
-    mrconvert -force -json_import $filedir/$filebase.json -fslgrad $filedir/$filebase.bvec $filedir/$filebase.bval $filedir/$filebase.nii.gz $datadir/preproc/$filebase.mif.gz
+    mrconvert -force -json_import $filedir/$filebase.json -fslgrad $filedir/$filebase.bvec $filedir/$filebase.bval $filedir/$filebase.nii.gz $datadir/$filebase.mif.gz
 done
 
 #Then update variables to only refer to filebase names (instead of path/file)
@@ -94,7 +94,7 @@ dwiPA=`basename $dwiPA .nii.gz`
 
 ##################################################################################
 # 0. Create dwi.mif.gz as concatenation of dwiAP and dwiPA. This is the file to work with
-cd $datadir/preproc
+cd $datadir
 
 if [[ $dwiAP = "" ]] || [[ $dwiPA = "" ]]; then
     echo "No dwi data provided";
@@ -110,7 +110,7 @@ cd $currdir
 
 ##################################################################################
 # 1. Do PCA-denoising and Remove Gibbs Ringing Artifacts
-cd $datadir/preproc
+cd $datadir
 
 # Directory for MP PCA QC files
 if [ ! -d denoise ]; then mkdir denoise; fi
@@ -142,12 +142,12 @@ cd $currdir
 
 ##################################################################################
 # 2. TOPUP and EDDY for Motion- and susceptibility distortion correction
-cd $datadir/preproc
+cd $datadir
 
 # Create b0APPA.mif.gz to go into TOPUP
 if [ ! -f b0APPA.mif.gz ];then
     echo "Create a PErevPE pair of SE images to use with TOPUP
-1. Do this by put one good b0 from dir-AP_dwi and dir-PA_dwi into a file b0APPA.mif into $datadir/preproc
+1. Do this by put one good b0 from dir-AP_dwi and dir-PA_dwi into a file b0APPA.mif into $datadir
 2. Run this script again.    
       "
     exit;
@@ -168,7 +168,7 @@ cd $currdir
 
 ##################################################################################
 # 3. Mask generation, N4 biasfield correction, meanb0 generation and tensor estimation
-cd $datadir/preproc
+cd $datadir
 
 echo "Pre-processing with mask generation, N4 biasfield correction, Normalisation, meanb0 generation and tensor estimation"
 
@@ -203,9 +203,9 @@ cd $currdir
 
 cd $datadir
 
-# Create symbolic links to last file in /preproc and mask.mif.gz and put this in $datadir
-ln -s preproc/$dwipreproclast dwi_preproc.mif.gz
-ln -s preproc/mask.mif.gz mask.mif.gz
+# Create symbolic links to last file in preproc and mask.mif.gz and put this in $datadir
+ln -s $dwipreproclast dwi_preproc.mif.gz
+ln -s mask.mif.gz mask.mif.gz
 dwi=dwi_preproc
 
 # B0-normalisation

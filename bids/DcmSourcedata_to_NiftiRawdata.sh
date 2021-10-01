@@ -65,7 +65,7 @@ docker pull nipy/heudiconv:latest
 docker pull bids/validator:latest
 #docker pull poldracklab/pydeface:latest
 docker pull poldracklab/mriqc:latest
-docker pull nipreps/fmriprep:latest
+#docker pull nipreps/fmriprep:latest
 
 ################ PROCESSING ################
 
@@ -88,6 +88,7 @@ docker run --name heudiconv_container \
                -b \
                -o /dataOut \
                --overwrite \
+	       --grouping accession_number \
            > $logdir/sub-${sID}_$scriptname.log 2>&1 
            
 # heudiconv makes files read only
@@ -144,18 +145,18 @@ docker run --name mriqc_container \
 # FL - how should we run this?
 # YZ - code added below for testing
 # FL - changed code coher with https://github.com/WinawerLab/SampleData/blob/master/s1_preprocess-data.sh
-echo "now run fmriprep for ${sID} at participant level, output at /derivatives"
-docker run --name fmriprep_container \
-    --user $userID \
-    --rm \
-    --volume $rawdatadir:/data:ro \
-    --volume $studydir/derivatives:/out \
-    --volume $FREESURFER_HOME/license.txt:/opt/freesurfer/license.txt \
-    nipreps/fmriprep \
-        /data \
-        /out \
-        participant \
-        --participant_label ${sID} \
-    > $logdir/sub-${sID}_fmriprep_participant.log 2>&1
+#echo "now run fmriprep for ${sID} at participant level, output at /derivatives"
+#docker run --name fmriprep_container \
+#    --user $userID \
+#    --rm \
+#    --volume $rawdatadir:/data:ro \
+#    --volume $studydir/derivatives:/out \
+#    --volume $FREESURFER_HOME/license.txt:/opt/freesurfer/license.txt \
+#    nipreps/fmriprep \
+#        /data \
+#        /out \
+#        participant \
+#        --participant_label ${sID} \
+#    > $logdir/sub-${sID}_fmriprep_participant.log 2>&1
 # FL - Add group level?
 # YZ - only “participant” in the case of fMRIPrep (see BIDS-Apps specification).a

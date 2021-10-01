@@ -1,12 +1,19 @@
-Bash and python scripts for dMRI preprocessing, including:
+Bash and python scripts for dMRI processing, including:
 
- - `preprocess.sh`
- - `mrtrix3_export_keyval_json.sh`: a script that calls `mrinfo` from MRtrix3 to extract keyval (e.g. SliceTiming) into json file
- - `replace_slicetimings.py`: a script that replace SliceTiming of the BIDS json by the keyval from DICOM Syngo (extracted by `mrtrix3_export_keyval_json.sh`). Takes two arguments as inputs:  
-`python replace_slicetiming.py from_bids.json from_dicom_syngo.json` 
-
+Essentially follows the [BATMAN tutorial](https://osf.io/pm9ba/)
 
 Datadir is `/derivatives/dMRI/sub-$sID`
+
+Run scripts in the following order:
+
+- preprocess.sh
+- registration.sh
+- csd.sh
+- tractography.sh
+- connectome.sh
+
+
+**preprocess.sh**
 
 Performs:
 1. MP-PCA Denoising and Gibbs Unringing 
