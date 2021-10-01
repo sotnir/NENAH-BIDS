@@ -9,7 +9,7 @@ Perform segmentation on sMRI data using FreeSurfer
 Arguments:
   sID				Subject ID (e.g. NENAH001)
 Options:
-  -T1	T1 image (default: derivatives/sMRI/preproc/sub-sID/sub-sID_desc-process_T1w.nii.gz)
+  -T1				T1 image (default: rawdata/sub-sID/anat/sub-sID_run-1_T1w.nii.gz)
   -threads			Nbr of CPU cores/threads for FreeSurfer analysis. (default: threads=10)  
   -d / -data-dir  <directory>   The directory used to output the preprocessed files (default: derivatives/sMRI/segmentation)
   -h / -help / --help           Print usage.
@@ -25,8 +25,8 @@ sID=$1
 
 # Defaults
 currdir=`pwd`
-t1w=derivatives/sMRI/preproc/sub-${sID}/sub-${sID}_desc-preproc_T1w.nii.gz
-datadir=derivatives/sMRI/segmentation
+t1w=rawdata/sub-${sID}/anat/sub-${sID}_run-1_T1w.nii.gz
+datadir=derivatives/sMRI_fs-segmentation
 threads=10
 # check whether the different tools are set and load parameters
 codedir="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
