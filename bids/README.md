@@ -10,7 +10,9 @@ This prepares the DICOMS by re-naming and organizing them into `/sourcedata`
 2. Run script `DcmSourcedata_to_NiftiRawdata.sh` \
 This converts the dicoms in `/sourcedata` to BIDS-organised NIfTIs in `/rawdata`using the heudiconv routine. 
 - `heudiconv` is run with using a Docker container using rules set in the python file `nenah_heuristic.py`
-- The script also makes a BIDS-validation and MRIQC
 
-3. (In testing) Run fMRIPrep
-- `run_fmap_add_IntendedFor.sh` is a bash script that executes `fmap_add_IntendedFor.py`, which updates the corresponding `.json` file of field maps in `/fmap`. This is to prepare running fMRIPrep by performing susceptibility distortion correction.
+3. Run correction scripts to make the /rawdata BIDS compliant and include slice_time_corrections and Intended_for
+
+4. Run BIDS validator
+
+5. Run MRIQC

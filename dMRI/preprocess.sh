@@ -38,7 +38,7 @@ datadir=derivatives/dMRI/sub-$sID
 studydir=$currdir;
 codedir="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 
-shift; shift
+shift
 while [ $# -gt 0 ]; do
     case "$1" in
  -dwiAP) shift; dwi=$1; ;;
@@ -84,7 +84,9 @@ filelist="$dwiAP $dwiPA"
 for file in $filelist; do
     filebase=`basename $file .nii.gz`;
     filedir=`dirname $file`
-    mrconvert -force -json_import $filedir/$filebase.json -fslgrad $filedir/$filebase.bvec $filedir/$filebase.bval $filedir/$filebase.nii.gz $datadir/$filebase.mif.gz
+    if [ ! -f $datadir/$filebase.mif.gz ]; then
+	mrconvert -force -json_import $filedir/$filebase.json -fslgrad $filedir/$filebase.bvec $filedir/$filebase.bval $filedir/$filebase.nii.gz $datadir/$filebase.mif.gz
+    fi
 done
 
 #Then update variables to only refer to filebase names (instead of path/file)
@@ -189,8 +191,8 @@ fi
 # Do B1-correction. Use ANTs N4
 if [ ! -f  ${dwi}_N4.mif.gz ]; then
     threads=6;
-    if [ ! -d N4 ]; then mkdir N4;fi
-    dwibiascorrect ants -mask mask.mif.gz -bias N4/bias.mif.gz $dwi.mif.gz ${dwi}_N4.mif.gz
+    if [ ! -d N4 ]; then mkdir N4; fi
+    dwibiascorrect ants -mask mask.mif.gz -nthreads $threads -bias N4/bias.mif.gz $dwi.mif.gz ${dwi}_N4.mif.gz
 fi
 
 # last file in the processing
@@ -209,7 +211,7 @@ ln -s mask.mif.gz mask.mif.gz
 dwi=dwi_preproc
 
 # B0-normalisation
-if [ ! -f ${dwi}_norm.mif.gz ];then
+if [ ! -f ${dwi}_norm.mif.gz ]; then
     dwinormalise individual $dwi.mif.gz mask.mif.gz ${dwi}_norm.mif.gz
 fi
 
