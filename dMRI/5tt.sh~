@@ -122,12 +122,12 @@ fi
 if [ ! -f reg/${meanb0}_2_${t1w}_flirt-bbr.mat ];then 
     echo "Rigid-body linear registration using FSL's FLIRT"
     flirt -in ${meanb0}_brain.nii.gz -ref anat/${t1w}_brain.nii.gz -dof 6 -omat reg/tmp.mat
-    flirt -in ${meanb0}_brain.nii.gz -ref anat/${t1w}_brain.nii.gz -dof 6 -cost bbr -wmseg anat/$wmseg.nii.gz -init reg/tmp.mat -omat reg/dwi_2_t1w_flirt-bbr.mat -schedule $FSLDIR/etc/flirtsch/bbr.sch
+    flirt -in ${meanb0}_brain.nii.gz -ref anat/${t1w}_brain.nii.gz -dof 6 -cost bbr -wmseg anat/$wmseg.nii.gz -init reg/tmp.mat -omat reg/${meanb0}_2_${t1w}_flirt-bbr.mat -schedule $FSLDIR/etc/flirtsch/bbr.sch
     rm reg/tmp.mat
 fi
 # Transform FLIRT registration matrix into MRtrix format
-if [ ! -f reg/dwi_2_t1w_mrtrix-bbr.mat ];then
-     transformconvert reg/dwi_2_t1w_flirt-bbr.mat ${meanb0}_brain.nii.gz anat/$t1w.nii.gz flirt_import reg/dwi_2_t1w_mrtrix-bbr.mat
+if [ ! -f reg/${meanb0}_2_${t1w}_mrtrix-bbr.mat ];then
+     transformconvert reg/${meanb0}_2_${t1w}_flirt-bbr.mat ${meanb0}_brain.nii.gz anat/$t1w.nii.gz flirt_import reg/${meanb0}_2_${t1w}_mrtrix-bbr.mat
 fi
      
 cd $studydir
@@ -138,6 +138,6 @@ cd $studydir
 cd $datadir
 
 # T1
-mrtransform anat/$t1w.nii.gz -linear reg/dwi_2_t1w_mrtrix-bbr.mat anat/${t1w}_space-dwi.mif.gz -inverse
+mrtransform anat/$t1w.nii.gz -linear reg/${meanb0}_2_${t1w}_mrtrix-bbr.mat anat/${t1w}_space-dwi.mif.gz -inverse
 
 cd $studydir
