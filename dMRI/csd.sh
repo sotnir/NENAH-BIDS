@@ -129,7 +129,7 @@ if [[ $response = tournier ]]; then
     fi
     # Normalise responce fcns and ODFs
     if [[ ! -f csd/csd-${response}_norm.mif.gz ]]; then
-	mtnormalise csd/csd-${response}.mif.gz csd/csd-${response}_norm.mif.gz –mask $mask
+	mtnormalise -mask $mask csd/csd-${response}.mif.gz csd/csd-${response}_norm.mif.gz 
     fi
 fi
 
@@ -157,7 +157,7 @@ if [[ $response = dhollander ]]; then
     fi
     # Normalise responce fcns and ODFs
     if [[ ! -f csd/csd-${response}_wm_norm.mif.gz ]]; then
-	mtnormalise csd/csd-${response}_wm.mif.gz csd/csd-${response}_wm_norm.mif.gz csd/csd-${response}_gm.mif.gz csd/csd-${response}_gm_norm.mif.gz csd/csd-${response}_csf.mif.gz csd/csd-${response}_csf_norm.mif.gz –mask $mask
+	mtnormalise -mask $mask csd/csd-${response}_wm.mif.gz csd/csd-${response}_wm_norm.mif.gz csd/csd-${response}_gm.mif.gz csd/csd-${response}_gm_norm.mif.gz csd/csd-${response}_csf.mif.gz csd/csd-${response}_csf_norm.mif.gz 
     fi
 fi
 
@@ -187,7 +187,7 @@ if [[ $response = msmt_5tt ]]; then
     fi
     # Normalise responce fcns and ODFs
     if [[ ! -f csd/csd-${response}_wm_norm.mif.gz ]]; then
-	mtnormalise csd/csd-${response}_wm.mif.gz csd/csd-${response}_wm_norm.mif.gz csd/csd-${response}_gm.mif.gz csd/csd-${response}_gm_norm.mif.gz csd/csd-${response}_csf.mif.gz csd/csd-${response}_csf_norm.mif.gz –mask $mask
+	mtnormalise -mask $mask csd/csd-${response}_wm.mif.gz csd/csd-${response}_wm_norm.mif.gz csd/csd-${response}_gm.mif.gz csd/csd-${response}_gm_norm.mif.gz csd/csd-${response}_csf.mif.gz csd/csd-${response}_csf_norm.mif.gz
     fi
 fi
 
