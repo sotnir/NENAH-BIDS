@@ -88,11 +88,11 @@ fi
 
 # Create for visualisation 
 if [ ! -f 5ttvis_space-dwi.mif.gz ]; then
-    5tt2vis 5tt_space-dwi.mif.gz 5ttvis_space-dwi.mif.gz
+    5tt2vis 5tt_space-dwi.mif.gz 5tt_space-dwi_vis.mif.gz
 fi
 # and GM/WM boundary
 if [ ! -f 5ttgmwm_space-dwi.mif.gz ]; then
-    5tt2gmwmi 5tt_space-dwi.mif.gz 5ttgmwmi_space-dwi.mif.gz
+    5tt2gmwmi 5tt_space-dwi.mif.gz 5tt_space-dwi_gmwmi.mif.gz
 fi
 
 cd $studydir
