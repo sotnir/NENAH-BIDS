@@ -12,7 +12,7 @@ Arguments:
 Options:
   -dwi			processed dMRI data (default: derivatives/dMRI/sub-sID/dwi_preproc.mif.gz)
   -mask			mask for dMRI data (default: derivatives/dMRI/sub-sID/mask.mif.gz)
-  -reponse		response function used (default: dhollander) (NOTE - if msmt_5tt is used then appropriate 5TT needs to be in \$datadir/5tt/5tt_space-dwi.mif.gz)
+  -response		response function used (default: dhollander) (NOTE - if msmt_5tt is used then appropriate 5TT needs to be in \$datadir/5tt/5tt_space-dwi.mif.gz)
   -d / -data-dir	<directory> The directory used to output the preprocessed files (default: derivatives/dMRI/sub-sID)
   -visualise		binary variable (0 or 1) to create visualisations of responses/csd estimates (default: 0 = no visualisation) 
   -h / -help / --help	Print usage.
@@ -45,7 +45,7 @@ while [ $# -gt 0 ]; do
     case "$1" in
 	-dwi) shift; dwi=$1; ;;
 	-mask) shift; mask=$1; ;;
-	-reponse) shift; response=$1; ;;
+	-response) shift; response=$1; ;;
 	-d|-data-dir)  shift; datadir=$1; ;;
 	-visualise) shift; visualise=$1; ;;
 	-h|-help|--help) usage; ;;
