@@ -109,6 +109,8 @@ docker run --name BIDSvalidation_container \
            --volume $rawdatadir:/data:ro \
            bids/validator \
                /data \
+	   --ignoreNiftiHeaders \
+	   --ignoreWarnings
            > $studydir/derivatives/bids-validator_report.txt 2>&1
            
 ###   Deface:   ###
@@ -147,22 +149,4 @@ docker run --name mriqc_container \
            > $logdir/sub-${sID}_mriqc_group.log 2>&1
 
 ###   fMRIPprep:   ###
-# fmriprep folder contains the reports and results of 'fmriprep'
-# FL - how should we run this?
-# YZ - code added below for testing
-# FL - changed code coher with https://github.com/WinawerLab/SampleData/blob/master/s1_preprocess-data.sh
-#echo "now run fmriprep for ${sID} at participant level, output at /derivatives"
-#docker run --name fmriprep_container \
-#    --user $userID \
-#    --rm \
-#    --volume $rawdatadir:/data:ro \
-#    --volume $studydir/derivatives:/out \
-#    --volume $FREESURFER_HOME/license.txt:/opt/freesurfer/license.txt \
-#    nipreps/fmriprep \
-#        /data \
-#        /out \
-#        participant \
-#        --participant_label ${sID} \
-#    > $logdir/sub-${sID}_fmriprep_participant.log 2>&1
-# FL - Add group level?
-# YZ - only “participant” in the case of fMRIPrep (see BIDS-Apps specification).
+# Moved to /fMRI
