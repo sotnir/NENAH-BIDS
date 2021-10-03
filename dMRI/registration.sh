@@ -138,6 +138,8 @@ cd $studydir
 cd $datadir
 
 # T1
+# note $mask must be pointing to mask in dwi-space 
 mrtransform anat/$t1w.nii.gz -linear reg/dwi_2_t1w_mrtrix-bbr.mat anat/${t1w}_space-dwi.mif.gz -inverse
+mrcalc anat/${t1w}_space-dwi.mif.gz anat/$mask.mif.gz -mult anat/${t1w}_brain_space-dwi.mig.gz
 
 cd $studydir
