@@ -12,6 +12,7 @@ Arguments:
 Options:
   -tract			SIFT whole-brain tractogram to use (default: derivatives/dMRI/sub-$\sID/tractography/whole_brain_10M_sift.tck)
   -label			Segmentation/Parcellation image in dMRI space (default: derivatives/dMRI/sub-$\sID/anat/fs-segm_aparc+aseg_dwi-space.mif.gz)
+  -threads			Number of CPUs (default: 10)
   -d / -data-dir  <directory>   The directory used to output the preprocessed files (default: derivatives/dMRI/sub-$\sID)
   -h / -help / --help           Print usage.
 "
@@ -52,6 +53,7 @@ echo "Creation off Whole-brain ACT tractography
 Subject:       	        $sID 
 Tract:			$tract
 Labels:			$label
+Threads:		$threads
 Directory:     		$datadir 
 $BASH_SOURCE   		$command
 ----------------------------"
@@ -75,7 +77,7 @@ tractdir=tractography
 if [ ! -d $datadir/$tractdir ]; then mkdir -p $datadir/$tractdir; fi
 
 # Tractogram will go into tractography folder
-tractbase=`basename $tract`
+tractbase=`basename $tract .tck`
 if [ ! -f $datadir/$tractdir/$tractbase.tck ];then
     cp $tract $datadir/$tractdir/.
 fi
@@ -107,11 +109,11 @@ if [ ! -d connectome ]; then mkdir connectome; fi
 
 MRTRIXHOME=`which mrview | sed 's/\/bin\/mrview//g'`
 if [ ! -f connectome/${label}_nodes.mif.gz ]; then
-    labelconvert anat/$label.mif.gz $FREESURFER_HOME/FreeSurferColorLUT.txt $MRTRIXHOME/share/mrtrix3/labelconfig/fs_default.txt connectome/${label}_nodes.mif.gz
+    labelconvert anat/$label.mif.gz $FREESURFER_HOME/FreeSurferColorLUT.txt $MRTRIXHOME/share/mrtrix3/labelconvert/fs_default.txt connectome/${label}_nodes.mif.gz
 fi
 
 if [ ! -f connectome/${label}_nodes_fixSGM.mif.gz ]; then
-    labelsgmfix connectome/${label}.mif.gz anat/t1w_brain_space-dwi.mif.gz $MRTRIXHOME/share/mrtrix3/labelconfig/fs_default.txt connectome/${label}_nodes_fixSGM.mif.gz -premasked
+    labelsgmfix connectome/${label}_nodes.mif.gz anat/t1w_brain_space-dwi.mif.gz $MRTRIXHOME/share/mrtrix3/labelconvert/fs_default.txt connectome/${label}_nodes_fixSGM.mif.gz -premasked -sgm_amyg_hipp -nthreads $threads
 fi
 
 cd $currdir
@@ -125,7 +127,7 @@ cd $datadir
 if [ ! -f connectome/${tractbase}_${label}_Connectome.csv ]; then
     # Create connectome using ${tractbase}.tck
     echo "Creating $label connectome from ${tractbase}.tck"
-    tck2connectome -symmetric -zero_diagonal -scale_invnodevol -out_assignments connectome/assignments_${tractbase}_${label}_Connectome.csv tractography/$tractbase.tck  connectome/${tractbase}_${connectome}_Connectome.csv    
+    tck2connectome -symmetric -zero_diagonal -scale_invnodevol -out_assignments connectome/assignments_${tractbase}_${label}_Connectome.csv tractography/$tractbase.tck connectome/${label}_nodes_fixSGM.mif.gz connectome/${tractbase}_${connectome}_Connectome.csv    
 fi
 
 cd $currdir
