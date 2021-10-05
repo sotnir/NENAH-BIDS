@@ -8,7 +8,10 @@ usage()
 Script to preprocess dMRI data 
 1. MP-PCA Denoising and Gibbs Unringing 
 2. TOPUP and EDDY for motion- and susceptebility image distortion correction
-3. N4 biasfield correction, Normalisation
+3. N4 biasfield correction
+4. Normalisation
+5. Creation of a mean B0 image (as average from normalised unwarped b0s)
+6. Calculation of tensor and tensor maps (FA, MD etc)
 
 Arguments:
   sID    Subject ID   (e.g. NENAHC001) 
