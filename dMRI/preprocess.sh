@@ -36,6 +36,7 @@ currdir=`pwd`
 dwiAP=rawdata/sub-$sID/dwi/sub-${sID}_dir-AP_run-1_dwi.nii.gz
 dwiPA=rawdata/sub-$sID/dwi/sub-${sID}_dir-PA_run-1_dwi.nii.gz
 datadir=derivatives/dMRI/sub-$sID
+threads=10
 
 # check whether the different tools are set and load parameters
 studydir=$currdir;
@@ -62,7 +63,8 @@ echo "dMRI preprocessing
 Subject:       	$sID 
 DWI (AP):	$dwiAP
 DWI (PA):      	$dwiPA
-Directory:     	$datadir 
+Directory:     	$datadir
+Threads:	$threads
 $BASH_SOURCE   	$command
 ----------------------------"
 
@@ -124,7 +126,7 @@ if [ ! -d denoise ]; then mkdir denoise; fi
 if [ ! -f dwi_den.mif.gz ]; then
     echo Doing MP PCA-denosing with dwidenoise
     # PCA-denoising
-    dwidenoise dwi.mif.gz dwi_den.mif.gz -noise denoise/dwi_noise.mif.gz;
+    dwidenoise -nthreads $threads dwi.mif.gz dwi_den.mif.gz -noise denoise/dwi_noise.mif.gz;
     # and calculate residuals
     mrcalc dwi.mif.gz dwi_den.mif.gz -subtract denoise/dwi_den_residuals.mif.gz
     echo Check the residuals! Should not contain anatomical structure
@@ -137,7 +139,7 @@ if [ ! -d unring ]; then mkdir unring; fi
 if [ ! -f dwi_den_unr.mif.gz ]; then
     echo Remove Gibbs Ringing Artifacts with mrdegibbs
     # Gibbs 
-    mrdegibbs -axes 0,1 dwi_den.mif.gz dwi_den_unr.mif.gz
+    mrdegibbs -nthreads $threads -axes 0,1 dwi_den.mif.gz dwi_den_unr.mif.gz
     #calculate residuals
     mrcalc dwi_den.mif.gz  dwi_den_unr.mif.gz -subtract unring/dwi_den_unr_residuals.mif.gz
     echo Check the residuals! Should not contain anatomical structure
@@ -193,7 +195,6 @@ fi
 
 # Do B1-correction. Use ANTs N4
 if [ ! -f  ${dwi}_N4.mif.gz ]; then
-    threads=6;
     if [ ! -d N4 ]; then mkdir N4; fi
     dwibiascorrect ants -mask mask.mif.gz -nthreads $threads -bias N4/bias.mif.gz $dwi.mif.gz ${dwi}_N4.mif.gz
 fi
@@ -215,7 +216,7 @@ dwi=dwi_preproc
 
 # B0-normalisation
 if [ ! -f ${dwi}_norm.mif.gz ]; then
-    dwinormalise individual $dwi.mif.gz mask.mif.gz ${dwi}_norm.mif.gz
+    dwinormalise individual -nthreads $threads $dwi.mif.gz mask.mif.gz ${dwi}_norm.mif.gz
 fi
 
 # Extract mean B0
