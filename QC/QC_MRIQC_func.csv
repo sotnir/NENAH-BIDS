@@ -9,9 +9,9 @@ NENAH012	0.5	sub-NENAH012_task-rest_dir-AP_run-1_bold.nii.gz	sub-NENAH012_task-r
 NENAH014	1	sub-NENAH014_task-rest_dir-AP_run-1_bold.nii.gz	sub-NENAH014_task-rest_dir-AP_run-1_bold.nii.gz	1		
 NENAH015	0.5	sub-NENAH015_task-rest_dir-AP_run-1_bold.nii.gz	sub-NENAH015_task-rest_dir-AP_run-1_bold.nii.gz	0.5	sub-NENAH015_task-rest_dir-AP_run-2_bold.nii.gz	0
 NENAH016	1	sub-NENAH016_task-rest_dir-AP_run-1_bold.nii.gz	sub-NENAH016_task-rest_dir-AP_run-1_bold.nii.gz	1		
-NENAH022						
-NENAH024						
-NENAH029						
+NENAH022	0.5	sub-NENAH022_task-rest_dir-AP_run-1_bold.nii.gz	sub-NENAH022_task-rest_dir-AP_run-1_bold.nii.gz	0.5		
+NENAH024	1	sub-NENAH024_task-rest_dir-AP_run-1_bold.nii.gz	sub-NENAH024_task-rest_dir-AP_run-1_bold.nii.gz	1	sub-NENAH024_task-rest_dir-AP_run-2_bold.nii.gz	0.5
+NENAH029	0.5	sub-NENAH029_task-rest_dir-AP_run-1_bold.nii.gz	sub-NENAH029_task-rest_dir-AP_run-1_bold.nii.gz	0.5		
 NENAH031	1	sub-NENAH031_task-rest_dir-AP_run-1_bold.nii.gz	sub-NENAH031_task-rest_dir-AP_run-1_bold.nii.gz	1	sub-NENAH031_task-rest_dir-AP_run-2_bold.nii.gz	0
 NENAH033	1	sub-NENAH033_task-rest_dir-AP_run-1_bold.nii.gz	sub-NENAH033_task-rest_dir-AP_run-1_bold.nii.gz	1	sub-NENAH033_task-rest_dir-AP_run-2_bold.nii.gz	0
 NENAHC001	0.5	sub-NENAHC001_task-rest_dir-AP_run-1_bold.nii.gz	sub-NENAHC001_task-rest_dir-AP_run-1_bold.nii.gz	0.5	sub-NENAHC001_task-rest_dir-AP_run-2_bold.nii.gz	0
@@ -20,9 +20,9 @@ NENAHC003	0	sub-NENAHC003_task-rest_dir-AP_run-1_bold.nii.gz	sub-NENAHC003_task-
 NENAHC004	0	sub-NENAHC004_task-rest_dir-AP_run-1_bold.nii.gz	sub-NENAHC004_task-rest_dir-AP_run-1_bold.nii.gz	0	sub-NENAHC004_task-rest_dir-AP_run-2_bold.nii.gz	0
 NENAHC005	0	sub-NENAHC005_task-rest_dir-AP_run-1_bold.nii.gz	sub-NENAHC005_task-rest_dir-AP_run-1_bold.nii.gz	0	sub-NENAHC005_task-rest_dir-AP_run-2_bold.nii.gz	0
 NENAHC009	1	sub-NENAHC009_task-rest_dir-AP_run-1_bold.nii.gz	sub-NENAHC009_task-rest_dir-AP_run-1_bold.nii.gz	1	sub-NENAHC009_task-rest_dir-AP_run-2_bold.nii.gz	1
-NENAHC010						
+NENAHC010	0.5	sub-NENAHC010_task-rest_dir-AP_run-1_bold.nii.gz	sub-NENAHC010_task-rest_dir-AP_run-1_bold.nii.gz	0.5		
 NENAHC012	1	sub-NENAHC012_task-rest_dir-AP_run-1_bold.nii.gz	sub-NENAHC012_task-rest_dir-AP_run-1_bold.nii.gz	1	sub-NENAHC012_task-rest_dir-AP_run-2_bold.nii.gz	1
-NENAHC013						
+NENAHC013	0.5	sub-NENAHC013_task-rest_dir-AP_run-1_bold.nii.gz	sub-NENAHC013_task-rest_dir-AP_run-1_bold.nii.gz	0.5		
 NENAHC014	1	sub-NENAHC014_task-rest_dir-AP_run-1_bold.nii.gz	sub-NENAHC014_task-rest_dir-AP_run-1_bold.nii.gz	1	sub-NENAHC014_task-rest_dir-AP_run-2_bold.nii.gz	0
 NENAHC015	1	sub-NENAHC015_task-rest_dir-AP_run-1_bold.nii.gz	sub-NENAHC015_task-rest_dir-AP_run-1_bold.nii.gz	1	sub-NENAHC015_task-rest_dir-AP_run-2_bold.nii.gz	1
 NENAHC016						
