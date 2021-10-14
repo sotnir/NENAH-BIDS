@@ -8,6 +8,8 @@ Run scripts in the following order:
 
 - preprocess.sh
 - registration.sh
+- segmentation.sh
+- 5tt.sh
 - csd.sh
 - tractography.sh
 - connectome.sh

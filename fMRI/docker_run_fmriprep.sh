@@ -71,8 +71,9 @@ docker run --rm \
     --volume $studydir/derivatives:/out \
     --volume $FREESURFER_HOME/license.txt:/opt/freesurfer/license.txt \
     nipreps/fmriprep \
+	--skip_bids_validation \
         /data \
-        /out/fmriprep \
+        /out \
         participant \
         --participant_label ${sID} \
     > $logdir/sub-${sID}_fmriprep_participant.log 2>&1

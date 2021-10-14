@@ -64,7 +64,7 @@ userID=$(id -u):$(id -g)
 docker pull nipy/heudiconv:latest
 docker pull bids/validator:latest
 #docker pull poldracklab/pydeface:latest
-docker pull poldracklab/mriqc:latest
+docker pull nipreps/mriqc:latest
 #docker pull nipreps/fmriprep:latest
 
 ################ PROCESSING ################
@@ -124,10 +124,11 @@ echo "now run mriqc for ${sID} at participant level, output at /derivatives/mriq
 docker run --name mriqc_container \
            --user $userID \
            --rm \
-           --volume $studydir:/data \
-           poldracklab/mriqc \
+           --volume $rawdatadir:/data \
+           --volume $studydir/derivatives/mriqc_reports:/out \
+           nipreps/mriqc \
                /data \
-               /data/derivatives/mriqc_reports \
+               /out \
                participant \
                --ica \
                --verbose-reports \
@@ -141,10 +142,11 @@ echo "now run mriqc for ${sID} at group level, output at /derivatives/mriqc_repo
 docker run --name mriqc_container \
            --user $userID \
            --rm \
-           --volume $studydir:/data \
-           poldracklab/mriqc \
+           --volume $rawdatadir:/data \
+           --volume $studydir/derivatives/mriqc_reports:/out \
+           nipreps/mriqc \
                /data \
-               /data/derivatives/mriqc_reports \
+               /out \
                group \
            > $logdir/sub-${sID}_mriqc_group.log 2>&1
 
