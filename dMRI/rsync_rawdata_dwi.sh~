@@ -44,6 +44,5 @@ done
 if [ ! -d $dest ]; then mkdir -p $dest; fi
 
 echo "Performing rsync of NII-images in $source to $dest"
-rsync -avz $source/*_dwi.nii* $source/*_dwi.bval $source/*_dwi.bvec $dest/
-
+rsync -avz $source/*_dwi.nii* $dest/
 

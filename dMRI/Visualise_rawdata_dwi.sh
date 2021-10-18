@@ -44,9 +44,13 @@ files=`ls *_dwi.nii*`
 echo "Subject: $sID"
 echo "All files: $files"
 for file in $files; do
-    echo -e "\nViewing $file"
+    echo -e "\n$file"
     filebase=`basename $file .nii.gz`
-    for shell in `mrinfo -quiet -fslgrad $filebase.bvec $filebase.bval -shell_bvalues $file`; do
+    size=`mrinfo -quiet -fslgrad $filebase.bvec $filebase.bval -size $file`;
+    shells=`mrinfo -quiet -fslgrad $filebase.bvec $filebase.bval -shell_bvalues $file`;
+    shell_sizes=`mrinfo -quiet -fslgrad $filebase.bvec $filebase.bval -shell_sizes $file`;
+    echo -e "sizes: $size\nshell sizes: $shell_sizes"
+    for shell in $shells; do
 	echo "viewing b-value: $shell"
 	dwiextract $file - -fslgrad $filebase.bvec $filebase.bval -shells $shell -quiet | mrview - -mode 2; 
     done
