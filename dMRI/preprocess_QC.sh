@@ -165,8 +165,8 @@ cd $datadir
 # Create b0APPA.mif.gz to go into TOPUP
 if [ ! -f b0APPA.mif.gz ];then
     echo Creating a PErevPE pair of SE images to use with TOPUP
-    dwiextract -force -bzero $dwiAP.mif.gz - | mrconvert -coord 3 $b0APvol -axes 0,1,2 b0AP.mif.gz
-    dwiextract -force -bzero $dwiPA.mif.gz - | mrconvert -coord 3 $b0PAvol -axes 0,1,2 b0PA.mif.gz 
+    dwiextract -force -bzero $dwiAP.mif.gz - | mrconvert -coord 3 $b0APvol -axes 0,1,2 - b0AP.mif.gz
+    dwiextract -force -bzero $dwiPA.mif.gz - | mrconvert -coord 3 $b0PAvol -axes 0,1,2 - b0PA.mif.gz 
     mrcat -force b0AP.mif.gz b0PA.mif.gz b0APPA.mif.gz
 fi
 
