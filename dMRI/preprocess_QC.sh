@@ -221,7 +221,6 @@ cd $datadir
 
 # Create symbolic links to last file in preproc and mask.mif.gz and put this in $datadir
 ln -s $dwipreproclast dwi_preproc.mif.gz
-ln -s mask.mif.gz mask.mif.gz
 dwi=dwi_preproc
 
 # B0-normalisation
