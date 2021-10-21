@@ -230,8 +230,12 @@ cd $datadir
 echo "Normalisation (participant level), meanb0 generation and tensor estimation"
 
 # Create symbolic links to last file in preproc and mask.mif.gz and put this in $datadir
-ln -s preproc/$dwipreproclast dwi_preproc.mif.gz
-ln -s preproc/mask.mif.gz mask.mif.gz
+#ln -s preproc/$dwipreproclast dwi_preproc.mif.gz
+# symbolic links do not work with rsync, so better to hard copy using mrconvert to retain command history
+mrconvert preproc/$dwipreproclast dwi_preproc.mif.gz
+#ln -s preproc/mask.mif.gz mask.mif.gz
+mrconvert preproc/mask.mif.gz mask.mif.gz
+
 dwi=dwi_preproc
 
 # B0-normalisation
