@@ -3,16 +3,16 @@ Routines for assessing data quality in NENAH MRI data
 
 ## sMRI
 ### MRIQC report
-- Eye-balling rawdata
-- MRIQC output MOREMORE
+- Eye-balling rawdata in MRIQC report
+- Assess the MRIQC report output MOREMORE
+- Decide which T1w to use for the sMRI pipeline
 
-Decide which T1w to use for the sMRI pipeline\
 Update in `QC_MRIQC_anat.tsv`
 
 ## fMRI
 ### MRIQC report
-- Eye-balling rawdata\
-- MRIQC report output MOREMORE
+- Eye-balling rawdata
+- Assess MRIQC report output MOREMORE
 
 Update in `QC_MRIQC_func.tsv`
 
