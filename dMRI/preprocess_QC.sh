@@ -209,12 +209,11 @@ fi
 
 # Brain mask estimation
 if [ ! -f mask.mif.gz ]; then
-    dwiextract -bzero $dwi.mif.gz - | mrmath -force -axis 3 - mean meanb0tmp.nii.gz
+    dwiextract -bzero ${dwi}_unbiased.mif.gz - | mrmath -force -axis 3 - mean meanb0tmp.nii.gz
     dwi2mask ${dwi}_unbiased.mif.gz mask.mif.gz 
     # Check result
     echo Check the results
     echo "mrview meanb0tmp.nii.gz -roi.load mask.mif.gz -roi.opacity 0.5 -mode 2"
-    mrconvert meanb0tmp_brain_mask.nii.gz mask.mif.gz
     rm meanb0tmp*
 fi
 
