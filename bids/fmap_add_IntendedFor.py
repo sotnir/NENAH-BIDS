@@ -23,10 +23,15 @@ with open(json_from_phasediff) as jsonFile:
     jsonFile.close()
 
 # Next, add IntendedFor
+#json_newObj = {}
+#for element in jsonObject:
+#    if element != 'IntendedFor' and element != 'Units':
+#        json_newObj[element] = jsonObject[element]
 jsonObject['IntendedFor'] = boldfile_list
 
 # Finally, update the json file
 # https://stackoverflow.com/questions/17055117/python-json-dump-append-to-txt-with-each-variable-on-new-line
 with open(json_from_phasediff, 'w') as jsonFile:
     json.dump(jsonObject, jsonFile, indent=2)
+    #json.dump(json_newObj, jsonFile, indent=2)
     jsonFile.close()
