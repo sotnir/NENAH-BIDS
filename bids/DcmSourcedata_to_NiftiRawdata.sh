@@ -109,7 +109,6 @@ docker run --name BIDSvalidation_container \
            --volume $rawdatadir:/data:ro \
            bids/validator \
                /data \
-	   --ignoreNiftiHeaders \
 	   --ignoreWarnings
            > $studydir/derivatives/bids-validator_report.txt 2>&1
            
