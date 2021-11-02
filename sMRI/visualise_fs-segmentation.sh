@@ -9,7 +9,7 @@ Visalisation of FreeSurfer segmentation output for QC
 Arguments:
   sID				Subject ID (e.g. NENAH001)
 Options:
-  -freesurfer_subject_folder	Path to FreeSurfer folder (default: deriatives/sMRIsMRI_fs-segmentation/sub-\$sID)  
+  -freesurfer_subject_folder	Path to FreeSurfer folder (default: deriatives/sMRI_fs-segmentation/sub-\$sID)  
   -h / -help / --help           Print usage.
 "
   exit;
