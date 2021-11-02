@@ -10,6 +10,7 @@ Run fMRIprep without FS (for testing)
 Arguments:
   sID				Subject ID (e.g. NENAHC001) 
 Options:
+  -fs_folder 			FreeSurfer folder to input.
   -h / -help / --help           Print usage.
 "
   exit;
@@ -17,16 +18,24 @@ Options:
 
 ################ ARGUMENTS ################
 
+# Define Folders
+codedir="$( cd "$( dirname "${BASH_SOURCE[0]}" )" >/dev/null 2>&1 && pwd )"
+studydir=$PWD
+rawdatadir=$studydir/rawdata;
+fsLicense=${FREESURFER_HOME}/license.txt
+
 [ $# -ge 1 ] || { usage; }
 command=$@
 sID=$1
 
 # Defaults
 nthreads=10;
+fs_folder=$studyfolder/derivatives/sMRI_fs-segmentation
 
 shift
 while [ $# -gt 0 ]; do
     case "$1" in
+    	-fs_folder) shift; fs_folder=$1; ;;
 	-h|-help|--help) usage; ;;
 	-*) echo "$0: Unrecognized option $1" >&2; usage; ;;
 	*) break ;;
@@ -34,11 +43,6 @@ while [ $# -gt 0 ]; do
     shift
 done
 
-# Define Folders
-codedir="$( cd "$( dirname "${BASH_SOURCE[0]}" )" >/dev/null 2>&1 && pwd )"
-studydir=$PWD
-rawdatadir=$studydir/rawdata;
-fsLicense=${FREESURFER_HOME}/license.txt
 scriptname=`basename $0 .sh`
 logdir=$studydir/derivatives/preprocessing_logs/sub-${sID}
 
@@ -67,6 +71,7 @@ echo "now run fmriprep for ${sID}, output at /derivatives"
 docker run --rm \
     --volume $rawdatadir:/data:ro \
     --volume $studydir/derivatives:/out \
+    --volume $fs_folder:/fs \
     --volume $FREESURFER_HOME/license.txt:/opt/freesurfer/license.txt \
     nipreps/fmriprep \
         /data \
@@ -74,7 +79,7 @@ docker run --rm \
         participant \
         --participant_label ${sID} \
 	--skip_bids_validation \
-	--fs-no-reconall \
+	--fs-subjects-dir /fs \
 	--nthreads $nthreads \
 	--stop-on-first-crash \
 	-w $HOME
