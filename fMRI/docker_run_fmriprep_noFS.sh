@@ -5,11 +5,7 @@ usage()
 {
   base=$(basename "$0")
   echo "usage: $base sID [options]
-Conversion of DCMs in /sourcedata into NIfTIs in /rawdata
-1. NIfTI-conversion to BIDS-compliant /rawdata folder
-2. validation of BIDS dataset
-3. Run of MRIQC on structural and functional data
-4. Run fMRIprep
+Run fMRIprep without FS (for testing)
 
 Arguments:
   sID				Subject ID (e.g. NENAHC001) 
@@ -25,6 +21,9 @@ Options:
 command=$@
 sID=$1
 
+# Defaults
+nthreads=10;
+
 shift
 while [ $# -gt 0 ]; do
     case "$1" in
@@ -37,9 +36,8 @@ done
 
 # Define Folders
 codedir="$( cd "$( dirname "${BASH_SOURCE[0]}" )" >/dev/null 2>&1 && pwd )"
-studydir=`pwd` #studydir=`dirname -- "$codedir"`
+studydir=$PWD
 rawdatadir=$studydir/rawdata;
-sourcedatadir=$studydir/sourcedata;
 fsLicense=${FREESURFER_HOME}/license.txt
 scriptname=`basename $0 .sh`
 logdir=$studydir/derivatives/preprocessing_logs/sub-${sID}
@@ -71,10 +69,14 @@ docker run --rm \
     --volume $studydir/derivatives:/out \
     --volume $FREESURFER_HOME/license.txt:/opt/freesurfer/license.txt \
     nipreps/fmriprep \
-	--skip_bids_validation \
         /data \
         /out \
         participant \
         --participant_label ${sID} \
+	--skip_bids_validation \
+	--fs-no-reconall \
+	--nthreads $nthreads \
+	--stop-on-first-crash \
+	-w $HOME
     > $logdir/sub-${sID}_fmriprep_participant.log 2>&1
 # FL - Add group level?
