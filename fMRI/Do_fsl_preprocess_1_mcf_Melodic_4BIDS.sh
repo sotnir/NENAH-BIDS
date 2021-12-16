@@ -1,7 +1,7 @@
 #!/bin/bash
 ## NENAH study
 # Date created:  10 Jun 2016
-# Date modified: 1 Dec 2021
+# Date modified: 16 Dec 2021
 # Contributors: Finn Lennartsson, Yukai Zou
 # Inherited from codes that perform pre-processing of rs-fMRI data for Melodic
 # Specifically the script runs motion correction/detection, and defines example_func (mid-frame of time-series)
@@ -55,7 +55,14 @@ if [ ! -d fsl_motion_outliers ]; then mkdir -p fsl_motion_outliers; fi
 # Motion-discarding conditions from Smyser et al 2015 (A and B)
 
 # A) vol-to-vol motion > 0.25 mm (i.e. relative motion)
-thr=0.25 # motion threshold
+#thr=0.50 # This is DEFAULT by fMRIPrep
+#thr=0.45
+#thr=0.40
+thr=0.35
+#thr=0.30
+#thr=0.25 # This is based on Smyser et al 2015
+#thr=0.20
+
 echo Detecting volumes with extensive vol-2-vol motion - threshold $thr mm
 fsl_motion_outliers -i prefiltered_func_run-${runID}_data -o fsl_motion_outliers/vol2volmotion_run-${runID}.mat -p fsl_motion_outliers/vol2volmotion_run-${runID}.png -s fsl_motion_outliers/vol2volmotion_run-${runID}.txt --fdrms --thresh=$thr
 # if these should be discarded, run Do_fsl_preprocess_1_mcf_and_discard_vols_Melodic.sh
