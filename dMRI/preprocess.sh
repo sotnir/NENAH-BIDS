@@ -45,7 +45,7 @@ codedir="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 shift
 while [ $# -gt 0 ]; do
     case "$1" in
- -dwiAP) shift; dwi=$1; ;;
+ -dwiAP) shift; dwiAP=$1; ;;
  -dwiPA) shift; dwiPA=$1; ;;
  -d|-data-dir)  shift; datadir=$1; ;;
  -h|-help|--help) usage; ;;
