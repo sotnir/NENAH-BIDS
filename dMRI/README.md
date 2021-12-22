@@ -8,8 +8,8 @@ Run scripts in the following order:
 
 - preprocess.sh
 - response.sh
-- average_response.sh
 - csd.sh
+- normalisation.sh
 
 Need 5TT from sMRI
 - registration.sh
