@@ -1,6 +1,6 @@
 Bash and python scripts for dMRI processing, including:
 
-Essentially follows the [BATMAN tutorial](https://osf.io/pm9ba/)
+Essentially follows the [BATMAN tutorial](https://osf.io/pm9ba/) and [FBA analysis in MRtrix](https://mrtrix.readthedocs.io/en/latest/fixel_based_analysis/mt_fibre_density_cross-section.html#fibre-density-and-cross-section-multi-tissue-csd)
 
 Datadir is `/derivatives/dMRI/sub-$sID`
 
@@ -8,6 +8,8 @@ Run scripts in the following order:
 
 - preprocess.sh
 - response.sh
+- average_response.sh
+- upsampled_dwi.sh
 - csd.sh
 - normalisation.sh
 
