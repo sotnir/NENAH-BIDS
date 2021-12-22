@@ -9,7 +9,7 @@ Run scripts in the following order:
 - preprocess.sh
 - response.sh
 - average_response.sh
-- upsampled_dwi.sh
+- upsample_dwi.sh
 - csd.sh
 - normalisation.sh
 
