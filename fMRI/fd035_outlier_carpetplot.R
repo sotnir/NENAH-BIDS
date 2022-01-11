@@ -21,16 +21,15 @@ library(tidyverse); library(tidyr); library(reshape2)
 #    1) vol-to-vol head displacement >= 0.25mm;
 #    2) rms BOLD signal intensity change (DVARS) >= 0.3%
 path_to_fMRI <- "/Volumes/cndng/NENAH/NENAH_BIDS/derivatives/fMRI"
-# list_vol2volmotion_FD025 <- read.table("rawdata/20211210_fsl_motion_outliers-vol2volmotion-FD025_list.txt", header=F)
-list_vol2volmotion_FD035 <- read.table("rawdata/20220108_fsl_motion_outliers-vol2volmotion-FD035_list.txt", header=F)
-list_vol2volDVARS <- read.table("rawdata/20220108_fsl_motion_outliers-vol2volDVARS_list.txt", header=F)
+list_vol2volmotion_FD035 <- read.table("rawdata/20220111_fsl_motion_outliers-vol2volmotion-FD035_list.txt", header=F)
+list_vol2volDVARS <- read.table("rawdata/20220111_fsl_motion_outliers-vol2volDVARS_list.txt", header=F)
 
 # A range of discarded FD timeseries
-list_discard_vol2volmotion_FD035 <- read.table("rawdata/20220108_fsl_motion_outliers-discarded_vols_vol2volmotion-FD035_list.txt", header=F)
-list_discard_vol2volDVARS <- read.table("rawdata/20220108_fsl_motion_outliers-discarded_vols_vol2volDVARS_list.txt", header=F)
+list_discard_vol2volmotion_FD035 <- read.table("rawdata/20220111_fsl_motion_outliers-discarded_vols_vol2volmotion-FD035_list.txt", header=F) %>% filter(!grepl("sub-NENAH008/fsl_motion_outliers_FD035/discarded_vols_vol2volmotion_run-1.txt", V1))
+list_discard_vol2volDVARS <- read.table("rawdata/20220111_fsl_motion_outliers-discarded_vols_vol2volDVARS_list.txt", header=F) %>% filter(!grepl("sub-NENAH008/fsl_motion_outliers_FD035/discarded_vols_vol2volDVARS_run-1.txt", V1))
 
 # Read in maximal distance based on discarded text files
-list_discard_maxdist_vol2volmotion_FD035 <- read.table("rawdata/20220108_fsl_motion_outliers-discarded_maxdist_vol2volmotion-FD035_list.txt", header=F)
+list_discard_maxdist_vol2volmotion_FD035 <- read.table("rawdata/20220111_fsl_motion_outliers-discarded_maxdist_vol2volmotion-FD035_list.txt", header=F) %>% filter(!grepl("sub-NENAH008/fsl_motion_outliers_FD035/discarded_vols_vol2volmotion_run-1_maxdist.txt", V1))
 
 # SubjectID_runID
 sID <- sapply(strsplit(list_vol2volmotion_FD035$V1, "/"), 
@@ -66,19 +65,36 @@ create_carp_outliers <- function(Path = path_to_discard_vol2volmotion) {
         return(report2)
 }
 
+concat_discarded_maxdist <- function(Path = path_to_discard_maxdist_vol2volmotion_FD035) {
+        # Path = path_to_discard_maxdist_vol2volmotion_FD035; i = 1 # Testing
+        report <- NULL
+        for (i in 1:length(Path)) {
+                l1 <- read.table(Path[i], header = F)$V1
+                report <- rbind(report, l1)
+        }
+        
+        report2 <- data.frame(report) %>% 
+                transform(Subject = factor(sID_rID)) %>%
+                dplyr::rename(maxdist = report)
+        return(report2)
+}
+
+write.csv(concat_discarded_maxdist(Path = path_to_discard_maxdist_vol2volmotion_FD035), "processed/20220111_discarded_maxdist_vol2volmotion_FD035.csv", row.names = F)
+
 # A range of discarded FD thresholds at 0.35
 gVol2volmotion_outlier_FD035 <- create_carp_outliers(path_to_discard_vol2volmotion_FD035) %>% dplyr::rename(discard.FD035 = discard)
 gVol2volDVARS_outlier <- create_carp_outliers(path_to_discard_vol2volDVARS) %>% dplyr::rename(discard.DVARS = discard)
 
 gVol2volmotion_outlier_FDall_DVARS <- gVol2volmotion_outlier_FD035 %>%
         left_join(gVol2volDVARS_outlier)
+write.csv(gVol2volmotion_outlier_FDall_DVARS, "processed/20220111_vol2volmotion_outlier_FD035 DVARS timeseries.csv", row.names=F)
 
-gVol2volmotion_outlier_FDall_DVARS <- read.csv("processed/20220108_vol2volmotion_outlier_FD035 DVARS timeseries.csv") %>% as_tibble()
+# gVol2volmotion_outlier_FDall_DVARS <- read.csv("processed/20220108_vol2volmotion_outlier_FD035 DVARS timeseries.csv") %>% as_tibble()
 gVol2volmotion_outlier_FDall_DVARS$Subject <- factor(gVol2volmotion_outlier_FDall_DVARS$Subject)
 gVol2volmotion_outlier_FDall_DVARS[,grepl("discard", names(gVol2volmotion_outlier_FDall_DVARS))] <- lapply(gVol2volmotion_outlier_FDall_DVARS[,grepl("discard", names(gVol2volmotion_outlier_FDall_DVARS))], factor)
 gVol2volmotion_outlier_FDall_DVARS$variable <- factor(gVol2volmotion_outlier_FDall_DVARS$variable, levels = paste0("X", seq(1:250)))
 
-dat_maxdist_FD035 <- read.csv("processed/20220108_discarded_maxdist_vol2volmotion_FD035.csv", stringsAsFactors = T)
+dat_maxdist_FD035 <- read.csv("processed/20220111_discarded_maxdist_vol2volmotion_FD035.csv", stringsAsFactors = T)
 
 gVol2volmotion_outlier_FDall_DVARS <- gVol2volmotion_outlier_FDall_DVARS %>% left_join(dat_maxdist_FD035)
 
