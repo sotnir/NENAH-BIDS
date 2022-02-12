@@ -4,7 +4,15 @@ Essentially follows the [BATMAN tutorial](https://osf.io/pm9ba/) and [FBA analys
 
 Datadir is `/derivatives/dMRI/sub-$sID`
 
-Run scripts in the following order:
+### Before start
+
+Make sure your `.bashrc` file contains the paths to all the dependent packages.
+
+- For MRtrix3, add path according to the issue [here](https://github.com/yukaizou2015/NENAH-BIDS/issues/18#issuecomment-877311286).
+
+### Running scripts 
+
+Scripts should be run in the following order:
 
 - preprocess.sh
 - response.sh
