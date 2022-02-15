@@ -317,7 +317,7 @@ done
 # Calculate diffusion tensor and tensor metrics
 
 if [ ! -f dt.mif.gz ]; then
-    dwi2tensor -mask mask.mif.gz ${dwi}_norm.mif.gz dt.mif.gz
+    dwi2tensor -mask mask.mif.gz ${dwi}_inorm.mif.gz dt.mif.gz
     tensor2metric -force -fa fa.mif.gz -adc adc.mif.gz -rd rd.mif.gz -ad ad.mif.gz -vector ev.mif.gz dt.mif.gz
 fi
 
