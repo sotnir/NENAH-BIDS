@@ -16,8 +16,8 @@ Scripts should be run in the following order:
 
 - preprocess.sh
 - response.sh
-- average_response.sh
-(- upsample_dwi.sh)
+- (average_response.sh)
+- (upsample_dwi.sh)
 - csd.sh
 - normalisation.sh
 
