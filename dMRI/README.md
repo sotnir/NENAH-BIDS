@@ -19,7 +19,7 @@ Scripts should be run in the following order:
 - (average_response.sh)
 - (upsample_dwi.sh)
 - csd.sh
-- normalisation.sh
+- (normalisation.sh)
 
 Need 5TT from sMRI
 - registration.sh
