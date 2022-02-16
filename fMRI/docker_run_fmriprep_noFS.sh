@@ -66,7 +66,7 @@ docker pull nipreps/fmriprep:latest
 echo "now run fmriprep for ${sID}, output at /derivatives"
 docker run --rm \
     --volume $rawdatadir:/data:ro \
-    --volume $studydir/derivatives:/out \
+    --volume $studydir/derivatives/fmriprep:/out \
     --volume $FREESURFER_HOME/license.txt:/opt/freesurfer/license.txt \
     nipreps/fmriprep \
         /data \
