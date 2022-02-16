@@ -29,8 +29,8 @@ sID=$1
 currdir=`pwd`
 
 # Defaults
-dwi=derivatives/dMRI/sub-$sID/dwi_preproc_inorm.mif.gz
-mask=derivatives/dMRI/sub-$sID/mask.mif.gz
+dwi=derivatives/dMRI/sub-$sID/dwi/dwi_preproc_inorm.mif.gz
+mask=derivatives/dMRI/sub-$sID/dwi/mask.mif.gz
 datadir=derivatives/dMRI/sub-$sID
 response=dhollander
 visualise=0
@@ -103,7 +103,7 @@ fi
 ##################################################################################
 # 1. Perform response function estimation and CSD estimation
 
-cd $datadir
+cd $datadir/dwi
 if [ ! -d csd ]; then mkdir -p csd; fi
 
 # ---- Tournier ----
