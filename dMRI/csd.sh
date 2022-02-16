@@ -10,7 +10,7 @@ Script to estimate response function and CSD estimation of preprocessed dMRI dat
 Arguments:
   sID    Subject ID   (e.g. NENAHC001) 
 Options:
-  -dwi			processed dMRI data (default: derivatives/dMRI/sub-sID/dwi_preproc.mif.gz)
+  -dwi			processed dMRI data (default: derivatives/dMRI/sub-sID/dwi_preproc_inorm.mif.gz)
   -mask			mask for dMRI data (default: derivatives/dMRI/sub-sID/mask.mif.gz)
   -response		response function used (default: dhollander) (NOTE - if msmt_5tt is used then appropriate 5TT needs to be in \$datadir/5tt/5tt_space-dwi.mif.gz)
   -d / -data-dir	<directory> The directory used to output the preprocessed files (default: derivatives/dMRI/sub-sID)
@@ -29,7 +29,7 @@ sID=$1
 currdir=`pwd`
 
 # Defaults
-dwi=derivatives/dMRI/sub-$sID/dwi_preproc.mif.gz
+dwi=derivatives/dMRI/sub-$sID/dwi_preproc_inorm.mif.gz
 mask=derivatives/dMRI/sub-$sID/mask.mif.gz
 datadir=derivatives/dMRI/sub-$sID
 response=dhollander
