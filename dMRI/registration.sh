@@ -11,7 +11,7 @@ Then tranformation of T1 into dMRI space (by updating headers = no resampling)
 Arguments:
   sID				Subject ID (e.g. NENAHC012) 
 Options:
-  -meanb0			Undistorted brain extracted dMRI meanb0 image  (default: derivatives/dMRI/sub-sID/meanb0_brain.nii.gz)
+  -meanb0			Undistorted brain extracted dMRI meanb0 image  (default: derivatives/dMRI/sub-sID/dwi/meanb0_brain.nii.gz)
   -T1				T1 N4-biased (e.g. from FreeSurfer) and to registered to (default: derivatives/sMRI_fs-segmentation/sub-sID/mri/nu.mgz)
   -mask				Mask to brain extract T1 (default: derivatives/sMRI_fs-segmentation/sub-sID/mri/brainmask.mgz)
   -wmsegm			WM segmentation to be used with registration with BBR (default: derivatives/sMRI_fs-segmentation/sub-sID/mri/wm.seg.mgz) 
@@ -34,7 +34,7 @@ shift;
 studydir=`pwd`
 
 # Defaults
-meanb0=derivatives/dMRI/sub-$sID/meanb0_brain.nii.gz
+meanb0=derivatives/dMRI/sub-$sID/dwi/meanb0_brain.nii.gz
 t1w=derivatives/sMRI_fs-segmentation/sub-$sID/mri/nu.mgz
 mask=derivatives/sMRI_fs-segmentation/sub-$sID/mri/brainmask.mgz
 wmseg=derivatives/sMRI_fs-segmentation/sub-$sID/mri/wm.seg.mgz
@@ -91,8 +91,8 @@ if [ ! -f $datadir/anat/t1w_brain.nii.gz ]; then
     mrcalc $mask $t1w -mult $datadir/anat/t1w_brain.nii.gz
 fi
 # meanb0_brain
-if [ ! -f $datadir/meanb0_brain.nii.gz ]; then
-    mrconvert $meanb0 $datadir/meanb0_brain.nii.gz
+if [ ! -f $datadir/dwi/meanb0_brain.nii.gz ]; then
+    mrconvert $meanb0 $datadir/dwi/meanb0_brain.nii.gz
 fi
 # WM segmentation and make sure it is binarized
 if [ ! -f $datadir/anat/fs-wmsegm_aseg.nii.gz ]; then
@@ -111,23 +111,23 @@ wmseg=fs-wmseg_dseg
 
 cd $datadir
 
-if [ ! -d reg ]; then mkdir reg; fi
+if [ ! -d xfm ]; then mkdir xfm; fi
 
 # Do brain extractions of meanb0 and T1 before linear registration
-if [ ! -f ${meanb0}_brain.nii.gz ];then
-    bet $meanb0.nii.gz ${meanb0}_brain.nii.gz -F -R
+if [ ! -f dwi/${meanb0}_brain.nii.gz ];then
+    bet dwi/$meanb0.nii.gz dwi/${meanb0}_brain.nii.gz -F -R
 fi
      
 # Registration using BBR
-if [ ! -f reg/${meanb0}_2_${t1w}_flirt-bbr.mat ];then 
+if [ ! -f xfm/${meanb0}_2_${t1w}_flirt-bbr.mat ];then 
     echo "Rigid-body linear registration using FSL's FLIRT"
-    flirt -in ${meanb0}_brain.nii.gz -ref anat/${t1w}_brain.nii.gz -dof 6 -omat reg/tmp.mat
-    flirt -in ${meanb0}_brain.nii.gz -ref anat/${t1w}_brain.nii.gz -dof 6 -cost bbr -wmseg anat/$wmseg.nii.gz -init reg/tmp.mat -omat reg/dwi_2_t1w_flirt-bbr.mat -schedule $FSLDIR/etc/flirtsch/bbr.sch
-    rm reg/tmp.mat
+    flirt -in dwi/${meanb0}_brain.nii.gz -ref anat/${t1w}_brain.nii.gz -dof 6 -omat xfm/tmp.mat
+    flirt -in dwi/${meanb0}_brain.nii.gz -ref anat/${t1w}_brain.nii.gz -dof 6 -cost bbr -wmseg anat/$wmseg.nii.gz -init xfm/tmp.mat -omat xfm/dwi_2_t1w_flirt-bbr.mat -schedule $FSLDIR/etc/flirtsch/bbr.sch
+    rm xfm/tmp.mat
 fi
 # Transform FLIRT registration matrix into MRtrix format
-if [ ! -f reg/dwi_2_t1w_mrtrix-bbr.mat ];then
-     transformconvert reg/dwi_2_t1w_flirt-bbr.mat ${meanb0}_brain.nii.gz anat/$t1w.nii.gz flirt_import reg/dwi_2_t1w_mrtrix-bbr.mat
+if [ ! -f xfm/dwi_2_t1w_mrtrix-bbr.mat ];then
+     transformconvert xfm/dwi_2_t1w_flirt-bbr.mat dwi/${meanb0}_brain.nii.gz anat/$t1w.nii.gz flirt_import xfm/dwi_2_t1w_mrtrix-bbr.mat
 fi
      
 cd $studydir
@@ -139,7 +139,7 @@ cd $datadir
 
 # T1
 # note $mask must be pointing to mask in dwi-space 
-mrtransform anat/$t1w.nii.gz -linear reg/dwi_2_t1w_mrtrix-bbr.mat anat/${t1w}_space-dwi.mif.gz -inverse
+mrtransform anat/$t1w.nii.gz -linear xfm/dwi_2_t1w_mrtrix-bbr.mat anat/${t1w}_space-dwi.mif.gz -inverse
 mrcalc anat/${t1w}_space-dwi.mif.gz anat/$mask.mif.gz -mult anat/${t1w}_brain_space-dwi.mig.gz
 
 cd $studydir
