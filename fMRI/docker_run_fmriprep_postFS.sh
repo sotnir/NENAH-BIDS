@@ -81,6 +81,7 @@ docker run --rm \
 	--skip_bids_validation \
 	--fs-subjects-dir /fs \
 	--nthreads $nthreads \
+	--fd-spike-threshold 0.35 \
 	--stop-on-first-crash \
 	-w $HOME
     > $logdir/sub-${sID}_fmriprep_participant.log 2>&1

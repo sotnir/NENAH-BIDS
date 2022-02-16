@@ -74,6 +74,7 @@ docker run --rm \
         participant \
         --participant_label ${sID} \
 	--skip_bids_validation \
+	--fd-spike-threshold 0.35 \
 	--fs-no-reconall \
 	--nthreads $nthreads \
 	--stop-on-first-crash \
