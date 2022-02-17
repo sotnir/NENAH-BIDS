@@ -11,7 +11,7 @@ Then tranformation of T1 into dMRI space (by updating headers = no resampling)
 Arguments:
   sID				Subject ID (e.g. NENAHC012) 
 Options:
-  -meanb0			Undistorted brain extracted dMRI meanb0 image  (default: derivatives/dMRI/sub-sID/dwi/meanb0_brain.nii.gz)
+  -meanb0			Undistorted brain extracted dMRI meanb0 image  (default: derivatives/dMRI/sub-sID/dwi/meanb0_brain.mif.gz)
   -T1				T1 N4-biased (e.g. from FreeSurfer) and to registered to (default: derivatives/sMRI_fs-segmentation/sub-sID/mri/nu.mgz)
   -mask				Mask to brain extract T1 (default: derivatives/sMRI_fs-segmentation/sub-sID/mri/brainmask.mgz)
   -wmsegm			WM segmentation to be used with registration with BBR (default: derivatives/sMRI_fs-segmentation/sub-sID/mri/wm.seg.mgz) 
@@ -34,7 +34,7 @@ shift;
 studydir=`pwd`
 
 # Defaults
-meanb0=derivatives/dMRI/sub-$sID/dwi/meanb0_brain.nii.gz
+meanb0=derivatives/dMRI/sub-$sID/dwi/meanb0_brain.mif.gz
 t1w=derivatives/sMRI_fs-segmentation/sub-$sID/mri/nu.mgz
 mask=derivatives/sMRI_fs-segmentation/sub-$sID/mri/brainmask.mgz
 wmseg=derivatives/sMRI_fs-segmentation/sub-$sID/mri/wm.seg.mgz
@@ -140,6 +140,6 @@ cd $datadir
 # T1
 # note $mask must be pointing to mask in dwi-space 
 mrtransform anat/$t1w.nii.gz -linear xfm/dwi_2_t1w_mrtrix-bbr.mat anat/${t1w}_space-dwi.mif.gz -inverse
-mrcalc anat/${t1w}_space-dwi.mif.gz anat/$mask.mif.gz -mult anat/${t1w}_brain_space-dwi.mig.gz
+mrcalc anat/${t1w}_space-dwi.mif.gz anat/$mask.mif.gz -mult anat/${t1w}_brain_space-dwi.mif.gz
 
 cd $studydir
