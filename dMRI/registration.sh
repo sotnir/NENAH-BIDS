@@ -115,9 +115,10 @@ cd $datadir
 if [ ! -d xfm ]; then mkdir xfm; fi
 
 # Do brain extractions of meanb0 and T1 before linear registration
-if [ ! -f dwi/${meanb0}_brain.nii.gz ];then
-    bet dwi/$meanb0.nii.gz dwi/${meanb0}_brain.nii.gz -F -R
-fi
+# FL - This is not needed as $meanb0 should be provided brain extracted and saved as $datadir/dwi/meanb0_brain.nii.gz
+#if [ ! -f dwi/${meanb0}_brain.nii.gz ];then
+#    bet dwi/$meanb0.nii.gz dwi/${meanb0}_brain.nii.gz -F -R
+#fi
      
 # Registration using BBR
 if [ ! -f xfm/${meanb0}_2_${t1w}_flirt-bbr.mat ];then 
