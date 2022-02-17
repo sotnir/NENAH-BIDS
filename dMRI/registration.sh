@@ -84,13 +84,14 @@ if [ ! -d $datadir/anat ]; then mkdir -p $datadir/anat; fi
 if [ ! -f $datadir/anat/t1w.nii.gz ]; then
     mrconvert $t1w $datadir/anat/t1w.nii.gz
 fi
-if [ ! -f $datadir/anat/mask.nii.gz ]; then
+if [ ! -f $datadir/anat/space-t1w_mask.nii.gz ]; then
     mrconvert $mask $datadir/anat/space-t1w_mask.nii.gz
 fi
 if [ ! -f $datadir/anat/t1w_brain.nii.gz ]; then
     mrcalc $mask $t1w -mult $datadir/anat/t1w_brain.nii.gz
 fi
 # meanb0_brain
+# FL - NOTE in NIfTI format .nii.gz
 if [ ! -f $datadir/dwi/meanb0_brain.nii.gz ]; then
     mrconvert $meanb0 $datadir/dwi/meanb0_brain.nii.gz
 fi
@@ -138,8 +139,10 @@ cd $studydir
 cd $datadir
 
 # T1
-# note $mask must be pointing to mask in dwi-space 
-mrtransform anat/$t1w.nii.gz -linear xfm/dwi_2_t1w_mrtrix-bbr.mat anat/${t1w}_space-dwi.mif.gz -inverse
-mrcalc anat/${t1w}_space-dwi.mif.gz anat/$mask.mif.gz -mult anat/${t1w}_brain_space-dwi.mif.gz
+mrtransform anat/$t1w.nii.gz -linear xfm/dwi_2_t1w_mrtrix-bbr.mat anat/space-dwi_t1w.mif.gz -inverse
+mrtransform anat/$mask.nii.gz -linear xfm/dwi_2_t1w_mrtrix-bbr.mat anat/space-dwi_mask.mif.gz -inverse
+
+# FL - NOTE $mask must be pointing to mask in dwi-space 
+mrcalc anat/space-dwi_t1w.mif.gz anat/space-dwi_mask.mif.gz -mult anat/space-dwi_t1w_brain.mif.gz
 
 cd $studydir
