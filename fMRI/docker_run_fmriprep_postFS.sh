@@ -67,7 +67,7 @@ docker pull nipreps/fmriprep:latest
 # FL - how should we run this?
 # YZ - code added below for testing
 # FL - changed code coher with https://github.com/WinawerLab/SampleData/blob/master/s1_preprocess-data.sh
-echo "now run fmriprep for ${sID}, output at /derivatives"
+echo "now run fmriprep for ${sID}, output at /derivatives/fmriprep"
 docker run --rm \
     --volume $rawdatadir:/data:ro \
     --volume $studydir/derivatives/fmriprep:/out \
