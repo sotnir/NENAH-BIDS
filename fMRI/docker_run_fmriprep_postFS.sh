@@ -62,7 +62,7 @@ docker pull nipreps/fmriprep:latest
 
 ################ PROCESSING ################
 
-###   fMRIPprep:   ###
+###   fMRIprep:   ###
 # fmriprep folder contains the reports and results of 'fmriprep'
 # FL - how should we run this?
 # YZ - code added below for testing

@@ -19,8 +19,18 @@ For fMRI data being anonymised through Syngo, neither `dcm2niix` or `mrtrix3` ca
 source activate
 python replace_slicetimings_fMRI.py /path/to/func/bold.json /path/to/slicetiming.json
 ```
-## Run fMRIprep without FreeSurfer
+## Run fMRIprep after FreeSurfer
+
+**NOTE: `segmentation.sh` should have been completed prior to this step.**
 
 Run the script:
 
 - docker_run_fmriprep_noFS.sh OR docker_run_fmriprep_postFS.sh
+
+## (Optional) Run fMRIprep without FreeSurfer
+
+**NOTE: `segmentation.sh` is not required for this step.**
+
+Run the script:
+
+- docker_run_fmriprep_noFS.sh OR docker_run_fmriprep_noFS.sh
