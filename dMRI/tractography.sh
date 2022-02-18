@@ -9,7 +9,7 @@ Performs whole-brain tractography and SIFT-filtering
 Arguments:
   sID				Subject ID (e.g. NENAHC012) 
 Options:
-  -csd				CSD mif.gz-file (default: derivatives/dMRI/sub-sID/csd/csd-msmt-5tt_wm_norm.mif.gz)
+  -csd				CSD mif.gz-file (default: derivatives/dMRI/sub-sID/csd/csd-dhollander_wm_norm.mif.gz)
   -5TT				5TT mif.gz-file in dMRI space (default: derivatives/dMRI/sub-sID/5tt/5tt_space-dwi.mif.gz)
   -nbr				Number of streamlines in whole-brain tractogram (default: 10M)
   -threads			Number of threads for parallell processing (default: 10)
@@ -29,8 +29,8 @@ currdir=`pwd`
 
 # Defaults
 datadir=derivatives/dMRI/sub-$sID
-csd=derivatives/dMRI/sub-$sID/csd/csd-msmt-5tt_wm_norm.mif.gz
-act5tt=derivatives/dMRI/sub-$sID/5tt/5tt_space-dwi.mif.gz
+csd=derivatives/dMRI/sub-$sID/dwi/csd/csd-dhollander_wm_norm.mif.gz
+act5tt=derivatives/dMRI/sub-$sID/dwi/5tt/5tt_space-dwi.mif.gz
 nbr=10M
 threads=10
 
@@ -103,11 +103,11 @@ act5tt=`basename $act5tt .mif.gz`
 
 cd $datadir
 
-if [ ! -d tractography ]; then mkdir tractography; fi
+if [ ! -d dwi/tractography ]; then mkdir dwi/tractography; fi
 
 # If a gmwmi mask does not exist, then create one
-if [ ! -f 5tt/${act5tt}_gmwmi.mif.gz ];then
-    5tt2gmwmi 5tt/$act5tt.mif.gz 5tt/${act5tt}_gmwmi.mif.gz
+if [ ! -f dwi/5tt/${act5tt}_gmwmi.mif.gz ];then
+    5tt2gmwmi dwi/5tt/$act5tt.mif.gz dwi/5tt/${act5tt}_gmwmi.mif.gz
 fi
 
 # Whole-brain tractography
@@ -116,21 +116,21 @@ init=$cutoff; # default is equal to cutoff
 cutofftext=`echo $cutoff | sed 's/\./p/g'`
 inittext=$cutofftext;
 # using above cutoff and init
-if [ ! -f tractography/whole_brain_${nbr}.tck ];then
-    tckgen -nthreads $threads -cutoff $cutoff -seed_cutoff $init -act 5tt/$act5tt.mif.gz -backtrack -seed_gmwmi 5tt/${act5tt}_gmwmi.mif.gz -crop_at_gmwmi -select $nbr csd/$csd.mif.gz tractography/whole_brain_${nbr}.tck
+if [ ! -f dwi/tractography/whole_brain_${nbr}.tck ];then
+    tckgen -nthreads $threads -cutoff $cutoff -seed_cutoff $init -act dwi/5tt/$act5tt.mif.gz -backtrack -seed_gmwmi dwi/5tt/${act5tt}_gmwmi.mif.gz -crop_at_gmwmi -select $nbr dwi/csd/$csd.mif.gz dwi/tractography/whole_brain_${nbr}.tck
 fi
-if [ ! -f tractography/whole_brain_${nbr}_edit100k.tck ];then
-    tckedit tractography/whole_brain_${nbr}.tck -number 100k tractography/whole_brain_${nbr}_edit100k.tck
+if [ ! -f dwi/tractography/whole_brain_${nbr}_edit100k.tck ];then
+    tckedit dwi/tractography/whole_brain_${nbr}.tck -number 100k dwi/tractography/whole_brain_${nbr}_edit100k.tck
 fi
 
 # SIFT-filtering of whole-brain tractogram
-if [ ! -f tractography/whole_brain_${nbr}_sift.tck ]; then
-    count=`tckinfo tractography/whole_brain_$nbr.tck | grep \ count: | awk '{print $2}'`;
+if [ ! -f dwi/tractography/whole_brain_${nbr}_sift.tck ]; then
+    count=`tckinfo dwi/tractography/whole_brain_$nbr.tck | grep \ count: | awk '{print $2}'`;
     count0p10=`echo "$count / 10" | bc`;
-    tcksift -act 5tt/$act5tt.mif.gz -term_number $count0p10 tractography/whole_brain_$nbr.tck csd/$csd.mif.gz tractography/whole_brain_${nbr}_sift.tck
+    tcksift -act dwi/5tt/$act5tt.mif.gz -term_number $count0p10 dwi/tractography/whole_brain_$nbr.tck dwi/csd/$csd.mif.gz dwi/tractography/whole_brain_${nbr}_sift.tck
 fi
-if [ ! -f tractography/whole_brain_${nbr}_sift_edit100k.tck ];then
-    tckedit tractography/whole_brain_${nbr}_sift.tck -number 100k tractography/whole_brain_${nbr}_sift_edit100k.tck
+if [ ! -f dwi/tractography/whole_brain_${nbr}_sift_edit100k.tck ];then
+    tckedit dwi/tractography/whole_brain_${nbr}_sift.tck -number 100k dwi/tractography/whole_brain_${nbr}_sift_edit100k.tck
 fi
 
 cd $currdir
