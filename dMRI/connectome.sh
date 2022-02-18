@@ -10,7 +10,7 @@ Arguments:
   sID				Subject ID (e.g. NENAHCO12) 
 
 Options:
-  -tract			SIFT whole-brain tractogram to use (default: derivatives/dMRI/sub-$\sID/tractography/whole_brain_10M_sift.tck)
+  -tract			SIFT whole-brain tractogram to use (default: derivatives/dMRI/sub-$\sID/dwi/tractography/whole_brain_10M_sift.tck)
   -label			Segmentation/Parcellation image in dMRI space (default: derivatives/dMRI/sub-$\sID/anat/fs-segm_aparc+aseg_dwi-space.mif.gz)
   -threads			Number of CPUs (default: 10)
   -d / -data-dir  <directory>   The directory used to output the preprocessed files (default: derivatives/dMRI/sub-$\sID)
@@ -32,7 +32,7 @@ currdir=`pwd`
 
 # Defaults
 datadir=derivatives/dMRI/sub-$sID
-tract=derivatives/dMRI/sub-$sID/tractography/whole_brain_10M_sift.tck
+tract=derivatives/dMRI/sub-$sID/dwi/tractography/whole_brain_10M_sift.tck
 label=derivatives/dMRI/sub-$sID/anat/fs-segm_aparc+aseg_space-dwi.mif.gz
 threads=10
 
@@ -74,12 +74,12 @@ echo
 ## 0. Copy to files to relevant $atlas location $datadir/anat folder (incl .json if present at original location)
 
 tractdir=tractography
-if [ ! -d $datadir/$tractdir ]; then mkdir -p $datadir/$tractdir; fi
+if [ ! -d $datadir/dwi/$tractdir ]; then mkdir -p $datadir/dwi/$tractdir; fi
 
 # Tractogram will go into tractography folder
 tractbase=`basename $tract .tck`
-if [ ! -f $datadir/$tractdir/$tractbase.tck ];then
-    cp $tract $datadir/$tractdir/.
+if [ ! -f $datadir/dwi/$tractdir/$tractbase.tck ];then
+    cp $tract $datadir/dwi/$tractdir/.
 fi
 
 # Labels file will go into anat folder
@@ -100,7 +100,7 @@ label=`basename $label .mif.gz`
 cd $datadir
 
 # put these in connectome folder
-if [ ! -d connectome ]; then mkdir connectome; fi
+if [ ! -d dwi/connectome ]; then mkdir dwi/connectome; fi
 
 # first use labelconvert to extract connectome structures and put into a continuous LUT and make sure 3D and datatype uint32
     #labelconvert -force $seg_in $lut_in $lut_out - | mrmath -datatype uint32 -force -axis 3 - mean $seg_out
@@ -108,12 +108,12 @@ if [ ! -d connectome ]; then mkdir connectome; fi
 #mrthreshold -abs $thr -invert $seg_out - | mrcalc -force -datatype uint32 - $seg_out -mul - | mrmath -force -axis 3 -datatype uint32 - mean $seg_out
 
 MRTRIXHOME=`which mrview | sed 's/\/bin\/mrview//g'`
-if [ ! -f connectome/${label}_nodes.mif.gz ]; then
-    labelconvert anat/$label.mif.gz $FREESURFER_HOME/FreeSurferColorLUT.txt $MRTRIXHOME/share/mrtrix3/labelconvert/fs_default.txt connectome/${label}_nodes.mif.gz
+if [ ! -f dwi/connectome/${label}_nodes.mif.gz ]; then
+    labelconvert anat/$label.mif.gz $FREESURFER_HOME/FreeSurferColorLUT.txt $MRTRIXHOME/share/mrtrix3/labelconvert/fs_default.txt dwi/connectome/${label}_nodes.mif.gz
 fi
 
-if [ ! -f connectome/${label}_nodes_fixSGM.mif.gz ]; then
-    labelsgmfix connectome/${label}_nodes.mif.gz anat/t1w_brain_space-dwi.mif.gz $MRTRIXHOME/share/mrtrix3/labelconvert/fs_default.txt connectome/${label}_nodes_fixSGM.mif.gz -premasked -sgm_amyg_hipp -nthreads $threads
+if [ ! -f dwi/connectome/${label}_nodes_fixSGM.mif.gz ]; then
+    labelsgmfix dwi/connectome/${label}_nodes.mif.gz anat/t1w_brain_space-dwi.mif.gz $MRTRIXHOME/share/mrtrix3/labelconvert/fs_default.txt dwi/connectome/${label}_nodes_fixSGM.mif.gz -premasked -sgm_amyg_hipp -nthreads $threads
 fi
 
 cd $currdir
@@ -124,10 +124,10 @@ cd $currdir
 cd $datadir
 
 # Generate connectome
-if [ ! -f connectome/${tractbase}_${label}_Connectome.csv ]; then
+if [ ! -f dwi/connectome/${tractbase}_${label}_Connectome.csv ]; then
     # Create connectome using ${tractbase}.tck
     echo "Creating $label connectome from ${tractbase}.tck"
-    tck2connectome -symmetric -zero_diagonal -scale_invnodevol -out_assignments connectome/assignments_${tractbase}_${label}_Connectome.csv tractography/$tractbase.tck connectome/${label}_nodes_fixSGM.mif.gz connectome/${tractbase}_${connectome}_Connectome.csv    
+    tck2connectome -symmetric -zero_diagonal -scale_invnodevol -out_assignments dwi/connectome/assignments_${tractbase}_${label}_Connectome.csv dwi/tractography/$tractbase.tck dwi/connectome/${label}_nodes_fixSGM.mif.gz dwi/connectome/${tractbase}_${connectome}_Connectome.csv    
 fi
 
 cd $currdir
