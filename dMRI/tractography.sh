@@ -9,8 +9,8 @@ Performs whole-brain tractography and SIFT-filtering
 Arguments:
   sID				Subject ID (e.g. NENAHC012) 
 Options:
-  -csd				CSD mif.gz-file (default: derivatives/dMRI/sub-sID/csd/csd-dhollander_wm_norm.mif.gz)
-  -5TT				5TT mif.gz-file in dMRI space (default: derivatives/dMRI/sub-sID/5tt/5tt_space-dwi.mif.gz)
+  -csd				CSD mif.gz-file (default: derivatives/dMRI/sub-sID/dwi/csd/csd-dhollander_wm_norm.mif.gz)
+  -5TT				5TT mif.gz-file in dMRI space (default: derivatives/dMRI/sub-sID/dwi/5tt/5tt_space-dwi.mif.gz)
   -nbr				Number of streamlines in whole-brain tractogram (default: 10M)
   -threads			Number of threads for parallell processing (default: 10)
   -d / -data-dir  <directory>   The directory used to output the preprocessed files (default: derivatives/dMRI/sub-sID)
