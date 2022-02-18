@@ -68,7 +68,7 @@ echo
 
 if [ ! -d $datadir/anat ]; then mkdir -p $datadir/anat; fi
 
-if [ ! -f $datadir/fs-segm_aparc+aseg.nii.gz ]; then
+if [ ! -f $datadir/anat/fs-segm_aparc+aseg.nii.gz ]; then
     mrconvert $segm $datadir/anat/fs-segm_aparc+aseg.nii.gz
 fi
 
