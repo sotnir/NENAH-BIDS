@@ -76,9 +76,9 @@ fi
 # 1. Generate 5TT image and extra files (directly in dMRI space)
 #
 
-if [ ! -d $datadir/5tt ]; then mkdir -p $datadir/5tt; fi
+if [ ! -d $datadir/dwi/5tt ]; then mkdir -p $datadir/dwi/5tt; fi
 
-cd $datadir/5tt
+cd $datadir/dwi/5tt
 
 # Generate 5tt and transform into dMRI space directly
 if [ ! -f 5tt_space-dwi.mif.gz ]; then
