@@ -82,8 +82,8 @@ cd $datadir/dwi/5tt
 
 # Generate 5tt and transform into dMRI space directly
 if [ ! -f 5tt_space-dwi.mif.gz ]; then
-    5ttgen -force freesurfer -sgm_amyg_hipp $datadir/anat/fs-segm_aparc+aseg.nii.gz 5tt_space-t1w.mif.gz
-    mrtransform 5tt_space-t1w.mif.gz -linear $datadir/xfm/dwi_2_t1w_mrtrix-bbr.mat 5tt_space-dwi.mif.gz -inverse
+    5ttgen -force freesurfer -sgm_amyg_hipp ../../anat/fs-segm_aparc+aseg.nii.gz 5tt_space-t1w.mif.gz
+    mrtransform 5tt_space-t1w.mif.gz -linear ../../xfm/dwi_2_t1w_mrtrix-bbr.mat 5tt_space-dwi.mif.gz -inverse
 fi
 
 # Create for visualisation 
