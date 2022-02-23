@@ -5,6 +5,7 @@ usage()
 {
   base=$(basename "$0")
   echo "usage: $base subjectID [options]
+Transform FreeSurfer segmentation into dMRI space
 Create 5tt image from FreeSurfer segmentation
 and transform into dMRI space (requires that registration.sh has been run to create transformation between T1w <-> dMRI)
 
@@ -68,7 +69,7 @@ echo
 
 if [ ! -d $datadir/anat ]; then mkdir -p $datadir/anat; fi
 
-if [ ! -f $datadir/fs-segm_aparc+aseg.nii.gz ]; then
+if [ ! -f $datadir/anat/fs-segm_aparc+aseg.nii.gz ]; then
     mrconvert $segm $datadir/anat/fs-segm_aparc+aseg.nii.gz
 fi
 
@@ -76,14 +77,14 @@ fi
 # 1. Generate 5TT image and extra files (directly in dMRI space)
 #
 
-if [ ! -d $datadir/5tt ]; then mkdir -p $datadir/5tt; fi
+if [ ! -d $datadir/dwi/5tt ]; then mkdir -p $datadir/dwi/5tt; fi
 
-cd $datadir/5tt
+cd $datadir/dwi/5tt
 
 # Generate 5tt and transform into dMRI space directly
 if [ ! -f 5tt_space-dwi.mif.gz ]; then
-    5ttgen -force freesurfer -sgm_amyg_hipp ../anat/fs-segm_aparc+aseg.nii.gz 5tt_space-t1w.mif.gz
-    mrtransform 5tt_space-t1w.mif.gz -linear ../xfm/dwi_2_t1w_mrtrix-bbr.mat 5tt_space-dwi.mif.gz -inverse
+    mrtransform ../../anat/fs-segm_aparc+aseg.nii.gz -linear ../../xfm/dwi_2_t1w_mrtrix-bbr.mat ../../anat/fs-segm_aparc+aseg_space-dwi.mif.gz -inverse
+    5ttgen -force freesurfer -sgm_amyg_hipp ../../anat/fs-segm_aparc+aseg_space-dwi.mif.gz 5tt_space-dwi.mif.gz
 fi
 
 # Create for visualisation 
