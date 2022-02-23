@@ -113,7 +113,7 @@ if [ ! -f dwi/connectome/${label}_nodes.mif.gz ]; then
 fi
 
 if [ ! -f dwi/connectome/${label}_nodes_fixSGM.mif.gz ]; then
-    labelsgmfix dwi/connectome/${label}_nodes.mif.gz anat/t1w_brain_space-dwi.mif.gz $MRTRIXHOME/share/mrtrix3/labelconvert/fs_default.txt dwi/connectome/${label}_nodes_fixSGM.mif.gz -premasked -sgm_amyg_hipp -nthreads $threads
+    labelsgmfix dwi/connectome/${label}_nodes.mif.gz anat/space-dwi_t1w_brain.mif.gz.gz $MRTRIXHOME/share/mrtrix3/labelconvert/fs_default.txt dwi/connectome/${label}_nodes_fixSGM.mif.gz -premasked -sgm_amyg_hipp -nthreads $threads
 fi
 
 cd $currdir
