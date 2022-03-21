@@ -8,12 +8,12 @@
 # 2) Connect to CNDNG research filestore
 # 3) To clean data, make sure sub-NENAH008 run1 is removed
 # 4) Sync /Volumes/cndng/NENAH/NENAH_BIDS/derivatives/fMRI:
- # cd /Volumes/cndng/NENAH/NENAH_BIDS/derivatives/fMRI
+ # cd /Volumes/cndng/NENAH/NENAH_BIDS/derivatives/
  # rsync -aP --include=*/ --include=*/fsl_motion_outliers_FD035/ \
  #           --include=*/fsl_motion_outliers_FD035/*.txt \
  #           --include=*/fsl_motion_outliers_FD035/*.png \
  #           --exclude=* --prune-empty-dirs \
- # yz23e20@NENAH:/local/scratch/disk2/research/NENAH_BIDS/derivatives/fMRI .
+ # yz23e20@NENAH:/local/scratch/disk2/research/NENAH_BIDS/derivatives/fMRI/ fMRI/
 
 setwd("/Volumes/cndng/NENAH/Scanning")
 library(tidyverse); library(tidyr); library(reshape2)
