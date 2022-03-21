@@ -7,7 +7,16 @@ Datadir is `/derivatives/fMRI/sub-$sID`
 Run scripts in the following order:
 
 - Do_fsl_preprocess_1_mcf_Melodic_4BIDS.sh
+```
+bash Do_fsl_preprocess_1_mcf_Melodic_4BIDS.sh <NENAHxxx> <SessionID>
+```
+    - Example: `bash Do_fsl_preprocess_1_mcf_Melodic_4BIDS.sh NENAHC001 1`
+    - Note: One session at a time. Specify `NENAHxxx` without prefix "sub-" (e.g. `NENAH001`, not `sub-NENAH001`).
 - get_discard_max_diff.py
+```
+source activate
+python get_discard_max_diff.py /path/to/discarded_vols_vol2volmotion_run-<SessionID>.txt
+```
 - fd035_outlier_carpetplot.R
 
 ## Update Slice Timing for Anonymised Data
