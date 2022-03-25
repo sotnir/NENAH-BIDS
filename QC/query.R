@@ -1,8 +1,8 @@
 setwd("/Volumes/GoogleDrive/My Drive/nenah-bids/code/NENAH-BIDS/QC")
 library(tibble); library(tidyverse)
 
-dat_forFinn <- read.csv("QC_MRIQC_func_24Mar_forFinn.csv")
-dat_fMRI <- read.csv("QC_MRIQC_func_24Mar_fMRI.csv") %>%
+dat_forFinn <- read.csv("rawdata/QC_MRIQC_func_24Mar_fromFinn.csv")
+dat_fMRI <- read.csv("rawdata/QC_MRIQC_func_24Mar_fMRI.csv") %>%
         transform(SubjectID.fMRI = gsub("HH", "H", SubjectID.fMRI)) %>%
         filter(SubjectID.fMRI != "NENAH046_5")
 
