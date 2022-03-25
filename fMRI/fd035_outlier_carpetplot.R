@@ -1,19 +1,22 @@
 # fMRI Quality Assessment using carpet plot and framewise displacement
 # Author: Yukai Zou
 # Date Created: 1 Nov 2021
-# Date Modified: 12 Jan 2022
+# Date Modified: 24 Mar 2022
 
 # Before Start
 # 1) Connect to VPN;
 # 2) Connect to CNDNG research filestore
 # 3) To clean data, make sure sub-NENAH008 run1 is removed
 # 4) Sync /Volumes/cndng/NENAH/NENAH_BIDS/derivatives/fMRI:
- # cd /Volumes/cndng/NENAH/NENAH_BIDS/derivatives/
- # rsync -aP --include=*/ --include=*/fsl_motion_outliers_FD035/ \
- #           --include=*/fsl_motion_outliers_FD035/*.txt \
- #           --include=*/fsl_motion_outliers_FD035/*.png \
- #           --exclude=* --prune-empty-dirs \
- # yz23e20@NENAH:/local/scratch/disk2/research/NENAH_BIDS/derivatives/fMRI/ fMRI/
+# cd /Volumes/cndng/NENAH/NENAH_BIDS/derivatives/
+# rsync -aP --include=*/ --include=*/fsl_motion_outliers_FD035/ \
+#           --include=*/fsl_motion_outliers_FD035/*.txt \
+#           --include=*/fsl_motion_outliers_FD035/*.png \
+#           --exclude=* --prune-empty-dirs \
+# yz23e20@NENAH:/local/scratch/disk2/research/NENAH_BIDS/derivatives/fMRI/ fMRI/
+#
+# ls sub*/fsl*_FD035/discarded_vols_vol2volmotion_run-[1-5].txt > discarded_vols_vol2volmotion-FD035_list.txt
+# ls sub*/fsl*_FD035/discarded*_run-[1-5]_maxdist.txt > discarded_maxdist_vol2volmotion-FD035_list.txt
 
 setwd("/Volumes/cndng/NENAH/Scanning")
 library(tidyverse); library(tidyr); library(reshape2)
