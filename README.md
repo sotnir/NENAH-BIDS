@@ -27,3 +27,4 @@ For quality assessment of sMRI and rs-fMRI, [MRIQC](https://mriqc.readthedocs.io
  - [Winawer Lab](https://wikis.nyu.edu/display/winawerlab/home) [[Sample Data Pipeline](https://wikis.nyu.edu/display/winawerlab/Sample+Data+Pipeline)]
  - [Iridis: Singularity and Docker](https://hpc.soton.ac.uk/redmine/projects/iridis-5-support/wiki/Docker_and_Singularity), also watch [ABCD-ReproNim Week 3 videos](https://abcd-repronim.github.io/materials/week-3/)
  - [QSIprep](https://qsiprep.readthedocs.io/en/latest/): Preprocessing and analysis of q-space images
+ - [Neuroimaging and Data Science](http://neuroimaging-data-science.org/)
