@@ -3,7 +3,7 @@ NENAH002,0.5,sub-NENAH002_task-rest_dir-AP_run-1_bold.nii.gz ,sub-NENAH002_task-
 NENAH004,1,sub-NENAH004_task-rest_dir-AP_run-1_bold.nii.gz,sub-NENAH004_task-rest_dir-AP_run-1_bold.nii.gz,1,,NA,,,,,,
 NENAH005,1,sub-NENAH005_task-rest_dir-AP_run-1_bold,sub-NENAH005_task-rest_dir-AP_run-1_bold,1,,NA,,,,,,
 NENAH007,0,sub-NENAH007_task-rest_dir-AP_run-1_bold.nii.gz,sub-NENAH007_task-rest_dir-AP_run-1_bold.nii.gz,0,sub-NENAH007_task-rest_dir-AP_run-2_bold.nii.gz,0,,,,,,
-NENAH008,NO_MRIQC,,sub-NENAH008_task-rest_dir-AP_run-1_bold.nii.gz,0,sub-NENAH008_task-rest_dir-AP_run-2_bold.nii.gz,NEED QC,,,,,,
+NENAH008,NEW 0.5,sub-NENAH008_task-rest_dir-AP_run-2_bold.nii.gz,NA,NA,sub-NENAH008_task-rest_dir-AP_run-2_bold.nii.gz,0.5,,,,,,
 NENAH010,1,sub-NENAH010_task-rest_dir-AP_run-1_bold.nii.gz,sub-NENAH010_task-rest_dir-AP_run-1_bold.nii.gz,1,,NA,,,,,,
 NENAH011,1,sub-NENAH011_task-rest_dir-AP_run-1_bold.nii.gz,sub-NENAH011_task-rest_dir-AP_run-1_bold.nii.gz,1,sub-NENAH011_task-rest_dir-AP_run-2_bold.nii.gz,0,,,,,,
 NENAH012,0.5,sub-NENAH012_task-rest_dir-AP_run-1_bold.nii.gz,sub-NENAH012_task-rest_dir-AP_run-1_bold.nii.gz,0.5,,NA,,,,,,
