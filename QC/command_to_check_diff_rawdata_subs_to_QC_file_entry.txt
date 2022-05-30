@@ -1,0 +1,1 @@
+for pat in `ls -d ../../../rawdata/sub-NENAH*`; do patient=`basename $pat | sed s/sub-//g`; patient2=`cat QC_MRIQC_anat.csv | grep $patient | sed s/,/ /g | awk {print }`; echo $patient $patient2; done
