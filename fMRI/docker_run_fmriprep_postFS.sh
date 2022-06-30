@@ -30,7 +30,7 @@ sID=$1
 
 # Defaults
 nthreads=10;
-fs_folder=$studyfolder/derivatives/sMRI_fs-segmentation
+fs_folder=$studydir/derivatives/sMRI_fs-segmentation
 
 shift
 while [ $# -gt 0 ]; do
