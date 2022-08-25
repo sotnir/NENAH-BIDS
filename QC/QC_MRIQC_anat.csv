@@ -1,6 +1,6 @@
 Subject_ID,QC_rawdata_anat_PASS_1_or_FAIL_0,rawdata_anat_TO_USE,rawdata_anat_run.1,rawdata_anat_run.1_PASS_1_or_FAIL_0,rawdata_anat_run.2,rawdata_anat_run.2_PASS_1_or_FAIL_0,rawdata_anat_run.3,rawdata_anat_run.3_PASS_1_or_FAIL_0
 NENAH002,0,sub-NENAH002_run-1_T1w.nii.gz,sub-NENAH002_run-1_T1w.nii.gz,0,sub-NENAH002_run-2_T1w.nii.gz,0,,NA
-NENAH003,0.5,sub-NENAH003_run-2_T1w.nii.gz,sub-NENAH003_run-1_T1w.nii.gz,0.5,sub-NENAH003_run-2_T1w.nii.gz,0.5,,,,
+NENAH003,0.5,sub-NENAH003_run-2_T1w.nii.gz,sub-NENAH003_run-1_T1w.nii.gz,0.5,sub-NENAH003_run-2_T1w.nii.gz,0.5,,NA
 NENAH004,1,sub-NENAH004_run-1_T1w.nii.gz,sub-NENAH004_run-1_T1w.nii.gz,1,,NA,,NA
 NENAH005,1,sub-NENAH005_run-1_T1w.nii.gz,sub-NENAH005_run-1_T1w.nii.gz,1,,NA,,NA
 NENAH006,1,sub-NENAH006_run-1_T1w.nii.gz,sub-NENAH006_run-1_T1w.nii.gz,1,,,,
