@@ -1,5 +1,6 @@
 Subject_ID,QC_rawdata_func_PASS_1_UNCERTAIN_0.5_FAIL_0,rawdata_func_TO_USE,rawdata_func_run.1,rawdata_func_run.1_PASS_1_or_FAIL_0,rawdata_func_run.2,rawdata_func_run.2_PASS_1_or_FAIL_0,rawdata_func_run.3,rawdata_func_run.3_PASS_1_or_FAIL_0,rawdata_func_run.4,rawdata_func_run.4_PASS_1_or_FAIL_0,rawdata_func_run.5,rawdata_func_run.5_PASS_1_or_FAIL_0
 NENAH002,0.5,sub-NENAH002_task-rest_dir-AP_run-1_bold.nii.gz ,sub-NENAH002_task-rest_dir-AP_run-1_bold.nii.gz ,0.5,,NA,,,,,,
+NENAH003,0.5,sub-NENAH003_task-rest_dir-AP_run-1_bold.nii.gz,sub-NENAH003_task-rest_dir-AP_run-1_bold.nii.gz,0.5,,NA,,,,,,
 NENAH004,1,sub-NENAH004_task-rest_dir-AP_run-1_bold.nii.gz,sub-NENAH004_task-rest_dir-AP_run-1_bold.nii.gz,1,,NA,,,,,,
 NENAH005,1,sub-NENAH005_task-rest_dir-AP_run-1_bold,sub-NENAH005_task-rest_dir-AP_run-1_bold,1,,NA,,,,,,
 NENAH006,1,sub-NENAH006_task-rest_dir-AP_run-1_bold,sub-NENAH006_task-rest_dir-AP_run-1_bold,1,,NA,,,,,,
