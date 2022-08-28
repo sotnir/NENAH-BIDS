@@ -95,4 +95,4 @@ recon-all -subjid sub-$sID -i $t1w -sd $datadir -threads $threads -all
 # (the argument [SUBJECT_DIR] is only necessary if the
 #  environment variable SUBJECTS_DIR has not been set
 #  or if you want to override it)
-# SUBJECT_DIR=derivatives/sMRI_fs-segmentation
+# segmentHA_T1.sh sub-$sID $datadir
