@@ -89,3 +89,10 @@ recon-all -subjid sub-$sID -i $t1w -sd $datadir -threads $threads -all
 
 # https://surfer.nmr.mgh.harvard.edu/fswiki/HippocampalSubfields
 # recon-all -s sub-$sID -hippocampal-subfields-T1 -sd $datadir -threads $threads -all
+# ERROR: the hippocampal subfield module is now in separate scripts:
+#   segmentHA_T1.sh
+# segmentHA_T1.sh SUBJECT_ID [SUBJECT_DIR]
+# (the argument [SUBJECT_DIR] is only necessary if the
+#  environment variable SUBJECTS_DIR has not been set
+#  or if you want to override it)
+# SUBJECT_DIR=derivatives/sMRI_fs-segmentation
