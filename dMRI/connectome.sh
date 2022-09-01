@@ -127,7 +127,7 @@ cd $datadir
 if [ ! -f dwi/connectome/${tractbase}_${label}_Connectome.csv ]; then
     # Create connectome using ${tractbase}.tck
     echo "Creating $label connectome from ${tractbase}.tck"
-    tck2connectome -symmetric -zero_diagonal -scale_invnodevol -out_assignments dwi/connectome/assignments_${tractbase}_${label}_Connectome.csv dwi/tractography/$tractbase.tck dwi/connectome/${label}_nodes_fixSGM.mif.gz dwi/connectome/${tractbase}_${connectome}_Connectome.csv    
+    tck2connectome -symmetric -zero_diagonal -out_assignments dwi/connectome/assignments_${tractbase}_${label}_Connectome.csv dwi/tractography/$tractbase.tck dwi/connectome/${label}_nodes_fixSGM.mif.gz dwi/connectome/${tractbase}_${connectome}_Connectome.csv    
 fi
 
 cd $currdir
