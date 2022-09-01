@@ -87,12 +87,8 @@ echo
 # Run FreeSurfer
 recon-all -subjid sub-$sID -i $t1w -sd $datadir -threads $threads -all
 
-# https://surfer.nmr.mgh.harvard.edu/fswiki/HippocampalSubfields
-# recon-all -s sub-$sID -hippocampal-subfields-T1 -sd $datadir -threads $threads -all
-# ERROR: the hippocampal subfield module is now in separate scripts:
+# Run segmentation of hippocampus and nuclei of amygdala
+# See https://surfer.nmr.mgh.harvard.edu/fswiki/HippocampalSubfields
+# The module is now in separate scripts:
 #   segmentHA_T1.sh
-# segmentHA_T1.sh SUBJECT_ID [SUBJECT_DIR]
-# (the argument [SUBJECT_DIR] is only necessary if the
-#  environment variable SUBJECTS_DIR has not been set
-#  or if you want to override it)
-# segmentHA_T1.sh sub-$sID $datadir
+segmentHA_T1.sh sub-$sID $datadir
