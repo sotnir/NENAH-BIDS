@@ -10,6 +10,7 @@ Arguments:
   sID				Subject ID (e.g. NENAH001)
 Options:
   -T1				T1 image (default: rawdata/sub-sID/anat/sub-sID_run-1_T1w.nii.gz)
+  -hippocampal-subfields-T1	Automated segmentation of the hippocampal subfields (requires the Matlab R2012 runtime)
   -threads			Nbr of CPU cores/threads for FreeSurfer analysis. (default: threads=10)  
   -d / -data-dir  <directory>   The directory used to output the preprocessed files (default: derivatives/sMRI/segmentation)
   -h / -help / --help           Print usage.
@@ -45,7 +46,7 @@ while [ $# -gt 0 ]; do
 done
 
 # Check if images exist, else put in No_image
-if [ ! -f $tw1 ]; then tw1=""; fi
+if [ ! -f $t1w ]; then t1w=""; fi
 
 # System specific #
 # (These are the same for all studies/subjects):
@@ -84,5 +85,10 @@ echo
 
 ##################################################################################
 # Run FreeSurfer
-
 recon-all -subjid sub-$sID -i $t1w -sd $datadir -threads $threads -all
+
+# Run segmentation of hippocampus and nuclei of amygdala
+# See https://surfer.nmr.mgh.harvard.edu/fswiki/HippocampalSubfields
+# The module is now in separate scripts:
+#   segmentHA_T1.sh
+segmentHA_T1.sh sub-$sID $datadir
