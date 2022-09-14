@@ -58,7 +58,7 @@ NENAHC017,0,sub-NENAHC017_dir-AP_run-1_dwi.nii.gz,0,no_correct_coverage,
 NENAHC018,1,sub-NENAHC018_dir-AP_run-1_dwi.nii.gz,0,sub-NENAHC018_dir-PA_run-1_dwi.nii.gz,29
 NENAHC019,,no_PA_in_BIDS_rawdata/dwi,,no_PA_in_BIDS_rawdata/dwi,
 NENAHC020,1,sub-NENAHC020_dir-AP_run-1_dwi.nii.gz,0,sub-NENAHC020_dir-PA_run-1_dwi.nii.gz,0
-NENAHC021,NEED QC,,,,
+NENAHC021,1,sub-NENAHC021_dir-AP_run-1_dwi.nii.gz,0,sub-NENAHC021_dir-PA_run-1_dwi.nii.gz,0
 NENAHC022,1,sub-NENAHC022_dir-AP_run-1_dwi.nii.gz,0,sub-NENAHC022_dir-PA_run-2_dwi.nii.gz,15
 NENAHC023,1,sub-NENAHC023_dir-AP_run-1_dwi.nii.gz,0,sub-NENAHC023_dir-PA_run-1_dwi.nii.gz,0
 NENAHC024,0.5,sub-NENAHC024_dir-AP_run-1_dwi.nii.gz,0,sub-NENAHC024_dir-PA_run-1_dwi.nii.gz,0
