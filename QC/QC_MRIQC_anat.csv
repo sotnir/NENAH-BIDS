@@ -33,7 +33,7 @@ NENAH042,1,sub-NENAH042_run-1_T1w.nii.gz,sub-NENAH042_run-1_T1w.nii.gz,1,,NA,,NA
 NENAH043,1,sub-NENAH043_run-1_T1w.nii.gz,sub-NENAH043_run-1_T1w.nii.gz,1,,NA,,NA
 NENAH044,1,sub-NENAH044_run-1_T1w.nii.gz,sub-NENAH044_run-1_T1w.nii.gz,1,,,,
 NENAH045,0.5,sub-NENAH045_run-1_T1w.nii.gz,sub-NENAH045_run-1_T1w.nii.gz,0.5,,NA,,NA
-NENAH046,1,sub-NENAH046_run-3_T1w.nii.gz,sub-NENAH046_run-1_T1w.nii.gz,0.5,sub-NENAH046_run-2_T1w.nii.gz,0.5,sub-NENAH046_run-3_T1w.nii.gz,1
+NENAH046,1,sub-NENAH046_run-2_T1w.nii.gz,sub-NENAH046_run-1_T1w.nii.gz,0.5,sub-NENAH046_run-2_T1w.nii.gz,1,,NA
 NENAH047,1,sub-NENAH047_run-2_T1w.nii.gz,sub-NENAH047_run-1_T1w.nii.gz,0,sub-NENAH047_run-2_T1w.nii.gz,1,,NA
 NENAH048,0.5,sub-NENAH048_run-1_T1w.nii.gz,sub-NENAH048_run-1_T1w.nii.gz,0.5,,NA,,NA
 NENAH052,0,sub-NENAH052_run-1_T1w.nii.gz,sub-NENAH052_run-1_T1w.nii.gz,0,sub-NENAH052_run-2_T1w.nii.gz,0,,
