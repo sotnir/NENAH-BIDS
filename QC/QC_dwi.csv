@@ -63,7 +63,7 @@ NENAHC022,1,sub-NENAHC022_dir-AP_run-1_dwi.nii.gz,0,sub-NENAHC022_dir-PA_run-2_d
 NENAHC023,1,sub-NENAHC023_dir-AP_run-1_dwi.nii.gz,0,sub-NENAHC023_dir-PA_run-1_dwi.nii.gz,0
 NENAHC024,0.5,sub-NENAHC024_dir-AP_run-1_dwi.nii.gz,0,sub-NENAHC024_dir-PA_run-1_dwi.nii.gz,0
 NENAHC025,1,sub-NENAHC025_dir-AP_run-1_dwi.nii.gz,0,sub-NENAHC025_dir-PA_run-1_dwi.nii.gz,0
-NENAHC026,NEED QC,sub-NENAHC026_dir-AP_run-1_dwi.nii.gz,NEED QC,sub-NENAHC026_dir-PA_run-1_dwi.nii.gz,NEED QC
+NENAHC026,1,sub-NENAHC026_dir-AP_run-1_dwi.nii.gz,0,sub-NENAHC026_dir-PA_run-1_dwi.nii.gz,0
 NENAHC027,1,sub-NENAHC027_dir-AP_run-1_dwi.nii.gz,0,sub-NENAHC027_dir-PA_run-1_dwi.nii.gz,0
 NENAHC028,1,sub-NENAHC028_dir-AP_run-1_dwi.nii.gz,0,sub-NENAHC028_dir-PA_run-1_dwi.nii.gz,0
 NENAHC029,1,sub-NENAHC029_dir-AP_run-1_dwi.nii.gz,0,sub-NENAHC029_dir-PA_run-1_dwi.nii.gz,0
