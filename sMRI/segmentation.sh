@@ -91,4 +91,4 @@ recon-all -subjid sub-$sID -i $t1w -sd $datadir -threads $threads -all
 # See https://surfer.nmr.mgh.harvard.edu/fswiki/HippocampalSubfields
 # The module is now in separate scripts:
 #   segmentHA_T1.sh
-segmentHA_T1.sh sub-$sID $datadir
+#segmentHA_T1.sh sub-$sID $datadir
