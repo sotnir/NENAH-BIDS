@@ -94,7 +94,7 @@ docker run --name heudiconv_container \
 # heudiconv makes files read only
 #    We need some files to be writable, eg for defacing
 # (8 Dec) Uncommented based on Issue #108 on Github
-chown -R :neuropediatrics $rawdatadir
+chown -R :sys $rawdatadir
 chmod -R g+rw $rawdatadir
 
 ## FL: 	Either we terminate here!
