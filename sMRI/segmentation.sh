@@ -12,7 +12,7 @@ Options:
   -T1				T1 image (default: rawdata/sub-sID/anat/sub-sID_run-1_T1w.nii.gz)
   -hippocampal-subfields-T1	Automated segmentation of the hippocampal subfields (requires the Matlab R2012 runtime)
   -threads			Nbr of CPU cores/threads for FreeSurfer analysis. (default: threads=10)  
-  -d / -data-dir  <directory>   The directory used to output the preprocessed files (default: derivatives/sMRI/segmentation)
+  -d / -data-dir  <directory>   The directory used to output the preprocessed files (default: derivatives/sMRI_fs-segmentation)
   -h / -help / --help           Print usage.
 "
   exit;
