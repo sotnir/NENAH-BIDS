@@ -77,7 +77,7 @@ docker run --name heudiconv_container \
            --rm \
            -it \
            --volume $studydir:/base \
-	   --volume $codedir:/code \
+           --volume $codedir:/code \
            --volume $sourcedatadir:/dataIn:ro \
            --volume $rawdatadir:/dataOut \
            nipy/heudiconv \
@@ -88,7 +88,7 @@ docker run --name heudiconv_container \
                -b \
                -o /dataOut \
                --overwrite \
-	       --grouping accession_number \
+               --grouping accession_number \
            > $logdir/sub-${sID}_$scriptname.log 2>&1 
            
 # heudiconv makes files read only
@@ -110,7 +110,7 @@ docker run --name BIDSvalidation_container \
            --volume $rawdatadir:/data:ro \
            bids/validator \
                /data \
-	   --ignoreWarnings
+               --ignoreWarnings
            > $studydir/derivatives/bids-validator_report.txt 2>&1
            
 ###   Deface:   ###
@@ -134,7 +134,7 @@ docker run --name mriqc_container \
                --verbose-reports \
                --fft-spikes-detector \
                --participant_label ${sID} \
-	       --no-sub \
+               --no-sub \
            > $logdir/sub-${sID}_mriqc_participant.log 2>&1
 # FL 2021-05-25 - added MRIQC group level
 # group level
