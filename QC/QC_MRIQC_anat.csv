@@ -1,5 +1,5 @@
 Subject_ID,QC_rawdata_anat_PASS_1_or_FAIL_0,rawdata_anat_TO_USE,rawdata_anat_run.1,rawdata_anat_run.1_PASS_1_or_FAIL_0,rawdata_anat_run.2,rawdata_anat_run.2_PASS_1_or_FAIL_0,rawdata_anat_run.3,rawdata_anat_run.3_PASS_1_or_FAIL_0
-NENAH002,0,sub-NENAH002_run-1_T1w.nii.gz,sub-NENAH002_run-1_T1w.nii.gz,0,sub-NENAH002_run-2_T1w.nii.gz,0,,NA
+NENAH002,0.5,sub-NENAH002_run-1_T1w.nii.gz,sub-NENAH002_run-1_T1w.nii.gz,0.5,sub-NENAH002_run-2_T1w.nii.gz,0.5,,NA
 NENAH003,0.5,sub-NENAH003_run-2_T1w.nii.gz,sub-NENAH003_run-1_T1w.nii.gz,0.5,sub-NENAH003_run-2_T1w.nii.gz,0.5,,NA
 NENAH004,1,sub-NENAH004_run-1_T1w.nii.gz,sub-NENAH004_run-1_T1w.nii.gz,1,,NA,,NA
 NENAH005,1,sub-NENAH005_run-1_T1w.nii.gz,sub-NENAH005_run-1_T1w.nii.gz,1,,NA,,NA
@@ -27,8 +27,8 @@ NENAH032,1,sub-NENAH032_run-1_T1w.nii.gz,sub-NENAH032_run-1_T1w.nii.gz,1,,NA,,NA
 NENAH033,1,sub-NENAH033_run-1_T1w.nii.gz,sub-NENAH033_run-1_T1w.nii.gz,1,,NA,,NA
 NENAH036,1,sub-NENAH036_run-1_T1w.nii.gz,sub-NENAH036_run-1_T1w.nii.gz,1,,NA,,NA
 NENAH037,0.5,sub-NENAH037_run-1_T1w.nii.gz,sub-NENAH037_run-1_T1w.nii.gz,0.5,,NA,,NA
-NENAH038 ,1,sub-NENAH038_run-1_T1w.nii.gz,sub-NENAH038_run-1_T1w.nii.gz,1,,NA,,NA
-NENAH039 ,1,sub-NENAH039_run-1_T1w.nii.gz,sub-NENAH039_run-1_T1w.nii.gz,1,,NA,,NA
+"NENAH038 ",1,sub-NENAH038_run-1_T1w.nii.gz,sub-NENAH038_run-1_T1w.nii.gz,1,,NA,,NA
+"NENAH039 ",1,sub-NENAH039_run-1_T1w.nii.gz,sub-NENAH039_run-1_T1w.nii.gz,1,,NA,,NA
 NENAH042,1,sub-NENAH042_run-1_T1w.nii.gz,sub-NENAH042_run-1_T1w.nii.gz,1,,NA,,NA
 NENAH043,1,sub-NENAH043_run-1_T1w.nii.gz,sub-NENAH043_run-1_T1w.nii.gz,1,,NA,,NA
 NENAH044,1,sub-NENAH044_run-1_T1w.nii.gz,sub-NENAH044_run-1_T1w.nii.gz,1,,,,
@@ -48,7 +48,7 @@ NENAHC007,1,sub-NENAHC007_run-1_T1w.nii.gz,sub-NENAHC007_run-1_T1w.nii.gz,1,,NA,
 NENAHC008,1,sub-NENAHC008_run-1_T1w.nii.gz,sub-NENAHC008_run-1_T1w.nii.gz,1,,NA,,NA
 NENAHC009,1,sub-NENAHC009_run-1_T1w.nii.gz,sub-NENAHC009_run-1_T1w.nii.gz,1,,NA,,NA
 NENAHC010,1,sub-NENAHC010_run-1_T1w.nii.gz,sub-NENAHC010_run-1_T1w.nii.gz,1,,NA,,NA
-NENAHC011,1,sub-NENAHC011_run-1_T1w.nii.gz ,sub-NENAHC011_run-1_T1w.nii.gz ,1,,NA,,NA
+NENAHC011,1,"sub-NENAHC011_run-1_T1w.nii.gz ","sub-NENAHC011_run-1_T1w.nii.gz ",1,,NA,,NA
 NENAHC012,1,sub-NENAHC012_run-1_T1w.nii.gz,sub-NENAHC012_run-1_T1w.nii.gz,1,,NA,,NA
 NENAHC013,1,sub-NENAHC013_run-1_T1w.nii.gz,sub-NENAHC013_run-1_T1w.nii.gz,1,,NA,,NA
 NENAHC014,1,sub-NENAHC014_run-1_T1w.nii.gz,sub-NENAHC014_run-1_T1w.nii.gz,1,,NA,,NA
