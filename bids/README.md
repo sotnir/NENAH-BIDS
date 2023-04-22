@@ -8,11 +8,12 @@ To complete the conversion:
 This prepares the DICOMS by re-naming and organizing them into `/sourcedata`
 
 2. Run script `DcmSourcedata_to_NiftiRawdata.sh` \
-This converts the dicoms in `/sourcedata` to BIDS-organised NIfTIs in `/rawdata`using the heudiconv routine. 
-- `heudiconv` is run with using a Docker container using rules set in the python file `nenah_heuristic.py`
+This converts the dicoms in `/sourcedata` to BIDS-organised NIfTIs in `/rawdata` using the heudiconv routine.
+The script runs
+- `heudiconv` using a Docker container with rules set in the python file `nenah_heuristic.py`.
+- BIDS validator (using a docker container)
+- MRIQC (using a docker container)
 
-3. Run correction scripts to make the /rawdata BIDS compliant and include slice_time_corrections and Intended_for
+3. Run correction scripts `run_fmap_add_Intededfor.py` to include entries for `Intended_for` in .JSON file
 
-4. Run BIDS validator
 
-5. Run MRIQC
