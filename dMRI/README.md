@@ -28,6 +28,5 @@ Scripts should be run in the following order:
 Need 5TT from sMRI
 - registration.sh
 - 5tt.sh
-
 - tractography.sh
 - connectome.sh
