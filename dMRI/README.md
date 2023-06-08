@@ -11,7 +11,11 @@ Make sure your `.bashrc` file contains the paths to all the dependent packages.
 - For MRtrix3, add path according to the issue [here](https://github.com/yukaizou2015/NENAH-BIDS/issues/18#issuecomment-877311286).
 
 ### Running scripts 
-
+Scripts are intended to run from the study directory (/local/scratch/disk2/research/NENAH_BIDS)
+```
+cd /local/scratch/disk2/research/NENAH_BIDS
+bash code/NENAH-BIDS/dMRI/preprocess_QC.sh NENAH007
+```
 Scripts should be run in the following order:
 
 - preprocess.sh / or preprocess_QC.sh
