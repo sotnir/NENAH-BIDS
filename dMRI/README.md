@@ -14,7 +14,7 @@ Make sure your `.bashrc` file contains the paths to all the dependent packages.
 
 Scripts should be run in the following order:
 
-- preprocess.sh
+- preprocess.sh / or preprocess_QC.sh
 - response.sh
 - (average_response.sh)
 - (upsample_dwi.sh)
