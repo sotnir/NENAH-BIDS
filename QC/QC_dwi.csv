@@ -4,7 +4,7 @@ NENAH003,,no_data_in_BIDS_rawdata/dwi,,no_data_in_BIDS_rawdata/dwi,
 NENAH004,1,sub-NENAH004_dir-AP_run-1_dwi.nii.gz,0,sub-NENAH004_dir-PA_run-1_dwi.nii.gz,15
 NENAH005,0,sub-NENAH005_dir-AP_run-1_dwi.nii.gz,0,sub-NENAH005_dir-PA_run-1_dwi.nii.gz,0
 NENAH006,1,sub-NENAH006_dir-PA_run-1_dwi.nii.gz,0,sub-NENAH006_dir-PA_run-1_dwi.nii.gz,0
-NENAH007,0,sub-NENAH007_dir-AP_run-1_dwi.nii.gz,24,sub-NENAH007_dir-PA_run-1_dwi.nii.gz,15
+NENAH007,0.5,sub-NENAH007_dir-AP_run-1_dwi.nii.gz,0,sub-NENAH007_dir-PA_run-1_dwi.nii.gz,0
 NENAH008,0,sub-NENAH008_dir-AP_run-1_dwi.nii.gz,0,no_correct_coverage,
 NENAH009,1,sub-NENAH009_dir-AP_run-1_dwi.nii.gz,0,sub-NENAH009_dir-PA_run-1_dwi.nii.gz,0
 NENAH010,1,sub-NENAH010_dir-AP_run-1_dwi.nii.gz,35,sub-NENAH010_dir-PA_run-1_dwi.nii.gz,0
@@ -38,7 +38,7 @@ NENAH047,1,sub-NENAH047_dir-AP_run-1_dwi.nii.gz,0,sub-NENAH047_dir-AP_run-1_dwi.
 NENAH048,1,sub-NENAH048_dir-AP_run-1_dwi.nii.gz,0,sub-NENAH048_dir-PA_run-1_dwi.nii.gz,0
 NENAH052,0,sub-NENAH052_dir-AP_run-1_dwi.nii.gz,15,sub-NENAH052_dir-PA_run-1_dwi.nii.gz,0
 NENAH054,1,sub-NENAH054_dir-AP_run-1_dwi.nii.gz,35,sub-NENAH054_dir-PA_run-1_dwi.nii.gz,0
-NENAHC001,0,sub-NENAHC001_dir-AP_run-1_dwi.nii.gz,24,Bad_conversion_NO_4D_instead_all_in_3D,
+NENAHC001,1,sub-NENAHC001_dir-AP_run-1_dwi.nii.gz,0,sub-NENAHC001_dir-PA_run-1_dwi.nii.gz,0
 NENAHC002,1,sub-NENAHC002_dir-AP_run-1_dwi.nii.gz,0,sub-NENAHC002_dir-PA_run-1_dwi.nii.gz,0
 NENAHC003,1,sub-NENAHC003_dir-AP_run-1_dwi.nii.gz,0,sub-NENAHC003_dir-PA_run-1_dwi.nii.gz,15
 NENAHC004,,no_data_in_BIDS_rawdata/dwi,,no_data_in_BIDS_rawdata/dwi,
@@ -54,14 +54,14 @@ NENAHC013,1,sub-NENAHC013_dir-AP_run-1_dwi.nii.gz,0,sub-NENAHC013_dir-PA_run-1_d
 NENAHC014,1,sub-NENAHC014_dir-AP_run-1_dwi.nii.gz,0,sub-NENAHC014_dir-PA_run-1_dwi.nii.gz,0
 NENAHC015,1,sub-NENAHC015_dir-AP_run-1_dwi.nii.gz,0,sub-NENAHC015_dir-PA_run-1_dwi.nii.gz,0
 NENAHC016,1,sub-NENAHC016_dir-AP_run-1_dwi.nii.gz,0,sub-NENAHC016_dir-PA_run-1_dwi.nii.gz,0
-NENAHC017,0,sub-NENAHC017_dir-AP_run-1_dwi.nii.gz,0,no_correct_coverage,
+NENAHC017,1,sub-NENAHC017_dir-AP_run-1_dwi.nii.gz,0,sub-NENAHC017_dir-PA_run-1_dwi.nii.gz,0
 NENAHC018,1,sub-NENAHC018_dir-AP_run-1_dwi.nii.gz,0,sub-NENAHC018_dir-PA_run-1_dwi.nii.gz,29
-NENAHC019,,no_PA_in_BIDS_rawdata/dwi,,no_PA_in_BIDS_rawdata/dwi,
+NENAHC019,0.5,sub-NENAHC019_dir-AP_run-1_dwi.nii.gz,0,sub-NENAHC019_dir-PA_run-1_dwi.nii.gz,0
 NENAHC020,1,sub-NENAHC020_dir-AP_run-1_dwi.nii.gz,0,sub-NENAHC020_dir-PA_run-1_dwi.nii.gz,0
 NENAHC021,1,sub-NENAHC021_dir-AP_run-1_dwi.nii.gz,0,sub-NENAHC021_dir-PA_run-1_dwi.nii.gz,0
 NENAHC022,1,sub-NENAHC022_dir-AP_run-1_dwi.nii.gz,0,sub-NENAHC022_dir-PA_run-2_dwi.nii.gz,15
 NENAHC023,1,sub-NENAHC023_dir-AP_run-1_dwi.nii.gz,0,sub-NENAHC023_dir-PA_run-1_dwi.nii.gz,0
-NENAHC024,0.5,sub-NENAHC024_dir-AP_run-1_dwi.nii.gz,0,sub-NENAHC024_dir-PA_run-1_dwi.nii.gz,0
+NENAHC024,1,sub-NENAHC024_dir-AP_run-1_dwi.nii.gz,0,sub-NENAHC024_dir-PA_run-1_dwi.nii.gz,0
 NENAHC025,1,sub-NENAHC025_dir-AP_run-1_dwi.nii.gz,0,sub-NENAHC025_dir-PA_run-1_dwi.nii.gz,0
 NENAHC026,1,sub-NENAHC026_dir-AP_run-1_dwi.nii.gz,0,sub-NENAHC026_dir-PA_run-1_dwi.nii.gz,0
 NENAHC027,1,sub-NENAHC027_dir-AP_run-1_dwi.nii.gz,0,sub-NENAHC027_dir-PA_run-1_dwi.nii.gz,0
