@@ -262,21 +262,22 @@ echo "Pre-processing with mask generation, N4 biasfield correction, Normalisatio
 # point to right filebase
 dwi=dwi_den_unr_eddy
 
-# Create mask and dilate (to ensure usage with ACT)
-if [ ! -f mask.mif.gz ]; then
-    dwiextract -bzero $dwi.mif.gz - | mrmath -force -axis 3 - mean meanb0tmp.nii.gz
-    bet meanb0tmp meanb0tmp_brain -m -F -R
-    # Check result
-    echo Check the results
-    echo "mrview meanb0tmp.nii.gz -roi.load meanb0tmp_brain_mask.nii.gz -roi.opacity 0.5 -mode 2"
-    mrconvert meanb0tmp_brain_mask.nii.gz mask.mif.gz
-    rm meanb0tmp*
-fi
-
+#changed the code the mask from bet to dwi2mask and dwiexctract with b1000, moved bias correction before mask generation in the code. Now masks will be generated after bias correction
 # Do B1-correction. Use ANTs N4
 if [ ! -f  ${dwi}_N4.mif.gz ]; then
     if [ ! -d N4 ]; then mkdir N4; fi
-    dwibiascorrect ants -mask mask.mif.gz -nthreads $threads -bias N4/bias.mif.gz $dwi.mif.gz ${dwi}_N4.mif.gz
+    dwibiascorrect ants -nthreads $threads -bias N4/bias.mif.gz $dwi.mif.gz ${dwi}_N4.mif.gz
+fi
+
+# Create mask and dilate (to ensure usage with ACT)
+if [ ! -f mask.mif.gz ]; then
+    dwiextract -b 1000 ${dwi}_N4.mif.gz - | mrmath -force -axis 3 - mean meanb1000tmp.mif.gz
+    dwi2mask meanb1000tmp.mif.gz meanb1000tmp_brain.nii.gz
+    # Check result
+    echo Check the results
+    echo "mrview meanb1000tmp.mif.gz -roi.load meanb1000tmp_brain_mask.nii.gz -roi.opacity 0.5 -mode 2"
+   mrconvert meanb1000tmp_brain_mask.nii.gz mask.mif.gz
+    rm meanb1000tmp*
 fi
 
 # last file in the processing
