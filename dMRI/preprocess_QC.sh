@@ -57,7 +57,7 @@ done
 sIDrow=`cat $QC | grep $sID`
 # Column-wise entries in QC file should be:  Subject_ID QC_rawdata_dwi_PASS_1_FAIL_0	rawdata_dir-AP_dwi	rawdata_dir-AP_b0_volume	rawdata_dir-PA_dwi	rawdata_dir-PA_b0_volume
 
-if [[ ! `echo $sIDrow | awk '{ print $2 }'` == 1 || ! `echo $sIDrow | awk '{ print $2 }'` == 0.5 ]]; then
+if [[ ! `echo $sIDrow | awk '{ print $2 }'` == 1 && ! `echo $sIDrow | awk '{ print $2 }'` == 0.5 ]]; then
     echo "Subject $sID has no entry in QC-file, or has no in dwi data that has passed QC"
     exit;
 else
