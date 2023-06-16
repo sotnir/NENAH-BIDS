@@ -9,7 +9,7 @@ NENAH008,0,sub-NENAH008_dir-AP_run-1_dwi.nii.gz,0,no_correct_coverage,
 NENAH009,1,sub-NENAH009_dir-AP_run-1_dwi.nii.gz,0,sub-NENAH009_dir-PA_run-1_dwi.nii.gz,0
 NENAH010,1,sub-NENAH010_dir-AP_run-1_dwi.nii.gz,35,sub-NENAH010_dir-PA_run-1_dwi.nii.gz,0
 NENAH011,1,sub-NENAH011_dir-AP_run-1_dwi.nii.gz,0,sub-NENAH011_dir-PA_run-1_dwi.nii.gz,0
-NENAH012,0.5,sub-NENAH012_dir-AP_run-1_dwi.nii.gz,15,sub-NENAH012_dir-PA_run-1_dwi.nii.gz,15,motion artifacts and signal dropouts in several dMRI volumes
+NENAH012,0.5,sub-NENAH012_dir-AP_run-1_dwi.nii.gz,15,sub-NENAH012_dir-PA_run-1_dwi.nii.gz,15
 NENAH014,0,sub-NENAH014_dir-AP_run-1_dwi.nii.gz,0,misplaced acquisition box and incorrect anatomical coverage,
 NENAH015,1,sub-NENAH015_dir-AP_run-1_dwi.nii.gz,0,sub-NENAH015_dir-PA_run-1_dwi.nii.gz,0
 NENAH016,1,sub-NENAH016_dir-AP_run-1_dwi.nii.gz,0,sub-NENAH016_dir-PA_run-1_dwi.nii.gz,0
