@@ -12,7 +12,7 @@ Uses inputs from QC-file
 2. TOPUP and EDDY for motion- and susceptebility image distortion correction
 3. N4 biasfield correction
 4. Normalisation
-5. Creation of a mean B0 image (as average from normalised unwarped b0s)
+5. Creation of a mean B0, B1000 and B2600 images (as average from normalised unwarped b0s)
 6. Calculation of tensor and tensor maps (FA, MD etc)
 
 Arguments:

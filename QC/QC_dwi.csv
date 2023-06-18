@@ -4,7 +4,7 @@ NENAH003,,no_data_in_BIDS_rawdata/dwi,,no_data_in_BIDS_rawdata/dwi,,,
 NENAH004,1,sub-NENAH004_dir-AP_run-1_dwi.nii.gz,0,sub-NENAH004_dir-PA_run-1_dwi.nii.gz,15,0.45,Pending
 NENAH005,1,sub-NENAH005_dir-AP_run-1_dwi.nii.gz,0,sub-NENAH005_dir-PA_run-1_dwi.nii.gz,0,,
 NENAH006,1,sub-NENAH006_dir-PA_run-1_dwi.nii.gz,0,sub-NENAH006_dir-PA_run-1_dwi.nii.gz,0,0.4,Pending
-NENAH007,0.5,sub-NENAH007_dir-AP_run-1_dwi.nii.gz,0,sub-NENAH007_dir-PA_run-1_dwi.nii.gz,0,,Pending
+NENAH007,0.5,sub-NENAH007_dir-AP_run-1_dwi.nii.gz,0,sub-NENAH007_dir-PA_run-1_dwi.nii.gz,0,0.45,Pending
 NENAH008,0,sub-NENAH008_dir-AP_run-1_dwi.nii.gz,0,no_correct_coverage,,,
 NENAH009,1,sub-NENAH009_dir-AP_run-1_dwi.nii.gz,0,sub-NENAH009_dir-PA_run-1_dwi.nii.gz,0,0.45,Pending
 NENAH010,1,sub-NENAH010_dir-AP_run-1_dwi.nii.gz,35,sub-NENAH010_dir-PA_run-1_dwi.nii.gz,0,0.4,Pending
