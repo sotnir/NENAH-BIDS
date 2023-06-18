@@ -54,9 +54,9 @@ while [ $# -gt 0 ]; do
 done
 
 # Assign dwi data from input
-# Since it is saved as .csv-file with ',' as delimiter, we change ',' to '\t'
+# Since it is saved as .csv-file with ',' as delimiter, we change ',' to ' '
 sIDrow=`cat $QC | grep $sID | sed 's/\,/\ /g'`
-# Column-wise entries in QC file should be:  Subject_ID QC_rawdata_dwi_PASS_1_FAIL_0	rawdata_dir-AP_dwi	rawdata_dir-AP_b0_volume	rawdata_dir-PA_dwi	rawdata_dir-PA_b0_volume
+# Column-wise entries in QC file should be:  Subject_ID QC_rawdata_dwi_PASS_1_FAIL_0	rawdata_dir-AP_dwi	rawdata_dir-AP_b0_volume	rawdata_dir-PA_dwi	rawdata_dir-PA_b0_volume    optimal_BET_f-value QC_preprocess
 
 echo $sIDrow
 
@@ -212,12 +212,25 @@ fi
 
 # Brain mask estimation
 if [ ! -f mask.mif.gz ]; then
-    dwiextract -bzero ${dwi}_unbiased.mif.gz - | mrmath -force -axis 3 - mean meanb0tmp.nii.gz
-    dwi2mask ${dwi}_unbiased.mif.gz mask.mif.gz 
-    # Check result
-    echo Check the results
-    echo "mrview meanb0tmp.nii.gz -roi.load mask.mif.gz -roi.opacity 0.5 -mode 2"
-    rm meanb0tmp*
+    dwiextract -shells 1000 ${dwi}_unbiased.mif.gz - | mrmath -force -axis 3 - mean meanb1000tmp.nii.gz
+    # Now create a set of BET-masks
+    for fvalue in 30 35 40 45; do 
+        bet meanb1000tmp.nii.gz meanb1000tmp_0p${fvalue} -R -m -f 0.$fvalue
+    done
+    # Check result and choose the appropriate mask
+    echo "1. Check the results to decide the best BET f-value"
+    echo    "mrview meanb1000tmp.nii.gz \
+            -roi.load meanb1000tmp_0p30_mask.nii.gz -roi.opacity 0.5 \
+            -roi.load meanb1000tmp_0p35_mask.nii.gz -roi.opacity 0.5 \
+            -roi.load meanb1000tmp_0p40_mask.nii.gz -roi.opacity 0.5 \
+            -roi.load meanb1000tmp_0p45_mask.nii.gz -roi.opacity 0.5 \
+            -mode 2"
+    echo "2. Choose the best mask and
+                - save this as mask.mif.gz (mrconvert BET-mask.)
+                - delete the tmp-files 
+                - put the BET f-value into QC_dwi.csv-file"
+    echo "3. Run this script again"
+    exit;
 fi
 
 # last file in the processing
@@ -255,9 +268,18 @@ cd $datadir
 if [ ! -f meanb0.mif.gz ]; then
     dwiextract -bzero $dwi.mif.gz - |  mrmath -force -axis 3 - mean meanb0.mif.gz
     mrcalc meanb0.mif.gz mask.mif.gz -mul meanb0_brain.mif.gz
-    echo "Visually check the meanb0_brain"
-    echo "mrview meanb0_brain.nii.gz -mode 2"
 fi
+if [ ! -f meanb1000.mif.gz ]; then
+    dwiextract -shells 1000  $dwi.mif.gz - |  mrmath -force -axis 3 - mean meanb1000.mif.gz
+    mrcalc meanb1000.mif.gz mask.mif.gz -mul meanb1000_brain.mif.gz
+fi
+if [ ! -f meanb2600.mif.gz ]; then
+    dwiextract -bzero $dwi.mif.gz - |  mrmath -force -axis 3 - mean meanb2600.mif.gz
+    mrcalc meanb2600.mif.gz mask.mif.gz -mul meanb2600_brain.mif.gz
+fi
+    echo "Visually check the meann b-files"
+    echo "mrview meanb*_brain.nii.gz -mode 2"
+
 cd $currdir
 
 ##################################################################################
@@ -265,7 +287,7 @@ cd $currdir
 cd $datadir
 
 if [ ! -f dt.mif.gz ]; then
-    dwi2tensor -mask mask.mif.gz $dwi.mif.gz dt.mif.gz
+    dwiextract -shells 0,1000 $dwi.mif.gz - | dwi2tensor -mask mask.mif.gz - dt.mif.gz
     tensor2metric -force -fa fa.mif.gz -adc adc.mif.gz -rd rd.mif.gz -ad ad.mif.gz -vector ev.mif.gz dt.mif.gz
 fi
 
