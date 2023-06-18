@@ -54,8 +54,11 @@ while [ $# -gt 0 ]; do
 done
 
 # Assign dwi data from input
-sIDrow=`cat $QC | grep $sID`
+# Since it is saved as .csv-file with ',' as delimiter, we change ',' to '\t'
+sIDrow=`cat $QC | grep $sID | sed 's/\,/\/t/g'`
 # Column-wise entries in QC file should be:  Subject_ID QC_rawdata_dwi_PASS_1_FAIL_0	rawdata_dir-AP_dwi	rawdata_dir-AP_b0_volume	rawdata_dir-PA_dwi	rawdata_dir-PA_b0_volume
+
+echo $sIDrow
 
 if [[ `echo $sIDrow | awk '{ print $2 }'` == 1 || `echo $sIDrow | awk '{ print $2 }'` == 0.5 ]]; then
     dwiAPfile=`echo $sIDrow | awk '{ print $3 }'`
