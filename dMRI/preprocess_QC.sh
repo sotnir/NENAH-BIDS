@@ -56,7 +56,7 @@ done
 # Assign dwi data from input
 # Since it is saved as .csv-file with ',' as delimiter, we change ',' to ' '
 sIDrow=`cat $QC | grep $sID | sed 's/\,/\ /g'`
-# Column-wise entries in QC file should be:  Subject_ID QC_rawdata_dwi_PASS_1_FAIL_0	rawdata_dir-AP_dwi	rawdata_dir-AP_b0_volume	rawdata_dir-PA_dwi	rawdata_dir-PA_b0_volume    optimal_BET_f-value QC_preprocess
+# Column-wise entries in QC file should be:  Subject_ID QC_rawdata_dwi_PASS_1_FAIL_0	rawdata_dir-AP_dwi	rawdata_dir-AP_b0_volume	rawdata_dir-PA_dwi	rawdata_dir-PA_b0_volume    optimal_BET_f-value
 
 echo $sIDrow
 
