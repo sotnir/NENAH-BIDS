@@ -57,16 +57,16 @@ done
 sIDrow=`cat $QC | grep $sID`
 # Column-wise entries in QC file should be:  Subject_ID QC_rawdata_dwi_PASS_1_FAIL_0	rawdata_dir-AP_dwi	rawdata_dir-AP_b0_volume	rawdata_dir-PA_dwi	rawdata_dir-PA_b0_volume
 
-if [[ ! `echo $sIDrow | awk '{ print $2 }'` == 1 && ! `echo $sIDrow | awk '{ print $2 }'` == 0.5 ]]; then
-    echo "Subject $sID has no entry in QC-file, or has no in dwi data that has passed QC"
-    exit;
-else
+if [[ `echo $sIDrow | awk '{ print $2 }'` == 1 || `echo $sIDrow | awk '{ print $2 }'` == 0.5 ]]; then
     dwiAPfile=`echo $sIDrow | awk '{ print $3 }'`
     dwiAP=rawdata/sub-$sID/dwi/$dwiAPfile
     b0APvol=`echo $sIDrow | awk '{ print $4 }'`
     dwiPAfile=`echo $sIDrow | awk '{ print $5 }'`
     dwiPA=rawdata/sub-$sID/dwi/$dwiPAfile
     b0PAvol=`echo $sIDrow | awk '{ print $6 }'`
+else
+    echo "Subject $sID has no entry in QC-file, or has no in dwi data that has passed QC"
+    exit;
 fi
 
 echo "dMRI preprocessing
