@@ -96,16 +96,31 @@ cat $codedir/$script.sh >> ${logdir}/sub-${sID}_dMRI_$script.log 2>&1
 echo
 
 ##################################################################################
+# 0. Create subfolder structure in $datadir
+
+if [ ! -d $datadir ]; then mkdir -p $datadir; fi
+
+cd $datadir
+if [ ! -d anat ]; then mkdir -p anat; fi
+if [ ! -d dwi ]; then mkdir -p dwi; fi
+if [ ! -d fmap ]; then mkdir -p fmap; fi
+if [ ! -d xfm ]; then mkdir -p xfm; fi
+if [ ! -d qc ]; then mkdir -p qc; fi
+cd $studydir
+
+##################################################################################
+
+##################################################################################
 # 0a. Create dMRI mif-files in $datadir/orig (importing .json and bvecs/bvals files) of original data
 
-if [ ! -d $datadir/orig ]; then mkdir -p $datadir/orig; fi
+if [ ! -d $datadir/dwi/orig ]; then mkdir -p $datadir/dwi/orig; fi
 
 filelist="$dwiAP $dwiPA"
 for file in $filelist; do
     filebase=`basename $file .nii.gz`;
     filedir=`dirname $file`
-    if [ ! -f $datadir/orig/$filebase.mif.gz ]; then
-	mrconvert -force -json_import $filedir/$filebase.json -fslgrad $filedir/$filebase.bvec $filedir/$filebase.bval $filedir/$filebase.nii.gz $datadir/orig/$filebase.mif.gz
+    if [ ! -f $datadir/dwi/orig/$filebase.mif.gz ]; then
+	mrconvert -force -json_import $filedir/$filebase.json -fslgrad $filedir/$filebase.bvec $filedir/$filebase.bval $filedir/$filebase.nii.gz $datadir/dwi/orig/$filebase.mif.gz
     fi
 done
 
@@ -116,7 +131,7 @@ dwiPA=`basename $dwiPA .nii.gz`
 
 ##################################################################################
 # 0b. Create dwi.mif.gz as concatenation of dwiAP and dwiPA. This is the file to work with
-cd $datadir
+cd $datadir/dwi
 
 if [[ $dwiAP = "" ]] || [[ $dwiPA = "" ]]; then
     echo "No dwi data provided";
@@ -133,9 +148,9 @@ cd $currdir
 ##################################################################################
 # 1. Do PCA-denoising and Remove Gibbs Ringing Artifacts
 
-if [ ! -d $datadir/preproc ]; then mkdir -p $datadir/preproc; fi
+if [ ! -d $datadir/dwi/preproc ]; then mkdir -p $datadir/dwi/preproc; fi
 
-cd $datadir/preproc
+cd $datadir/dwi/preproc
 
 # Point to dwi rawdata, located in $datadir
 dwiraw=../dwi.mif.gz
@@ -171,7 +186,7 @@ cd $currdir
 
 ##################################################################################
 # 2. TOPUP and EDDY for Motion- and susceptibility distortion correction
-cd $datadir/preproc
+cd $datadir/dwi/preproc
 
 # Create b0APPA.mif.gz in to go into TOPUP
 if [ ! -f b0APPA.mif.gz ];then
@@ -197,7 +212,7 @@ cd $currdir
 
 ##################################################################################
 # 3. Mask generation, N4 biasfield correction, meanb0 generation and tensor estimation
-cd $datadir/preproc
+cd $datadir/dwi/preproc
 
 echo "Pre-processing with mask generation, N4 biasfield correction"
 
@@ -240,7 +255,7 @@ cd $currdir
 
 ##################################################################################
 ## 4. B0-normalisation (individual/participant level)
-cd $datadir
+cd $datadir/dwi
 
 echo "Normalisation (participant level), meanb0 generation and tensor estimation"
 
@@ -262,8 +277,8 @@ dwi=dwi_preproc_norm-ind
 cd $currdir
 
 ##################################################################################
-# 5. Meanb0 generation
-cd $datadir
+# 5. meanb0, meanb1000 and meanb2600 generation
+cd $datadir/dwi
 
 if [ ! -f meanb0.mif.gz ]; then
     dwiextract -bzero $dwi.mif.gz - |  mrmath -force -axis 3 - mean meanb0.mif.gz
@@ -284,7 +299,7 @@ cd $currdir
 
 ##################################################################################
 # 6. Calculate diffusion tensor and tensor metrics
-cd $datadir
+cd $datadir/dwi
 
 if [ ! -f dt.mif.gz ]; then
     dwiextract -shells 0,1000 $dwi.mif.gz - | dwi2tensor -mask mask.mif.gz - dt.mif.gz
