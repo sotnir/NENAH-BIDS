@@ -8,17 +8,22 @@ Datadir is `/derivatives/dMRI/sub-$sID`
 
 Make sure your `.bashrc` file contains the paths to all the dependent packages.
 
-- For MRtrix3, add path according to the issue [here](https://github.com/yukaizou2015/NENAH-BIDS/issues/18#issuecomment-877311286).
+- MRtrix3
+- dcm2niix
+- heudiconv
+- ANTs
+- FSL
 
 ### Running scripts 
-Scripts are intended to run from the study directory (/local/scratch/disk2/research/NENAH_BIDS)
+Scripts are intended to run from the study directory (i.e. /local/scratch/disk2/research/NENAH_BIDS)
+To run a script
 ```
-cd /local/scratch/disk2/research/NENAH_BIDS
-bash code/NENAH-BIDS/dMRI/preprocess_QC.sh NENAH007
+$ cd /local/scratch/disk2/research/NENAH_BIDS
+$ bash code/NENAH-BIDS/dMRI/preprocess_QC.sh NENAH007
 ```
 Scripts should be run in the following order:
 
-- preprocess.sh / or preprocess_QC.sh
+- preprocess_QC.sh
 - response.sh
 - (average_response.sh)
 - (upsample_dwi.sh)
