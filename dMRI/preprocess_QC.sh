@@ -281,7 +281,7 @@ cd $currdir
 cd $datadir/dwi
 
 if [ ! -f meanb0.mif.gz ]; then
-    dwiextract -bzero $dwi.mif.gz - |  mrmath -force -axis 3 - mean meanb0.mif.gz
+    dwiextract -shells 0 $dwi.mif.gz - |  mrmath -force -axis 3 - mean meanb0.mif.gz
     mrcalc meanb0.mif.gz mask.mif.gz -mul meanb0_brain.mif.gz
 fi
 if [ ! -f meanb1000.mif.gz ]; then
@@ -289,7 +289,7 @@ if [ ! -f meanb1000.mif.gz ]; then
     mrcalc meanb1000.mif.gz mask.mif.gz -mul meanb1000_brain.mif.gz
 fi
 if [ ! -f meanb2600.mif.gz ]; then
-    dwiextract -bzero $dwi.mif.gz - |  mrmath -force -axis 3 - mean meanb2600.mif.gz
+    dwiextract -shells 2600 $dwi.mif.gz - |  mrmath -force -axis 3 - mean meanb2600.mif.gz
     mrcalc meanb2600.mif.gz mask.mif.gz -mul meanb2600_brain.mif.gz
 fi
     echo "Visually check the meann b-files"
