@@ -117,8 +117,8 @@ echo
 
 # DTI
 cd dti
-echo "QC of generated DTI maps (fa, md, ad, rd, rgb)"
-for map in fa md ad rd rgb; do
+echo "QC of generated DTI maps (fa, adc, ad, rd, ev)"
+for map in fa adc ad rd ev; do
 	echo "Visualization of DTI map: $map"
 	mrview $map.mif.gz -mode 2
 done
