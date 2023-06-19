@@ -214,7 +214,7 @@ cd $currdir
 # 3. Mask generation, N4 biasfield correction, meanb0 generation and tensor estimation
 cd $datadir/dwi/preproc
 
-echo "Pre-processing with mask generation, N4 biasfield correction"
+echo "Pre-processing with B1-field correction (N4 biasfield) and brain mask generation"
 
 # point to right filebase
 dwi=dwi_den_unr_eddy
@@ -240,8 +240,8 @@ if [ ! -f mask.mif.gz ]; then
             -roi.load meanb1000tmp_0p40_mask.nii.gz -roi.opacity 0.5 \
             -roi.load meanb1000tmp_0p45_mask.nii.gz -roi.opacity 0.5 \
             -mode 2"
-    echo "2. Choose the best mask and
-                - save this as mask.mif.gz (mrconvert BET-mask.)
+    echo "2. Choose the best BET-mask (0pXX) and
+                - save this as mask.mif.gz (mrconvert meanb1000tmp_0pXX_mask.nii.gz mask.mif.gz)
                 - delete the tmp-files 
                 - put the BET f-value into QC_dwi.csv-file"
     echo "3. Run this script again"
@@ -301,8 +301,11 @@ cd $currdir
 # 6. Calculate diffusion tensor and tensor metrics
 cd $datadir/dwi
 
-if [ ! -f dt.mif.gz ]; then
-    dwiextract -shells 0,1000 $dwi.mif.gz - | dwi2tensor -mask mask.mif.gz - dt.mif.gz
+if [ ! -d dti ]; then mkdir dti; fi
+
+if [ ! -f dti/dt.mif.gz ]; then
+    dwiextract -shells 0,1000 $dwi.mif.gz - | dwi2tensor -mask mask.mif.gz - dti/dt.mif.gz
+    cd dti
     tensor2metric -force -fa fa.mif.gz -adc adc.mif.gz -rd rd.mif.gz -ad ad.mif.gz -vector ev.mif.gz dt.mif.gz
 fi
 
