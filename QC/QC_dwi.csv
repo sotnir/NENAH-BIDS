@@ -2,7 +2,7 @@ Subject_ID,QC_rawdata_dwi_PASS_1_FAIL_0,rawdata_dir-AP_dwi,rawdata_dir-AP_b0_vol
 NENAH002,1,sub-NENAH002_dir-AP_run-1_dwi.nii.gz,0,sub-NENAH002_dir-PA_run-1_dwi.nii.gz,0,0.45
 NENAH003,,no_data_in_BIDS_rawdata/dwi,,no_data_in_BIDS_rawdata/dwi,,
 NENAH004,1,sub-NENAH004_dir-AP_run-1_dwi.nii.gz,0,sub-NENAH004_dir-PA_run-1_dwi.nii.gz,15,0.45
-NENAH005,1,sub-NENAH005_dir-AP_run-1_dwi.nii.gz,0,sub-NENAH005_dir-PA_run-1_dwi.nii.gz,0,
+NENAH005,0,sub-NENAH005_dir-AP_run-1_dwi.nii.gz,0,not_correct_slice-thickness,,
 NENAH006,1,sub-NENAH006_dir-PA_run-1_dwi.nii.gz,0,sub-NENAH006_dir-PA_run-1_dwi.nii.gz,0,0.40
 NENAH007,0.5,sub-NENAH007_dir-AP_run-1_dwi.nii.gz,0,sub-NENAH007_dir-PA_run-1_dwi.nii.gz,0,0.45
 NENAH008,0,sub-NENAH008_dir-AP_run-1_dwi.nii.gz,0,no_correct_coverage,,
