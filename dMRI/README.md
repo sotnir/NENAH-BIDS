@@ -60,7 +60,7 @@ Options:
   -h / -help / --help   Print usage.
 ```
 
-## Overview of scripts 
+## Overview of scripts in the dMRI pipeline
 Scripts should be run in the following order:
 
 - preprocess_QC.sh
@@ -76,10 +76,17 @@ Need 5TT from sMRI
 - tractography.sh
 - connectome.sh
 
+A book-keeping, `derivatives/dMRI/Subject_Tracker_dMRI_pipeline.csv`, is used for keeping track of the status for each subjects in the dMRI pipeline.  
+
 ## Specific steps/scripts
 
 ### Preprocess_QC 
 Script to preprocess dMRI data.  
+
+Input:  `QC-file` and NIfTI-images in `/rawdata/$sID`
+Output: Orignal and various intermediate and preprocessed files in `derivatives/dMRI/$sID/dwi`
+
+Specific steps:
 1. MP-PCA Denoising and Gibbs Unringing
 2. TOPUP and EDDY for motion- and susceptebility image distortion correction
 3. N4 biasfield correction
@@ -109,16 +116,16 @@ dwi
 ├── meanb2600_brain.mif.gz      <= mean b2600 shell data (skull-stripped)
 ├── meanb2600.mif.gz            <= mean b2600 shell data
 ├── orig        <= original data
-│   ├── sub-NENAHC003_dir-AP_run-1_dwi.bval
-│   ├── sub-NENAHC003_dir-AP_run-1_dwi.bvec
-│   ├── sub-NENAHC003_dir-AP_run-1_dwi.json
-│   ├── sub-NENAHC003_dir-AP_run-1_dwi.mif.gz
-│   ├── sub-NENAHC003_dir-AP_run-1_dwi.nii.gz
-│   ├── sub-NENAHC003_dir-PA_run-1_dwi.bval
-│   ├── sub-NENAHC003_dir-PA_run-1_dwi.bvec
-│   ├── sub-NENAHC003_dir-PA_run-1_dwi.json
-│   ├── sub-NENAHC003_dir-PA_run-1_dwi.mif.gz
-│   └── sub-NENAHC003_dir-PA_run-1_dwi.nii.gz
+│   ├── sub-NENAH$sID_dir-AP_run-1_dwi.bval
+│   ├── sub-NENAH$sID_dir-AP_run-1_dwi.bvec
+│   ├── sub-NENAH$sID_dir-AP_run-1_dwi.json
+│   ├── sub-NENAH$sID_dir-AP_run-1_dwi.mif.gz
+│   ├── sub-NENAH$sID_dir-AP_run-1_dwi.nii.gz
+│   ├── sub-NENAH$sID_dir-PA_run-1_dwi.bval
+│   ├── sub-NENAH$sID_dir-PA_run-1_dwi.bvec
+│   ├── sub-NENAH$sID_dir-PA_run-1_dwi.json
+│   ├── sub-NENAH$sID_dir-PA_run-1_dwi.mif.gz
+│   └── sub-NENAH$sID_dir-PA_run-1_dwi.nii.gz
 └── preproc     <= files/intermediate files in preprocessing steps
     ├── denoise
     ├── dwiAP.mif.gz

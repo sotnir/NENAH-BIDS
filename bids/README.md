@@ -13,7 +13,7 @@ The study directory `NENAH_BIDS` is [BIDS-organised](https://bids-specification.
     └── sequences   <= MRI protocols, gradient files etc
 ```
 
-## Converting DCM data into BIDS-organised NIfTI-data in  `NENAH_BIDS`
+## Converting DCM data into BIDS-organised NIfTI-data
 Bash and python scripts to convert DICOM data into BIDS-organised NIfTI data, in `/rawdata`.
 
 All scripts working on the BIDS rawdata are organized in the `/bids` folder.
@@ -31,3 +31,30 @@ The script runs
 - MRIQC (using a docker container)
 
 3. Run correction scripts `run_fmap_add_Intededfor.py` to include entries for `Intended_for` in .JSON file
+
+## Quality Control of NIfTI-data
+After the conversion, a quality control (QC) is performed of the **sMRI**, **dMRI** and **fMRI** data.
+
+Result are in dedicated book-keeping csv-files located in `/code/NENAH-BIDS/QC`.
+
+Common for all QC-files, the 2nd column states if they have passed the QC-check
+- PASS = 1 = Visually good quality rawdata
+- Borderline = 0.5 = Visually not perfect rawdata and it is unclear whether it can be used
+- FAIL = 0 = Visually poor quality rawdata and should not be used for further processing.
+
+### Structural MRI (sMRI)
+This is done by inspecting the T1-weighted images, both by inspecting the NIfTI-images and the output of `MRIQC`. 
+
+Results are put in `code/NENAH-BIDS/QC/QC_MRIQC_anat.csv`:
+
+### Diffusion  MRI (dMRI)
+This is done by visually inspecting all the dMRI data using the script 
+
+Results are put in `code/NENAH-BIDS/QC/QC_dwi.csv`:
+
+NOTE - two columns describe which b0-volumes that will go into TOPUP are decided.  
+
+### Resting-state fMRI (rs-fMRI)
+This is done by inspecting the fMRI time-series and using output from `MRIQC`. 
+
+Results are put in `code/NENAH-BIDS/QC/QC_MRIQC_func.csv`:
