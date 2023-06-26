@@ -37,7 +37,7 @@ To run a bash-script, make sure that you are in studydir and then run the script
 cd /local/scratch/disk2/research/NENAH_BIDS
 bash code/NENAH-BIDS/dMRI/preprocess_QC.sh NENAH007
 ```
-When a bash-scripts is run without an input-arguments (or with flag -h/-help/--help), it returns the usage
+When a bash-scripts is run without an input-arguments (or with flag -h/-help/--help), it returns the usage  
 E.g.
 ```
 bash code/NENAH-BIDS/dMRI/preprocess_QC.sh
@@ -59,6 +59,7 @@ Options:
   -d / -data-dir        <directory> The directory used to output the preprocessed files (default: derivatives/dMRI/sub-sID)
   -h / -help / --help   Print usage.
 ```
+For the usage, input arguments/options and the processing steps are understood. For more details, as well as more information on output, can be found in the script.
 
 ## Overview of scripts in the dMRI pipeline
 Scripts should be run in the following order:
@@ -83,7 +84,7 @@ A book-keeping, `derivatives/dMRI/Subject_Tracker_dMRI_pipeline.csv`, is used fo
 ### Preprocess_QC 
 Script to preprocess dMRI data.  
 
-Input:  `QC-file` and NIfTI-images in `/rawdata/$sID`
+Input:  `QC-file` and NIfTI-images in `/rawdata/$sID`  
 Output: Orignal and various intermediate and preprocessed files in `derivatives/dMRI/$sID/dwi`
 
 Specific steps:
@@ -126,7 +127,7 @@ dwi
 │   ├── sub-NENAH$sID_dir-PA_run-1_dwi.json
 │   ├── sub-NENAH$sID_dir-PA_run-1_dwi.mif.gz
 │   └── sub-NENAH$sID_dir-PA_run-1_dwi.nii.gz
-└── preproc     <= files/intermediate files in preprocessing steps
+└── preproc     <= folders and files/intermediate files in preprocessing steps
     ├── denoise
     ├── dwiAP.mif.gz
     ├── dwi_den.mif.gz
