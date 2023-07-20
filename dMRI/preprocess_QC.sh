@@ -197,9 +197,14 @@ if [ ! -f b0APPA.mif.gz ];then
     rm b0AP.mif.gz b0PA.mif.gz
 fi
 
+scratchdir=dwifslpreproc
+
 # Do Topup and Eddy with dwipreproc and b0APPA.mif.gz as input
 if [ ! -f dwi_den_unr_eddy.mif.gz ]; then
-	dwifslpreproc -rpe_header -se_epi b0APPA.mif.gz -eddy_slspec $studydir/sequences/slspec_NENAH_64_interleaved_slices.txt -align_seepi \
+	dwifslpreproc -scratch $scratchdir \
+ 	-nocleanup \
+    	-rpe_header -se_epi b0APPA.mif.gz \
+     	-eddy_slspec $studydir/sequences/slspec_NENAH_64_interleaved_slices.txt -align_seepi \
 	-topup_options " --iout=field_mag_unwarped" \
 	-eddy_options " --slm=linear --repol --mporder=16 --s2v_niter=10 --s2v_interp=trilinear --s2v_lambda=1 " \
 	-eddyqc_all eddy \
@@ -207,6 +212,12 @@ if [ ! -f dwi_den_unr_eddy.mif.gz ]; then
 	dwi_den_unr_eddy.mif.gz;
    # or use -rpe_pair combo: dwifslpreproc DWI_in.mif DWI_out.mif -rpe_pair -se_epi b0_pair.mif -pe_dir ap -readout_time 0.72 -align_seepi
 fi
+
+# Now cleanup by transferring relevant files to topup folder and deleting scratch folder
+mv eddy/quad ../../qc/.
+cp $scratchdir/command.txt $scratchdir/log.txt $scratchdir/eddy_*.txt $scratchdir/applytopup_*.txt $scratchdir/slspec.txt eddy/.
+mv $scratchdir/field_* $scratchdir/topup_* topup/.
+rm -rf $scratchdir
 
 cd $currdir
 
