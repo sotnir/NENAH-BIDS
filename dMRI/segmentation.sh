@@ -33,7 +33,8 @@ studydir=`pwd`
 
 # Defaults
 seg=derivatives/sMRI_fs-segmentation/sub-$sID/mri/aparc+aseg.mgz
-transform=derivatives/dMRI/sub-$sID/reg/dwi_2_t1w_mrtrix-bbr.mat
+#transform=derivatives/dMRI/sub-$sID/reg/dwi_2_t1w_mrtrix-bbr.mat
+transform=derivatives/dMRI/sub-$sID/xfm/dwi_2_t1w_mrtrix-bbr.mat
 datadir=derivatives/dMRI/sub-$sID
 
 while [ $# -gt 0 ]; do
