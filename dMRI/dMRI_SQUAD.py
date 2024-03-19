@@ -31,8 +31,9 @@ if not os.path.exists(squadfolder): # then make this directory
     os.makedirs(squadfolder)
 # and write the squadlist file to this (required as input to eddy_quad)
 squadlistfile = os.path.join(squadfolder,'squad_list.txt')
-with open(squadlistfile, "w") as outfile:
-    outfile.write("\n".join(quadfolders))
+if not os.path.isfile(squadlistfile):
+    with open(squadlistfile, "w") as outfile:
+        outfile.write("\n".join(quadfolders))
 
 ####################################################
 # Now run SQUAD (eddy_squad)
