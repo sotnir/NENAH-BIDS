@@ -41,7 +41,7 @@ df_sID_ssID = pd.DataFrame(sID, columns=["participant_id"])
 # rename the columns
 dfqc.rename(columns = {'qc_motion_abs':'qc_motion_abs_pass_fail',
                        'qc_motion_rel':'qc_motion_rel_pass_fail',
-                       'qc_outliers_tot_pass_fail':'qc_outliers_tot_pass_fail'}, 
+                       'qc_outliers_tot':'qc_outliers_tot_pass_fail'}, 
                        inplace = True)
 #dfqc.rename(columns = {'qc_motion_abs':'qc_motion_abs_pass_fail',
 #                       'qc_motion_rel':'qc_motion_rel_pass_fail',
