@@ -5,7 +5,7 @@
 
 # Define derivatives folder
 derivatives = '/data/1TSSD/NENAH_BIDS/derivatives/dMRI'
-squadfolder = os.path.join(derivatives,f'sub-NENAHGRP/qc/squad_with_grouping_exclNENAHC041")
+squadfolder = os.path.join(derivatives,f'sub-NENAHGRP/qc/squad_with_grouping_exclNENAHC041')
 
 # Read SQUAD output (GROUP JSON-file)
 import json
