@@ -57,8 +57,8 @@ with open(os.path.join(squadfolder,'group_db.json'), 'r') as f:
   squad = json.load(f)
 # and put into dataframes
 df1 = pd.DataFrame(squad["qc_motion"], columns=['qc_motion_abs',  'qc_motion_rel'], dtype = float)
-#df2 = pd.DataFrame(squad["qc_cnr"], columns=['qc_snr_b0',  'qc_cnr_b0400',  'qc_cnr_b1000',  'qc_cnr_b2500'], dtype = float)
-df3 = pd.DataFrame(squad["qc_outliers"], columns=['qc_outliers_tot', 'qc_outliers_b400', 'qc_outliers_b1000', 'qc_outliers_b2500','qc_outliers_pe'], dtype = float)
+#df2 = pd.DataFrame(squad["qc_cnr"], columns=['qc_snr_b0',  'qc_cnr_b1000',  'qc_cnr_b2600'], dtype = float)
+df3 = pd.DataFrame(squad["qc_outliers"], columns=['qc_outliers_tot', 'qc_outliers_b1000', 'qc_outliers_b2500','qc_outliers_pe'], dtype = float)
 # and a final dataframe
 df =  pd.concat([df1, df3['qc_outliers_tot']], axis=1, join='outer')
 #df =  pd.concat([df1,df2, df3['qc_outliers_tot']], axis=1, join='outer')
