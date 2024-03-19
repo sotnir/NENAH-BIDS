@@ -14,7 +14,7 @@ squadlistfile = os.path.join(derivatives,f'sub-NENAHGRP/qc/squad_quad_folders_ex
 squadfolder = os.path.join(derivatives,f'sub-NENAHGRP/qc/squad_with_grouping_exclNENAHC041')
 
 # Read the included quadfolder
-with open(squadlistfile), 'r') as f:
+with open(squadlistfile, 'r') as f:
   quadfolders = f.read()
 
 # Read SQUAD output (GROUP JSON-file)
