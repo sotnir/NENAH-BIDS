@@ -11,9 +11,10 @@ Uses inputs from QC-file
 1. MP-PCA Denoising and Gibbs Unringing 
 2. TOPUP and EDDY for motion- and susceptebility image distortion correction
 3. N4 biasfield correction
-4. Normalisation
-5. Creation of a mean B0, B1000 and B2600 images (as average from normalised unwarped b0s)
-6. Calculation of tensor and tensor maps (FA, MD etc)
+4. Brain mask estimation (with FSL's BET using different values for -f => see code)
+5. Normalisation
+6. Creation of a mean B0, B1000 and B2600 images (as average from normalised unwarped b0s)
+7. Calculation of tensor and tensor maps (FA, MD etc) using b0 and b1000 shells only
 
 Arguments:
   sID    Subject ID   (e.g. NENAHC001) 
