@@ -11,15 +11,15 @@ import pandas as pd
 # Finn's laptop
 studydir = '/Users/fi2313le/Research/Projects/UoS_-_HIE_NENAH-school-age/Data/NENAH_BIDS'
 # UoS WS
-studydir = '/data/1TSSD/NENAH_BIDS'
+#studydir = '/data/1TSSD/NENAH_BIDS'
 derivatives = studydir + '/derivatives/dMRI'
 squadlistfile = os.path.join(derivatives,f'sub-NENAHGRP/qc/squad_quad_folders_exclNENAHC041.txt')
 squadfolder = os.path.join(derivatives,f'sub-NENAHGRP/qc/squad_with_grouping_exclNENAHC041')
 
 # Put the included participant_id into a dataframe
 df0 = pd.read_csv(squadlistfile, sep=" ", header=None)
-df0 = df0.replace("../../sub","sub", regex=True).replace("/qc/eddy_quad","", regex=True)
-df0.columns = ['participant_id'] 
+df0 = df0.replace("../../sub-","", regex=True).replace("/qc/eddy_quad","", regex=True)
+df0.columns = ['Subject_ID'] 
 
 # Read SQUAD output (GROUP JSON-file)
 with open(os.path.join(squadfolder,'group_db.json'), 'r') as f:
@@ -58,9 +58,26 @@ dfqc.rename(columns = {'qc_min':'qc_min_pass_fail',
 #                       'qc_outliers_tot_pass_fail':'qc_outliers_tot_pass_fail'}, 
 #                       inplace = True)
 
-# include the participant_id
+# include the Subject_ID
 dfqc =  pd.concat([df0, dfqc], axis=1, join='outer')
-dfqc = dfqc.sort_values( by = 'participant_id')
+dfqc = dfqc.sort_values( by = 'Subject_ID')
 # and write to output-file
 squadqctsv = os.path.join(squadfolder,'QC_SQUAD.tsv')
 dfqc.to_csv(squadqctsv, sep="\t", index=False)
+
+# Finally, create a QC_dMRI_pipeline.tsv file that goes into codedir/QC for further processing in pipeline
+codedir = '/Users/fi2313le/Code/NENAH-BIDS'
+qc_rawdata_anat_file = os.path.join(codedir,'QC','QC_MRIQC_anat.csv')
+qc_rawdata_dwi_file = os.path.join(codedir,'QC','QC_dwi.csv')
+qc_dMRI_pipeline_dwi_file = os.path.join(codedir,'QC','QC_dMRI_pipeline_dwi.csv')
+dfanat = pd.read_csv(qc_rawdata_anat_file, sep=",")
+dfdwi = pd.read_csv(qc_rawdata_dwi_file, sep=",")
+df = pd.concat([dfanat[["Subject_ID","QC_rawdata_anat_PASS_1_or_FAIL_0"]], dfdwi["QC_rawdata_dwi_PASS_1_FAIL_0"]], axis=1, join='outer')
+
+# Merge the two data frames 
+df_merged = pd.merge(df, dfqc[["Subject_ID","qc_min_pass_fail"]], on="Subject_ID", how="left")
+# rename
+df_merged.rename(columns = {'qc_min_pass_fail':'QC_EddyQC_dwi_PASS_1_FAIL_0'})
+# and then save in file
+df_merged.to_csv(qc_dMRI_pipeline_dwi_file, sep=",", index=False)
+
