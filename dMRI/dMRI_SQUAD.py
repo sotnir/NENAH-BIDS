@@ -7,11 +7,14 @@ import json
 import numpy as np
 import pandas as pd
 
-# Define derivatives folder
+# Define INPUT
 # Finn's laptop
 studydir = '/Users/fi2313le/Research/Projects/UoS_-_HIE_NENAH-school-age/Data/NENAH_BIDS'
+codedir = '/Users/fi2313le/Code/NENAH-BIDS'
 # UoS WS
 studydir = '/data/1TSSD/NENAH_BIDS'
+codedir = studydir + '/code/NENAH-BIDS'
+# Define derivatives folder and SQUAD input
 derivatives = studydir + '/derivatives/dMRI'
 squadlistfile = os.path.join(derivatives,f'sub-NENAHGRP/qc/squad_quad_folders_exclNENAHC041.txt')
 squadfolder = os.path.join(derivatives,f'sub-NENAHGRP/qc/squad_with_grouping_exclNENAHC041')
@@ -66,7 +69,6 @@ squadqctsv = os.path.join(squadfolder,'QC_SQUAD.tsv')
 dfqc.to_csv(squadqctsv, sep="\t", index=False)
 
 # Finally, create a QC_dMRI_pipeline.tsv file that goes into codedir/QC for further processing in pipeline
-codedir = '/Users/fi2313le/Code/NENAH-BIDS'
 qc_rawdata_anat_file = os.path.join(codedir,'QC','QC_MRIQC_anat.csv')
 qc_rawdata_dwi_file = os.path.join(codedir,'QC','QC_dwi.csv')
 qc_dMRI_pipeline_dwi_file = os.path.join(codedir,'QC','QC_dMRI_pipeline_dwi.csv')
