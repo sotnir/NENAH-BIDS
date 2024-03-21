@@ -11,7 +11,7 @@ import pandas as pd
 # Finn's laptop
 studydir = '/Users/fi2313le/Research/Projects/UoS_-_HIE_NENAH-school-age/Data/NENAH_BIDS'
 # UoS WS
-#studydir = '/data/1TSSD/NENAH_BIDS'
+studydir = '/data/1TSSD/NENAH_BIDS'
 derivatives = studydir + '/derivatives/dMRI'
 squadlistfile = os.path.join(derivatives,f'sub-NENAHGRP/qc/squad_quad_folders_exclNENAHC041.txt')
 squadfolder = os.path.join(derivatives,f'sub-NENAHGRP/qc/squad_with_grouping_exclNENAHC041')
