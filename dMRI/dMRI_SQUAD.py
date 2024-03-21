@@ -81,5 +81,5 @@ df_merged = pd.merge(df, dfqc[["Subject_ID","qc_min_pass_fail"]], on="Subject_ID
 # rename
 df_merged.rename(columns = {'qc_min_pass_fail':'QC_EddyQC_dwi_PASS_1_FAIL_0'})
 # and then save in file
-df_merged.to_csv(qc_dMRI_pipeline_dwi_file, sep="/t", index=False)
+df_merged.to_csv(qc_dMRI_pipeline_dwi_file, sep="\t", index=False)
 
