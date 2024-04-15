@@ -82,6 +82,6 @@ fi
 mv $eddydir/eddy_cnr_maps.nii.gz eddy/.
 mv $eddydir/quad ../../qc/eddy_quad_cnr
 rm -rf $scratchdir
-rm $eddydir
+rm -rf $eddydir
 
 cd $currdir
