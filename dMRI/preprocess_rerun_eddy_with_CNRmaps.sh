@@ -60,16 +60,16 @@ eddydir=eddy_cnr
 # Do Topup and Eddy with dwipreproc and b0APPA.mif.gz as input
 if [ -f dwi_den_unr_eddy.mif.gz ]; then
 	dwifslpreproc -scratch $scratchdir \
- 	-nocleanup \
-    -rpe_header -se_epi b0APPA.mif.gz \
-    -eddy_slspec $studydir/sequences/slspec_NENAH_64_interleaved_slices.txt -align_seepi \
+  -nocleanup \
+  -rpe_header -se_epi b0APPA.mif.gz \
+  -eddy_slspec $studydir/sequences/slspec_NENAH_64_interleaved_slices.txt -align_seepi \
 	-topup_options " --iout=field_mag_unwarped" \
 	-eddy_options " --cnr_maps --slm=linear --repol --mporder=16 --s2v_niter=10 --s2v_interp=trilinear --s2v_lambda=1 " \
 	-eddyqc_all $eddydir \
-    -nthreads $threads
-	dwi_den_unr.mif.gz \
+  -nthreads $threads \
+  dwi_den_unr.mif.gz \
 	dwi_den_unr_eddy-cnr.mif.gz;
-   # or use -rpe_pair combo: dwifslpreproc DWI_in.mif DWI_out.mif -rpe_pair -se_epi b0_pair.mif -pe_dir ap -readout_time 0.72 -align_seepi
+  # or use -rpe_pair combo: dwifslpreproc DWI_in.mif DWI_out.mif -rpe_pair -se_epi b0_pair.mif -pe_dir ap -readout_time 0.72 -align_seepi
 fi
 
 # Now cleanup by transferring relevant files to topup folder and deleting scratch folder
