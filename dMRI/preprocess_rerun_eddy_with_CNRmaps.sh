@@ -7,7 +7,7 @@ usage()
   echo "usage: $base sID [options]
 Script to preprocess FSL's eddy (via dwifslpreprocess) to include CNR-maps as output 
 Only run if dwi_den_unr_eddy.mif.gz exists (i.e. eddy has been run before)
-Preprocessing is gathered in $datadir/preproc 
+New eddy_quad output is gathered in $datadir/preproc 
 
 Arguments:
   sID    Subject ID   (e.g. NENAHC001) 
@@ -73,9 +73,9 @@ if [ -f dwi_den_unr_eddy.mif.gz ]; then
 fi
 
 # Now cleanup by transferring relevant files to topup folder and deleting scratch folder
-#mv eddy/quad ../../qc/.
-#cp $scratchdir/command.txt $scratchdir/log.txt $scratchdir/eddy_*.txt $scratchdir/applytopup_*.txt $scratchdir/slspec.txt eddy/.
-#mv $scratchdir/field_* $scratchdir/topup_* topup/.
-#rm -rf $scratchdir
+
+mv $eddydir/eddy_cnr_maps.nii.gz eddy/.
+mv $eddydir/quad ../../qc/eddy_quad_cnr
+rm -rf $scratchdir
 
 cd $currdir
