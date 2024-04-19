@@ -81,7 +81,7 @@ dfdwi = pd.read_csv(qc_rawdata_dwi_file, sep=",")
 df = pd.concat([dfanat[["Subject_ID","QC_rawdata_anat_PASS_1_or_FAIL_0"]], dfdwi["QC_rawdata_dwi_PASS_1_FAIL_0"]], axis=1, join='outer')
 
 # Merge the two data frames 
-df_merged = pd.merge(df, dfqc[["Subject_ID","qc_min_pass_fail"]], on="Subject_ID", how="left")
+df_merged = pd.merge(df, dfqc[["Subject_ID","qc_eyeball-postEddy_pass_fail"]], on="Subject_ID", how="left")
 # rename
 df_merged.rename(columns = {'qc_eyeball-postEddy_pass_fail':'QC_EddyQC_dwi_PASS_1_FAIL_0'})
 # and then save in file
