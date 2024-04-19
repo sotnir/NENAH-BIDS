@@ -64,7 +64,7 @@ dfqc.rename(columns = {'qc_motion_abs':'qc_motion_abs_pass_fail',
 # include the Subject_ID
 dfqc =  pd.concat([df0, dfqc], axis=1, join='outer')
 # include a column for book-keeping eye-balling of results
-dfqc["qc_eyeball-postEddy_pass_fail]=""
+dfqc["qc_eyeball-postEddy_pass_fail"] = ""
 dfqc = dfqc.sort_values( by = 'Subject_ID')
 
 # and write to output-file
