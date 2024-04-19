@@ -52,7 +52,8 @@ dfqc =  pd.concat([dfmin, dfqc], axis=1, join='outer')
 #                       'qc_motion_rel':'qc_motion_rel_pass_fail',
 #                       'qc_outliers_tot':'qc_outliers_tot_pass_fail'}, 
 #                       inplace = True)
-dfqc.rename(columns = {'qc_motion_abs':'qc_motion_abs_pass_fail',
+dfqc.rename(columns = {'qc_min':'qc_min_pass_fail',
+                       'qc_motion_abs':'qc_motion_abs_pass_fail',
                        'qc_motion_rel':'qc_motion_rel_pass_fail',
                        'qc_snr_b0':'qc_snr_b0_pass_fail',
                        'qc_cnr_b0400':'qc_cnr_b0400_pass_fail',
