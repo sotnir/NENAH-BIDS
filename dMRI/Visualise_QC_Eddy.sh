@@ -74,7 +74,8 @@ echo
 # Preprocess
 echo "############## QC of Process: Preprocess
 "
-cd $datadir/dwi/preproc
+preprocdir = $datadir/dwi/preproc
+cd $preprocdir
 
 # Brain Mask
 dwi=dwi_den_unr_eddy.mif.gz 
@@ -84,12 +85,16 @@ echo Visualisation of Brain Mask as an ROI-overlay on meanb1000
 dwiextract -quiet $dwi - -shells 1000 | mrmath -quiet - mean - -axis 3 | mrview - -roi.load mask.mif.gz -roi.opacity 0.5 -mode 2
 echo
 
-# Final output (N4-biasfield corrected and B0-intensity normalised)
-cd .. #go to $datadir/dwi
-dwi=dwi_preproc.mif.gz
+# Final output 
+dwi=dwi_den_unr_eddy_unbiased.mif.gz
 echo "QC of final preprocessing output (PCA-denoise, Gibbs unring, EDDY, N4-biasfield corrected)"
 echo "Check corrected dMRI, shell by shell, for residual motion, signal dropout, (excessive) image distortions"
 dMRI_visualisation $dwi;
+
+echo Inspecting SNR/CNR-maps
+file=$preprocdir/eddy/eddy_cnr_maps.nii.gz
+mrview $file -mode 2
+
 for bvalue in b0 b1000 b2600; do
 	echo "Visualization of skull-stripped mean$bvalue"
 	mrview mean${bvalue}_brain.mif.gz -mode 2
