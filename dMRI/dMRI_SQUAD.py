@@ -72,18 +72,18 @@ dfqc = dfqc.sort_values( by = 'Subject_ID')
 squadqctsv = os.path.join(squadfolder,'QC_SQUAD.tsv')
 dfqc.to_csv(squadqctsv, sep="\t", index=False)
 
-# Finally, create a QC_dMRI_pipeline.tsv file that goes into codedir/QC for further processing in pipeline
-qc_rawdata_anat_file = os.path.join(codedir,'QC','QC_MRIQC_anat.csv')
-qc_rawdata_dwi_file = os.path.join(codedir,'QC','QC_dwi.csv')
-qc_dMRI_pipeline_dwi_file = os.path.join(codedir,'QC','QC_dMRI_pipeline_dwi.csv')
-dfanat = pd.read_csv(qc_rawdata_anat_file, sep=",")
-dfdwi = pd.read_csv(qc_rawdata_dwi_file, sep=",")
-df = pd.concat([dfanat[["Subject_ID","QC_rawdata_anat_PASS_1_or_FAIL_0"]], dfdwi["QC_rawdata_dwi_PASS_1_FAIL_0"]], axis=1, join='outer')
+## Finally, create a QC_dMRI_pipeline.tsv file that goes into codedir/QC for further processing in pipeline
+#qc_rawdata_anat_file = os.path.join(codedir,'QC','QC_MRIQC_anat.csv')
+#qc_rawdata_dwi_file = os.path.join(codedir,'QC','QC_dwi.csv')
+#qc_dMRI_pipeline_dwi_file = os.path.join(codedir,'QC','QC_dMRI_pipeline_dwi.csv')
+#dfanat = pd.read_csv(qc_rawdata_anat_file, sep=",")
+#dfdwi = pd.read_csv(qc_rawdata_dwi_file, sep=",")
+#df = pd.concat([dfanat[["Subject_ID","QC_rawdata_anat_PASS_1_or_FAIL_0"]], dfdwi["QC_rawdata_dwi_PASS_1_FAIL_0"]], axis=1, join='outer')
 
-# Merge the two data frames 
-df_merged = pd.merge(df, dfqc[["Subject_ID","qc_eyeball-postEddy_pass_fail"]], on="Subject_ID", how="left")
-# rename
-df_merged.rename(columns = {'qc_eyeball-postEddy_pass_fail':'QC_EddyQC_dwi_PASS_1_FAIL_0'})
-# and then save in file
-df_merged.to_csv(qc_dMRI_pipeline_dwi_file, sep="\t", index=False)
+## Merge the two data frames 
+#df_merged = pd.merge(df, dfqc[["Subject_ID","qc_eyeball-postEddy_pass_fail"]], on="Subject_ID", how="left")
+## rename
+#df_merged.rename(columns = {'qc_eyeball-postEddy_pass_fail':'QC_EddyQC_dwi_PASS_1_FAIL_0'})
+## and then save in file
+#df_merged.to_csv(qc_dMRI_pipeline_dwi_file, sep="\t", index=False)
 
