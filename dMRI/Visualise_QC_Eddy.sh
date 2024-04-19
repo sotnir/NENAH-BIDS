@@ -92,8 +92,7 @@ echo "Check corrected dMRI, shell by shell, for residual motion, signal dropout,
 dMRI_visualisation $dwi;
 
 echo Inspecting SNR/CNR-maps
-file=$preprocdir/eddy/eddy_cnr_maps.nii.gz
-mrview $file -mode 2
+mrview eddy/eddy_cnr_maps.nii.gz -mode 2
 
 for bvalue in b0 b1000 b2600; do
 	echo "Visualization of skull-stripped mean$bvalue"
