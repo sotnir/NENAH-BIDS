@@ -16,12 +16,12 @@ studydir = '/data/1TSSD/NENAH_BIDS'
 codedir = studydir + '/code/NENAH-BIDS'
 # Define derivatives folder and SQUAD input
 derivatives = studydir + '/derivatives/dMRI'
-squadlistfile = os.path.join(derivatives,f'sub-NENAHGRP/qc/squad_quad_folders_exclNENAHC041.txt')
-squadfolder = os.path.join(derivatives,f'sub-NENAHGRP/qc/squad_with_grouping_exclNENAHC041')
+squadlistfile = os.path.join(derivatives,f'sub-NENAHGRP/qc/squad_quad_cnr_folders_exclNENAHC041.txt')
+squadfolder = os.path.join(derivatives,f'sub-NENAHGRP/qc/squad_quad_cnr')
 
 # Put the included participant_id into a dataframe
 df0 = pd.read_csv(squadlistfile, sep=" ", header=None)
-df0 = df0.replace("../../sub-","", regex=True).replace("/qc/eddy_quad","", regex=True)
+df0 = df0.replace("../../sub-","", regex=True).replace("/qc/eddy_quad_cnr","", regex=True)
 df0.columns = ['Subject_ID'] 
 
 # Read SQUAD output (GROUP JSON-file)
@@ -29,11 +29,11 @@ with open(os.path.join(squadfolder,'group_db.json'), 'r') as f:
   squad = json.load(f)
 # and put into dataframes
 df1 = pd.DataFrame(squad["qc_motion"], columns=['qc_motion_abs',  'qc_motion_rel'], dtype = float)
-#df2 = pd.DataFrame(squad["qc_cnr"], columns=['qc_snr_b0',  'qc_cnr_b1000',  'qc_cnr_b2600'], dtype = float)
+df2 = pd.DataFrame(squad["qc_cnr"], columns=['qc_snr_b0',  'qc_cnr_b1000',  'qc_cnr_b2600'], dtype = float)
 df3 = pd.DataFrame(squad["qc_outliers"], columns=['qc_outliers_tot', 'qc_outliers_b1000', 'qc_outliers_b2600','qc_outliers_pe_dirAP','qc_outliers_pe_dirPA'], dtype = float)
 # and a final dataframe
-df =  pd.concat([df1, df3['qc_outliers_tot']], axis=1, join='outer')
-#df =  pd.concat([df1,df2, df3['qc_outliers_tot']], axis=1, join='outer')
+#df =  pd.concat([df1, df3['qc_outliers_tot']], axis=1, join='outer')
+df =  pd.concat([df1,df2, df3['qc_outliers_tot']], axis=1, join='outer')
 
 # Create dataframe for deciding QC
 dfqc = pd.DataFrame(np.zeros(df.shape)) # same shape as df but filled with zeros
@@ -47,23 +47,26 @@ dfmin  = pd.DataFrame(dfqc.min(axis=1), columns = ["qc_min"])
 dfqc =  pd.concat([dfmin, dfqc], axis=1, join='outer')
 
 # rename the columns
-dfqc.rename(columns = {'qc_min':'qc_min_pass_fail',
-                       'qc_motion_abs':'qc_motion_abs_pass_fail',
-                       'qc_motion_rel':'qc_motion_rel_pass_fail',
-                       'qc_outliers_tot':'qc_outliers_tot_pass_fail'}, 
-                       inplace = True)
-#dfqc.rename(columns = {'qc_motion_abs':'qc_motion_abs_pass_fail',
+#dfqc.rename(columns = {'qc_min':'qc_min_pass_fail',
+#                       'qc_motion_abs':'qc_motion_abs_pass_fail',
 #                       'qc_motion_rel':'qc_motion_rel_pass_fail',
-#                       'qc_snr_b0':'qc_snr_b0_pass_fail',
-#                       'qc_cnr_b0400':'qc_cnr_b0400_pass_fail',
-#                       'qc_cnr_b1000':'qc_cnr_b1000_pass_fail',
-#                       'qc_cnr_b2500':'qc_cnr_b2500_pass_fail',
-#                       'qc_outliers_tot_pass_fail':'qc_outliers_tot_pass_fail'}, 
+#                       'qc_outliers_tot':'qc_outliers_tot_pass_fail'}, 
 #                       inplace = True)
+dfqc.rename(columns = {'qc_motion_abs':'qc_motion_abs_pass_fail',
+                       'qc_motion_rel':'qc_motion_rel_pass_fail',
+                       'qc_snr_b0':'qc_snr_b0_pass_fail',
+                       'qc_cnr_b0400':'qc_cnr_b0400_pass_fail',
+                       'qc_cnr_b1000':'qc_cnr_b1000_pass_fail',
+                       'qc_cnr_b2500':'qc_cnr_b2500_pass_fail',
+                       'qc_outliers_tot_pass_fail':'qc_outliers_tot_pass_fail'}, 
+                       inplace = True)
 
 # include the Subject_ID
 dfqc =  pd.concat([df0, dfqc], axis=1, join='outer')
+# include a column for book-keeping eye-balling of results
+dfqc["qc_eyeball-postEddy_pass_fail]=""
 dfqc = dfqc.sort_values( by = 'Subject_ID')
+
 # and write to output-file
 squadqctsv = os.path.join(squadfolder,'QC_SQUAD.tsv')
 dfqc.to_csv(squadqctsv, sep="\t", index=False)
@@ -79,7 +82,7 @@ df = pd.concat([dfanat[["Subject_ID","QC_rawdata_anat_PASS_1_or_FAIL_0"]], dfdwi
 # Merge the two data frames 
 df_merged = pd.merge(df, dfqc[["Subject_ID","qc_min_pass_fail"]], on="Subject_ID", how="left")
 # rename
-df_merged.rename(columns = {'qc_min_pass_fail':'QC_EddyQC_dwi_PASS_1_FAIL_0'})
+df_merged.rename(columns = {'qc_eyeball-postEddy_pass_fail':'QC_EddyQC_dwi_PASS_1_FAIL_0'})
 # and then save in file
 df_merged.to_csv(qc_dMRI_pipeline_dwi_file, sep="\t", index=False)
 
