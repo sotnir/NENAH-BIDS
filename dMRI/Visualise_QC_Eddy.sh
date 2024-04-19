@@ -74,8 +74,8 @@ echo
 # Preprocess
 echo "############## QC of Process: Preprocess
 "
-preprocdir = $datadir/dwi/preproc
-cd $preprocdir
+
+cd $datadir/dwi/preproc
 
 # Brain Mask
 dwi=dwi_den_unr_eddy.mif.gz 
@@ -94,6 +94,7 @@ dMRI_visualisation $dwi;
 echo Inspecting SNR/CNR-maps
 mrview eddy/eddy_cnr_maps.nii.gz -mode 2
 
+cd ..
 for bvalue in b0 b1000 b2600; do
 	echo "Visualization of skull-stripped mean$bvalue"
 	mrview mean${bvalue}_brain.mif.gz -mode 2
