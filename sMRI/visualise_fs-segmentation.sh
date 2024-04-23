@@ -53,9 +53,10 @@ else
 fi
 
 # Visualisation with FreeSurfer's freeview (taken from https://surfer.nmr.mgh.harvard.edu/fswiki/FsTutorial/OutputData_freeview)
-#To verify that FreeSurfer did a good job, you will want to check:
-# - Whether the surfaces accurately follow the gray matter and white matter boundaries.
-# - Whether the aseg accurately follows the subcortical intensity boundaries.
+echo "QC of FreeSurfer segmentation for $sID"
+echo To verify that FreeSurfer did a good job, you will want to check:
+echo Whether the surfaces accurately follow the gray matter and white matter boundaries.
+echo Whether the aseg accurately follows the subcortical intensity boundaries.
 
 freeview -v \
 	 $freesurfer_subject_folder/mri/T1.mgz \
