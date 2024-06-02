@@ -47,6 +47,8 @@ Primarily based on the FSL's EDDY and its [QC routines](https://fsl.fmrib.ox.ac.
 - The QC results are stored in `sub-NENAHGRP/qc/squad_quad_cnr/QC_SQUAD.tsv`, specifically `qc_eyeball-postEddy_pass_fail` and given `1=pass`, `0.5=borderline` or `0=fail`
 - This column is transferred to `$studydir/derivatives/dMRI/QC_dMRI_pipeline.tsv`
 
+Visualisaton of preprocessed data is done with script `$codedir/dMRI/Visualise_QC_Eddy.sh`
+
 Guidance from [EDDY QC paper](https://www.sciencedirect.com/science/article/pii/S1053811918319451) and the paper on the [dMRI pipeline in dHCP](https://www.sciencedirect.com/science/article/pii/S1053811918304889?via%3Dihub)
 #### Response
 #### CSD  
