@@ -292,7 +292,7 @@ if [ ! -f ${dwi}_norm-ind.mif.gz ]; then
     fi
 fi
 
-dwi=${dwi}_norm-ind
+dwi=dwi_preproc_norm-ind
 cd $currdir
 
 ##################################################################################
