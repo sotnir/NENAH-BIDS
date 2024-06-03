@@ -282,10 +282,17 @@ dwi=dwi_preproc
 
 # B0-normalisation
 if [ ! -f ${dwi}_norm-ind.mif.gz ]; then
-    dwinormalise individual -nthreads $threads $dwi.mif.gz mask.mif.gz ${dwi}_norm-ind.mif.gz
+    # Check if response functions are already generated
+    if [ -f csd/dhollander_wm.txt ] && [ -f csd/dhollander_gm.txt ] && [ -f csd/dhollander_csf.txt ]; then
+        # MT normalization for WM, GM, and CSF
+        mtnormalise -force -mask mask.mif.gz csd/wmfod.mif csd/wmfod_norm.mif csd/gmfod.mif csd/gmfod_norm.mif csd/csffod.mif csd/csffod_norm.mif
+    else
+        echo "Response functions not found. Please run csd.sh to generate them."
+        exit 1
+    fi
 fi
 
-dwi=dwi_preproc_norm-ind
+dwi=${dwi}_norm-ind
 cd $currdir
 
 ##################################################################################
