@@ -4,13 +4,13 @@
 usage()
 {
   base=$(basename "$0")
-  echo "usage: $base subjectID sessionID [options]
+  echo "usage: $base subjectID [options]
 Estimation of response function
 
 Arguments:
   sID				Subject ID (e.g. NENAHC003) 
 Options:
-  -dwi				Preprocessed dMRI data serie (format: .mif.gz) (default: derivatives/dMRI/sub-sID/dwi/dwi_preproc_inorm.mif.gz)
+  -dwi				Preprocessed dMRI data serie (format: .mif.gz) (default: derivatives/dMRI/sub-sID/dwi/dwi_preproc.mif.gz)
   -mask				Mask for dMRI data (format: .mif.gz) (default: derivatives/dMRI/sub-sID/dwi/mask.mif.gz)
   -response			Response function (tournier or dhollander) (default: dhollander)
   -d / -data-dir  <directory>   The directory used to output the preprocessed files (default: derivatives/dMRI/sub-sID)
@@ -31,7 +31,7 @@ currdir=$PWD
 
 # Defaults
 datadir=derivatives/dMRI/sub-$sID
-dwi=$datadir/dwi/dwi_preproc_inorm.mif.gz
+dwi=$datadir/dwi/dwi_preproc.mif.gz
 mask=$datadir/dwi/mask.mif.gz
 response=dhollander
 
@@ -99,6 +99,7 @@ mask=`basename $mask .mif.gz`
 ## Make Response Function estimation and then CSD calcuation
 
 cd $datadir/dwi
+dwibase=`basename $dwi .mif.gz`
 
 ## ---- Tournier ----
 if [[ $response = tournier ]]; then
@@ -109,12 +110,12 @@ if [[ $response = tournier ]]; then
 
     if [ ! -f response/${response}_response.txt ]; then
 	echo "Estimating response function use $response method"
-	dwi2response tournier -force -mask  $mask.mif.gz -voxels $responsedir/${response}_sf.mif.gz $dwi.mif.gz $responsedir/${response}_response.txt
+	dwi2response tournier -force -mask  $mask.mif.gz -voxels $responsedir/${response}_sf_$dwibase.mif.gz $dwi.mif.gz $responsedir/${response}_response_$dwibase.txt
     fi
 
     echo Check results: response fcn and sf voxels
     echo shview  response/${response}_response.txt
-    echo mrview  meanb0_brain.mif.gz -roi.load $responsedir/${response}_sf.mif.gz -roi.opacity 0.5 -mode 2
+    echo mrview  meanb0_brain.mif.gz -roi.load $responsedir/${response}_sf_$dwibase.mif.gz -roi.opacity 0.5 -mode 2
 fi
 
 
@@ -126,14 +127,14 @@ if [[ $response = dhollander ]]; then
 
     if [ ! -f response/${response}_response.txt ]; then
 	echo "Estimating response function use $response method"
-	dwi2response dhollander -force -mask $mask.mif.gz -voxels $responsedir/${response}_sf.mif.gz $dwi.mif.gz $responsedir/${response}_wm.txt $responsedir/${response}_gm.txt $responsedir/${response}_csf.txt
+	dwi2response dhollander -force -mask $mask.mif.gz -voxels $responsedir/${response}_sf_$dwibase.mif.gz $dwi.mif.gz $responsedir/${response}_wm_$dwibase.txt $responsedir/${response}_gm_$dwibase.txt $responsedir/${response}_csf_$dwibase.txt
     fi
     
     echo "Check results for response fcns (wm, gm and csf) and single-fibre voxels (sf)"
-    echo shview  $responsedir/${response}_wm.txt
-    echo shview  $responsedir/${response}_gm.txt
-    echo shview  $responsedir/${response}_csf.txt
-    echo mrview  meanb0_brain.mif.gz -overlay.load $responsedir/${response}_sf.mif.gz -overlay.opacity 0.5 -mode 2
+    echo shview  $responsedir/${response}_wm_$dwibase.txt
+    echo shview  $responsedir/${response}_gm_$dwibase.txt
+    echo shview  $responsedir/${response}_csf_$dwibase.txt
+    echo mrview  meanb0_brain.mif.gz -overlay.load $responsedir/${response}_sf_$dwibase.mif.gz -overlay.opacity 0.5 -mode 2
     
 fi
 
