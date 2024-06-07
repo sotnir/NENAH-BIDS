@@ -1,23 +1,27 @@
 #!/bin/bash
 
 usage() {
-  echo "Usage: $0 [-d data-dir] [-v voxel-size] [-h help] sID"
-  echo "Script to upsample DWI data and use it to generate meanb1000 and creating brain mask"
+  echo "Usage: $0 [-d data-dir] [-v voxel-size] [-QC qc-file] [-h help] sID"
+  echo "Script to upsample DWI data and use it to generate meanb1000 and create brain masks"
   echo ""
   echo "Arguments:"
   echo "  sID              Subject ID (e.g. NENAHC001)"
   echo ""
   echo "Options:"
-  echo "  -d / -data-dir   <directory> The base directory used for output of upsampling files (default: derivatives/dMRI/sub-sID)"
-  echo "  -v / -voxel-size <size>      The voxel size for upsampling (default: 1.25)"
-  echo "  -h / -help       Print usage"
+  echo "  -d / -data-dir   <directory>  The base directory used for output of upsampling files (default: derivatives/dMRI/sub-sID/dwi)"
+  echo "  -v / -voxel-size <size>       The voxel size for upsampling (default: 1.25)"
+  echo "  -QC <qc-file>                 QC file with entries for the optimal BET f-value (default: \ NENAH_BIDS/QC/QC_dwi.csv)"
+  echo "  -h / -help                    Print usage"
   exit 1
 }
 
 # default parameters
 studydir=$PWD
-basedir=$studydir/NENAH_BIDS/derivatives
+#codedir="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+#basedir=$studydir/derivatives
 voxel_size=1.25
+datadir=derivatives/dMRI/sub-sID/dwi
+qc_file=$studydir/../QC/QC_dwi.csv
 
 # return usage if no input arguments
 if [ $# -eq 0 ]; then
@@ -28,11 +32,15 @@ fi
 while [[ $# -gt 0 ]]; do
   case "$1" in
     -d|-data-dir)
-      basedir=$2
+      datadir=$2
       shift 2
       ;;
     -v|-voxel-size)
       voxel_size=$2
+      shift 2
+      ;;
+    -QC)
+      qc_file=$2
       shift 2
       ;;
     -h|-help)
@@ -52,10 +60,13 @@ if [ -z "$sID" ]; then
   exit 1
 fi
 
+# update datadir with subject ID
+datadir=derivatives/dMRI/sub-$sID/dwi
+
 ################ UPSAMPLING ################
 
 # perform upsampling for the subject
-subject_dir="$basedir/dMRI/sub-$sID/dwi"
+subject_dir="$studydir/$datadir"
 input_file="$subject_dir/dwi_preproc.mif.gz"
 output_file="$subject_dir/dwi_preproc_hires.mif.gz"
 
@@ -98,9 +109,6 @@ fi
 
 
 ################ BRAIN MASK GENERATION ################
-
-# enter QC file and get optimal BET f-value
-qc_file="$basedir/../code/NENAH-BIDS/QC/QC_dwi.csv"
 
 #How do we handle the subjects who do not have optimal BET value?
 

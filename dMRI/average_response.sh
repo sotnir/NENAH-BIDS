@@ -10,6 +10,7 @@ Using subjects with pass value of 1 and 0.5 in QC_dMRI_pipeline.tsv and QC_fs-se
 
 Arguments:
   base                          Path to derivites-folder (e.g. derivatives)
+
 Options:
   -response                     Response algorithm (default: dhollander)
   -d / -data-dir  <directory>   The directory used to output the preprocessed files (default: derivatives/dMRI/sub-NENAHGRP/dwi/response)
@@ -23,27 +24,28 @@ Output:
 
 ################ ARGUMENTS ################
 
+
 # defaults
 studydir=$PWD
-basedir=$studydir/NENAH_BIDS/derivatives
-qc_dMRI_file="$basedir/dMRI/QC_dMRI_pipeline.tsv"
-qc_sMRI_file="$basedir/sMRI_fs_segmentation/QC_fs-segmentation.tsv"
+#codedir="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+datadir=derivatives/dMRI/sub-NENAHGRP/dwi/response
+qc_dMRI_file="derivatives/dMRI/QC_dMRI_pipeline.tsv"
+qc_sMRI_file="derivatives/sMRI_fs_segmentation/QC_fs-segmentation.tsv"
 response=dhollander
 
 # command-line arguments
 while [ $# -gt 0 ]; do
     case "$1" in
-    -d|-data-dir)  shift; basedir=$1
-                   qc_dMRI_file="$basedir/dMRI/QC_dMRI_pipeline.tsv"
-                   qc_sMRI_file="$basedir/sMRI_fs_segmentation/QC_fs-segmentation.tsv"; ;;
+    -d|-data-dir)  shift; basedir=$1; ;;
     -h|-help|--help) usage; ;;
+    -response) shift; response=$1; ;;
     -*) echo "$0: Unrecognized option $1" >&2; usage; ;;
     *) break ;;
     esac
     shift
 done
 
-# parse QC files and extract subject IDs with a pass value of 1 or 0.5
+# parse QC files and find subject IDs with a pass value of 1 or 0.5
 get_subjects() {
   local qc_files=("$@")
   local subjects=()
@@ -68,23 +70,28 @@ run_response_calculation() {
   done
 }
 
-output_dir=$basedir/dMRI/sub-NENAHGRP/dwi/response
+output_dir=$studydir/$datadir
 if [ ! -d $output_dir ]; then mkdir -p $output_dir; fi
 
 # function to calculate group average response 
 calculate_group_average() {
   local tissue=$1
-  local output_file="${output_dir}/${response}_${tissue}_response.txt"
-  local response_files=$(find $basedir/dMRI -name "${tissue}_response.txt")
+  local output_file="${output_dir}/${response}_${tissue}_dwi_preproc.txt"
+  local response_files=()
+
+  for sID in "${subjects[@]}"; do
+    files=$(find $studydir/derivatives/dMRI/$sID/dwi -name "response/${response}_${tissue}_dwi_preproc.txt")
+    response_files+=($files)
+  done
 
   # check if any response function files exist
-  if [ -z "$response_files" ]; then
+  if [ ${response_files[@]} -eq 0 ]; then
     echo "No $tissue response function files found."
     return
   fi
 
     #using responsemean 
-  responsemean $response_files $output_file
+  responsemean $response_files[@] $output_file
 }
 
 # run response calculation for each subject

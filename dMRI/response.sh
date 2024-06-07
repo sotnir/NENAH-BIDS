@@ -108,14 +108,14 @@ if [[ $response = tournier ]]; then
     responsedir=response #Becomes as sub-folder in $datadir/dwi
     if [ ! -d $responsedir ];then mkdir -p $responsedir;fi    
 
-    if [ ! -f response/${response}_response.txt ]; then
-	echo "Estimating response function use $response method"
-	dwi2response tournier -force -mask  $mask.mif.gz -voxels $responsedir/${response}_sf_$dwibase.mif.gz $dwi.mif.gz $responsedir/${response}_response_$dwibase.txt
+    if [ ! -f $responsedir/${response}_$dwibase.txt ]; then
+	    echo "Estimating response function use $response method"
+	    dwi2response tournier -force -mask  $mask.mif.gz -voxels $responsedir/${response}_sf_$dwibase.mif.gz $dwi.mif.gz $responsedir/${response}_$dwibase.txt
+        echo Check results: response fcn and sf voxels
+        echo shview  response/${response}_response.txt
+        echo mrview  meanb0_brain.mif.gz -roi.load $responsedir/${response}_sf_$dwibase.mif.gz -roi.opacity 0.5 -mode 2
     fi
-
-    echo Check results: response fcn and sf voxels
-    echo shview  response/${response}_response.txt
-    echo mrview  meanb0_brain.mif.gz -roi.load $responsedir/${response}_sf_$dwibase.mif.gz -roi.opacity 0.5 -mode 2
+    
 fi
 
 
@@ -125,16 +125,15 @@ if [[ $response = dhollander ]]; then
     responsedir=response #Becomes as sub-folder in $datadir/dwi
     if [ ! -d $responsedir ];then mkdir -p $responsedir; fi
 
-    if [ ! -f response/${response}_response.txt ]; then
-	echo "Estimating response function use $response method"
-	dwi2response dhollander -force -mask $mask.mif.gz -voxels $responsedir/${response}_sf_$dwibase.mif.gz $dwi.mif.gz $responsedir/${response}_wm_$dwibase.txt $responsedir/${response}_gm_$dwibase.txt $responsedir/${response}_csf_$dwibase.txt
+    if [ ! -f $responsedir/${response}_wm_$dwibase.txt ]; then
+	    echo "Estimating response function use $response method"
+	    dwi2response dhollander -force -mask $mask.mif.gz -voxels $responsedir/${response}_sf_$dwibase.mif.gz $dwi.mif.gz $responsedir/${response}_wm_$dwibase.txt $responsedir/${response}_gm_$dwibase.txt $responsedir/${response}_csf_$dwibase.txt
+        echo "Check results for response fcns (wm, gm and csf) and single-fibre voxels (sf)"
+        echo shview  $responsedir/${response}_wm_$dwibase.txt
+        echo shview  $responsedir/${response}_gm_$dwibase.txt
+        echo shview  $responsedir/${response}_csf_$dwibase.txt
+        echo mrview  meanb0_brain.mif.gz -overlay.load $responsedir/${response}_sf_$dwibase.mif.gz -overlay.opacity 0.5 -mode 2
     fi
-    
-    echo "Check results for response fcns (wm, gm and csf) and single-fibre voxels (sf)"
-    echo shview  $responsedir/${response}_wm_$dwibase.txt
-    echo shview  $responsedir/${response}_gm_$dwibase.txt
-    echo shview  $responsedir/${response}_csf_$dwibase.txt
-    echo mrview  meanb0_brain.mif.gz -overlay.load $responsedir/${response}_sf_$dwibase.mif.gz -overlay.opacity 0.5 -mode 2
     
 fi
 
