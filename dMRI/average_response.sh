@@ -1,19 +1,22 @@
 #!/bin/bash
-# NENAH Study - Global Average Response Function Calculation
+# NENAH Study - Group Average Response Function Calculation
 
 usage()
 {
   base=$(basename "$0")
   echo "usage: $base [options]
-Global average response function calculation for WM, GM, and CSF.
+Group average response function calculation for WM, GM, and CSF.
 Using subjects with pass value of 1 and 0.5 in QC_dMRI_pipeline.tsv and QC_fs-segmentation.tsv.
 
+Arguments:
+  base                          Path to derivites-folder (e.g. derivatives)
 Options:
-  -d / -data-dir  <directory>   The directory containing the QC files (default: /NENAH_BIDS/derivatives)
+  -response                     Response algorithm (default: dhollander)
+  -d / -data-dir  <directory>   The directory used to output the preprocessed files (default: derivatives/dMRI/sub-NENAHGRP/dwi/response)
   -h / -help / --help           Print usage.
 
 Output:
-  The resulting files for WM, GM, and CSF are saved in /NENAH_BIDS/derivatives/dMRI/sub-NENAHGRP.
+  The resulting files for WM, GM, and CSF are saved in /NENAH_BIDS/derivatives/dMRI/sub-NENAHGRP/dwi/response.
 "
   exit;
 }
@@ -21,16 +24,18 @@ Output:
 ################ ARGUMENTS ################
 
 # defaults
-datadir=/NENAH_BIDS/derivatives
-qc_dMRI_file="$datadir/dMRI/QC_dMRI_pipeline.tsv"
-qc_sMRI_file="$datadir/sMRI_fs_segmentation/QC_fs-segmentation.tsv"
+studydir=$PWD
+basedir=$studydir/NENAH_BIDS/derivatives
+qc_dMRI_file="$basedir/dMRI/QC_dMRI_pipeline.tsv"
+qc_sMRI_file="$basedir/sMRI_fs_segmentation/QC_fs-segmentation.tsv"
+response=dhollander
 
 # command-line arguments
 while [ $# -gt 0 ]; do
     case "$1" in
-    -d|-data-dir)  shift; datadir=$1
-                   qc_dMRI_file="$datadir/dMRI/QC_dMRI_pipeline.tsv"
-                   qc_sMRI_file="$datadir/sMRI_fs_segmentation/QC_fs-segmentation.tsv"; ;;
+    -d|-data-dir)  shift; basedir=$1
+                   qc_dMRI_file="$basedir/dMRI/QC_dMRI_pipeline.tsv"
+                   qc_sMRI_file="$basedir/sMRI_fs_segmentation/QC_fs-segmentation.tsv"; ;;
     -h|-help|--help) usage; ;;
     -*) echo "$0: Unrecognized option $1" >&2; usage; ;;
     *) break ;;
@@ -59,15 +64,18 @@ subjects=$(get_subjects "$qc_dMRI_file" "$qc_sMRI_file")
 run_response_calculation() {
   local subjects=("$@")
   for sID in "${subjects[@]}"; do
-    ./response.sh "$sID" -response dhollander
+    ./response.sh "$sID" -response $response
   done
 }
 
-# function to calculate global average response 
-calculate_global_average() {
+output_dir=$basedir/dMRI/sub-NENAHGRP/dwi/response
+if [ ! -d $output_dir ]; then mkdir -p $output_dir; fi
+
+# function to calculate group average response 
+calculate_group_average() {
   local tissue=$1
-  local output_file=$2
-  local response_files=$(find $datadir/dMRI -name "${tissue}_response.txt")
+  local output_file="${output_dir}/${response}_${tissue}_response.txt"
+  local response_files=$(find $basedir/dMRI -name "${tissue}_response.txt")
 
   # check if any response function files exist
   if [ -z "$response_files" ]; then
@@ -75,19 +83,17 @@ calculate_global_average() {
     return
   fi
 
-  # use responsemean to calculate global average
+    #using responsemean 
   responsemean $response_files $output_file
 }
 
 # run response calculation for each subject
 run_response_calculation "${subjects[@]}"
 
-# calculate global averages for WM, GM, and CSF
-output_dir=$datadir/dMRI/sub-NENAHGRP
+# calculate group averages for WM, GM, and CSF
+calculate_group_average "wm"
+calculate_group_average "gm"
+calculate_group_average "csf"
 
-calculate_global_average "wm" $output_dir/global_wm_response.txt
-calculate_global_average "gm" $output_dir/global_gm_response.txt
-calculate_global_average "csf" $output_dir/global_csf_response.txt
-
-echo "Global average response function calculation completed. Files are saved in $output_dir."
+echo "Group average response function calculation completed. Files are saved in $output_dir."
 

@@ -12,7 +12,7 @@ Uses inputs from QC-file
 2. TOPUP and EDDY for motion- and susceptebility image distortion correction
 3. N4 biasfield correction
 4. Brain mask estimation (with FSL's BET using different values for -f => see code)
-5. Normalisation
+5. Normalisation 
 6. Creation of a mean B0, B1000 and B2600 images (as average from normalised unwarped b0s)
 7. Calculation of tensor and tensor maps (FA, MD etc) using b0 and b1000 shells only
 
@@ -288,21 +288,23 @@ fi
 dwi=dwi_preproc_norm-ind
 cd $currdir
 
+
 ##################################################################################
 # 5. meanb0, meanb1000 and meanb2600 generation
 cd $datadir/dwi
+dwi=dwi_preproc_norm-ind
 
-if [ ! -f meanb0.mif.gz ]; then
-    dwiextract -shells 0 $dwi.mif.gz - |  mrmath -force -axis 3 - mean meanb0.mif.gz
-    mrcalc meanb0.mif.gz mask.mif.gz -mul meanb0_brain.mif.gz
+if [ ! -f meanb0_brain_$dwi.mif.gz ]; then
+    dwiextract -shells 0 $dwi.mif.gz - |  mrmath -force -axis 3 - mean meanb0_$dwi.mif.gz
+    mrcalc meanb0_$dwi.mif.gz mask.mif.gz -mul meanb0_brain_$dwi.mif.gz
 fi
-if [ ! -f meanb1000.mif.gz ]; then
-    dwiextract -shells 1000  $dwi.mif.gz - |  mrmath -force -axis 3 - mean meanb1000.mif.gz
-    mrcalc meanb1000.mif.gz mask.mif.gz -mul meanb1000_brain.mif.gz
+if [ ! -f meanb1000_brain_$dwi.mif.gz ]; then
+    dwiextract -shells 1000  $dwi.mif.gz - |  mrmath -force -axis 3 - mean meanb1000_$dwi.mif.gz
+    mrcalc meanb1000_$dwi.mif.gz mask.mif.gz -mul meanb1000_brain_$dwi.mif.gz
 fi
-if [ ! -f meanb2600.mif.gz ]; then
-    dwiextract -shells 2600 $dwi.mif.gz - |  mrmath -force -axis 3 - mean meanb2600.mif.gz
-    mrcalc meanb2600.mif.gz mask.mif.gz -mul meanb2600_brain.mif.gz
+if [ ! -f meanb2600_brain_$dwi.mif.gz ]; then
+    dwiextract -shells 2600 $dwi.mif.gz - |  mrmath -force -axis 3 - mean meanb2600_$dwi.mif.gz
+    mrcalc meanb2600_$dwi.mif.gz mask.mif.gz -mul meanb2600_brain_$dwi.mif.gz
 fi
     echo "Visually check the meann b-files"
     echo "mrview meanb*_brain.nii.gz -mode 2"
