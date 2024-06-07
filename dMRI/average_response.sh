@@ -27,10 +27,10 @@ Output:
 
 # defaults
 studydir=$PWD
-#codedir="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+codedir="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 datadir=derivatives/dMRI/sub-NENAHGRP/dwi/response
 qc_dMRI_file="derivatives/dMRI/QC_dMRI_pipeline.tsv"
-qc_sMRI_file="derivatives/sMRI_fs_segmentation/QC_fs-segmentation.tsv"
+qc_sMRI_file="derivatives/sMRI_fs-segmentation/QC_fs-segmentation.tsv"
 response=dhollander
 
 # command-line arguments
@@ -66,9 +66,10 @@ subjects=$(get_subjects "$qc_dMRI_file" "$qc_sMRI_file")
 run_response_calculation() {
   local subjects=("$@")
   for sID in "${subjects[@]}"; do
-    ./response.sh "$sID" -response $response
+    "$codedir/code/dMRI/response.sh" "$sID" -response $response
   done
 }
+
 
 output_dir=$studydir/$datadir
 if [ ! -d $output_dir ]; then mkdir -p $output_dir; fi
@@ -80,7 +81,7 @@ calculate_group_average() {
   local response_files=()
 
   for sID in "${subjects[@]}"; do
-    files=$(find $studydir/derivatives/dMRI/sub-$sID/dwi -name "response/${response}_${tissue}_dwi_preproc.txt")
+    files=$(find "$studydir/derivatives/dMRI/sub-$sID/dwi" -path "*/response/${response}_${tissue}_dwi_preproc.txt")
     response_files+=($files)
   done
 
