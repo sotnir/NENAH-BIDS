@@ -80,17 +80,17 @@ calculate_group_average() {
   local response_files=()
 
   for sID in "${subjects[@]}"; do
-    files=$(find $studydir/derivatives/dMRI/$sID/dwi -name "response/${response}_${tissue}_dwi_preproc.txt")
+    files=$(find $studydir/derivatives/dMRI/sub-$sID/dwi -name "response/${response}_${tissue}_dwi_preproc.txt")
     response_files+=($files)
   done
 
   # check if any response function files exist
-  if [ ${response_files[@]} -eq 0 ]; then
+  if [ ${#response_files[@]} -eq 0 ]; then
     echo "No $tissue response function files found."
     return
   fi
 
-    #using responsemean 
+    #using responsemean
   responsemean $response_files[@] $output_file
 }
 
