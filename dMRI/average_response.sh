@@ -46,53 +46,53 @@ while [ $# -gt 0 ]; do
     shift
 done
 
-# function to extract subject IDs from dMRI qc_file
-subjects_dMRI() {
-    local dMRI_file="derivatives/dMRI/QC_dMRI_pipeline.tsv"
-    local dMRI_subjects=()
-    while IFS=$'\t' read -r subject_id pass_value; do
-        if [[ "$pass_value" == "1" || "$pass_value" == "0.5" ]]; then
-            dMRI_subjects+=("$subject_id")
-        fi
-    done < "$dMRI_file"
-    echo "${dMRI_subjects[@]}"
-}
+# # function to extract subject IDs from dMRI qc_file
+# subjects_dMRI() {
+#     local dMRI_file="derivatives/dMRI/QC_dMRI_pipeline.tsv"
+#     local dMRI_subjects=()
+#     while IFS=$'\t' read -r subject_id pass_value; do
+#         if [[ "$pass_value" == "1" || "$pass_value" == "0.5" ]]; then
+#             dMRI_subjects+=("$subject_id")
+#         fi
+#     done < "$dMRI_file"
+#     echo "${dMRI_subjects[@]}"
+# }
 
-# function to extract subject IDs from sMRI file
-subjects_sMRI() {
-    local sMRI_file="derivatives/sMRI_fs-segmentation/QC_fs-segmentation.tsv"
-    local sMRI_subjects=()
-    while IFS=$'\t' read -r subject_id pass_value; do
-        if [[ "$pass_value" == "1" || "$pass_value" == "0.5" ]]; then
-            sMRI_subjects+=("$subject_id")
-        fi
-    done < "$sMRI_file"
-    echo "${sMRI_subjects[@]}"
-}
+# # function to extract subject IDs from sMRI file
+# subjects_sMRI() {
+#     local sMRI_file="derivatives/sMRI_fs-segmentation/QC_fs-segmentation.tsv"
+#     local sMRI_subjects=()
+#     while IFS=$'\t' read -r subject_id pass_value; do
+#         if [[ "$pass_value" == "1" || "$pass_value" == "0.5" ]]; then
+#             sMRI_subjects+=("$subject_id")
+#         fi
+#     done < "$sMRI_file"
+#     echo "${sMRI_subjects[@]}"
+# }
 
-# get subject IDs from dMRI file
-dMRI_subjects=($(subjects_dMRI))
-sMRI_subjects=($(subjects_sMRI))
+# # get subject IDs from dMRI file
+# dMRI_subjects=($(subjects_dMRI))
+# sMRI_subjects=($(subjects_sMRI))
 
-#
-subjects=()
+# #
+# subjects=()
 
-# loop through the dMRI subjects
-for subject_id in "${dMRI_subjects[@]}"; do
-    if [[ " ${sMRI_subjects[@]} " =~ " $subject_id " ]]; then
-        subjects+=("$subject_id")
-    fi
-done
+# # loop through the dMRI subjects
+# for subject_id in "${dMRI_subjects[@]}"; do
+#     if [[ " ${sMRI_subjects[@]} " =~ " $subject_id " ]]; then
+#         subjects+=("$subject_id")
+#     fi
+# done
 
-printf "%s\n" "${subjects[@]}"
+# printf "%s\n" "${subjects[@]}"
 
-# call response.sh for each subject
-run_response_calculation() {
-  local subjects=("$@")
-  for sID in "${subjects[@]}"; do
-    "$codedir/response.sh" "$sID" -response $response
-  done
-}
+# # call response.sh for each subject
+# run_response_calculation() {
+#   local subjects=("$@")
+#   for sID in "${subjects[@]}"; do
+#     "$codedir/response.sh" "$sID" -response $response
+#   done
+# }
 
 output_dir=$studydir/$datadir
 if [ ! -d $output_dir ]; then mkdir -p $output_dir; fi
@@ -104,7 +104,7 @@ calculate_group_average() {
   local response_files=()
 
   for sID in "${subjects[@]}"; do
-    files=$(find "$studydir/derivatives/dMRI/sub-${sID}/dwi" -name "*/response/${response}_${tissue}_dwi_preproc.txt")
+    files=$(find "$studydir/derivatives/dMRI/sub-${sID}/dwi" -path "*/response/${response}_${tissue}_dwi_preproc.txt")
     response_files+=($files)
   done
 
