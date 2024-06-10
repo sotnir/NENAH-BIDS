@@ -67,7 +67,7 @@ get_subjects() {
 # get subject IDs from QC files
 subjects=$(get_subjects "$qc_dMRI_file" "$qc_sMRI_file")
 
-echo " This is $subjects ------subs done"
+echo " This is $subjects ------subs done 3"
 
 # call response.sh for each subject
 run_response_calculation() {
