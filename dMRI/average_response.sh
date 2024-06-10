@@ -72,6 +72,7 @@ echo " This is $subjects ------subs done 3"
 # call response.sh for each subject
 run_response_calculation() {
   local subjects=("$@")
+  echo "$subjects rseponse subject 222"
   for sID in "${subjects[@]}"; do
     "$codedir/response.sh" "$sID" -response $response
   done
@@ -88,7 +89,6 @@ calculate_group_average() {
   local response_files=()
 
   for sID in "${subjects[@]}"; do
-    sID="{$subjects[index]}"
     files=$(find "$studydir/derivatives/dMRI/sub-${sID}/dwi" -path "*/response/${response}_${tissue}_dwi_preproc.txt")
     response_files+=($files)
   done
