@@ -46,32 +46,31 @@ while [ $# -gt 0 ]; do
     shift
 done
 
-# parse QC files and find subjects with pass score of 1 or 0.5
 get_subjects() {
-  local qc_files=("$@")
-  local subjects=()
-  declare -A seen_ids  # associative array to track seen subject IDs
-  for file in "${qc_files[@]}"; do
-    while IFS=$'\t' read -r Subject_ID qc_preprocess_pass_1_fail_0; do
-      if [[ "$Subject_ID" != "Subject_ID" && ("$qc_preprocess_pass_1_fail_0" == "1" || "$qc_preprocess_pass_1_fail_0" == "0.5") ]]; then
-        # check if the subject ID is not already in the array
-        if [[ ! ${seen_ids[$Subject_ID]} ]]; then
-          subjects+=("$Subject_ID")
-          seen_ids[$Subject_ID]=1  # mark the subject ID as seen
-        fi
-      fi
-    done < "$file"
-  done
-  printf '%n' "${subjects[@]}"
+  local qc_dMRI_file="$1"
+  local qc_sMRI_file="$2"
+  local -a subjects=()
+
+  # loop through the lines of QC files
+  while IFS=$'\t' read -r dMRI_ID dMRI_pass sMRI_ID sMRI_pass; do
+    # check if both passes are either 1 or 0.5
+    if [[ "$dMRI_pass" =~ ^(1|0\.5)$ ]] && [[ "$sMRI_pass" =~ ^(1|0\.5)$ ]]; then
+      # if ok, add the subject ID to the subjects array
+      subjects+=("$dMRI_ID")
+    fi
+  done < <(paste "$qc_dMRI_file" "$qc_sMRI_file")
+
+  echo "${subjects[@]}"
 }
+
 # get subject IDs from QC files
 subjects=$(get_subjects "$qc_dMRI_file" "$qc_sMRI_file")
 
+echo "This is subjects: $subjects"
 
 # call response.sh for each subject
 run_response_calculation() {
   local subjects=("$@")
-  echo "$subjects rseponse subject 222"
   for sID in "${subjects[@]}"; do
     "$codedir/response.sh" "$sID" -response $response
   done
