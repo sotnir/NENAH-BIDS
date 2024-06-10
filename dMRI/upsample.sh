@@ -61,12 +61,12 @@ if [ -z "$sID" ]; then
 fi
 
 # # update datadir with subject ID
-# datadir=derivatives/dMRI/sub-$sID/dwi
+datadir=derivatives/dMRI/sub-$sID/dwi
 
 # ################ UPSAMPLING ################
 
 # # perform upsampling for the subject
-# subject_dir="$studydir/$datadir"
+subject_dir="$studydir/$datadir"
 # input_file="$subject_dir/dwi_preproc.mif.gz"
 # output_file="$subject_dir/dwi_preproc_hires.mif.gz"
 
