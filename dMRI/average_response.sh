@@ -73,6 +73,7 @@ echo " This is $subjects ------subs done"
 run_response_calculation() {
   local subjects=("$@")
   for sID in "${subjects[@]}"; do
+  sID="{$subjects[index]}"
     "$codedir/response.sh" "$sID" -response $response
   done
 }
