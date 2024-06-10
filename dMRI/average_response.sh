@@ -89,8 +89,8 @@ calculate_group_average() {
   local response_files=()
 
   for sID in "${subjects[@]}"; do
-    files=$(find "$studydir/derivatives/dMRI/sub-${sID}/dwi" -path "*/response/${response}_${tissue}_dwi_preproc.txt")
-    response_files+=($"files")
+    files=$(find "$studydir/derivatives/dMRI/sub-${sID}/dwi" -name "*/response/${response}_${tissue}_dwi_preproc.txt")
+    response_files+=($files)
   done
 
   # check if any response function files exist
