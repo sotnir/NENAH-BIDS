@@ -46,27 +46,45 @@ while [ $# -gt 0 ]; do
     shift
 done
 
-get_subjects() {
-  local qc_dMRI_file="$1"
-  local qc_sMRI_file="$2"
-  local -a subjects=()
-
-  # loop through the lines of QC files
-  while IFS=$'\t' read -r dMRI_ID dMRI_pass sMRI_ID sMRI_pass; do
-    # check if both passes are either 1 or 0.5
-    if [[ "$dMRI_pass" =~ ^(1|0\.5)$ ]] && [[ "$sMRI_pass" =~ ^(1|0\.5)$ ]]; then
-      # if ok, add the subject ID to the subjects array
-      subjects+=("$dMRI_ID")
-    fi
-  done < <(paste "$qc_dMRI_file" "$qc_sMRI_file")
-
-  echo "${subjects[@]}"
+# function to extract subject IDs from dMRI qc_file
+subjects_dMRI() {
+    local dMRI_file="derivatives/dMRI/QC_dMRI_pipeline.tsv"
+    local dMRI_subjects=()
+    while IFS=$'\t' read -r subject_id pass_value; do
+        if [[ "$pass_value" == "1" || "$pass_value" == "0.5" ]]; then
+            dMRI_subjects+=("$subject_id")
+        fi
+    done < "$dMRI_file"
+    echo "${dMRI_subjects[@]}"
 }
 
-# get subject IDs from QC files
-subjects=$(get_subjects "$qc_dMRI_file" "$qc_sMRI_file")
+# function to extract subject IDs from sMRI file
+subjects_sMRI() {
+    local sMRI_file="derivatives/sMRI_fs-segmentation/QC_fs-segmentation.tsv"
+    local sMRI_subjects=()
+    while IFS=$'\t' read -r subject_id pass_value; do
+        if [[ "$pass_value" == "1" || "$pass_value" == "0.5" ]]; then
+            sMRI_subjects+=("$subject_id")
+        fi
+    done < "$sMRI_file"
+    echo "${sMRI_subjects[@]}"
+}
 
-echo "This is subjects: $subjects"
+# get subject IDs from dMRI file
+dMRI_subjects=($(subjects_dMRI))
+sMRI_subjects=($(subjects_sMRI))
+
+#
+subjects=()
+
+# loop through the dMRI subjects
+for subject_id in "${dMRI_subjects[@]}"; do
+    if [[ " ${sMRI_subjects[@]} " =~ " $subject_id " ]]; then
+        subjects+=("$subject_id")
+    fi
+done
+
+printf "%s\n" "${subjects[@]}"
 
 # call response.sh for each subject
 run_response_calculation() {
