@@ -45,14 +45,18 @@ while [ $# -gt 0 ]; do
     shift
 done
 
-# parse QC files and find subject IDs with a pass value of 1 or 0.5
+
+# parse QC files and find subjects with pass score of 1 or 0.5
 get_subjects() {
   local qc_files=("$@")
   local subjects=()
   for file in "${qc_files[@]}"; do
     while IFS=$'\t' read -r Subject_ID qc_preprocess_pass_1_fail_0; do
       if [[ "$Subject_ID" != "Subject_ID" && ("$qc_preprocess_pass_1_fail_0" == "1" || "$qc_preprocess_pass_1_fail_0" == "0.5") ]]; then
-        subjects+=("$Subject_ID")
+        IFS=' ' read -ra id_array <<< "$Subject_ID"
+        for id in "${id_array[@]}"; do
+          subjects+=("$id")
+        done
       fi
     done < "$file"
   done
@@ -66,7 +70,7 @@ subjects=$(get_subjects "$qc_dMRI_file" "$qc_sMRI_file")
 run_response_calculation() {
   local subjects=("$@")
   for sID in "${subjects[@]}"; do
-    "$codedir/code/dMRI/response.sh" "$sID" -response $response
+    "$codedir/response.sh" "$sID" -response $response
   done
 }
 
