@@ -94,7 +94,6 @@ run_response_calculation() {
   done
 }
 
-
 output_dir=$studydir/$datadir
 if [ ! -d $output_dir ]; then mkdir -p $output_dir; fi
 
@@ -105,9 +104,8 @@ calculate_group_average() {
   local response_files=()
 
   for sID in "${subjects[@]}"; do
-    echo " this is try sID $sID"
-    # files=$(find "$studydir/derivatives/dMRI/sub-${sID}/dwi" -name "*/response/${response}_${tissue}_dwi_preproc.txt")
-    # response_files+=($files)
+    files=$(find "$studydir/derivatives/dMRI/sub-${sID}/dwi" -name "*/response/${response}_${tissue}_dwi_preproc.txt")
+    response_files+=($files)
   done
 
   # check if any response function files exist
