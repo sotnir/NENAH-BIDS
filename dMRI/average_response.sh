@@ -46,21 +46,24 @@ while [ $# -gt 0 ]; do
     shift
 done
 
-
 # parse QC files and find subjects with pass score of 1 or 0.5
 get_subjects() {
   local qc_files=("$@")
   local subjects=()
+  declare -A seen_ids  # associative array to track seen subject IDs
   for file in "${qc_files[@]}"; do
     while IFS=$'\t' read -r Subject_ID qc_preprocess_pass_1_fail_0; do
       if [[ "$Subject_ID" != "Subject_ID" && ("$qc_preprocess_pass_1_fail_0" == "1" || "$qc_preprocess_pass_1_fail_0" == "0.5") ]]; then
-        subjects+=("$Subject_ID")
+        # check if the subject ID is not already in the array
+        if [[ ! ${seen_ids[$Subject_ID]} ]]; then
+          subjects+=("$Subject_ID")
+          seen_ids[$Subject_ID]=1  # mark the subject ID as seen
+        fi
       fi
     done < "$file"
   done
   echo "${subjects[@]}"
 }
-
 # get subject IDs from QC files
 subjects=$(get_subjects "$qc_dMRI_file" "$qc_sMRI_file")
 
