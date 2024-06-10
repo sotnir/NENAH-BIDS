@@ -64,7 +64,7 @@ get_subjects() {
 }
 
 # get subject IDs from QC files
-subjects=$(get_subjects "$qc_dMRI_file" "$qc_sMRI_file")
+subjects=$($(get_subjects "$qc_dMRI_file" "$qc_sMRI_file"))
 
 # call response.sh for each subject
 run_response_calculation() {
@@ -96,7 +96,7 @@ calculate_group_average() {
   fi
 
     #using responsemean
-  responsemean $response_files[@] $output_file
+  responsemean ${response_files[@]} $output_file
 }
 
 # run response calculation for each subject
