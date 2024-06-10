@@ -33,7 +33,7 @@ qc_dMRI_file="derivatives/dMRI/QC_dMRI_pipeline.tsv"
 qc_sMRI_file="derivatives/sMRI_fs-segmentation/QC_fs-segmentation.tsv"
 response=dhollander
 
-echo $codedir
+echo " is $codedir"
 
 # command-line arguments
 while [ $# -gt 0 ]; do
