@@ -126,6 +126,8 @@ fi
 
 echo "Using optimal BET f-value of $optimal_bet for subject $sID"
 
+echo "suddir här $subjectdir här"
+
 # create brain mask
 meanb1000_file="$subjectdir/meanb1000_$upsampled_dwi.mif.gz"
 mask_file="mask_$upsampled_dwi.mif.gz"
