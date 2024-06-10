@@ -53,10 +53,7 @@ get_subjects() {
   for file in "${qc_files[@]}"; do
     while IFS=$'\t' read -r Subject_ID qc_preprocess_pass_1_fail_0; do
       if [[ "$Subject_ID" != "Subject_ID" && ("$qc_preprocess_pass_1_fail_0" == "1" || "$qc_preprocess_pass_1_fail_0" == "0.5") ]]; then
-        IFS=' ' read -ra id_array <<< "$Subject_ID"
-        for id in "${id_array[@]}"; do
-          subjects+=("$id")
-        done
+        subjects+=("$Subject_ID")
       fi
     done < "$file"
   done
@@ -107,5 +104,10 @@ calculate_group_average "wm"
 calculate_group_average "gm"
 calculate_group_average "csf"
 
-echo "Group average response function calculation completed. Files are saved in $output_dir."
+if [ -f "${output_dir}/${response}_wm_dwi_preproc.txt" ] && [ -f "${output_dir}/${response}_gm_dwi_preproc.txt" ] && [ -f "${output_dir}/${response}_csf_dwi_preproc.txt" ]; then
+  echo "Group average response function calculation completed. Files are saved in $output_dir."
+else
+  echo "Group average response function calculation unsuccessful."
+fi
+
 
