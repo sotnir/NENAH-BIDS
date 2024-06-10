@@ -33,7 +33,6 @@ qc_dMRI_file="derivatives/dMRI/QC_dMRI_pipeline.tsv"
 qc_sMRI_file="derivatives/sMRI_fs-segmentation/QC_fs-segmentation.tsv"
 response=dhollander
 
-echo " is $codedir"
 
 # command-line arguments
 while [ $# -gt 0 ]; do
@@ -63,7 +62,7 @@ get_subjects() {
 }
 
 # get subject IDs from QC files
-subjects=$($(get_subjects "$qc_dMRI_file" "$qc_sMRI_file"))
+subjects=$(get_subjects "$qc_dMRI_file" "$qc_sMRI_file")
 
 # call response.sh for each subject
 run_response_calculation() {
