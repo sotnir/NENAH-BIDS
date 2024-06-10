@@ -64,7 +64,6 @@ get_subjects() {
 
 # get subject IDs from QC files
 subjects=$($(get_subjects "$qc_dMRI_file" "$qc_sMRI_file"))
-IFS=' ' read -r -a subjects_array <<< "$subjects"
 
 # call response.sh for each subject
 run_response_calculation() {
