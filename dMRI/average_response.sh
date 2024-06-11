@@ -119,7 +119,7 @@ calculate_group_average() {
 }
 
 # run response calculation for each subject
-##run_response_calculation "${subjects[@]}"
+run_response_calculation "${subjects[@]}"
 
 # calculate group averages for WM, GM, and CSF
 calculate_group_average "wm"

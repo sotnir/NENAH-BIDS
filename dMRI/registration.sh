@@ -129,7 +129,7 @@ if [ ! -f xfm/${meanb0}_2_${t1w}_flirt-bbr.mat ];then
 fi
 # Transform FLIRT registration matrix into MRtrix format
 if [ ! -f xfm/dwi_2_t1w_mrtrix-bbr.mat ];then
-     transformconvert xfm/dwi_2_t1w_flirt-bbr.mat dwi/${meanb0}_brain.nii.gz anat/$t1w.nii.gz flirt_import xfm/dwi_2_t1w_mrtrix-bbr.mat
+    transformconvert xfm/dwi_2_t1w_flirt-bbr.mat dwi/${meanb0}_brain.nii.gz anat/$t1w.nii.gz flirt_import xfm/dwi_2_t1w_mrtrix-bbr.mat
 fi
      
 cd $studydir

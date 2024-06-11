@@ -18,7 +18,6 @@ usage() {
 # default parameters
 studydir=$PWD
 codedir="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
-#basedir=$studydir/derivatives
 voxel_size=1.25
 datadir=derivatives/dMRI/sub-sID/dwi
 qc_file=$codedir/../QC/QC_dwi.csv
@@ -67,18 +66,18 @@ datadir=derivatives/dMRI/sub-$sID/dwi
 
 # # perform upsampling for the subject
 subject_dir="$studydir/$datadir"
-# input_file="$subject_dir/dwi_preproc.mif.gz"
-# output_file="$subject_dir/dwi_preproc_hires.mif.gz"
+input_file="$subject_dir/dwi_preproc.mif.gz"
+output_file="$subject_dir/dwi_preproc_hires.mif.gz"
 
-# # check input file exists
-# if [[ ! -f "$input_file" ]]; then
-#   echo "Input file $input_file not found for subject $sID!"
-#   exit 1
-# fi
+# check input file exists
+if [[ ! -f "$input_file" ]]; then
+  echo "Input file $input_file not found for subject $sID!"
+  exit 1
+fi
 
-# # upsampling
-# echo "Upsampling $input_file to voxel size $voxel_size for subject $sID..."
-# mrgrid "$input_file" regrid -vox "$voxel_size" "$output_file"
+# upsampling
+echo "Upsampling $input_file to voxel size $voxel_size for subject $sID..."
+mrgrid "$input_file" regrid -vox "$voxel_size" "$output_file"
 
 
 ################ MEANB0 AND MEANB1000 GENERATION ################
@@ -92,17 +91,17 @@ cd $subject_dir
 upsampled_dwi="dwi_preproc_hires"
 
 
-# if [ ! -f meanb0_$upsampled_dwi.mif.gz ]; then
-#     dwiextract -shells 0 $upsampled_dwi.mif.gz - | mrmath -force -axis 3 - mean meanb0_$upsampled_dwi.mif.gz
-# fi
+if [ ! -f meanb0_$upsampled_dwi.mif.gz ]; then
+    dwiextract -shells 0 $upsampled_dwi.mif.gz - | mrmath -force -axis 3 - mean meanb0_$upsampled_dwi.mif.gz
+fi
 
-# if [ ! -f meanb1000_$upsampled_dwi.mif.gz ]; then
-#     dwiextract -shells 1000 $upsampled_dwi.mif.gz - | mrmath -force -axis 3 - mean meanb1000_$upsampled_dwi.mif.gz
-# fi
+if [ ! -f meanb1000_$upsampled_dwi.mif.gz ]; then
+    dwiextract -shells 1000 $upsampled_dwi.mif.gz - | mrmath -force -axis 3 - mean meanb1000_$upsampled_dwi.mif.gz
+fi
 
-# if [ ! -f meanb2600_$upsampled_dwi.mif.gz ]; then
-#     dwiextract -shells 2600 $upsampled_dwi.mif.gz - | mrmath -force -axis 3 - mean meanb2600_$upsampled_dwi.mif.gz
-# fi
+if [ ! -f meanb2600_$upsampled_dwi.mif.gz ]; then
+    dwiextract -shells 2600 $upsampled_dwi.mif.gz - | mrmath -force -axis 3 - mean meanb2600_$upsampled_dwi.mif.gz
+fi
 
 
 
@@ -126,7 +125,6 @@ fi
 
 echo "Using optimal BET f-value of $optimal_bet for subject $sID"
 
-echo "suddir här $subjectdir här"
 
 # create brain mask
 meanb1000_file="$subject_dir/meanb1000_$upsampled_dwi.mif.gz"
@@ -140,10 +138,13 @@ bet $temp_meanb1000 meanb1000tmp_0p${optimal_bet} -R -m -f $optimal_bet
 mrconvert meanb1000tmp_0p${optimal_bet}_mask.nii.gz $mask_file
 
 # clean up temp. files (I assume we are not using these anymore)
-#rm meanb1000tmp.nii.gz meanb1000tmp_0p${optimal_bet}_mask.nii.gz
+rm meanb1000tmp.nii.gz meanb1000tmp_0p${optimal_bet}_mask.nii.gz
 
 # visual checking (is this needed?)
 echo "Visually check the brain mask:"
 echo "mrview $meanb1000_file -roi.load $mask_file -roi.opacity 0.5 -mode 2"
 
 echo "Brain mask created for subject $sID at $subject_dir/$mask_file"
+
+# Create brain extracted meanb1000
+mrcalc $meanb1000_file $mask_file -mul $subject_dir/meanb1000_brain_$upsampled_dwi.mif.gz
