@@ -34,7 +34,7 @@ shift;
 studydir=`pwd`
 
 # Defaults
-meanb0=derivatives/dMRI/sub-$sID/dwi/meanb0_brain.mif.gz
+meanb0=derivatives/dMRI/sub-$sID/dwi/meanb0_brain.mif.gz  #should meanb1000_brain_dwi_preproc_hires.mif.gz?
 t1w=derivatives/sMRI_fs-segmentation/sub-$sID/mri/nu.mgz
 mask=derivatives/sMRI_fs-segmentation/sub-$sID/mri/brainmask.mgz
 wmseg=derivatives/sMRI_fs-segmentation/sub-$sID/mri/wm.seg.mgz
@@ -119,7 +119,9 @@ if [ ! -d xfm ]; then mkdir xfm; fi
 #if [ ! -f dwi/${meanb0}_brain.nii.gz ];then
 #    bet dwi/$meanb0.nii.gz dwi/${meanb0}_brain.nii.gz -F -R
 #fi
-     
+
+mrcalc meanb0_file_hires mask_hires -mul meanb0_brain_hires_tmp.nii.gz 
+    
 # Registration using BBR
 if [ ! -f xfm/${meanb0}_2_${t1w}_flirt-bbr.mat ];then 
     echo "Rigid-body linear registration using FSL's FLIRT"

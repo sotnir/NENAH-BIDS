@@ -107,15 +107,15 @@ fi
 
 ################ BRAIN MASK GENERATION ################
 
-#How do we handle the subjects who do not have optimal BET value?
+# subjects without optimal BET-value will not be processed
 
 if [ ! -f "$qc_file" ]; then
   echo "QC file $qc_file not found!"
   exit 1
 fi
 
-# {print $NF} takes the value of the last col, maybe bad if we are to add coloumns in qc-file 
-# in future
+# {print $NF} takes the value of the last col, maybe bad if we are to add coloumns to qc-file 
+# in the future
 optimal_bet=$(awk -F, -v id="$sID" '$1 == id {print $NF}' "$qc_file")
 
 if [ -z "$optimal_bet" ]; then
@@ -128,7 +128,7 @@ echo "Using optimal BET f-value of $optimal_bet for subject $sID"
 
 # create brain mask
 meanb1000_file="$subject_dir/meanb1000_$upsampled_dwi.mif.gz"
-mask_file="mask_$upsampled_dwi.mif.gz"
+mask_file="mask_space-dwi_hires.mif.gz"
 temp_meanb1000="meanb1000tmp.nii.gz"
 
 mrconvert $meanb1000_file $temp_meanb1000
