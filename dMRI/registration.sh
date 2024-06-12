@@ -34,7 +34,7 @@ shift;
 studydir=`pwd`
 
 # Defaults
-meanb0=derivatives/dMRI/sub-$sID/dwi/meanb0_brain.mif.gz  #should meanb1000_brain_dwi_preproc_hires.mif.gz?
+meanb0=derivatives/dMRI/sub-$sID/dwi/meanb1000_brain_dwi_preproc_hires.mif.gz  
 t1w=derivatives/sMRI_fs-segmentation/sub-$sID/mri/nu.mgz
 mask=derivatives/sMRI_fs-segmentation/sub-$sID/mri/brainmask.mgz
 wmseg=derivatives/sMRI_fs-segmentation/sub-$sID/mri/wm.seg.mgz
@@ -120,18 +120,20 @@ if [ ! -d xfm ]; then mkdir xfm; fi
 #    bet dwi/$meanb0.nii.gz dwi/${meanb0}_brain.nii.gz -F -R
 #fi
 
-mrcalc meanb0_file_hires mask_hires -mul meanb0_brain_hires_tmp.nii.gz 
+
+#creating temp meanb0.nii.gz file with brain extracted meanb1000
+mrcalc dwi/meanb0_dwi_preproc_hires.mif.gz dwi/meanb1000_brain_dwi_preproc_hires.mif.gz -mul dwi/meanb0_brain_hires_tmp.nii.gz 
     
 # Registration using BBR
 if [ ! -f xfm/${meanb0}_2_${t1w}_flirt-bbr.mat ];then 
     echo "Rigid-body linear registration using FSL's FLIRT"
-    flirt -in dwi/${meanb0}_brain.nii.gz -ref anat/${t1w}_brain.nii.gz -dof 6 -omat xfm/tmp.mat
-    flirt -in dwi/${meanb0}_brain.nii.gz -ref anat/${t1w}_brain.nii.gz -dof 6 -cost bbr -wmseg anat/$wmseg.nii.gz -init xfm/tmp.mat -omat xfm/dwi_2_t1w_flirt-bbr.mat -schedule $FSLDIR/etc/flirtsch/bbr.sch
+    flirt -in dwi/${meanb0}_brain_hires_tmp.nii.gz -ref anat/${t1w}_brain.nii.gz -dof 6 -omat xfm/tmp.mat
+    flirt -in dwi/${meanb0}_brain_hires_tmp.nii.gz -ref anat/${t1w}_brain.nii.gz -dof 6 -cost bbr -wmseg anat/$wmseg.nii.gz -init xfm/tmp.mat -omat xfm/dwi_2_t1w_flirt-bbr.mat -schedule $FSLDIR/etc/flirtsch/bbr.sch
     rm xfm/tmp.mat
 fi
 # Transform FLIRT registration matrix into MRtrix format
 if [ ! -f xfm/dwi_2_t1w_mrtrix-bbr.mat ];then
-    transformconvert xfm/dwi_2_t1w_flirt-bbr.mat dwi/${meanb0}_brain.nii.gz anat/$t1w.nii.gz flirt_import xfm/dwi_2_t1w_mrtrix-bbr.mat
+    transformconvert xfm/dwi_2_t1w_flirt-bbr.mat dwi/${meanb0}_brain_hires_tmp.nii.gz anat/$t1w.nii.gz flirt_import xfm/dwi_2_t1w_mrtrix-bbr.mat
 fi
      
 cd $studydir
