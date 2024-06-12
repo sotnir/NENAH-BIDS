@@ -135,7 +135,9 @@ fi
 if [ ! -f xfm/dwi_2_t1w_mrtrix-bbr.mat ];then
     transformconvert xfm/dwi_2_t1w_flirt-bbr.mat dwi/${meanb0}_brain_hires_tmp.nii.gz anat/$t1w.nii.gz flirt_import xfm/dwi_2_t1w_mrtrix-bbr.mat
 fi
-     
+
+rm $datadir/dwi/meanb0_brain_hires_tmp.nii.gz
+
 cd $studydir
 
 ####################################################################################################
@@ -151,3 +153,6 @@ mrtransform anat/$mask.nii.gz -linear xfm/dwi_2_t1w_mrtrix-bbr.mat anat/space-dw
 mrcalc anat/space-dwi_t1w.mif.gz anat/space-dwi_mask.mif.gz -mult anat/space-dwi_t1w_brain.mif.gz
 
 cd $studydir
+
+echo "Check registration by checking T1 in space-dwi with meanb0 overlaid on top"
+echo "mrview $datadir/anat/space-dwi_t1w_brain.mif.gz -overlay.load $datadir/dwi/space-dwi_t1w_brain.mif.gz -overlay.opacity 0.5 -mode 2"
