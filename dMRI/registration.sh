@@ -122,7 +122,7 @@ if [ ! -d xfm ]; then mkdir xfm; fi
 
 
 #creating temp meanb0.nii.gz file with brain extracted meanb1000
-mrcalc dwi/meanb0_dwi_preproc_hires.mif.gz dwi/meanb1000_brain_dwi_preproc_hires.mif.gz -mul dwi/meanb0_brain_hires_tmp.nii.gz 
+mrcalc dwi/meanb0_dwi_preproc_hires.mif.gz dwi/mask_space-dwi_hires.mif.gz -mul dwi/meanb0_brain_hires_tmp.nii.gz 
     
 # Registration using BBR
 if [ ! -f xfm/${meanb0}_2_${t1w}_flirt-bbr.mat ];then 
