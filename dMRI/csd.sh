@@ -29,8 +29,8 @@ sID=$1
 currdir=`pwd`
 
 # Defaults
-dwi=derivatives/dMRI/sub-$sID/dwi/dwi_preproc_inorm.mif.gz
-mask=derivatives/dMRI/sub-$sID/dwi/mask.mif.gz
+dwi=derivatives/dMRI/sub-$sID/dwi/dwi_preproc_hires.mif.gz
+mask=derivatives/dMRI/sub-$sID/dwi/mask_space-dwi_hires.mif.gz
 datadir=derivatives/dMRI/sub-$sID
 response=dhollander
 visualise=0
@@ -58,7 +58,7 @@ done
 # Check if images exist, else leave blank
 if [ ! -f $dwi ]; then dwi=""; fi
 if [[ $response = msmt_5tt ]]; then
-    act5tt=5tt_space-dwi.mif.gz;
+    act5tt=5tt/5tt_space-dwi.mif.gz;
 fi
 
 
@@ -106,90 +106,90 @@ fi
 cd $datadir/dwi
 if [ ! -d csd ]; then mkdir -p csd; fi
 
-# ---- Tournier ----
-if [[ $response = tournier ]]; then
-    # response fcn
-    if [ ! -f csd/${response}_response.txt ]; then
-	echo "Estimating response function use $response method"
-	dwi2response tournier -force -mask  $mask -voxels csd/${response}_sf.mif $dwi csd/${response}_response.txt
-	echo Check results: response fcn and sf voxels
-	if [[ $visualise = 1 ]]; then
-	    shview  csd/${response}_response.txt
-	    mrview  meanb0_brain.nii.gz -roi.load csd/${response}_sf.mif -roi.opacity 0.5 -mode 2
-	fi
-    fi
-    # Do CSD estimation
-    if [ ! -f csd/csd-${response}.mif.gz ]; then
-	echo "Estimating ODFs with CSD"
-	dwi2fod -force -mask $mask csd $dwi csd/${response}_response.txt csd/csd-${response}.mif.gz
-	echo Check results of ODFs
-	if [[ $visualise = 1 ]]; then
-	    mrview -load meanb0_brain.nii.gz -odf.load_sh csd/csd-${response}.mif.gz -mode 2
-	fi
-    fi
-    # Normalise responce fcns and ODFs
-    if [[ ! -f csd/csd-${response}_norm.mif.gz ]]; then
-	mtnormalise -mask $mask csd/csd-${response}.mif.gz csd/csd-${response}_norm.mif.gz 
-    fi
-fi
+# # ---- Tournier ----
+# if [[ $response = tournier ]]; then
+#     # response fcn
+#     if [ ! -f csd/${response}_response.txt ]; then
+# 		echo "Estimating response function use $response method"
+# 		dwi2response tournier -force -mask  $mask -voxels csd/${response}_sf.mif $dwi csd/${response}_response.txt
+# 		echo Check results: response fcn and sf voxels
+# 	if [[ $visualise = 1 ]]; then
+# 	    shview  csd/${response}_response.txt
+# 	    mrview  meanb0_brain.nii.gz -roi.load csd/${response}_sf.mif -roi.opacity 0.5 -mode 2
+# 	fi
+#     fi
+#     # Do CSD estimation
+#     if [ ! -f csd/csd-${response}.mif.gz ]; then
+# 		echo "Estimating ODFs with CSD"
+# 		dwi2fod -force -mask $mask csd $dwi csd/${response}_response.txt csd/csd-${response}.mif.gz
+# 		echo Check results of ODFs
+# 	if [[ $visualise = 1 ]]; then
+# 	    mrview -load meanb0_brain.nii.gz -odf.load_sh csd/csd-${response}.mif.gz -mode 2
+# 	fi
+#     fi
+#     # Normalise responce fcns and ODFs
+#     if [[ ! -f csd/csd-${response}_norm.mif.gz ]]; then
+# 		mtnormalise -mask $mask csd/csd-${response}.mif.gz csd/csd-${response}_norm.mif.gz 
+#     fi
+# fi
 
 # ---- dhollander ----
-if [[ $response = dhollander ]]; then
-    # Estimate response functions with dhollander algorithm
-    if [[ ! -f csd/${response}_wm.txt ]]; then
-	echo "Estimating response function use $response method"
-	dwi2response dhollander -force -voxels csd/${response}_sf.mif $dwi csd/${response}_wm.txt csd/${response}_gm.txt csd/${response}_csf.txt
-	echo "Check results for response fcns (wm, gm and csf) and single-fibre voxels (sf)"
-	if [[ $visualise = 1 ]]; then
-	    shview  csd/${response}_wm.txt
-	    shview  csd/${response}_gm.txt
-	    shview  csd/${response}_csf.txt
-	    mrview  meanb0_brain.nii.gz -overlay.load csd/${response}_sf.mif -overlay.opacity 0.5 -mode 2
-	fi
-    fi
+# if [[ $response = dhollander ]]; then
+#     # Estimate response functions with dhollander algorithm
+#     if [[ ! -f csd/${response}_wm.txt ]]; then
+# 		echo "Estimating response function use $response method"
+# 		dwi2response dhollander -force -voxels csd/${response}_sf.mif $dwi csd/${response}_wm.txt csd/${response}_gm.txt csd/${response}_csf.txt
+# 		echo "Check results for response fcns (wm, gm and csf) and single-fibre voxels (sf)"
+# 	if [[ $visualise = 1 ]]; then
+# 	    shview  csd/${response}_wm.txt
+# 	    shview  csd/${response}_gm.txt
+# 	    shview  csd/${response}_csf.txt
+# 	    mrview  meanb0_brain.nii.gz -overlay.load csd/${response}_sf.mif -overlay.opacity 0.5 -mode 2
+# 	fi
+# 	fi
     # Calculate ODFs
     if [[ ! -f csd/csd-${response}_wm.mif.gz ]]; then
-	echo "Calculating CSD using ACT and $response"
-	dwi2fod msmt_csd -force -mask $mask $dwi csd/${response}_wm.txt csd/csd-${response}_wm.mif.gz csd/${response}_gm.txt csd/csd-${response}_gm.mif.gz csd/${response}_csf.txt csd/csd-${response}_csf.mif.gz
+		echo "Calculating CSD using ACT and $response"
+		dwi2fod msmt_csd -force -mask $mask $dwi ../sub-NENAHGRP/dwi/response/${response}_wm_dwi_preproc.txt csd/csd-${response}_wm_dwi_preproc.mif.gz ../sub-NENAHGRP/dwi/response/${response}_gm_dwi_preproc.txt csd/csd-${response}_gm_dwi_preproc.mif.gz ../sub-NENAHGRP/dwi/response/${response}_csf_dwi_preproc.txt csd/csd-${response}_csf_dwi_preproc.mif.gz
 	if [[ $visualise = 1 ]]; then
-	    mrview -load meanb0_brain.nii.gz -odf.load_sh csd/csd-${response}_wm.mif.gz -mode 2;
+	    mrview -load meanb0_dwi_preproc_hires.mif.gz -odf.load_sh csd/csd-${response}_wm_dwi_preproc.mif.gz -mode 2;
 	fi
     fi
     # Normalise responce fcns and ODFs
     if [[ ! -f csd/csd-${response}_wm_norm.mif.gz ]]; then
-	mtnormalise -mask $mask csd/csd-${response}_wm.mif.gz csd/csd-${response}_wm_norm.mif.gz csd/csd-${response}_gm.mif.gz csd/csd-${response}_gm_norm.mif.gz csd/csd-${response}_csf.mif.gz csd/csd-${response}_csf_norm.mif.gz 
+		mtnormalise -mask $mask csd/csd-${response}_wm_dwi_preproc.mif.gz csd/csd-${response}_wm_norm_dwi_preproc.mif.gz csd/csd-${response}_gm_dwi_preproc.mif.gz csd/csd-${response}_gm_norm_dwi_preproc.mif.gz csd/csd-${response}_csf_dwi_preproc.mif.gz csd/csd-${response}_csf_norm_dwi_preproc.mif.gz 
     fi
 fi
 
 
-# ---- MSMT ----
-if [[ $response = msmt_5tt ]]; then
-    response=`echo $response | sed 's/\_/-/g'`
-    # Estimate msmt_csd response functions
-    if [[ ! -f csd/${response}_sf.mif ]]; then
-	echo "Estimating response function use $response method"
-	dwi2response msmt_5tt -force -voxels csd/${response}_sf.mif $dwi 5tt/$act5tt csd/${response}_wm.txt csd/${response}_gm.txt csd/${response}_csf.txt
-	echo "Check results for response fcns (wm, gm and csf) and single-fibre voxels (sf)"
-	if [[ $visualise = 1 ]]; then
-	    shview  csd/${response}_wm.txt
-	    shview  csd/${response}_gm.txt
-	    shview  csd/${response}_csf.txt
-	    mrview  meanb0_brain.nii.gz -overlay.load csd/${response}_sf.mif -overlay.opacity 0.5 -mode 2
-	fi
-    fi
-    # Calculate ODFs
-    if [[ ! -f csd/csd-${response}_csf.mif.gz ]]; then
-	echo "Calculating CSD using ACT and $response"
-	dwi2fod msmt_csd -force -mask $mask $dwi csd/${response}_wm.txt csd/csd-${response}_wm.mif.gz csd/${response}_gm.txt csd/csd-${response}_gm.mif.gz csd/${response}_csf.txt csd/csd-${response}_csf.mif.gz
-	if [[ $visualise = 1 ]]; then
-	    mrview -load meanb0_brain.nii.gz -odf.load_sh csd/csd-${response}_wm.mif.gz -mode 2;
-	fi
-    fi
-    # Normalise responce fcns and ODFs
-    if [[ ! -f csd/csd-${response}_wm_norm.mif.gz ]]; then
-	mtnormalise -mask $mask csd/csd-${response}_wm.mif.gz csd/csd-${response}_wm_norm.mif.gz csd/csd-${response}_gm.mif.gz csd/csd-${response}_gm_norm.mif.gz csd/csd-${response}_csf.mif.gz csd/csd-${response}_csf_norm.mif.gz
-    fi
-fi
+# # ---- MSMT ----
+# if [[ $response = msmt_5tt ]]; then
+#     response=`echo $response | sed 's/\_/-/g'`
+#     # Estimate msmt_csd response functions
+#     if [[ ! -f csd/${response}_sf.mif ]]; then
+# 		echo "Estimating response function use $response method"
+# 		dwi2response msmt_5tt -force -voxels csd/${response}_sf.mif $dwi 5tt/$act5tt csd/${response}_wm.txt csd/${response}_gm.txt csd/${response}_csf.txt
+# 		echo "Check results for response fcns (wm, gm and csf) and single-fibre voxels (sf)"
+# 	if [[ $visualise = 1 ]]; then
+# 	    shview  csd/${response}_wm.txt
+# 	    shview  csd/${response}_gm.txt
+# 	    shview  csd/${response}_csf.txt
+# 	    mrview  meanb0_brain.nii.gz -overlay.load csd/${response}_sf.mif -overlay.opacity 0.5 -mode 2
+# 	fi
+#     fi
+#     # Calculate ODFs
+#     if [[ ! -f csd/csd-${response}_csf.mif.gz ]]; then
+# 		echo "Calculating CSD using ACT and $response"
+# 		dwi2fod msmt_csd -force -mask $mask $dwi csd/${response}_wm.txt csd/csd-${response}_wm.mif.gz csd/${response}_gm.txt csd/csd-${response}_gm.mif.gz csd/${response}_csf.txt csd/csd-${response}_csf.mif.gz
+# 	if [[ $visualise = 1 ]]; then
+# 	    mrview -load meanb0_brain.nii.gz -odf.load_sh csd/csd-${response}_wm.mif.gz -mode 2;
+# 	fi
+#     fi
+#     # Normalise responce fcns and ODFs
+#     if [[ ! -f csd/csd-${response}_wm_norm.mif.gz ]]; then
+# 		mtnormalise -mask $mask csd/csd-${response}_wm.mif.gz csd/csd-${response}_wm_norm.mif.gz csd/csd-${response}_gm.mif.gz csd/csd-${response}_gm_norm.mif.gz csd/csd-${response}_csf.mif.gz csd/csd-${response}_csf_norm.mif.gz
+#     fi
+# fi
 
 cd $currdir
 

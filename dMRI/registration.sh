@@ -155,4 +155,4 @@ mrcalc anat/space-dwi_t1w.mif.gz anat/space-dwi_mask.mif.gz -mult anat/space-dwi
 cd $studydir
 
 echo "Check registration by checking T1 in space-dwi with meanb0 overlaid on top"
-echo "mrview $datadir/anat/space-dwi_t1w_brain.mif.gz -overlay.load $datadir/dwi/space-dwi_t1w_brain.mif.gz -overlay.opacity 0.5 -mode 2"
+echo "mrview $datadir/anat/space-dwi_t1w_brain.mif.gz -overlay.load $datadir/dwi/meanb0_dwi_preproc_hires.mif.gz -overlay.opacity 0.5 -mode 2"
