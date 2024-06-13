@@ -150,8 +150,7 @@ if [ ! -d csd ]; then mkdir -p csd; fi
     # Calculate ODFs
 if [[ ! -f csd/csd-${response}_wm.mif.gz ]]; then
 	echo "Calculating CSD using ACT and $response"
-	echo "${pwd}"
-	dwi2fod msmt_csd -force -mask $mask $dwi ../sub-NENAHGRP/dwi/response/${response}_wm_dwi_preproc.txt csd/csd-${response}_wm_dwi_preproc.mif.gz ../sub-NENAHGRP/dwi/response/${response}_gm_dwi_preproc.txt csd/csd-${response}_gm_dwi_preproc.mif.gz ../sub-NENAHGRP/dwi/response/${response}_csf_dwi_preproc.txt csd/csd-${response}_csf_dwi_preproc.mif.gz
+	dwi2fod msmt_csd -force -mask $mask $dwi ../../sub-NENAHGRP/dwi/response/${response}_wm_dwi_preproc.txt csd/csd-${response}_wm_dwi_preproc.mif.gz ../../sub-NENAHGRP/dwi/response/${response}_gm_dwi_preproc.txt csd/csd-${response}_gm_dwi_preproc.mif.gz ../../sub-NENAHGRP/dwi/response/${response}_csf_dwi_preproc.txt csd/csd-${response}_csf_dwi_preproc.mif.gz
 	if [[ $visualise = 1 ]]; then
 		mrview -load meanb0_dwi_preproc_hires.mif.gz -odf.load_sh csd/csd-${response}_wm_dwi_preproc.mif.gz -mode 2;
 	fi
