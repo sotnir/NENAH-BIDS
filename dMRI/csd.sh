@@ -154,7 +154,7 @@ if [[ ! -f csd/csd-${response}_wm_dwi_preproc.mif.gz ]]; then
 fi
     # Normalise responce fcns and ODFs
 if [[ ! -f csd/csd-${response}_wm_norm_dwi_preproc.mif.gz ]]; then
-	mtnormalise -mask $mask csd/csd-${response}_wm_$dwi.mif.gz csd/csd-${response}_wm_norm_$dwi.mif.gz csd/csd-${response}_gm_$dwi.mif.gz csd/csd-${response}_gm_norm_$dwi.mif.gz csd/csd-${response}_csf_$dwi.mif.gz csd/csd-${response}_csf_norm_$dwi.mif.gz 
+	mtnormalise -mask $mask.mif.gz csd/csd-${response}_wm_$dwi.mif.gz csd/csd-${response}_wm_norm_$dwi.mif.gz csd/csd-${response}_gm_$dwi.mif.gz csd/csd-${response}_gm_norm_$dwi.mif.gz csd/csd-${response}_csf_$dwi.mif.gz csd/csd-${response}_csf_norm_$dwi.mif.gz 
 fi
 
 if [[ $visualise = 1 ]]; then
