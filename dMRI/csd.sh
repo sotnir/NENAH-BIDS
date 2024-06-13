@@ -88,8 +88,8 @@ echo
 # 0. Put files in $datadir
 dwifullpath=$dwi
 maskfullpath=$mask
-dwi=`basename $dwi`
-mask=`basename $mask`
+dwi=`basename $dwi .mif.gz`
+mask=`basename $mask .mif.gz`
 
 # Only copy unless they are not there already
 if [ ! -f $datadir/$dwi ]; then
@@ -150,15 +150,15 @@ if [ ! -d csd ]; then mkdir -p csd; fi
     # Calculate ODFs
 if [[ ! -f csd/csd-${response}_wm_dwi_preproc.mif.gz ]]; then
 	echo "Calculating CSD using $response"
-	dwi2fod msmt_csd -force -mask $mask $dwi ../../sub-NENAHGRP/dwi/response/${response}_wm_dwi_preproc.txt csd/csd-${response}_wm_dwi_preproc.mif.gz ../../sub-NENAHGRP/dwi/response/${response}_gm_dwi_preproc.txt csd/csd-${response}_gm_dwi_preproc.mif.gz ../../sub-NENAHGRP/dwi/response/${response}_csf_dwi_preproc.txt csd/csd-${response}_csf_dwi_preproc.mif.gz
+	dwi2fod msmt_csd -force -mask $mask.mif.gz $dwi.mif.gz ../../sub-NENAHGRP/dwi/response/${response}_wm_dwi_preproc.txt csd/csd-${response}_wm_$dwi.mif.gz ../../sub-NENAHGRP/dwi/response/${response}_gm_dwi_preproc.txt csd/csd-${response}_gm_$dwi.mif.gz ../../sub-NENAHGRP/dwi/response/${response}_csf_dwi_preproc.txt csd/csd-${response}_csf_$dwi.mif.gz
 fi
     # Normalise responce fcns and ODFs
 if [[ ! -f csd/csd-${response}_wm_norm_dwi_preproc.mif.gz ]]; then
-	mtnormalise -mask $mask csd/csd-${response}_wm_dwi_preproc.mif.gz csd/csd-${response}_wm_norm_dwi_preproc.mif.gz csd/csd-${response}_gm_dwi_preproc.mif.gz csd/csd-${response}_gm_norm_dwi_preproc.mif.gz csd/csd-${response}_csf_dwi_preproc.mif.gz csd/csd-${response}_csf_norm_dwi_preproc.mif.gz 
+	mtnormalise -mask $mask csd/csd-${response}_wm_$dwi.mif.gz csd/csd-${response}_wm_norm_$dwi.mif.gz csd/csd-${response}_gm_$dwi.mif.gz csd/csd-${response}_gm_norm_$dwi.mif.gz csd/csd-${response}_csf_$dwi.mif.gz csd/csd-${response}_csf_norm_$dwi.mif.gz 
 fi
 
 if [[ $visualise = 1 ]]; then
-	mrview -load meanb0_dwi_preproc_hires.mif.gz -odf.load_sh csd/csd-${response}_wm_norm_dwi_preproc.mif.gz -mode 2;
+	mrview -load meanb0_$dwi.mif.gz -odf.load_sh csd/csd-${response}_wm_norm_$dwi.mif.gz -mode 2;
 fi
 
 

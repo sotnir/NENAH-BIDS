@@ -128,23 +128,23 @@ fi
 
 if [ $sift == 1 ]; then
 # SIFT-filtering of whole-brain tractogram
-if [ ! -f dwi/tractography/whole_brain_${nbr}_sift.tck ]; then
-    count=`tckinfo dwi/tractography/whole_brain_$nbr.tck | grep \ count: | awk '{print $2}'`;
-    count0p10=`echo "$count / 10" | bc`;
-    tcksift -act dwi/5tt/$act5tt.mif.gz -term_number $count0p10 dwi/tractography/whole_brain_$nbr.tck dwi/csd/$csd.mif.gz dwi/tractography/whole_brain_${nbr}_sift.tck
-fi
-if [ ! -f dwi/tractography/whole_brain_${nbr}_sift_edit100k.tck ];then
-    tckedit dwi/tractography/whole_brain_${nbr}_sift.tck -number 100k dwi/tractography/whole_brain_${nbr}_sift_edit100k.tck
-fi
+    if [ ! -f dwi/tractography/whole_brain_${nbr}_sift.tck ]; then
+        count=`tckinfo dwi/tractography/whole_brain_$nbr.tck | grep \ count: | awk '{print $2}'`;
+        count0p10=`echo "$count / 10" | bc`;
+        tcksift -act dwi/5tt/$act5tt.mif.gz -term_number $count0p10 dwi/tractography/whole_brain_$nbr.tck dwi/csd/$csd.mif.gz dwi/tractography/whole_brain_${nbr}_sift.tck
+    fi
+    if [ ! -f dwi/tractography/whole_brain_${nbr}_sift_edit100k.tck ];then
+        tckedit dwi/tractography/whole_brain_${nbr}_sift.tck -number 100k dwi/tractography/whole_brain_${nbr}_sift_edit100k.tck
+    fi
 fi 
 
-if [ $sift == 2]; then 
+if [ $sift == 2 ]; then 
 # SIFT2-filtering of whole-brain tractogram
-if [ ! -f dwi/tractography/whole_brain_${nbr}_sift2.tck ]; then
-    tcksift2 -act dwi/5tt/$act5tt.mif.gz dwi/tractography/whole_brain_${nbr}.tck dwi/csd/$csd.mif.gz dwi/tractography/whole_brain_${nbr}_sift2.txt
-fi
-if [ ! -f dwi/tractography/whole_brain_${nbr}_sift2_edit100k.tck ];then
-    tckedit dwi/tractography/whole_brain_${nbr}_sift2.tck -number 100k dwi/tractography/whole_brain_${nbr}_sift2_edit100k.tck
-fi
+    if [ ! -f dwi/tractography/whole_brain_${nbr}_sift2.txt ]; then
+        tcksift2 -act dwi/5tt/$act5tt.mif.gz dwi/tractography/whole_brain_${nbr}.tck dwi/csd/$csd.mif.gz dwi/tractography/whole_brain_${nbr}_sift2.txt
+    fi
+    if [ ! -f dwi/tractography/whole_brain_${nbr}_sift2_edit100k.tck ];then
+        tckedit dwi/tractography/whole_brain_${nbr}_sift2.tck -number 100k dwi/tractography/whole_brain_${nbr}_sift2_edit100k.tck
+    fi
 fi 
 cd $currdir
