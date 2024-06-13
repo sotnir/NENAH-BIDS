@@ -11,6 +11,7 @@ Arguments:
 Options:
   -csd				CSD mif.gz-file (default: derivatives/dMRI/sub-sID/dwi/csd/csd-dhollander_wm_norm.mif.gz)
   -5TT				5TT mif.gz-file in dMRI space (default: derivatives/dMRI/sub-sID/dwi/5tt/5tt_space-dwi.mif.gz)
+  -sift				SIFT-method [1=sift or 2=sift2] (default: 2)
   -nbr				Number of streamlines in whole-brain tractogram (default: 10M)
   -threads			Number of threads for parallell processing (default: 10)
   -d / -data-dir  <directory>   The directory used to output the preprocessed files (default: derivatives/dMRI/sub-sID)
@@ -29,10 +30,11 @@ currdir=`pwd`
 
 # Defaults
 datadir=derivatives/dMRI/sub-$sID
-csd=derivatives/dMRI/sub-$sID/dwi/csd/csd-dhollander_wm_norm.mif.gz
+csd=derivatives/dMRI/sub-$sID/dwi/csd/csd-dhollander_wm_norm_dwi_preproc_hires.mif.gz
 act5tt=derivatives/dMRI/sub-$sID/dwi/5tt/5tt_space-dwi.mif.gz
+sift=2
 nbr=10M
-threads=10
+threads=18
 
 # check whether the different tools are set and load parameters
 codedir="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
@@ -42,6 +44,7 @@ while [ $# -gt 0 ]; do
     case "$1" in
 	-csd) shift; csd=$1; ;;
 	-5TT) shift; act5tt=$1; ;;
+	-sift) shift; sift=$1; ;;
 	-nbr) shift; nbr=$1; ;;
 	-threads) shift; threads=$1; ;;
 	-d|-data-dir)  shift; datadir=$1; ;;
@@ -123,6 +126,7 @@ if [ ! -f dwi/tractography/whole_brain_${nbr}_edit100k.tck ];then
     tckedit dwi/tractography/whole_brain_${nbr}.tck -number 100k dwi/tractography/whole_brain_${nbr}_edit100k.tck
 fi
 
+if [ $sift == 1 ]; then
 # SIFT-filtering of whole-brain tractogram
 if [ ! -f dwi/tractography/whole_brain_${nbr}_sift.tck ]; then
     count=`tckinfo dwi/tractography/whole_brain_$nbr.tck | grep \ count: | awk '{print $2}'`;
@@ -132,5 +136,15 @@ fi
 if [ ! -f dwi/tractography/whole_brain_${nbr}_sift_edit100k.tck ];then
     tckedit dwi/tractography/whole_brain_${nbr}_sift.tck -number 100k dwi/tractography/whole_brain_${nbr}_sift_edit100k.tck
 fi
+fi 
 
+if [ $sift == 2]; then 
+# SIFT2-filtering of whole-brain tractogram
+if [ ! -f dwi/tractography/whole_brain_${nbr}_sift2.tck ]; then
+    tcksift2 -act dwi/5tt/$act5tt.mif.gz dwi/tractography/whole_brain_${nbr}.tck dwi/csd/$csd.mif.gz dwi/tractography/whole_brain_${nbr}_sift2.txt
+fi
+if [ ! -f dwi/tractography/whole_brain_${nbr}_sift2_edit100k.tck ];then
+    tckedit dwi/tractography/whole_brain_${nbr}_sift2.tck -number 100k dwi/tractography/whole_brain_${nbr}_sift2_edit100k.tck
+fi
+fi 
 cd $currdir
