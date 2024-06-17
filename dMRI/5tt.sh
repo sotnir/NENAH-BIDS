@@ -7,12 +7,13 @@ usage()
   echo "usage: $base subjectID [options]
 Transform FreeSurfer segmentation into dMRI space
 Create 5tt image from FreeSurfer segmentation
-and transform into dMRI space (requires that registration.sh has been run to create transformation between T1w <-> dMRI)
+and transform into dMRI or anatomical space (requires that registration.sh has been run to create transformation between T1w <-> dMRI)
 
 Arguments:
   sID				Subject ID (e.g. NENAHC012) 
 Options:
   -segm				Segmentation from FreeSurfer (default: derivatives/sMRI_fs-segmentation/sub-sID/mri/aparc+aseg.mgz) 
+  -space      Choose whether output to dwi-space or anat-space (default: anat)
   -d / -data-dir  <directory>   The directory used to output the preprocessed files (default: derivatives/dMRI/sub-sID)
   -h / -help / --help           Print usage.
 "
@@ -34,10 +35,12 @@ studydir=`pwd`
 # Defaults
 segm=derivatives/sMRI_fs-segmentation/sub-$sID/mri/aparc+aseg.mgz
 datadir=derivatives/dMRI/sub-$sID
+space=anat
 
 while [ $# -gt 0 ]; do
     case "$1" in
 	-segm) shift; segm=$; ;;
+  -space) shift; space=$1; ;;
 	-d|-data-dir)  shift; datadir=$1; ;;
 	-h|-help|--help) usage; ;;
 	-*) echo "$0: Unrecognized option $1" >&2; usage; ;;
@@ -48,8 +51,9 @@ done
 
 echo "Registration of dMRI and sMRI and transformation into dMRI-space
 Subject:       	   $sID 
-FS segm:	   $segm
+FS segm:	         $segm
 Directory:     	   $datadir 
+Space:             $space
 $BASH_SOURCE   	   $command
 ----------------------------"
 
@@ -77,23 +81,39 @@ fi
 # 1. Generate 5TT image and extra files (directly in dMRI space)
 #
 
-if [ ! -d $datadir/dwi/5tt ]; then mkdir -p $datadir/dwi/5tt; fi
+if [ "$space" == "dwi" ]; then
+    if [ ! -d $datadir/dwi/5tt ]; then mkdir -p $datadir/dwi/5tt; fi
+    cd $datadir/dwi/5tt
 
-cd $datadir/dwi/5tt
 
-# Generate 5tt and transform into dMRI space directly
-if [ ! -f 5tt_space-dwi.mif.gz ]; then
-    mrtransform ../../anat/fs-segm_aparc+aseg.nii.gz -linear ../../xfm/dwi_2_t1w_mrtrix-bbr.mat ../../anat/fs-segm_aparc+aseg_space-dwi.mif.gz -inverse
-    5ttgen -force freesurfer -sgm_amyg_hipp ../../anat/fs-segm_aparc+aseg_space-dwi.mif.gz 5tt_space-dwi.mif.gz
+    # Generate 5tt and transform into dMRI space directly
+    if [ ! -f 5tt_space-dwi.mif.gz ]; then
+        mrtransform ../../anat/fs-segm_aparc+aseg.nii.gz -linear ../../xfm/dwi_2_t1w_mrtrix-bbr.mat ../../anat/fs-segm_aparc+aseg_space-dwi.mif.gz -inverse
+        5ttgen -force freesurfer -sgm_amyg_hipp ../../anat/fs-segm_aparc+aseg_space-dwi.mif.gz 5tt_space-dwi.mif.gz
+    fi
+
+    # Create for visualisation 
+    if [ ! -f 5ttvis_space-dwi.mif.gz ]; then
+        5tt2vis 5tt_space-dwi.mif.gz 5tt_space-dwi_vis.mif.gz
+    fi
+    # and GM/WM boundary
+    if [ ! -f 5ttgmwm_space-dwi.mif.gz ]; then
+        5tt2gmwmi 5tt_space-dwi.mif.gz 5tt_space-dwi_gmwmi.mif.gz
+    fi
+else  
+    if [ ! -f 5tt.mif.gz ]; then
+        5ttgen -force freesurfer -sgm_amyg_hipp ../fs-segm_aparc+aseg.nii.gz 5tt.mif.gz
+    fi
+
+        # Create for visualisation 
+    if [ ! -f 5ttvis.mif.gz ]; then
+        5tt2vis 5tt.mif.gz 5tt_vis.mif.gz
+    fi
+    # and GM/WM boundary
+    if [ ! -f 5ttgmwm.mif.gz ]; then
+        5tt2gmwmi 5tt.mif.gz 5tt_gmwmi.mif.gz
+    fi
 fi
 
-# Create for visualisation 
-if [ ! -f 5ttvis_space-dwi.mif.gz ]; then
-    5tt2vis 5tt_space-dwi.mif.gz 5tt_space-dwi_vis.mif.gz
-fi
-# and GM/WM boundary
-if [ ! -f 5ttgmwm_space-dwi.mif.gz ]; then
-    5tt2gmwmi 5tt_space-dwi.mif.gz 5tt_space-dwi_gmwmi.mif.gz
-fi
-
+cd $studydir
 cd $studydir
