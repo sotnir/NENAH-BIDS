@@ -166,18 +166,17 @@ fi
 
 # Transform CSD results to anatomical space if required
 if [[ "$transform" == "1" ]]; then
-	if [[ ! -f csd/csd-${response}_wm_norm_anat.mif.gz ]]; then
+	if [[ ! -f csd/csd-${response}_wm_norm_space-anat.mif.gz ]]; then
         mrtransform csd/csd-${response}_wm_norm_$dwi.mif.gz -reorient_fod yes -linear ../../xfm/t1w_2_dwi_mrtrix-bbr.mat csd/csd-${response}_wm_norm_space-anat.mif.gz
     fi
-    if [[ ! -f csd/csd-${response}_gm_norm_anat.mif.gz ]]; then
+    if [[ ! -f csd/csd-${response}_gm_norm_space-anat.mif.gz ]]; then
         mrtransform csd/csd-${response}_gm_norm_$dwi.mif.gz -reorient_fod yes -linear ../../xfm/t1w_2_dwi_mrtrix-bbr.mat csd/csd-${response}_gm_norm_space-anat.mif.gz
     fi
-    if [[ ! -f csd/csd-${response}_csf_norm_anat.mif.gz ]]; then
+    if [[ ! -f csd/csd-${response}_csf_norm_space-anat.mif.gz ]]; then
         mrtransform csd/csd-${response}_csf_norm_$dwi.mif.gz -linear ../../xfm/t1w_2_dwi_mrtrix-bbr.mat csd/csd-${response}_csf_norm_space-anat.mif.gz
     fi
 fi
 
-cd $currdir
 
 # # ---- MSMT ----
 # if [[ $response = msmt_5tt ]]; then
