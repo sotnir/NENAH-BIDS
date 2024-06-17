@@ -10,11 +10,12 @@ Script to estimate response function and CSD estimation of preprocessed dMRI dat
 Arguments:
   sID    Subject ID   (e.g. NENAHC001) 
 Options:
-  -dwi			processed dMRI data (default: derivatives/dMRI/sub-sID/dwi_preproc_inorm.mif.gz)
-  -mask			mask for dMRI data (default: derivatives/dMRI/sub-sID/mask.mif.gz)
-  -response		response function used (default: dhollander) (NOTE - if msmt_5tt is used then appropriate 5TT needs to be in \$datadir/5tt/5tt_space-dwi.mif.gz)
+  -dwi				processed dMRI data (default: derivatives/dMRI/sub-sID/dwi_preproc_inorm.mif.gz)
+  -mask				mask for dMRI data (default: derivatives/dMRI/sub-sID/mask.mif.gz)
+  -response			response function used (default: dhollander) (NOTE - if msmt_5tt is used then appropriate 5TT needs to be in \$datadir/5tt/5tt_space-dwi.mif.gz)
   -d / -data-dir	<directory> The directory used to output the preprocessed files (default: derivatives/dMRI/sub-sID)
   -visualise		binary variable (0 or 1) to create visualisations of responses/csd estimates (default: 0 = no visualisation) 
+  -transform		Choose to transform to anatomical space: Yes = 1 or No = 0. (default: 0 (No))
   -h / -help / --help	Print usage.
 "
   exit;
@@ -34,6 +35,7 @@ mask=derivatives/dMRI/sub-$sID/dwi/mask_space-dwi_hires.mif.gz
 datadir=derivatives/dMRI/sub-$sID
 response=dhollander
 visualise=0
+transform=0
 act5tt=""
 
 # check whether the different tools are set and load parameters
@@ -48,6 +50,7 @@ while [ $# -gt 0 ]; do
 	-response) shift; response=$1; ;;
 	-d|-data-dir)  shift; datadir=$1; ;;
 	-visualise) shift; visualise=$1; ;;
+	-transform) shift; transform=$1; ;;
 	-h|-help|--help) usage; ;;
 	-*) echo "$0: Unrecognized option $1" >&2; usage; ;;
 	*) break ;;
@@ -161,6 +164,20 @@ if [[ $visualise = 1 ]]; then
 	mrview -load meanb0_$dwi.mif.gz -odf.load_sh csd/csd-${response}_wm_norm_$dwi.mif.gz -mode 2;
 fi
 
+# Transform CSD results to anatomical space if required
+if [[ "$transform" == "1" ]]; then
+	if [[ ! -f csd/csd-${response}_wm_norm_anat.mif.gz ]]; then
+        mrtransform csd/csd-${response}_wm_norm_$dwi.mif.gz -reorient_fod yes -linear ../../xfm/t1w_2_dwi_mrtrix-bbr.mat csd/csd-${response}_wm_norm_space-anat.mif.gz
+    fi
+    if [[ ! -f csd/csd-${response}_gm_norm_anat.mif.gz ]]; then
+        mrtransform csd/csd-${response}_gm_norm_$dwi.mif.gz -reorient_fod yes -linear ../../xfm/t1w_2_dwi_mrtrix-bbr.mat csd/csd-${response}_gm_norm_space-anat.mif.gz
+    fi
+    if [[ ! -f csd/csd-${response}_csf_norm_anat.mif.gz ]]; then
+        mrtransform csd/csd-${response}_csf_norm_$dwi.mif.gz -linear ../../xfm/t1w_2_dwi_mrtrix-bbr.mat csd/csd-${response}_csf_norm_space-anat.mif.gz
+    fi
+fi
+
+cd $currdir
 
 # # ---- MSMT ----
 # if [[ $response = msmt_5tt ]]; then

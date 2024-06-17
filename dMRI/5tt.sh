@@ -81,9 +81,12 @@ fi
 # 1. Generate 5TT image and extra files (directly in dMRI space)
 #
 
+
+if [ ! -d $datadir/dwi/5tt ]; then mkdir -p $datadir/dwi/5tt; fi
+cd $datadir/dwi/5tt
+
 if [ "$space" == "dwi" ]; then
-    if [ ! -d $datadir/dwi/5tt ]; then mkdir -p $datadir/dwi/5tt; fi
-    cd $datadir/dwi/5tt
+    
 
 
     # Generate 5tt and transform into dMRI space directly
@@ -100,20 +103,20 @@ if [ "$space" == "dwi" ]; then
     if [ ! -f 5ttgmwm_space-dwi.mif.gz ]; then
         5tt2gmwmi 5tt_space-dwi.mif.gz 5tt_space-dwi_gmwmi.mif.gz
     fi
-else  
-    if [ ! -f 5tt.mif.gz ]; then
-        5ttgen -force freesurfer -sgm_amyg_hipp ../fs-segm_aparc+aseg.nii.gz 5tt.mif.gz
+fi
+if [ "$space" == "anat"]; then
+    if [ ! -f 5tt_space-anat.mif.gz ]; then
+        5ttgen -force freesurfer -sgm_amyg_hipp ../fs-segm_aparc+aseg.nii.gz 5tt_space-anat.mif.gz
     fi
 
         # Create for visualisation 
     if [ ! -f 5ttvis.mif.gz ]; then
-        5tt2vis 5tt.mif.gz 5tt_vis.mif.gz
+        5tt2vis 5tt_space-anat.mif.gz 5tt_space-anat_vis.mif.gz
     fi
     # and GM/WM boundary
     if [ ! -f 5ttgmwm.mif.gz ]; then
-        5tt2gmwmi 5tt.mif.gz 5tt_gmwmi.mif.gz
+        5tt2gmwmi 5tt_space-anat.mif.gz 5tt_space-anat_gmwmi.mif.gz
     fi
 fi
 
-cd $studydir
 cd $studydir
