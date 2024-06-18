@@ -144,7 +144,7 @@ if [ $sift == 2 ]; then
         tcksift2 -out_mu whole_brain_sift2_mu -act dwi/5tt/$act5tt.mif.gz dwi/tractography/whole_brain_${nbr}.tck dwi/csd/$csd.mif.gz dwi/tractography/whole_brain_${nbr}_sift2.txt
     fi
     if [ ! -f dwi/tractography/whole_brain_${nbr}_sift2_edit100k.tck ];then
-        tckedit dwi/tractography/whole_brain_${nbr}_sift2.tck -number 100k dwi/tractography/whole_brain_${nbr}_sift2_edit100k.tck
+        tckedit dwi/tractography/whole_brain_${nbr}_sift2.txt -number 100k dwi/tractography/whole_brain_${nbr}_sift2_edit100k.tck
     fi
 fi 
 cd $currdir
