@@ -10,7 +10,7 @@ Arguments:
   sID				Subject ID (e.g. NENAHC012) 
 Options:
   -csd				CSD mif.gz-file (default: derivatives/dMRI/sub-sID/dwi/csd/csd-dhollander_wm_norm_space-anat.mif.gz)
-  -5TT				5TT mif.gz-file in dMRI space (default: derivatives/dMRI/sub-sID/dwi/5tt/5tt_space-dwi.mif.gz)
+  -5TT				5TT mif.gz-file in dMRI space (default: derivatives/dMRI/sub-sID/dwi/5tt/5tt_space-anat.mif.gz)
   -sift				SIFT-method [1=sift or 2=sift2] (default: 2)
   -nbr				Number of streamlines in whole-brain tractogram (default: 10M)
   -threads			Number of threads for parallell processing (default: 10)
@@ -141,7 +141,7 @@ fi
 if [ $sift == 2 ]; then 
 # SIFT2-filtering of whole-brain tractogram
     if [ ! -f dwi/tractography/whole_brain_${nbr}_sift2.txt ]; then
-        tcksift2 -out_mu whole_brain_sift2_mu -act dwi/5tt/$act5tt.mif.gz dwi/tractography/whole_brain_${nbr}.tck dwi/csd/$csd.mif.gz dwi/tractography/whole_brain_${nbr}_sift2.txt
+        tcksift2 -out_mu whole_brain_sift2_mu -act dwi/5tt/$act5tt.mif.gz dwi/tractography/whole_brain_${nbr}.tck dwi/csd/$csd.mif.gz dwi/tractography/whole_brain_${nbr}_sift2.tck
     fi
     if [ ! -f dwi/tractography/whole_brain_${nbr}_sift2_edit100k.tck ];then
         tckedit dwi/tractography/whole_brain_${nbr}_sift2.tck -number 100k dwi/tractography/whole_brain_${nbr}_sift2_edit100k.tck
