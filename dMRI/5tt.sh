@@ -11,9 +11,9 @@ and transform into dMRI or anatomical space (requires that registration.sh has b
 
 Arguments:
   sID				Subject ID (e.g. NENAHC012) 
+  space     Choose whether output to dwi-space or anat-space
 Options:
-  -segm				Segmentation from FreeSurfer (default: derivatives/sMRI_fs-segmentation/sub-sID/mri/aparc+aseg.mgz) 
-  -space      Choose whether output to dwi-space or anat-space (default: anat)
+  -segm				Segmentation from FreeSurfer (default: derivatives/sMRI_fs-segmentation/sub-sID/mri/aparc+aseg.mgz)
   -d / -data-dir  <directory>   The directory used to output the preprocessed files (default: derivatives/dMRI/sub-sID)
   -h / -help / --help           Print usage.
 "
@@ -25,22 +25,21 @@ Options:
 # check whether the different tools are set and load parameters
 codedir="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 
-[ $# -ge 1 ] || { usage; }
+[ $# -ge 2 ] || { usage; }
 command=$@
 sID=$1
-shift; 
+space=$2
+shift 2
 
 studydir=`pwd`
 
 # Defaults
 segm=derivatives/sMRI_fs-segmentation/sub-$sID/mri/aparc+aseg.mgz
 datadir=derivatives/dMRI/sub-$sID
-space=anat
 
 while [ $# -gt 0 ]; do
     case "$1" in
 	-segm) shift; segm=$; ;;
-  -space) shift; space=$1; ;;
 	-d|-data-dir)  shift; datadir=$1; ;;
 	-h|-help|--help) usage; ;;
 	-*) echo "$0: Unrecognized option $1" >&2; usage; ;;
@@ -52,10 +51,15 @@ done
 echo "Registration of dMRI and sMRI and transformation into dMRI-space
 Subject:       	   $sID 
 FS segm:	         $segm
-Directory:     	   $datadir 
 Space:             $space
+Directory:     	   $datadir 
 $BASH_SOURCE   	   $command
 ----------------------------"
+
+if [[ "$space" != "dwi" && "$space" != "anat" ]]; then
+    echo "Please enter a valid space. (eg. dwi or anat)"
+    usage
+fi
 
 logdir=$datadir/logs
 if [ ! -d $datadir ];then mkdir -p $datadir; fi
@@ -96,14 +100,15 @@ if [ "$space" == "dwi" ]; then
     fi
 
     # Create for visualisation 
-    if [ ! -f 5ttvis_space-dwi.mif.gz ]; then
+    if [ ! -f 5tt_space-dwi_vis.mif.gz ]; then
         5tt2vis 5tt_space-dwi.mif.gz 5tt_space-dwi_vis.mif.gz
     fi
     # and GM/WM boundary
-    if [ ! -f 5ttgmwm_space-dwi.mif.gz ]; then
+    if [ ! -f 5tt_space-dwi_gmwm.mif.gz ]; then
         5tt2gmwmi 5tt_space-dwi.mif.gz 5tt_space-dwi_gmwmi.mif.gz
     fi
 fi
+
 if [ "$space" == "anat"]; then
     if [ ! -f 5tt_space-anat.mif.gz ]; then
         5ttgen -force freesurfer -sgm_amyg_hipp ../fs-segm_aparc+aseg.nii.gz 5tt_space-anat.mif.gz
@@ -118,5 +123,6 @@ if [ "$space" == "anat"]; then
         5tt2gmwmi 5tt_space-anat.mif.gz 5tt_space-anat_gmwmi.mif.gz
     fi
 fi
+
 
 cd $studydir
