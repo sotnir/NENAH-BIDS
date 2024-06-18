@@ -31,7 +31,7 @@ currdir=`pwd`
 # Defaults
 datadir=derivatives/dMRI/sub-$sID
 csd=derivatives/dMRI/sub-$sID/dwi/csd/csd-dhollander_wm_norm_space-anat.mif.gz
-act5tt=derivatives/dMRI/sub-$sID/dwi/5tt/5tt_space-dwi.mif.gz
+act5tt=derivatives/dMRI/sub-$sID/dwi/5tt/5tt_space-anat.mif.gz
 sift=2
 nbr=10M
 threads=18
