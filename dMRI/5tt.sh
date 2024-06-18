@@ -109,7 +109,7 @@ if [ "$space" == "dwi" ]; then
     fi
 fi
 
-if [ "$space" == "anat"]; then
+if [ "$space" == "anat" ]; then
     if [ ! -f 5tt_space-anat.mif.gz ]; then
         5ttgen -force freesurfer -sgm_amyg_hipp ../fs-segm_aparc+aseg.nii.gz 5tt_space-anat.mif.gz
     fi
