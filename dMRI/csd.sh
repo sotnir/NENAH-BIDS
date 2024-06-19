@@ -170,10 +170,10 @@ if [[ "$transform" == "1" ]]; then
         mrtransform csd/csd-${response}_wm_norm_$dwi.mif.gz -reorient_fod yes -linear ../xfm/dwi_2_t1w_mrtrix-bbr.mat csd/csd-${response}_wm_norm_space-anat.mif.gz
     fi
     if [[ ! -f csd/csd-${response}_gm_norm_space-anat.mif.gz ]]; then
-        mrtransform csd/csd-${response}_gm_norm_$dwi.mif.gz -reorient_fod yes -linear ../xfm/dwi_2_t1w_mrtrix-bbr.mat csd/csd-${response}_gm_norm_space-anat.mif.gz
+        mrtransform csd/csd-${response}_gm_norm_$dwi.mif.gz -reorient_fod no -linear ../xfm/dwi_2_t1w_mrtrix-bbr.mat csd/csd-${response}_gm_norm_space-anat.mif.gz
     fi
     if [[ ! -f csd/csd-${response}_csf_norm_space-anat.mif.gz ]]; then
-        mrtransform csd/csd-${response}_csf_norm_$dwi.mif.gz -reorient_fod yes -linear ../xfm/dwi_2_t1w_mrtrix-bbr.mat csd/csd-${response}_csf_norm_space-anat.mif.gz
+        mrtransform csd/csd-${response}_csf_norm_$dwi.mif.gz -reorient_fod no -linear ../xfm/dwi_2_t1w_mrtrix-bbr.mat csd/csd-${response}_csf_norm_space-anat.mif.gz
     fi
 fi
 
