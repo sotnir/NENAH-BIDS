@@ -95,10 +95,10 @@ dwi=`basename $dwi .mif.gz`
 mask=`basename $mask .mif.gz`
 
 # Only copy unless they are not there already
-if [ ! -f $datadir/$dwi ]; then
+if [ ! -f $datadir/dwi/$dwi ]; then
     cp $dwifullpath $datadir/.
 fi
-if [ ! -f $datadir/$mask ]; then
+if [ ! -f $datadir/dwi/$mask ]; then
     cp $maskfullpath $datadir/.
 fi
 
