@@ -137,7 +137,7 @@ bet $temp_meanb1000 meanb1000tmp_0p${optimal_bet} -R -m -f $optimal_bet
 # convert the BET mask to mif format
 mrconvert meanb1000tmp_0p${optimal_bet}_mask.nii.gz $mask_file
 
-# clean up temp. files (I assume we are not using these anymore)
+# clean up temp. files
 rm meanb1000tmp.nii.gz meanb1000tmp_0p${optimal_bet}_mask.nii.gz
 
 # visual checking (is this needed?)
