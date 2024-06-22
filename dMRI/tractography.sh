@@ -119,10 +119,10 @@ init=$cutoff; # default is equal to cutoff
 cutofftext=`echo $cutoff | sed 's/\./p/g'`
 inittext=$cutofftext;
 # using above cutoff and init
-if [ ! -f dwi/tractography/whole_brain_${nbr}.tck ];then
+if [ ! -f dwi/tractography/whole_brain_${nbr}_space-anat.tck ];then
     tckgen -nthreads $threads -cutoff $cutoff -seed_cutoff $init -act dwi/5tt/$act5tt.mif.gz -backtrack -seed_gmwmi dwi/5tt/${act5tt}_gmwmi.mif.gz -crop_at_gmwmi -select $nbr dwi/csd/$csd.mif.gz dwi/tractography/whole_brain_${nbr}_space-anat.tck
 fi
-if [ ! -f dwi/tractography/whole_brain_${nbr}_edit100k.tck ];then
+if [ ! -f dwi/tractography/whole_brain_${nbr}_space-anat_edit100k.tck ];then
     tckedit dwi/tractography/whole_brain_${nbr}_space-anat.tck -number 100k dwi/tractography/whole_brain_${nbr}_space-anat_edit100k.tck
 fi
 
@@ -140,7 +140,7 @@ fi
 
 if [ $sift == 2 ]; then 
 # SIFT2-filtering of whole-brain tractogram
-    if [ ! -f dwi/tractography/whole_brain_${nbr}_sift2.txt ]; then
+    if [ ! -f dwi/tractography/whole_brain_${nbr}_space-anat_sift2.txt ]; then
         tcksift2 -out_mu dwi/tractography/whole_brain_${nbr}_sift2_space-anat_mu.txt -act dwi/5tt/$act5tt.mif.gz dwi/tractography/whole_brain_${nbr}_space-anat.tck dwi/csd/$csd.mif.gz dwi/tractography/whole_brain_${nbr}_space-anat_sift2.txt
     fi
 fi 
