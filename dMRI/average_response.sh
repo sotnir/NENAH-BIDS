@@ -90,50 +90,50 @@ printf "%s\n" "${dMRI_subjects[@]}"
 echo "### sMRI ###"
 printf "%s\n" "${sMRI_subjects[@]}"
 
-# # call response.sh for each subject
-# run_response_calculation() {
-#   local subjects=("$@")
-#   for sID in "${subjects[@]}"; do
-#     "$codedir/response.sh" "$sID" -response $response
-#   done
-# }
+# call response.sh for each subject
+run_response_calculation() {
+  local subjects=("$@")
+  for sID in "${subjects[@]}"; do
+    "$codedir/response.sh" "$sID" -response $response
+  done
+}
 
-# output_dir=$studydir/$datadir
-# if [ ! -d $output_dir ]; then mkdir -p $output_dir; fi
+output_dir=$studydir/$datadir
+if [ ! -d $output_dir ]; then mkdir -p $output_dir; fi
 
-# # function to calculate group average response 
-# calculate_group_average() {
-#   local tissue=$1
-#   local output_file="${output_dir}/${response}_${tissue}_dwi_preproc.txt"
-#   local response_files=()
+# function to calculate group average response 
+calculate_group_average() {
+  local tissue=$1
+  local output_file="${output_dir}/${response}_${tissue}_dwi_preproc.txt"
+  local response_files=()
 
-#   for sID in "${subjects[@]}"; do
-#     files=$(find "$studydir/derivatives/dMRI/sub-${sID}/dwi" -path "*/response/${response}_${tissue}_dwi_preproc.txt")
-#     response_files+=($files)
-#   done
+  for sID in "${subjects[@]}"; do
+    files=$(find "$studydir/derivatives/dMRI/sub-${sID}/dwi" -path "*/response/${response}_${tissue}_dwi_preproc.txt")
+    response_files+=($files)
+  done
 
-#   # check if any response function files exist
-#   if [ ${#response_files[@]} -eq 0 ]; then
-#     echo "No $tissue response function files found."
-#     return
-#   fi
+  # check if any response function files exist
+  if [ ${#response_files[@]} -eq 0 ]; then
+    echo "No $tissue response function files found."
+    return
+  fi
 
-#     #using responsemean
-#   responsemean ${response_files[@]} $output_file
-# }
+    #using responsemean
+  responsemean ${response_files[@]} $output_file
+}
 
-# # run response calculation for each subject
-# run_response_calculation "${subjects[@]}"
+# run response calculation for each subject
+run_response_calculation "${subjects[@]}"
 
-# # calculate group averages for WM, GM, and CSF
-# calculate_group_average "wm"
-# calculate_group_average "gm"
-# calculate_group_average "csf"
+# calculate group averages for WM, GM, and CSF
+calculate_group_average "wm"
+calculate_group_average "gm"
+calculate_group_average "csf"
 
-# if [ -f "${output_dir}/${response}_wm_dwi_preproc.txt" ] && [ -f "${output_dir}/${response}_gm_dwi_preproc.txt" ] && [ -f "${output_dir}/${response}_csf_dwi_preproc.txt" ]; then
-#   echo "Group average response function calculation completed. Files are saved in $output_dir."
-# else
-#   echo "Group average response function calculation unsuccessful."
-# fi
+if [ -f "${output_dir}/${response}_wm_dwi_preproc.txt" ] && [ -f "${output_dir}/${response}_gm_dwi_preproc.txt" ] && [ -f "${output_dir}/${response}_csf_dwi_preproc.txt" ]; then
+  echo "Group average response function calculation completed. Files are saved in $output_dir."
+else
+  echo "Group average response function calculation unsuccessful."
+fi
 
 
