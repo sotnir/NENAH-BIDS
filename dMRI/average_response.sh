@@ -50,7 +50,7 @@ done
 subjects_dMRI() {
     local dMRI_file="derivatives/dMRI/QC_dMRI_pipeline.tsv"
     local dMRI_subjects=()
-    while IFS=$'\t' read -r subject_id pass_value; do
+    while IFS=$'\t' read -r subject_id pass_value comments; do
         if [[ "$pass_value" == "1" || "$pass_value" == "0.5" ]]; then
             dMRI_subjects+=("$subject_id")
         fi
@@ -62,7 +62,7 @@ subjects_dMRI() {
 subjects_sMRI() {
     local sMRI_file="derivatives/sMRI_fs-segmentation/QC_fs-segmentation.tsv"
     local sMRI_subjects=()
-    while IFS=$'\t' read -r subject_id pass_value; do
+    while IFS=$'\t' read -r subject_id pass_value comments; do
         if [[ "$pass_value" == "1" || "$pass_value" == "0.5" ]]; then
             sMRI_subjects+=("$subject_id")
         fi
