@@ -84,11 +84,8 @@ for subject_id in "${dMRI_subjects[@]}"; do
     fi
 done
 
+echo "Calculating average response for subjects:"
 printf "%s\n" "${subjects[@]}"
-echo "### dMRI ####"
-printf "%s\n" "${dMRI_subjects[@]}"
-echo "### sMRI ###"
-printf "%s\n" "${sMRI_subjects[@]}"
 
 # call response.sh for each subject
 run_response_calculation() {
