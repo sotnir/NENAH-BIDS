@@ -85,6 +85,8 @@ for subject_id in "${dMRI_subjects[@]}"; do
 done
 
 printf "%s\n" "${subjects[@]}"
+printf "%s\n" "${dMRI_subjects[@]}"
+printf "%s\n" "${sMRI_subjects[@]}"
 
 # # call response.sh for each subject
 # run_response_calculation() {
