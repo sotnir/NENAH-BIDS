@@ -110,8 +110,9 @@ calculate_group_average() {
   done
 
   # check if any response function files exist
-  if [ ${#response_files[@]} -eq 0 ]; then
-    echo "No $tissue response function files found."
+  if [ ${#response_files[@]} -ne ${#subjects[@]} ]; then
+    echo "Mismatch: Did not find files for all subjects"
+    echo "Expected ${#subjects[@]} response files, but found ${#response_files[@]}."
     return
   fi
 
