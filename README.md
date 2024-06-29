@@ -8,7 +8,8 @@ This project is to streamline a Brain Imaging Data Structure ([BIDS](https://bid
 
 ![](https://raw.githubusercontent.com/yukaizou2015/NENAH-BIDS/main/img/workflows.png)
 
-![bild](https://github.com/sotnir/NENAH-BIDS/assets/160046020/881be4ec-905f-4380-a6ee-6d246caf88bc)
+![bild](https://github.com/sotnir/NENAH-BIDS/assets/160046020/dc2238a5-81fe-4f6c-8077-b347eb90b9ba)
+
 
 
 
