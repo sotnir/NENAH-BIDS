@@ -133,13 +133,19 @@ if [ ! -d "$thalamus_image_dir" ]; then
     mkdir -p "$thalamus_image_dir"
 fi
 
-echo "Combining left and right thalamus --> thalamus.mif in /sub-${sID}/connectome"
-mrcalc $right_output_thalamus_parcels $left_output_thalamus_parcels -add $thalamus_image
+if [ ! -f $thalamus_image ]; then 
+    echo "Combining left and right thalamus --> thalamus.mif in /sub-${sID}/connectome"
+    mrcalc $right_output_thalamus_parcels $left_output_thalamus_parcels -add $thalamus_image
+else   
+    echo "Combined thalamus image already exists"
+fi
 
-echo "Combining thalamus.mif with lobes..."
-mrcalc $thalamus_image $output_lobes_parcels -add $thalamus_lobes_image
-
-
+if [ ! -f $thalamus_lobes_image]; then
+    echo "Combining thalamus.mif with lobes..."
+    mrcalc $thalamus_image $output_lobes_parcels -add $thalamus_lobes_image
+else
+    echo "Combined thalamus and lobes image already exists"
+fi
 
 
 
