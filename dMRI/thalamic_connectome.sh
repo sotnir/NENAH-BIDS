@@ -10,21 +10,50 @@ usage() {
   echo ""
   echo "Options:"
   echo "  -d / -data-dir   <directory>  The base directory used for output of upsampling files (default: derivatives/dMRI/sub-sID/dwi)"
-  echo " -m / -mrtrix                   The PATH to MRTrix3 (default: ../software/mrtrix3)"
+  echo "  -m / -mrtrix                   The PATH to MRTrix3 (default: ../software/mrtrix3)"
   echo "  -h / -help                    Print usage"
   exit 1
 }
 
 
+# return usage if no input arguments
+if [ $# -eq 0 ]; then
+  usage
+fi
 
+# command line arguments
+while [[ $# -gt 0 ]]; do
+  case "$1" in
+    -d|-data-dir)
+      datadir=$2
+      shift 2
+      ;;
+    -m|-mrtrix)
+      MRTRIXHOME=$2
+      shift 2
+      ;;
+    -h|-help)
+      usage
+      ;;
+    *)
+      sID=$1
+      shift
+      ;;
+  esac
+done
 
-
+#  check sub id has been given
+if [ -z "$sID" ]; then
+  echo "Error: No subject ID provided."
+  usage
+  exit 1
+fi
 
 
 
 # default params
 studydir=$PWD
-datadir="${studydir}/derivatives/" #fix so that its only derivatives in lobes below
+datadir="${studydir}/derivatives/" 
 MRTRIXHOME="../software/mrtrix3"
 complete_lut="${datadir}/sMRI_thalamic_thomas/lobes_thalamic_LUT.txt"
 thalamo_lobe_image="${datadir}/sMRI_thalamic_thomas/sub-${sID}/connectome/thalamus_lobes.mif"
@@ -46,38 +75,8 @@ right_thomas_segm="${datadir}/sMRI_thalamic_thomas/sub-${sID}/right/thomas.nii.g
 left_output_thalamus_parcels="${datadir}/sMRI_thalamic_thomas/sub-${sID}/mri/${sID}_left_thalamus_parcels.mif"
 right_output_thalamus_parcels="${datadir}/sMRI_thalamic_thomas/sub-${sID}/mri/${sID}_right_thalamus_parcels.mif"
 
-# command line arguments
-while [[ $# -gt 0 ]]; do
-  case "$1" in
-    -d|-data-dir)
-      datadir=$2
-      shift 2
-      ;;
-    -m|-mrtrix)
-      MRTRIXHOME=$2
-      shirt 2
-      ;;
-    -h|-help)
-      usage
-      ;;
-    *)
-      sID=$1
-      shift
-      ;;
-  esac
-done
 
-# return usage if no input arguments
-if [ $# -eq 0 ]; then
-  usage
-fi
 
-#  check sub id has been given
-if [ -z "$sID" ]; then
-  echo "Error: No subject ID provided."
-  usage
-  exit 1
-fi
 
 
 
