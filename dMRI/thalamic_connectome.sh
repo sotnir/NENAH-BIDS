@@ -65,10 +65,10 @@ aparc_aseg="${datadir}/sMRI_fs-segmentation/sub-${sID}/mri/aparc+aseg.mgz"
 output_lobes_parcels="${datadir}/sMRI_fs-segmentation/sub-${sID}/mri/${sID}_lobes_parcels.mif"
 
 # default thalamus params divided into left/right
-left_convert="${datadir}/derivatives/sMRI_thalamic_thomas/left_convert.txt"
-right_convert="${datadir}/derivatives/sMRI_thalamic_thomas/right_convert.txt"
-left_labels="${datadir}/derivatives/sMRI_thalamic_thomas/left_labels.txt"
-right_labels="${datadir}/derivaties/sMRI_thalamic_thomas/right_labels.txt"
+left_convert="${datadir}/sMRI_thalamic_thomas/left_convert.txt"
+right_convert="${datadir}/sMRI_thalamic_thomas/right_convert.txt"
+left_labels="${datadir}/sMRI_thalamic_thomas/left_labels.txt"
+right_labels="${datadir}/sMRI_thalamic_thomas/right_labels.txt"
 left_thomas_segm="${datadir}/sMRI_thalamic_thomas/sub-${sID}/left/thomas.nii.gz"
 right_thomas_segm="${datadir}/sMRI_thalamic_thomas/sub-${sID}/right/thomas.nii.gz}"
 
