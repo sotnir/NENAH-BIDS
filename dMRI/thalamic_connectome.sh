@@ -70,7 +70,7 @@ right_convert="${datadir}/sMRI_thalamic_thomas/right_convert.txt"
 left_labels="${datadir}/sMRI_thalamic_thomas/left_labels.txt"
 right_labels="${datadir}/sMRI_thalamic_thomas/right_labels.txt"
 left_thomas_segm_nifty="${datadir}/sMRI_thalamic_thomas/sub-${sID}/left/thomas.nii.gz"
-right_thomas_segm_nifty="${datadir}/sMRI_thalamic_thomas/sub-${sID}/right/thomasr.nii.gz}"
+right_thomas_segm_nifty="${datadir}/sMRI_thalamic_thomas/sub-${sID}/right/thomasr.nii.gz"
 
 left_output_thalamus_parcels="${datadir}/sMRI_thalamic_thomas/sub-${sID}/left/${sID}_left_thalamus_parcels.mif"
 right_output_thalamus_parcels="${datadir}/sMRI_thalamic_thomas/sub-${sID}/right/${sID}_right_thalamus_parcels.mif"
