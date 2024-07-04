@@ -140,7 +140,7 @@ else
     echo "Combined thalamus image already exists"
 fi
 
-if [ ! -f $thalamus_lobes_image]; then
+if [ ! -f $thalamus_lobes_image ]; then
     echo "Combining thalamus.mif with lobes..."
     mrcalc $thalamus_image $output_lobes_parcels -add $thalamus_lobes_image
 else
