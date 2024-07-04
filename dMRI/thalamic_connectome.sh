@@ -1,0 +1,129 @@
+#!/bin/bash
+
+
+usage() {
+  echo "Usage: $0 [-d data-dir] [-c convert_txt] [-l labels_txt] [-m -mrtrix] [-h help] sID"
+  echo "Script to "
+  echo ""
+  echo "Arguments:"
+  echo "  sID              Subject ID (e.g. NENAHC001)"
+  echo ""
+  echo "Options:"
+  echo "  -d / -data-dir   <directory>  The base directory used for output of upsampling files (default: derivatives/dMRI/sub-sID/dwi)"
+  echo " -m / -mrtrix                   The PATH to MRTrix3 (default: ../software/mrtrix3)"
+  echo "  -h / -help                    Print usage"
+  exit 1
+}
+
+
+
+
+
+
+
+
+# default params
+studydir=$PWD
+datadir="${studydir}/derivatives/" #fix so that its only derivatives in lobes below
+MRTRIXHOME="../software/mrtrix3"
+complete_lut="${datadir}/sMRI_thalamic_thomas/lobes_thalamic_LUT.txt"
+thalamo_lobe_image="${datadir}/sMRI_thalamic_thomas/sub-${sID}/connectome/thalamus_lobes.mif"
+
+# default lobes params
+lobes_convert="${MRTRIXHOME}/share/mrtrix3/labelconvert/fs2lobes_cingsep_convert.txt"
+lobes_labels="${MRTRIXHOME}/share/mrtrix3/labelconvert/fs2lobes_cingsep_labels.txt"
+aparc_aseg="${datadir}/sMRI_fs-segmentation/sub-${sID}/mri/aparc+aseg.mgz"
+output_lobes_parcels="${datadir}/sMRI_fs-segmentation/sub-${sID}/mri/${sID}_lobes_parcels.mif"
+
+# default thalamus params divided into left/right
+left_convert="${datadir}/derivatives/sMRI_thalamic_thomas/left_convert.txt"
+right_convert="${datadir}/derivatives/sMRI_thalamic_thomas/right_convert.txt"
+left_labels="${datadir}/derivatives/sMRI_thalamic_thomas/left_labels.txt"
+right_labels="${datadir}/derivaties/sMRI_thalamic_thomas/right_labels.txt"
+left_thomas_segm="${datadir}/sMRI_thalamic_thomas/sub-${sID}/left/thomas.nii.gz"
+right_thomas_segm="${datadir}/sMRI_thalamic_thomas/sub-${sID}/right/thomas.nii.gz}"
+
+left_output_thalamus_parcels="${datadir}/sMRI_thalamic_thomas/sub-${sID}/mri/${sID}_left_thalamus_parcels.mif"
+right_output_thalamus_parcels="${datadir}/sMRI_thalamic_thomas/sub-${sID}/mri/${sID}_right_thalamus_parcels.mif"
+
+# command line arguments
+while [[ $# -gt 0 ]]; do
+  case "$1" in
+    -d|-data-dir)
+      datadir=$2
+      shift 2
+      ;;
+    -m|-mrtrix)
+      MRTRIXHOME=$2
+      shirt 2
+      ;;
+    -h|-help)
+      usage
+      ;;
+    *)
+      sID=$1
+      shift
+      ;;
+  esac
+done
+
+# return usage if no input arguments
+if [ $# -eq 0 ]; then
+  usage
+fi
+
+#  check sub id has been given
+if [ -z "$sID" ]; then
+  echo "Error: No subject ID provided."
+  usage
+  exit 1
+fi
+
+
+
+
+# convert lut for lobes 
+if [ ! -f $output_lobes_parcels ]; then
+    echo "Executing labelconvert for lobes..."
+    labelconvert $aparc_aseg $lobes_convert $lobes_labels $output_lobes_parcels
+fi
+
+if [ -f $output_lobes_parcels ]; then
+    echo "Label conversion complete or already done."
+else
+    echo "Couldn't convert labels or find existing files, exiting..."
+    exit
+fi
+
+# convert lut for left and right thalamus
+if [ ! -f $left_output_thalamus_parcels ]; then
+    echo "Executing labelconvert for left thalamus..."
+    labelconvert $left_thomas_segm $left_convert $left_labels $left_output_thalamus_parcels
+fi
+
+if [ ! -f $right_output_thalamus_parcels ]; then
+    echo "Executing labelconvert for right thalamus..."
+    labelconvert $right_thomas_segm $right_convert $right_labels $right_output_thalamus_parcels
+fi
+
+if [ -f $right_output_thalamus_parcels ] && [ -f $left_output_thalamus_parcels ]; then
+    echo "Label conversion for left and right thalamus complete or already done."
+else
+    echo "Couldn't convert labels or find existing files, exiting..."
+    exit
+fi
+
+# combine the images into one and store in sMRI_thalamic_thomas/sub_id/connectome/
+
+thalamo_lobe_image_dir=$(dirname "$thalamo_lobe_image")
+
+if [ ! -d "$thalamo_lobe_image_dir" ]; then
+    mkdir -p "$thalamo_lobe_image_dir"
+fi
+
+mrcalc $output_lobes_parcels $right_output_thalamus_parcels $left_output_thalamus_parcels -add $thalamo_lobe_image
+
+
+
+
+

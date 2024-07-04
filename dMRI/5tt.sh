@@ -48,9 +48,9 @@ while [ $# -gt 0 ]; do
     shift
 done
 
-echo "Registration of dMRI and sMRI and transformation into dMRI-space
+echo "Registration of dMRI and sMRI and transformation into ${space}-space
 Subject:       	   $sID 
-FS segm:	         $segm
+FS segm:	       $segm
 Space:             $space
 Directory:     	   $datadir 
 $BASH_SOURCE   	   $command
