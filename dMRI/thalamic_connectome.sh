@@ -69,8 +69,8 @@ left_convert="${datadir}/sMRI_thalamic_thomas/left_convert.txt"
 right_convert="${datadir}/sMRI_thalamic_thomas/right_convert.txt"
 left_labels="${datadir}/sMRI_thalamic_thomas/left_labels.txt"
 right_labels="${datadir}/sMRI_thalamic_thomas/right_labels.txt"
-left_thomas_segm="${datadir}/sMRI_thalamic_thomas/sub-${sID}/left/thomas.nii.gz"
-right_thomas_segm="${datadir}/sMRI_thalamic_thomas/sub-${sID}/right/thomas.nii.gz}"
+left_thomas_segm_nifty="${datadir}/sMRI_thalamic_thomas/sub-${sID}/left/thomas.nii.gz"
+right_thomas_segm_nifty="${datadir}/sMRI_thalamic_thomas/sub-${sID}/right/thomas.nii.gz}"
 
 left_output_thalamus_parcels="${datadir}/sMRI_thalamic_thomas/sub-${sID}/mri/${sID}_left_thalamus_parcels.mif"
 right_output_thalamus_parcels="${datadir}/sMRI_thalamic_thomas/sub-${sID}/mri/${sID}_right_thalamus_parcels.mif"
@@ -88,10 +88,22 @@ if [ ! -f $output_lobes_parcels ]; then
 fi
 
 if [ -f $output_lobes_parcels ]; then
-    echo "Label conversion complete or already done."
+    echo "Label conversion for lobes complete or already done."
 else
     echo "Couldn't convert labels or find existing files, exiting..."
     exit
+fi
+
+# convert thomas.nii.gz to mrtrix format
+left_thomas_segm="${datadir}/sMRI_thalamic_thomas/sub-${sID}/left/thomas.mif"
+right_thomas_segm="${datadir}/sMRI_thalamic_thomas/sub-${sID}/right/thomas.mif"
+
+if [ ! -f $left_thomas_segm ]; then
+    mrconvert $left_thomas_segm_nifty $left_thomas_segm
+fi
+
+if [ ! -f $right_thomas_segm ]; then
+    mrconvert $right_thomas_segm_nifty $right_thomas_segm
 fi
 
 # convert lut for left and right thalamus
