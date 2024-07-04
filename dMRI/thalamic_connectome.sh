@@ -53,7 +53,7 @@ fi
 
 # default params
 studydir=$PWD
-datadir="${studydir}/derivatives/" 
+datadir="${studydir}/derivatives" 
 MRTRIXHOME="../software/mrtrix3"
 complete_lut="${datadir}/sMRI_thalamic_thomas/lobes_thalamic_LUT.txt"
 thalamo_lobe_image="${datadir}/sMRI_thalamic_thomas/sub-${sID}/connectome/thalamus_lobes.mif"
