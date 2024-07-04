@@ -56,7 +56,8 @@ studydir=$PWD
 datadir="${studydir}/derivatives" 
 MRTRIXHOME="../software/mrtrix3"
 complete_lut="${datadir}/sMRI_thalamic_thomas/lobes_thalamic_LUT.txt"
-thalamo_lobe_image="${datadir}/sMRI_thalamic_thomas/sub-${sID}/connectome/thalamus_lobes.mif"
+thalamus_image="${datadir}/sMRI_thalamic_thomas/sub-${sID}/connectome/thalamus.mif"
+thalamus_lobes_image="${datadir}/sMRI_thalamic_thomas/sub-${sID}/connectome/thalamus_lobes.mif"
 
 # default lobes params
 lobes_convert="${MRTRIXHOME}/share/mrtrix3/labelconvert/fs2lobes_cingsep_convert.txt"
@@ -126,13 +127,19 @@ fi
 
 # combine the images into one and store in sMRI_thalamic_thomas/sub_id/connectome/
 
-thalamo_lobe_image_dir=$(dirname "$thalamo_lobe_image")
+thalamus_image_dir=$(dirname "$thalamus_image")
 
-if [ ! -d "$thalamo_lobe_image_dir" ]; then
-    mkdir -p "$thalamo_lobe_image_dir"
+if [ ! -d "$thalamus_image_dir" ]; then
+    mkdir -p "$thalamus_image_dir"
 fi
 
-mrcalc $output_lobes_parcels $right_output_thalamus_parcels $left_output_thalamus_parcels -add $thalamo_lobe_image
+echo "Combining left and right thalamus --> thalamus.mif in /sub-${sID}/connectome"
+mrcalc $right_output_thalamus_parcels $left_output_thalamus_parcels -add $thalamus_image
+
+echo "Combining thalamus.mif with lobes..."
+mrcalc $thalamus_image $output_lobes_parcels -add $thalamus_lobes_image
+
+
 
 
 
