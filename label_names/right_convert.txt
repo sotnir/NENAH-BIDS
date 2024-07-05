@@ -1,0 +1,14 @@
+19 CM
+19 MD
+19 Hb
+
+20 Pul
+20 LGN
+20 MGN
+
+21 VA
+21 VLa
+21 VLp
+21 VPl
+
+22 AV
