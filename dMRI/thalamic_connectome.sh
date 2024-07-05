@@ -9,7 +9,7 @@ usage() {
   echo "  sID              Subject ID (e.g. NENAHC001)"
   echo ""
   echo "Options:"
-  echo "  -d / -data-dir   <directory>  The base directory used for output of upsampling files (default: derivatives/dMRI/sub-sID/dwi)"
+  echo "  -d / -data-dir   <directory>  The base directory used for output of upsampling files (default: derivatives/dMRI/sub-sID)"
   echo "  -m / -mrtrix                  The PATH to MRTrix3 (default: ../software/mrtrix3)"
   echo "  -h / -help                    Print usage"
   exit 1
@@ -53,11 +53,11 @@ fi
 
 # default params
 studydir=$PWD
-datadir="${studydir}/derivatives/dwi/sub-${sID}" 
+datadir="${studydir}/derivatives/dMRI/sub-${sID}" 
 MRTRIXHOME="../software/mrtrix3"
 complete_lut="${studydir}/code/NENAH-BIDS/label_names/lobes_thalamic_LUT.txt"
-thalamus_image="${datadir}/dwi/connectome/thalamus.mif"
-thalamus_lobes_image="${datadir}/sMRI_thalamic_thomas/sub-${sID}/connectome/thalamus_lobes.mif"
+thalamus_image="${datadir}/anat/thalamus.mif"
+thalamus_lobes_image="${datadir}/anat/thalamus_lobes.mif"
 
 # default lobes params
 lobes_convert="${MRTRIXHOME}/share/mrtrix3/labelconvert/fs2lobes_cingsep_convert.txt"
@@ -73,8 +73,8 @@ right_labels="${studydir}/code/NENAH-BIDS/right_labels.txt"
 left_thomas_segm_nifty="${studydir}/derivatives/sMRI_thalamic_thomas/sub-${sID}/left/thomasfull.nii.gz"
 right_thomas_segm_nifty="${studydir}/derivatives/sMRI_thalamic_thomas/sub-${sID}/right/thomasrfull.nii.gz"
 
-left_output_thalamus_parcels="${datadir}/anat/${sID}_left_thalamus_parcels.mif"
-right_output_thalamus_parcels="${datadir}/anat/${sID}_right_thalamus_parcels.mif"
+left_output_thalamus_parcels="${datadir}/anat/left_thalamus_parcels.mif"
+right_output_thalamus_parcels="${datadir}/anat/right_thalamus_parcels.mif"
 
 
 
@@ -84,7 +84,7 @@ right_output_thalamus_parcels="${datadir}/anat/${sID}_right_thalamus_parcels.mif
 
 # convert lut for lobes 
 if [ ! -f $output_lobes_parcels ]; then
-    echo "Executing labelconvert for lobes..."
+    echo "Executing labelconvert for the lobes..."
     labelconvert $aparc_aseg $lobes_convert $lobes_labels $output_lobes_parcels
 fi
 
