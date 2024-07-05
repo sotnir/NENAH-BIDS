@@ -10,7 +10,7 @@ usage() {
   echo ""
   echo "Options:"
   echo "  -d / -data-dir   <directory>  The base directory used for output of upsampling files (default: derivatives/dMRI/sub-sID/dwi)"
-  echo "  -m / -mrtrix                   The PATH to MRTrix3 (default: ../software/mrtrix3)"
+  echo "  -m / -mrtrix                  The PATH to MRTrix3 (default: ../software/mrtrix3)"
   echo "  -h / -help                    Print usage"
   exit 1
 }
@@ -53,28 +53,28 @@ fi
 
 # default params
 studydir=$PWD
-datadir="${studydir}/derivatives" 
+datadir="${studydir}/derivatives/dwi/sub-${sID}" 
 MRTRIXHOME="../software/mrtrix3"
-complete_lut="${datadir}/sMRI_thalamic_thomas/lobes_thalamic_LUT.txt"
-thalamus_image="${datadir}/sMRI_thalamic_thomas/sub-${sID}/connectome/thalamus.mif"
+complete_lut="${studydir}/code/NENAH-BIDS/label_names/lobes_thalamic_LUT.txt"
+thalamus_image="${datadir}/dwi/connectome/thalamus.mif"
 thalamus_lobes_image="${datadir}/sMRI_thalamic_thomas/sub-${sID}/connectome/thalamus_lobes.mif"
 
 # default lobes params
 lobes_convert="${MRTRIXHOME}/share/mrtrix3/labelconvert/fs2lobes_cingsep_convert.txt"
 lobes_labels="${MRTRIXHOME}/share/mrtrix3/labelconvert/fs2lobes_cingsep_labels.txt"
-aparc_aseg="${datadir}/sMRI_fs-segmentation/sub-${sID}/mri/aparc+aseg.mgz"
-output_lobes_parcels="${datadir}/sMRI_fs-segmentation/sub-${sID}/mri/${sID}_lobes_parcels.mif"
+aparc_aseg="${studydir}/derivatives/sMRI_fs-segmentation/sub-${sID}/mri/aparc+aseg.mgz"
+output_lobes_parcels="${datadir}/anat/${sID}_lobes_parcels.mif"
 
 # default thalamus params divided into left/right
-left_convert="${datadir}/sMRI_thalamic_thomas/left_convert.txt"
-right_convert="${datadir}/sMRI_thalamic_thomas/right_convert.txt"
-left_labels="${datadir}/sMRI_thalamic_thomas/left_labels.txt"
-right_labels="${datadir}/sMRI_thalamic_thomas/right_labels.txt"
-left_thomas_segm_nifty="${datadir}/sMRI_thalamic_thomas/sub-${sID}/left/thomas.nii.gz"
-right_thomas_segm_nifty="${datadir}/sMRI_thalamic_thomas/sub-${sID}/right/thomasr.nii.gz"
+left_convert="${studydir}/code/NENAH-BIDS/left_convert.txt"
+right_convert="${studydir}/code/NENAH-BIDS/right_convert.txt"
+left_labels="${studydir}/code/NENAH-BIDS/left_labels.txt"
+right_labels="${studydir}/code/NENAH-BIDS/right_labels.txt"
+left_thomas_segm_nifty="${studydir}/derivatives/sMRI_thalamic_thomas/sub-${sID}/left/thomasfull.nii.gz"
+right_thomas_segm_nifty="${studydir}/derivatives/sMRI_thalamic_thomas/sub-${sID}/right/thomasrfull.nii.gz"
 
-left_output_thalamus_parcels="${datadir}/sMRI_thalamic_thomas/sub-${sID}/left/${sID}_left_thalamus_parcels.mif"
-right_output_thalamus_parcels="${datadir}/sMRI_thalamic_thomas/sub-${sID}/right/${sID}_right_thalamus_parcels.mif"
+left_output_thalamus_parcels="${datadir}/anat/${sID}_left_thalamus_parcels.mif"
+right_output_thalamus_parcels="${datadir}/anat/${sID}_right_thalamus_parcels.mif"
 
 
 
@@ -96,8 +96,8 @@ else
 fi
 
 # convert thomas.nii.gz to mrtrix format
-left_thomas_segm="${datadir}/sMRI_thalamic_thomas/sub-${sID}/left/thomasl.mif"
-right_thomas_segm="${datadir}/sMRI_thalamic_thomas/sub-${sID}/right/thomasr.mif"
+left_thomas_segm="${studydir}/derivatives/sMRI_thalamic_thomas/sub-${sID}/left/thomasl.mif"
+right_thomas_segm="${studydir}/derivatives/sMRI_thalamic_thomas/sub-${sID}/right/thomasr.mif"
 
 if [ ! -f $left_thomas_segm ]; then
     mrconvert $left_thomas_segm_nifty $left_thomas_segm
@@ -134,7 +134,7 @@ if [ ! -d "$thalamus_image_dir" ]; then
 fi
 
 if [ ! -f $thalamus_image ]; then 
-    echo "Combining left and right thalamus --> thalamus.mif in /sub-${sID}/connectome"
+    echo "Combining left and right thalamus --> thalamus.mif in /sub-${sID}/dwi/connectome"
     mrcalc $right_output_thalamus_parcels $left_output_thalamus_parcels -add $thalamus_image
 else   
     echo "Combined thalamus image already exists"
