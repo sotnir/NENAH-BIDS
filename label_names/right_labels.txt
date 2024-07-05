@@ -1,0 +1,4 @@
+19  R_medial_thomas_thalamic
+20  R_posterior_thomas_thalamic
+21  R_lateral_thomas_thalamic
+22  R_anterior_thomas_thalamic

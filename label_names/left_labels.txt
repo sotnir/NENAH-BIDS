@@ -1,0 +1,4 @@
+15  L_medial_thomas_thalamic
+16  L_posterior_thomas_thalamic
+17  L_lateral_thomas_thalamic
+18  L_anterior_thomas_thalamic
