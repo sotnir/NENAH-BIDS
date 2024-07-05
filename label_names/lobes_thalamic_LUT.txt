@@ -1,0 +1,26 @@
+0   Unknown
+
+1   L_Frontal_lobe
+2   L_Parietal_lobe
+3   L_Occipital_lobe
+4   L_Temporal_lobe
+5   L_Cingulate_lobe
+6   L_Cerebellum
+7   L_Subcortical
+
+8   R_Subcortical
+9   R_Cerebellum
+10  R_Cingulate_lobe
+11  R_Temporal_lobe
+12  R_Occipital_lobe
+13  R_Parietal_lobe
+14  R_Frontal_lobe
+
+15  L_medial_thomas_thalamic
+16  L_posterior_thomas_thalamic
+17  L_lateral_thomas_thalamic
+18  L_anterior_thomas_thalamic
+19  R_medial_thomas_thalamic
+20  R_posterior_thomas_thalamic
+21  R_lateral_thomas_thalamic
+22  R_anterior_thomas_thalamic
