@@ -66,10 +66,10 @@ aparc_aseg="${studydir}/derivatives/sMRI_fs-segmentation/sub-${sID}/mri/aparc+as
 output_lobes_parcels="${datadir}/anat/${sID}_lobes_parcels.mif"
 
 # default thalamus params divided into left/right
-left_convert="${studydir}/code/NENAH-BIDS/left_convert.txt"
-right_convert="${studydir}/code/NENAH-BIDS/right_convert.txt"
-left_labels="${studydir}/code/NENAH-BIDS/left_labels.txt"
-right_labels="${studydir}/code/NENAH-BIDS/right_labels.txt"
+left_convert="${studydir}/code/NENAH-BIDS/label_names/left_convert.txt"
+right_convert="${studydir}/code/NENAH-BIDS/label_names/right_convert.txt"
+left_labels="${studydir}/code/NENAH-BIDS/label_names/left_labels.txt"
+right_labels="${studydir}/code/NENAH-BIDS/label_names/right_labels.txt"
 left_thomas_segm_nifty="${studydir}/derivatives/sMRI_thalamic_thomas/sub-${sID}/left/thomasfull.nii.gz"
 right_thomas_segm_nifty="${studydir}/derivatives/sMRI_thalamic_thomas/sub-${sID}/right/thomasrfull.nii.gz"
 
