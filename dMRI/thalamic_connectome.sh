@@ -58,6 +58,7 @@ datadir="${studydir}/derivatives/dMRI/sub-${sID}"
 MRTRIXHOME="../software/mrtrix3"
 complete_lut="${studydir}/code/NENAH-BIDS/label_names/lobes_thalamic_LUT.txt"
 thalamus_image="${datadir}/anat/thalamus.mif"
+thalamus_lobes_image_float="${datadir}/anat/thalamus_lobes.mif"
 thalamus_lobes_image="${datadir}/anat/thalamus_lobes.mif"
 thomas_lut="../software/hipsthomasdocker/Thomas.lut"
 
@@ -147,8 +148,10 @@ fi
 
 if [ ! -f $thalamus_lobes_image ]; then
     echo "Combining thalamus.mif with lobes... --> thalamus_lobes.mif"
-    mrcalc $thalamus_image $output_lobes_parcels -add $thalamus_lobes_image
+    mrcalc $thalamus_image $output_lobes_parcels -add $thalamus_lobes_image_float
     echo ""
+    echo "Converting it to mrview supported datatype (float --> integer)"
+    mrconvert -datatype uint32 $thalamus_lobes_image_float $thalamus_image
 else
     echo "Combined thalamus and lobes image already exists"
 fi
