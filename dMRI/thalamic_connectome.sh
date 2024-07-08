@@ -59,12 +59,13 @@ MRTRIXHOME="../software/mrtrix3"
 complete_lut="${studydir}/code/NENAH-BIDS/label_names/lobes_thalamic_LUT.txt"
 thalamus_image="${datadir}/anat/thalamus.mif"
 thalamus_lobes_image="${datadir}/anat/thalamus_lobes.mif"
-
+thomas_lut="../software/hipsthomasdocker/Thomas.lut"
 
 # default lobes params
 lobes_convert="${MRTRIXHOME}/share/mrtrix3/labelconvert/fs2lobes_cingsep_convert.txt"
 lobes_labels="${MRTRIXHOME}/share/mrtrix3/labelconvert/fs2lobes_cingsep_labels.txt"
 aparc_aseg="${studydir}/derivatives/sMRI_fs-segmentation/sub-${sID}/mri/aparc+aseg.mgz"
+FS_LUT="${FREESURFER_HOME}/FreeSurferColorLUT.txt"
 output_lobes_parcels="${datadir}/anat/lobes_parcels.mif"
 
 # default thalamus params divided into left/right
@@ -87,7 +88,7 @@ right_output_thalamus_parcels="${datadir}/anat/right_thalamus_parcels.mif"
 # convert lut for lobes 
 if [ ! -f $output_lobes_parcels ]; then
     echo "Executing labelconvert for the lobes..."
-    labelconvert $aparc_aseg $lobes_convert $lobes_labels $output_lobes_parcels
+    labelconvert $aparc_aseg $FS_LUT $lobes_convert $output_lobes_parcels
 fi
 
 if [ -f $output_lobes_parcels ]; then
@@ -112,12 +113,12 @@ fi
 # convert lut for left and right thalamus
 if [ ! -f $left_output_thalamus_parcels ]; then
     echo "Executing labelconvert for left thalamus..."
-    labelconvert $left_thomas_segm $left_convert $left_labels $left_output_thalamus_parcels
+    labelconvert $left_thomas_segm  $thomas_lut $left_convert $left_output_thalamus_parcels
 fi
 
 if [ ! -f $right_output_thalamus_parcels ]; then
     echo "Executing labelconvert for right thalamus..."
-    labelconvert $right_thomas_segm $right_convert $right_labels $right_output_thalamus_parcels
+    labelconvert $right_thomas_segm $thomas_lut $right_convert $right_output_thalamus_parcels
     echo ""
 fi
 
