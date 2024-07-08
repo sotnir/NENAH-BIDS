@@ -2,8 +2,9 @@
 
 
 usage() {
-  echo "Usage: $0 [-d data-dir] [-c convert_txt] [-l labels_txt] [-m -mrtrix] [-h help] sID"
+  echo "Usage: $0 [-d data-dir] [-m -mrtrix] [-h help] sID"
   echo "Script to "
+  echo "Label and convert files is on the GitHub: (LINK)"
   echo ""
   echo "Arguments:"
   echo "  sID              Subject ID (e.g. NENAHC001)"
@@ -59,11 +60,12 @@ complete_lut="${studydir}/code/NENAH-BIDS/label_names/lobes_thalamic_LUT.txt"
 thalamus_image="${datadir}/anat/thalamus.mif"
 thalamus_lobes_image="${datadir}/anat/thalamus_lobes.mif"
 
+
 # default lobes params
 lobes_convert="${MRTRIXHOME}/share/mrtrix3/labelconvert/fs2lobes_cingsep_convert.txt"
 lobes_labels="${MRTRIXHOME}/share/mrtrix3/labelconvert/fs2lobes_cingsep_labels.txt"
 aparc_aseg="${studydir}/derivatives/sMRI_fs-segmentation/sub-${sID}/mri/aparc+aseg.mgz"
-output_lobes_parcels="${datadir}/anat/${sID}_lobes_parcels.mif"
+output_lobes_parcels="${datadir}/anat/lobes_parcels.mif"
 
 # default thalamus params divided into left/right
 left_convert="${studydir}/code/NENAH-BIDS/label_names/left_convert.txt"
@@ -79,7 +81,7 @@ right_output_thalamus_parcels="${datadir}/anat/right_thalamus_parcels.mif"
 
 
 
-
+### Convert and create necessary files from the HIPS-THOMAS segmentation and the FS-segmentation
 
 
 # convert lut for lobes 
@@ -125,7 +127,7 @@ else
     exit
 fi
 
-# combine the images into one and store in sMRI_thalamic_thomas/sub_id/connectome/
+# combine the images into one and store in ${datadir}/dwi/connectome/
 
 thalamus_image_dir=$(dirname "$thalamus_image")
 
@@ -134,7 +136,7 @@ if [ ! -d "$thalamus_image_dir" ]; then
 fi
 
 if [ ! -f $thalamus_image ]; then 
-    echo "Combining left and right thalamus --> thalamus.mif in /sub-${sID}/dwi/connectome"
+    echo "Combining left and right thalamus --> thalamus.mif in /sub-${sID}/anat/connectome"
     mrcalc $right_output_thalamus_parcels $left_output_thalamus_parcels -add $thalamus_image
 else   
     echo "Combined thalamus image already exists"
@@ -145,6 +147,27 @@ if [ ! -f $thalamus_lobes_image ]; then
     mrcalc $thalamus_image $output_lobes_parcels -add $thalamus_lobes_image
 else
     echo "Combined thalamus and lobes image already exists"
+fi
+
+
+
+### Create the thalamo-cortical connectome
+
+sift2_tract="${datadir}/dwi/tractography/whole_brain_10M_space-anat_sift2.txt"
+sift2_weights="${datadir}/dwi/tractography/whole_brain_10M_sift2_space-anat_mu.txt"
+
+output_connectome="${datadir}/dwi/connectome/whole_brain_10M_sift2_space-anat_thalamus_lobes_connectome.csv"
+output_assignments_connectome="${datadir}/dwi/connectome/assignment_whole_brain_10M_sift2_space-anat_thalamus_lobes_connectome.csv"
+
+if [ ! -f $output_connectome ]; then
+    echo "Creating thalamo-cortical connectome from whole_brain_10M_space-anat_sift2.txt for $sID"
+    tck2connectome $sift2_tract $thalamus_image $output_connectome -out_assignment $output_assignments_connectome -symmetric -zero_diagonal -scale_invnodevol -tck_weights $sift2_weights
+
+    if [ -f $output_connectome ]; then
+        echo "Connectome created successfully!"
+    fi
+else 
+    echo "Connectome already in this directory"
 fi
 
 
