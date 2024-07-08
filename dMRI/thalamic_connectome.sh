@@ -118,6 +118,7 @@ fi
 if [ ! -f $right_output_thalamus_parcels ]; then
     echo "Executing labelconvert for right thalamus..."
     labelconvert $right_thomas_segm $right_convert $right_labels $right_output_thalamus_parcels
+    echo ""
 fi
 
 if [ -f $right_output_thalamus_parcels ] && [ -f $left_output_thalamus_parcels ]; then
@@ -138,13 +139,15 @@ fi
 if [ ! -f $thalamus_image ]; then 
     echo "Combining left and right thalamus --> thalamus.mif in /sub-${sID}/anat/connectome"
     mrcalc $right_output_thalamus_parcels $left_output_thalamus_parcels -add $thalamus_image
+    echo ""
 else   
     echo "Combined thalamus image already exists"
 fi
 
 if [ ! -f $thalamus_lobes_image ]; then
-    echo "Combining thalamus.mif with lobes..."
+    echo "Combining thalamus.mif with lobes... --> thalamus_lobes.mif"
     mrcalc $thalamus_image $output_lobes_parcels -add $thalamus_lobes_image
+    echo ""
 else
     echo "Combined thalamus and lobes image already exists"
 fi
@@ -167,11 +170,14 @@ fi
 
 
 if [ ! -f $output_connectome ]; then
-    echo "Creating thalamo-cortical connectome from whole_brain_10M_space-anat_sift2.txt for $sID"
-    tck2connectome $tract $thalamus_lobes_image $output_connectome -out_assignment $output_assignments_connectome -symmetric -zero_diagonal -scale_invnodevol -tck_weights_in $sift2_weights
+    echo "Creating thalamo-cortical connectome from whole_brain_10M_space-ant.tck with Sift2 weights for $sID"
+    echo ""
+    tck2connectome -symmetric -zero_diagonal -scale_invnodevol $tract $thalamus_lobes_image $output_connectome -out_assignment $output_assignments_connectome -tck_weights_in $sift2_weights
 
     if [ -f $output_connectome ]; then
         echo "Connectome created successfully!"
+    else   
+        echo "### Failed to create connectome for $sID ###"
     fi
 else 
     echo "Connectome already in this directory"
