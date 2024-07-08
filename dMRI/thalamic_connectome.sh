@@ -154,7 +154,7 @@ fi
 ### Create the thalamo-cortical connectome
 
 tract="${datadir}/dwi/tractography/whole_brain_10M_space-anat.tck" 
-sift2_weights="${datadir}/dwi/tractography/whole_brain_10M_sift2_space-anat_mu.txt"
+sift2_weights="${datadir}/dwi/tractography/whole_brain_10M_sift2_space-anat_sift2.txt"
 
 output_connectome="${datadir}/dwi/connectome/whole_brain_10M_sift2_space-anat_thalamus_lobes_connectome.csv"
 output_assignments_connectome="${datadir}/dwi/connectome/assignment_whole_brain_10M_sift2_space-anat_thalamus_lobes_connectome.csv"
@@ -168,7 +168,7 @@ fi
 
 if [ ! -f $output_connectome ]; then
     echo "Creating thalamo-cortical connectome from whole_brain_10M_space-anat_sift2.txt for $sID"
-    tck2connectome $tract $thalamus_image $output_connectome -out_assignment $output_assignments_connectome -symmetric -zero_diagonal -scale_invnodevol -tck_weights $sift2_weights
+    tck2connectome $tract $thalamus_lobes_image $output_connectome -out_assignment $output_assignments_connectome -symmetric -zero_diagonal -scale_invnodevol -tck_weights_in $sift2_weights
 
     if [ -f $output_connectome ]; then
         echo "Connectome created successfully!"
