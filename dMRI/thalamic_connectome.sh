@@ -63,7 +63,7 @@ thalamus_lobes_image="${datadir}/anat/thalamus_lobes.mif"
 thomas_lut="../software/hipsthomasdocker/Thomas.lut"
 
 # default lobes params
-lobes_convert="${MRTRIXHOME}/share/mrtrix3/labelconvert/fs2lobes_cingsep_convert.txt"
+lobes_convert="${studydir}/code/NENAH-BIDS/label_names/fs2lobes_excluding_thalamus.txt"
 lobes_labels="${MRTRIXHOME}/share/mrtrix3/labelconvert/fs2lobes_cingsep_labels.txt"
 aparc_aseg="${studydir}/derivatives/sMRI_fs-segmentation/sub-${sID}/mri/aparc+aseg.mgz"
 FS_LUT="${FREESURFER_HOME}/FreeSurferColorLUT.txt"
@@ -150,8 +150,9 @@ if [ ! -f $thalamus_lobes_image ]; then
     echo "Combining thalamus.mif with lobes... --> thalamus_lobes.mif"
     mrcalc $thalamus_image $output_lobes_parcels -add $thalamus_lobes_image_float
     echo ""
-    echo "Converting it to mrview supported datatype (float --> integer)"
-    mrconvert -datatype uint32 $thalamus_lobes_image_float $thalamus_image
+    echo "Converting thalamus_lobes.mif to mrview supported datatype (float --> integer)"
+    mrconvert -datatype "uint32" $thalamus_lobes_image_float $thalamus_image
+    echo ""
 else
     echo "Combined thalamus and lobes image already exists"
 fi
@@ -187,6 +188,8 @@ else
     echo "Connectome already in this directory"
 fi
 
+
+### 
 
 
 
