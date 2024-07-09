@@ -64,7 +64,7 @@ if [ ! -d "$dti_dir" ]; then
 fi
 
 if [ ! -f "$dt_hires" ]; then
-    echo "Fitting tensor with mask_space-dwi_hires for $sID:"
+    echo "Fitting tensor with dwi_preproc_hires and mask_space-dwi_hires for $sID:"
     dwi2tensor -mask $dwi_mask $dwi_hires $dt_hires
     echo ""
 

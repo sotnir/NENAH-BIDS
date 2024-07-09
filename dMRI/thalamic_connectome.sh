@@ -230,7 +230,7 @@ if [ ! -f "${datadir}/dwi/connectome/whole_brain_10M_sift2_space-anat_thalamus_l
 else
     echo "Default thalamic connectome exists for $sID"
     echo "Starting with mean FA connectome..."
-
+fi
 
 
 ### Generating connectome matrix where the value of connectivity is the "mean FA"
@@ -263,7 +263,3 @@ else
     echo "Mean FA connectome already exists for $sID"
     echo ""
 fi
-
-
-
-
