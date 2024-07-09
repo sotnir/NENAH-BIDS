@@ -91,6 +91,8 @@ if [ ! -f $output_lobes_parcels ]; then
     labelconvert $aparc_aseg $FS_LUT $lobes_convert $output_lobes_parcels
     if [ -f $output_lobes_parcels ]; then
         echo "Labelconvert for lobes successfull!"
+    else    
+        echo "### ERROR: Labelconvert for lobes could not be done ###"
     fi
 else
     echo "Label conversion for lobes already done"
@@ -112,25 +114,31 @@ fi
 if [ ! -f $left_output_thalamus_parcels ]; then
     echo "Executing labelconvert for left thalamus..."
     labelconvert $left_thomas_segm  $thomas_lut $left_convert $left_output_thalamus_parcels
+    if [ -f $left_output_thalamus_parcels ]; then
+        echo "Labelconvert for left thalamus successful!"
+        echo ""
+    else    
+        echo "Labelconvert for left thalamus could not be performed for $sID"
+    fi
 fi
 
 if [ ! -f $right_output_thalamus_parcels ]; then
     echo "Executing labelconvert for right thalamus..."
     labelconvert $right_thomas_segm $thomas_lut $right_convert $right_output_thalamus_parcels
-    echo ""
+    if [ -f $right_output_thalamus_parcels ]; then
+        echo "Labelconvert for right thalamus successful!"
+    else
+        echo "Labelconvert for right thalamus could not be performed for $sID"
+    fi
 fi
 
 if [ -f $right_output_thalamus_parcels ] && [ -f $left_output_thalamus_parcels ]; then
-    echo "Label conversion for left and right thalamus complete or already done."
-else
-    echo "Couldn't convert labels or find existing files, exiting..."
-    exit
+    echo "Label conversion for left and right thalamus already done."
 fi
 
 # combine the images into one and store in ${datadir}/anat/
 
-# temp files 
-thalamus_image_tmp="${datadir}/anat/tmp_thalamus.mif"
+# temp file
 thalamus_lobes_tmp="${datadir}/anat/tmp_thalamus_lobes.mif"
 
 
@@ -139,27 +147,25 @@ if [ ! -f $thalamus_lobes_image ]; then
     echo ""
     echo ""
     echo "Combining left and right thalamus --> thalamus.mif"
-    mrcalc $right_output_thalamus_parcels $left_output_thalamus_parcels -add $thalamus_image_tmp
+    mrcalc $right_output_thalamus_parcels $left_output_thalamus_parcels -add $thalamus_image
     echo ""
     echo ""Combining thalamus.mif with lobes... --> tmp_thalamus_lobes.mif""
-    mrcalc $tmp_thalamus $output_lobes_parcels -add $thalamus_lobes_tmp
+    mrcalc $thalamus_image $output_lobes_parcels -add $thalamus_lobes_tmp
     echo ""
     echo "Converting tmp_thalamus_lobes.mif to mrview-friendly format (float --> integer)"
     mrconvert -datatype uint32 $thalamus_lobes_tmp $thalamus_lobes_image
     echo ""
     echo "Removing temporary files:"
-    rm $thalamus_image_tmp
     rm $thalamus_lobes_tmp
     echo ""
     if [ -f $thalamus_lobes_image ]; then
         echo "Successfully created thalamus_lobes.mif for $sID"
+    else
+        echo "### ERROR: Could not create thalamus_lobes.mif for $sID ###"
     fi
 else   
     echo "The file thalamus_lobes.mif already exists for $sID!"
 fi
-
-
-
 
 
 
