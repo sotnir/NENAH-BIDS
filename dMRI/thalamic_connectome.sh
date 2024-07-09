@@ -89,13 +89,11 @@ right_output_thalamus_parcels="${datadir}/anat/right_thalamus_parcels.mif"
 if [ ! -f $output_lobes_parcels ]; then
     echo "Executing labelconvert for the lobes..."
     labelconvert $aparc_aseg $FS_LUT $lobes_convert $output_lobes_parcels
-fi
-
-if [ -f $output_lobes_parcels ]; then
-    echo "Label conversion for lobes complete or already done."
+    if [ -f $output_lobes_parcels ]; then
+        echo "Labelconvert for lobes successfull!"
+    fi
 else
-    echo "Couldn't convert labels or find existing files, exiting..."
-    exit
+    echo "Label conversion for lobes already done"
 fi
 
 # convert thomas.nii.gz to mrtrix format
