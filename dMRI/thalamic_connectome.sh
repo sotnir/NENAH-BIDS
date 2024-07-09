@@ -80,27 +80,41 @@ left_output_thalamus_parcels="${datadir}/anat/left_thalamus_parcels.mif"
 right_output_thalamus_parcels="${datadir}/anat/right_thalamus_parcels.mif"
 
 
-
+echo ""
+echo "#### Running thalamic_connectome.sh for $sID: ####"
+echo ""
 
 ### Convert and create necessary files from the HIPS-THOMAS segmentation and the FS-segmentation
 
 
 # convert lut for lobes 
 if [ ! -f $output_lobes_parcels ]; then
-    echo "Executing labelconvert for the lobes..."
+    echo "Executing labelconvert for the lobes:"
     labelconvert $aparc_aseg $FS_LUT $lobes_convert $output_lobes_parcels
+    echo ""
     if [ -f $output_lobes_parcels ]; then
         echo "Labelconvert for lobes successfull!"
+        echo ""
     else    
         echo "### ERROR: Labelconvert for lobes could not be done ###"
+        echo ""
     fi
 else
     echo "Label conversion for lobes already done"
+    echo ""
 fi
 
 # convert thomas.nii.gz to mrtrix format
 left_thomas_segm="${studydir}/derivatives/sMRI_thalamic_thomas/sub-${sID}/left/thomasl.mif"
 right_thomas_segm="${studydir}/derivatives/sMRI_thalamic_thomas/sub-${sID}/right/thomasr.mif"
+
+if [ -f $left_thomas_segm ] && [ -f $right_thomas_segm ]; then
+    echo "thomasl.mif and thomasr.mif already exists for $sID, skipping convert step..."
+    echo ""
+else
+    echo "Converting nii.gz thomas segmentation files to .mif"
+    echo ""
+fi
 
 if [ ! -f $left_thomas_segm ]; then
     mrconvert $left_thomas_segm_nifty $left_thomas_segm
@@ -114,6 +128,7 @@ fi
 
 if [ -f $right_output_thalamus_parcels ] && [ -f $left_output_thalamus_parcels ]; then
     echo "Label conversion for left and right thalamus already done."
+    echo ""
 fi
 
 
@@ -133,6 +148,7 @@ if [ ! -f $right_output_thalamus_parcels ]; then
     labelconvert $right_thomas_segm $thomas_lut $right_convert $right_output_thalamus_parcels
     if [ -f $right_output_thalamus_parcels ]; then
         echo "Labelconvert for right thalamus successful!"
+        echo ""
     else
         echo "Labelconvert for right thalamus could not be performed for $sID"
     fi
@@ -194,11 +210,14 @@ if [ ! -f $output_connectome ]; then
 
     if [ -f $output_connectome ]; then
         echo "Connectome created successfully!"
+        echo ""
     else   
         echo "### Failed to create connectome for $sID ###"
+        echo ""
     fi
 else 
     echo "Connectome already in this directory"
+    echo ""
 fi
 
 
