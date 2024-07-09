@@ -140,7 +140,7 @@ fi
 
 if [ ! -f $thalamus_image ]; then 
     echo "Combining left and right thalamus --> thalamus.mif in /sub-${sID}/anat/connectome"
-    mrcalc $right_output_thalamus_parcels $left_output_thalamus_parcels -add $thalamus_image
+    mrcalc $right_output_thalamus_parcels $left_output_thalamus_parcels -add $thalamus_image_float
     echo ""
 else   
     echo "Combined thalamus image already exists"
@@ -148,7 +148,7 @@ fi
 
 if [ ! -f $thalamus_lobes_image ]; then
     echo "Combining thalamus.mif with lobes... --> thalamus_lobes.mif"
-    mrcalc $thalamus_image $output_lobes_parcels -add $thalamus_lobes_image_float
+    mrcalc $thalamus_image_float $output_lobes_parcels -add $thalamus_lobes_image_float
     echo ""
     echo "Converting thalamus_lobes.mif to mrview supported datatype (float --> integer)"
     mrconvert -datatype "uint32" $thalamus_lobes_image_float $thalamus_lobes_image
