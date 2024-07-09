@@ -17,7 +17,7 @@
 # Extracts the relevant grey matter parcellations from the default FreeSurfer segmentation (desikan_killiany), but segmentations are summarised into lobes and subcortical areas
 # Cingulate regions are combined to produce their own separate 'cingulate lobe' nodes
 # This file is intended to be used for the label conversion process; the corresponding lookup table for interpreting the resulting labels is: fs2lobes_cingsep_labels.txt
-
+# Excluding thalamus (set to 0)
 
 0     Unknown
 
@@ -58,8 +58,8 @@
 
 6     Left-Cerebellum-Cortex
 
-7     Left-Thalamus
-7     Left-Thalamus-Proper
+0     Left-Thalamus
+0     Left-Thalamus-Proper
 7     Left-Caudate
 7     Left-Putamen
 7     Left-Pallidum
@@ -67,8 +67,8 @@
 7     Left-Amygdala
 7     Left-Accumbens-area
 
-8     Right-Thalamus
-8     Right-Thalamus-Proper
+0     Right-Thalamus
+0     Right-Thalamus-Proper
 8     Right-Caudate
 8     Right-Putamen
 8     Right-Pallidum
