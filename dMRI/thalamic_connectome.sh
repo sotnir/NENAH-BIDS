@@ -111,6 +111,12 @@ if [ ! -f $right_thomas_segm ]; then
 fi
 
 # convert lut for left and right thalamus
+
+if [ -f $right_output_thalamus_parcels ] && [ -f $left_output_thalamus_parcels ]; then
+    echo "Label conversion for left and right thalamus already done."
+fi
+
+
 if [ ! -f $left_output_thalamus_parcels ]; then
     echo "Executing labelconvert for left thalamus..."
     labelconvert $left_thomas_segm  $thomas_lut $left_convert $left_output_thalamus_parcels
@@ -132,9 +138,6 @@ if [ ! -f $right_output_thalamus_parcels ]; then
     fi
 fi
 
-if [ -f $right_output_thalamus_parcels ] && [ -f $left_output_thalamus_parcels ]; then
-    echo "Label conversion for left and right thalamus already done."
-fi
 
 # combine the images into one and store in ${datadir}/anat/
 
@@ -149,7 +152,7 @@ if [ ! -f $thalamus_lobes_image ]; then
     echo "Combining left and right thalamus --> thalamus.mif"
     mrcalc $right_output_thalamus_parcels $left_output_thalamus_parcels -add $thalamus_image
     echo ""
-    echo ""Combining thalamus.mif with lobes... --> tmp_thalamus_lobes.mif""
+    echo "Combining thalamus.mif with lobes... --> tmp_thalamus_lobes.mif"
     mrcalc $thalamus_image $output_lobes_parcels -add $thalamus_lobes_tmp
     echo ""
     echo "Converting tmp_thalamus_lobes.mif to mrview-friendly format (float --> integer)"
@@ -185,7 +188,7 @@ fi
 
 
 if [ ! -f $output_connectome ]; then
-    echo "Creating thalamo-cortical connectome from whole_brain_10M_space-ant.tck with Sift2 weights for $sID"
+    echo "Creating thalamo-cortical connectome from whole_brain_10M_space-anat.tck with Sift2 weights for $sID"
     echo ""
     tck2connectome -symmetric -zero_diagonal -scale_invnodevol $tract $thalamus_lobes_image $output_connectome -out_assignment $output_assignments_connectome -tck_weights_in $sift2_weights
 
