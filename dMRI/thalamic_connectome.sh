@@ -60,7 +60,7 @@ complete_lut="${studydir}/code/NENAH-BIDS/label_names/lobes_thalamic_LUT.txt"
 thalamus_image="${datadir}/anat/thalamus.mif"
 thalamus_lobes_image_float="${datadir}/anat/thalamus_lobes.mif"
 thalamus_lobes_image="${datadir}/anat/thalamus_lobes.mif"
-thomas_lut="../software/hipsthomasdocker/Thomas.lut"
+thomas_lut="${studydir}/code/NENAH-BIDS/label_names/thomas_lut_excluding_RBGA.txt"
 
 # default lobes params
 lobes_convert="${studydir}/code/NENAH-BIDS/label_names/fs2lobes_excluding_thalamus.txt"
