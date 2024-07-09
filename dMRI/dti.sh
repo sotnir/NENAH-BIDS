@@ -51,25 +51,49 @@ fi
 studydir=$PWD
 datadir="${studydir}/derivatives/dMRI/sub-$sID"
 dwi_mask="${datadir}/dwi/mask_space-dwi_hires.mif.gz"
-dt="${datadir}/dwi/dti/dt_hires.mif,gz"
-
-
+dt_hires="${datadir}/dwi/dti/dt_hires.mif.gz"
+fa_hires_dwi="${datadir}/dwi/dti/fa_hires.mif.gz"
+fa_hires_anat="${datadir}/anat/fa_hires_space-anat.mif.gz"
 #### Fit tensor to dwi hires data
 
-dti_dir=$(dirname "$dt")
+dti_dir=$(dirname "$dt_hires")
 
 if [ ! -d "$dti_dir" ]; then
     mkdir -p "$dti_dir"
 fi
 
-if [ ! -f "$dt" ]; then
-    echo "Fitting tensor with mask_space-dwi_hires for $sID..."
-    dwi2tensor -iter "0" -mask $dwi_mask $dt
+if [ ! -f "$dt_hires" ]; then
+    echo "Fitting tensor with mask_space-dwi_hires for $sID:"
+    dwi2tensor -mask $dwi_mask $dt_hires
     echo ""
 
-    if [ -f "$dt" ]; then
+    if [ -f "$dt_hires" ]; then
         echo "dt-file created successfully!"
-    else   
+    else
+        echo "Could not perform dwi2tensor for $sID, exiting..."
+        exit
+    fi
+else
+    echo " dt-file already exists for $sID"
+    echo ""
+fi
 
 
-mrtransform fa_in - | tcksample tck.tck - - | tck2connectome  
+# create fa_hires.mif.gz using tensor2metric
+
+
+if [ ! -f "$fa_hires_dwi" ]; then
+    echo "Creating FA file from dt_hires for $sID:"
+    tensor2metric -fa $fa_hires_dwi $dt_hires
+    echo ""
+
+    if [ -f "$fa_hires_dwi" ]; then
+        echo "FA file created successfully!"
+    else
+        echo "Could not create FA file for $sID, exiting..."
+        exit
+    fi
+else
+    echo "FA file already exists for $sID"
+    echo ""
+fi
