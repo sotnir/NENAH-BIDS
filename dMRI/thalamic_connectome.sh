@@ -239,7 +239,9 @@ fi
 mean_FA_per_streamline="${datadir}/dwi/dti/mean_FA_per_streamline.csv"
 mean_FA_connectome="${datadir}/dwi/connectome/whole_brain_10M_space-anat_mean_FA_connectome.csv"
 fa_dwi2anat_transform="${datadir}/xfm/dwi_2_t1w_mrtrix-bbr.mat"
-fa_hires_anat="${datadir}/anat/fa_hires_space-anat.mif.gz"
+tract="${datadir}/dwi/tractography/whole_brain_10M_space-anat.tck"
+nodes=$thalamus_lobes_image
+fa_hires_dwi="${datadir}/dwi/dti/fa_hires.mif.gz"
 
 if [ ! -f $mean_FA_connectome ]; then
 
@@ -248,9 +250,9 @@ if [ ! -f $mean_FA_connectome ]; then
     echo ""
 
     # transform FA to anatomical space and perform connectome analysis
-    echo "Transforming FA to anatomical space and creating connectome for $sID by piping through:"
+    echo "Transforming FA to anatomical space and creating connectome for $sID by piping it through tcksample and tck2connectome:"
     mrtransform $fa_hires_dwi -linear $fa_dwi2anat_transform - | tcksample $tract - $mean_FA_per_streamline -stat_tck mean
-    tck2connectome $tract $thalamus_lobes_image $mean_FA_connectome -scale_file $mean_FA_per_streamline -stat_edge mean
+    tck2connectome $tract $nodes $mean_FA_connectome -scale_file $mean_FA_per_streamline -stat_edge mean
 
     if [ -f "$mean_FA_connectome" ]; then
         echo "Mean FA connectome generated successfully!"

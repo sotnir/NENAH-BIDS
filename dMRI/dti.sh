@@ -54,7 +54,6 @@ dwi_mask="${datadir}/dwi/mask_space-dwi_hires.mif.gz"
 dwi_hires="${datadir}/dwi/dwi_preproc_hires.mif.gz"
 dt_hires="${datadir}/dwi/dti/dt_hires.mif.gz"
 fa_hires_dwi="${datadir}/dwi/dti/fa_hires.mif.gz"
-fa_hires_anat="${datadir}/anat/fa_hires_space-anat.mif.gz"
 #### Fit tensor to dwi hires data
 
 dti_dir=$(dirname "$dt_hires")
