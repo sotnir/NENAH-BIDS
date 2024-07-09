@@ -158,7 +158,7 @@ if [ ! -f $thalamus_lobes_image ]; then
     echo "Converting tmp_thalamus_lobes.mif to mrview-friendly format (float --> integer)"
     mrconvert -datatype uint32 $thalamus_lobes_tmp $thalamus_lobes_image
     echo ""
-    echo "Removing temporary files:"
+    echo "Removing temporary files..."
     rm $thalamus_lobes_tmp
     echo ""
     if [ -f $thalamus_lobes_image ]; then
