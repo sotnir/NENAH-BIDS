@@ -58,7 +58,6 @@ datadir="${studydir}/derivatives/dMRI/sub-${sID}"
 MRTRIXHOME="../software/mrtrix3"
 complete_lut="${studydir}/code/NENAH-BIDS/label_names/lobes_thalamic_LUT.txt"
 thalamus_image="${datadir}/anat/thalamus.mif"
-thalamus_lobes_image_float="${datadir}/anat/thalamus_lobes.mif"
 thalamus_lobes_image="${datadir}/anat/thalamus_lobes.mif"
 thomas_lut="${studydir}/code/NENAH-BIDS/label_names/thomas_lut_excluding_RBGA.txt"
 
@@ -130,32 +129,39 @@ else
     exit
 fi
 
-# combine the images into one and store in ${datadir}/dwi/connectome/
+# combine the images into one and store in ${datadir}/anat/
 
-thalamus_image_dir=$(dirname "$thalamus_image")
+# temp files 
+thalamus_image_tmp="${datadir}/anat/tmp_thalamus.mif"
+thalamus_lobes_tmp="${datadir}/anat/tmp_thalamus_lobes.mif"
 
-if [ ! -d "$thalamus_image_dir" ]; then
-    mkdir -p "$thalamus_image_dir"
-fi
 
-if [ ! -f $thalamus_image_float ]; then 
-    echo "Combining left and right thalamus --> thalamus.mif in /sub-${sID}/anat/connectome"
-    mrcalc $right_output_thalamus_parcels $left_output_thalamus_parcels -add $thalamus_image_float
+if [ ! -f $thalamus_lobes_image ]; then 
+    echo "Creating thalamus_lobes.mif image in /sub-$sID/anat"
     echo ""
+    echo ""
+    echo "Combining left and right thalamus --> thalamus.mif"
+    mrcalc $right_output_thalamus_parcels $left_output_thalamus_parcels -add $thalamus_image_tmp
+    echo ""
+    echo ""Combining thalamus.mif with lobes... --> tmp_thalamus_lobes.mif""
+    mrcalc $tmp_thalamus $output_lobes_parcels -add $thalamus_lobes_tmp
+    echo ""
+    echo "Converting tmp_thalamus_lobes.mif to mrview-friendly format (float --> integer)"
+    mrconvert -datatype uint32 $thalamus_lobes_tmp $thalamus_lobes_image
+    echo ""
+    echo "Removing temporary files:"
+    rm $thalamus_image_tmp
+    rm $thalamus_lobes_tmp
+    echo ""
+    if [ -f $thalamus_lobes_image ]; then
+        echo "Successfully created thalamus_lobes.mif for $sID"
+    fi
 else   
-    echo "Combined thalamus image already exists"
+    echo "The file thalamus_lobes.mif already exists for $sID!"
 fi
 
-if [ ! -f $thalamus_lobes_image ]; then
-    echo "Combining thalamus.mif with lobes... --> thalamus_lobes.mif"
-    mrcalc $thalamus_image_float $output_lobes_parcels -add $thalamus_lobes_image_float
-    echo ""
-    echo "Converting thalamus_lobes.mif to mrview supported datatype (float --> integer)"
-    mrconvert -datatype "uint32" $thalamus_lobes_image_float $thalamus_lobes_image
-    echo ""
-else
-    echo "Combined thalamus and lobes image already exists"
-fi
+
+
 
 
 
