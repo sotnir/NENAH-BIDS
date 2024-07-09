@@ -51,6 +51,7 @@ fi
 studydir=$PWD
 datadir="${studydir}/derivatives/dMRI/sub-$sID"
 dwi_mask="${datadir}/dwi/mask_space-dwi_hires.mif.gz"
+dwi_hires="${datadir}/dwi/dwi_preproc_hires.mif.gz"
 dt_hires="${datadir}/dwi/dti/dt_hires.mif.gz"
 fa_hires_dwi="${datadir}/dwi/dti/fa_hires.mif.gz"
 fa_hires_anat="${datadir}/anat/fa_hires_space-anat.mif.gz"
@@ -64,7 +65,7 @@ fi
 
 if [ ! -f "$dt_hires" ]; then
     echo "Fitting tensor with mask_space-dwi_hires for $sID:"
-    dwi2tensor -mask $dwi_mask $dt_hires
+    dwi2tensor -mask $dwi_mask $dwi_hires $dt_hires
     echo ""
 
     if [ -f "$dt_hires" ]; then
