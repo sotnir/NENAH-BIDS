@@ -29,14 +29,21 @@ def load_connectivity_matrices(data_dir):
 
 
 
-
 # extracting the connectivity values for each group
-def extract_connectivity_values(group):
+def extract_connectivity_values(group, target_shape=(22, 22)):
     n = len(group)
-    p = group[0].shape[0]
-    values = np.zeros((n, p, p))
+    values = np.zeros((n, target_shape[0], target_shape[1]))
+    
     for i in range(n):
-        values[i] = group[i]
+        conn_matrix = group[i]
+        p, q = conn_matrix.shape
+        
+        # fix so that we have (22,22) matrix
+        if p > target_shape[0] or q > target_shape[1]:
+            conn_matrix = conn_matrix[:target_shape[0], :target_shape[1]]
+        
+        values[i, :conn_matrix.shape[0], :conn_matrix.shape[1]] = conn_matrix
+        
     return values
 
 
