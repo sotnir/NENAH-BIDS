@@ -230,6 +230,7 @@ if [ ! -f "${datadir}/dwi/connectome/whole_brain_10M_sift2_space-anat_thalamus_l
 else
     echo "Default thalamic connectome exists for $sID"
     echo "Starting with mean FA connectome..."
+    echo ""
 fi
 
 
@@ -248,6 +249,11 @@ if [ ! -f $mean_FA_connectome ]; then
     echo ""
     echo "Generating connectome with mean FA for $sID:"
     echo ""
+
+    if [ ! -f $fa_hires_dwi ]; then
+        echo "### Cannot find FA hires file for $sID, exiting... ###"
+        exit
+    fi
 
     # transform FA to anatomical space and perform connectome analysis
     echo "Transforming FA to anatomical space and creating connectome for $sID by piping it through tcksample and tck2connectome:"
