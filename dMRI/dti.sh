@@ -71,6 +71,7 @@ if [ ! -f "$dt_hires" ]; then
         echo "dt-file created successfully!"
     else
         echo "Could not perform dwi2tensor for $sID, exiting..."
+        echo ""
         exit
     fi
 else
@@ -89,8 +90,10 @@ if [ ! -f "$fa_hires_dwi" ]; then
 
     if [ -f "$fa_hires_dwi" ]; then
         echo "FA file created successfully!"
+        echo ""
     else
         echo "Could not create FA file for $sID, exiting..."
+        echo ""
         exit
     fi
 else
