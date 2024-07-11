@@ -5,10 +5,10 @@ import pandas as pd
 from scipy.stats import mannwhitneyu
 import statsmodels.stats.multitest as smm
 
-# path to datadir
+
 data_dir = "/data/iridis/NENAH_BIDS/derivatives/dMRI"
 
-# function to load the matrices from each subject
+
 def load_connectivity_matrices(data_dir):
     subject_matrices = []
     control_matrices = []
@@ -29,7 +29,7 @@ def load_connectivity_matrices(data_dir):
 
 
 
-# extracting the connectivity values for each group
+
 def extract_connectivity_values(group, target_shape=(22, 22)):
     n = len(group)
     values = np.zeros((n, target_shape[0], target_shape[1]))
@@ -83,7 +83,7 @@ np.savetxt(output_file, corrected_p_matrix, delimiter=",")
 
 print(f"Corrected p-values matrix saved in /mann_whitney_u/outputs/ as .CSV")
 
-# define significance
+
 alpha = 0.05 
 
 # identify significant connections
@@ -94,7 +94,7 @@ for i in range(p):
         if corrected_p_matrix[i, j] < alpha:
             significant_connections.append((i, j))
 
-# save connections to CSV
+
 csv_file = os.path.join(output_dir, "connections.csv")
 
 with open(csv_file, 'w') as f:
