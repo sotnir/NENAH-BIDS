@@ -51,7 +51,7 @@ done
 
 echo "Registration of dMRI and sMRI and transformation into dMRI-space
 Subject:       	   $sID 
-FS segm:	   $seg
+FS segm:	         $seg
 Tranformation:	   $transform
 Directory:     	   $datadir 
 $BASH_SOURCE   	   $command
