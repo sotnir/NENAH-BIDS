@@ -175,7 +175,7 @@ if [ ! -f "${datadir}/dwi/connectome/whole_brain_10M_sift2_space-anat_thalamus_l
         mrcalc $right_output_thalamus_parcels $left_output_thalamus_parcels -add $thalamus_image
         echo ""
         echo "Combining thalamus.mif with lobes... --> tmp_thalamus_lobes.mif"
-        mrcalc $thalamus_image $output_lobes_parcels -add $thalamus_lobes_tmp
+        mrcalc $thalamus_image 0 -gt $thalamus_image $output_lobes_parcels -if $thalamus_lobes_tmp
         echo ""
         echo "Converting tmp_thalamus_lobes.mif to mrview-friendly format (float --> integer)"
         mrconvert -datatype uint32 $thalamus_lobes_tmp $thalamus_lobes_image
