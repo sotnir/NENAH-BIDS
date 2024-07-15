@@ -4,7 +4,11 @@
 usage() {
   echo "Usage: $0 [-d data-dir] [-m -mrtrix] [-h help] sID"
   echo "Script to "
-  echo "Label and convert files is on the GitHub: (LINK)"
+  echo "1) generate thalamo-cortical connectivity matrix (thalamus to lobes)"
+  echo "2) generate connectivity matrix where the value of connectivity is the mean FA."
+  echo "This is done by re-mapping the outputs of FreeSurfer segmentation of the lobes and the HIPS-THOMAS segmentation of thalamus, and combining into a single parcellation image."
+  echo "Requires that segmentation of thalamus using HIPS-THOMAS and that fa_hires has been created using dti.sh"
+  echo "The LUTs and corresponding labels used for mapping files is on the GitHub: https://github.com/sotnir/NENAH-BIDS/tree/RioPhillips-branch/label_names"
   echo ""
   echo "Arguments:"
   echo "  sID              Subject ID (e.g. NENAHC001)"
