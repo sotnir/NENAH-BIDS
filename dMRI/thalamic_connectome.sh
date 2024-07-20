@@ -303,21 +303,32 @@ if [ $visualisation = 1 ]; then
         mkdir -p "$visualisation_dir"
     fi
 
-    echo "Generating colored thalamus-lobes parcellation image:"
+    if [ ! -f "$vis_nodes"]; then
+        echo "Generating colored thalamus-lobes parcellation image:"
+        label2colour $nodes $vis_nodes
+        echo ""
+    else
+        echo "Colored thalamus-lobes parcellation image already exists for $sID"
+        echo ""
+    fi
 
-    label2colour $nodes $vis_nodes
+    if [ ! -f "$$mesh_file"]; then
+        echo "Creating mesh-file (.obj) for thalamus-lobes parcellation image:"
+        label2mesh $nodes $mesh_file
+        echo ""
+    else
+        echo "mesh-file already exists for $sID"
+        echo ""
+    fi
 
-    echo ""
-
-    echo "Creating mesh-file (.obj) for thalamus-lobes parcellation image:"
-
-    label2mesh $nodes $mesh_file
-
-    echo ""
-
-    echo "Generating track file for visualising edges as streamlines or streamtubes (exemplars.tck):"
-
-    connectome2tck $tract $assignments $exemplars -files single -exemplars $nodes
+    if [ ! -f "$exemplars"]; then
+        echo "Generating track file for visualising edges as streamlines or streamtubes (exemplars.tck):"
+        connectome2tck $tract $assignments $exemplars -files single -exemplars $nodes
+        echo ""
+    else
+        echo "exemplars.tck already exists for $sID"
+        echo ""
+    fi
 
     echo "If successfull, the three files are in the /dwi/connectome/visualisation/ folder."
 
