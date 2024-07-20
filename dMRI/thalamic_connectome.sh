@@ -29,6 +29,10 @@ if [ $# -eq 0 ]; then
   usage
 fi
 
+
+# default visualisation param
+visualisation=0
+
 # command line arguments
 while [[ $# -gt 0 ]]; do
   case "$1" in
@@ -66,7 +70,6 @@ fi
 # default params
 studydir=$PWD
 datadir="${studydir}/derivatives/dMRI/sub-${sID}" 
-visualisation=0
 
 ## Thalamus Parameters ###
 MRTRIXHOME="../software/mrtrix3"
