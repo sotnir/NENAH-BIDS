@@ -296,7 +296,7 @@ if [ $visualisation = 1 ]; then
     mesh_file="${visualisation_dir}/mesh_thalamus_lobes.obj"
     tract="${datadir}/dwi/tractography/whole_brain_10M_space-anat.tck"
     assignments="${datadir}/dwi/connectome/assignment_whole_brain_10M_sift2_space-anat_thalamus_lobes_connectome.csv"
-
+    exemplars="${visualisation_dir}/exemplars.tck"
 
 
     if [ ! -d "$visualisation_dir" ]; then
@@ -317,7 +317,7 @@ if [ $visualisation = 1 ]; then
 
     echo "Generating track file for visualising edges as streamlines or streamtubes (exemplars.tck):"
 
-    connectome2tck $tract $assignments exemplars.tck -files single -exemplars $nodes
+    connectome2tck $tract $assignments $exemplars -files single -exemplars $nodes
 
     echo "If successfull, the three files are in the /dwi/connectome/visualisation/ folder."
 
