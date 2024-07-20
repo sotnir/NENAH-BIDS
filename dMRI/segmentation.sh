@@ -11,7 +11,7 @@ Requires that registration (linear BBR) has been performed between T1 and dMRI s
 Arguments:
   sID				Subject ID (e.g. NENAHC012) 
 Options:
-  -seg				Segmentation to be mapped (default: derivatives/sMRI_fs-segmentation/sub-sID/mri/aparc+aseg.mgz)
+  -seg				    Segmentation to be mapped (default: derivatives/sMRI_fs-segmentation/sub-sID/mri/aparc+aseg.mgz)
   -transform			Transformation matrix (default: derivatives/dMRI/sub-sID/reg/dwi_2_t1w_mrtrix-bbr.mat)
   -d / -data-dir  <directory>   The directory used to output the preprocessed files (default: derivatives/dMRI/sub-sID)
   -h / -help / --help           Print usage.

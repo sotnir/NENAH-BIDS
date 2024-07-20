@@ -5,7 +5,7 @@ usage()
 {
   base=$(basename "$0")
   echo "usage: $base subjectID [options]
-Transform FreeSurfer segmentation into dMRI space
+Transform FreeSurfer segmentation into dMRI space or keep in anatomical space
 Create 5tt image from FreeSurfer segmentation
 and transform into dMRI or anatomical space (requires that registration.sh has been run to create transformation between T1w <-> dMRI)
 

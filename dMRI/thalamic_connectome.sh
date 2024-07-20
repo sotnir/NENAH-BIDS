@@ -5,10 +5,10 @@ usage() {
   echo "Usage: $0 [-d data-dir] [-m -mrtrix] [-h help] sID"
   echo "Script to "
   echo "1) generate thalamo-cortical connectivity matrix (thalamus to lobes)"
-  echo "2) generate connectivity matrix where the value of connectivity is the mean FA."
+  echo "2) generate a connectivity matrix where the value of connectivity is the mean FA."
   echo "This is done by re-mapping the outputs of FreeSurfer segmentation of the lobes and the HIPS-THOMAS segmentation of thalamus, and combining into a single parcellation image."
-  echo "Requires that segmentation of thalamus using HIPS-THOMAS and that fa_hires has been created using dti.sh"
-  echo "The LUTs and corresponding labels used for mapping files is on the GitHub: https://github.com/sotnir/NENAH-BIDS/tree/RioPhillips-branch/label_names"
+  echo "Requires that segmentation of thalamus using HIPS-THOMAS has been performed and that fa_hires has been created using dti.sh"
+  echo "The LUTs and corresponding labels used for mapping the parcellation images is on the GitHub: https://github.com/sotnir/NENAH-BIDS/tree/RioPhillips-branch/label_names"
   echo ""
   echo "Arguments:"
   echo "  sID              Subject ID (e.g. NENAHC001)"
@@ -17,6 +17,9 @@ usage() {
   echo "  -d / -data-dir   <directory>  The base directory used for output of upsampling files (default: derivatives/dMRI/sub-sID)"
   echo "  -m / -mrtrix                  The PATH to MRTrix3 (default: ../software/mrtrix3)"
   echo "  -h / -help                    Print usage"
+  echo "  -v / -visualize               Will generate a colored thalamus-lobes parcellation image, a mesh-file (.obj) for viewing nodes as 3D sections of the brain and a track file"
+  echo "                                which allows the display of edges as streamlines or streamtubes. Visualization files will be but in the /dwi/connectome/visualisation/ folder."
+  echo "                                This is recommended to be used on one or few subjects only, on as-needed basis."
   exit 1
 }
 
@@ -40,6 +43,10 @@ while [[ $# -gt 0 ]]; do
     -h|-help)
       usage
       ;;
+    -v|-visualize)
+      visualisation=1
+      shift
+      ;;
     *)
       sID=$1
       shift
@@ -59,6 +66,7 @@ fi
 # default params
 studydir=$PWD
 datadir="${studydir}/derivatives/dMRI/sub-${sID}" 
+visualisation=0
 
 ## Thalamus Parameters ###
 MRTRIXHOME="../software/mrtrix3"
@@ -274,4 +282,45 @@ if [ ! -f $mean_FA_connectome ]; then
 else
     echo "Mean FA connectome already exists for $sID"
     echo ""
+fi
+
+
+### Create visualisation
+if [ $visualisation = 1 ]; then
+    visualisation_dir="${datadir}/dwi/connectome/visualisation/"
+    nodes=$thalamus_lobes_image
+    vis_nodes="${visualisation_dir}/vis_thalamus_lobes.mif"
+    mesh_file="${visualisation_dir}/mesh_thalamus_lobes.obj"
+    tract="${datadir}/dwi/tractography/whole_brain_10M_space-anat.tck"
+    assignments="${datadir}/dwi/connectome/assignment_whole_brain_10M_sift2_space-anat_thalamus_lobes_connectome.csv"
+
+
+
+    if [ ! -d "$visualisation_dir" ]; then
+        mkdir -p "$visualisation_dir"
+    fi
+
+    echo "Generating colored thalamus-lobes parcellation image:"
+
+    label2colour $nodes $vis_nodes
+
+    echo ""
+
+    echo "Creating mesh-file (.obj) for thalamus-lobes parcellation image:"
+
+    label2mesh $nodes $mesh_file
+
+    echo ""
+
+    echo "Generating track file for visualising edges as streamlines or streamtubes (exemplars.tck):"
+
+    connectome2tck $tract $assignments exemplars.tck -files single -exemplars $nodes
+
+    echo "If successfull, the three files are in the /dwi/connectome/visualisation/ folder."
+
+
+
+
+
+
 fi

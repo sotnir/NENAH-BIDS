@@ -4,7 +4,7 @@
 
 usage() {
   echo "Usage: $0 [-d data-dir] [-m -mrtrix] [-h help] sID"
-  echo "Script to "
+  echo "Script to perform DTI and generate fa_hires from dwi_preproc_hires upsampled data."
 
   echo ""
   echo "Arguments:"
@@ -54,6 +54,7 @@ dwi_mask="${datadir}/dwi/mask_space-dwi_hires.mif.gz"
 dwi_hires="${datadir}/dwi/dwi_preproc_hires.mif.gz"
 dt_hires="${datadir}/dwi/dti/dt_hires.mif.gz"
 fa_hires_dwi="${datadir}/dwi/dti/fa_hires.mif.gz"
+
 #### Fit tensor to dwi hires data
 
 dti_dir=$(dirname "$dt_hires")
