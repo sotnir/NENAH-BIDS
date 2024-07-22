@@ -6,7 +6,7 @@ import pandas as pd
 # default params
 studydir = os.getcwd()  # Assuming the script is run from the study directory
 data_dir = os.path.join(studydir, "dMRI")  # Directory with all the subject folders
-clinical_scores = os.path.join(studydir, "analysis", "clinical_scores", "RIO_NENAH_SchoolAge_memory_FSIQ_18July2024.xlsx")
+clinical_scores = os.path.join(studydir, "code", "NENAH-BIDS", "analysis", "clinical_scores", "RIO_NENAH_SchoolAge_memory_FSIQ_18July2024.xlsx")
 skip_subjects_mri = os.path.join(studydir, "code", "NENAH-BIDS", "dMRI", "skip_subjects.txt")
 
 
