@@ -15,6 +15,14 @@ def load_connectivity_matrices(data_dir, skip_subjects):
     control_matrices = {}
     subject_matrices = {}
 
+    print("Loading connectivity matrices for eligible subjects.")
+    with open(skip_subjects, 'r') as file:
+        skip_subjects = [line.strip() for line in file]
+    print("Skipped subjects from MRI data:")
+    for sID in skip_subjects:
+        print(sID)
+    print("")
+    
     for sub_dir in glob.glob(os.path.join(data_dir, "sub-*")):
         sub_id = os.path.basename(sub_dir)
         sID = sub_id.replace("sub-", "")
@@ -46,7 +54,17 @@ def load_clinical_data(clinical_scores_file):
 clinical_data = load_clinical_data(clinical_scores)
 
 # print some data for checking
+print("This is just some data for making sure everything seems fine:")
 print(f"Control group matrices: {len(control_matrices)}")
+for key in control_matrices.keys(): 
+    print(key)
+
+
 print(f"Subject group matrices: {len(subject_matrices)}")
+
+for key in subject_matrices.keys(): 
+    print(key)
+
+
 print(clinical_data.head())
 
