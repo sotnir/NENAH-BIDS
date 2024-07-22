@@ -44,12 +44,13 @@ control_matrices, subject_matrices = load_connectivity_matrices(data_dir, skip_s
 
 def load_clinical_data(clinical_scores_xl_file):
     df = pd.read_excel(clinical_scores_xl_file)
-    # coloumns to use in analysis
+
     columns = ["Study.No", "INCLUDE_NENAH", "Group", "sex", "WISC_VSI_CompScore", "WISC_WMI_CompScore", "CMS_GenMem_IndScore", "RBMT_Total_Score"]
     clinical_data = df[columns]
-    # filter out subjects not to be included 
+
+    clinical_excluded_subjects = df[df["INCLUDE_NENAH"] == 0]["Study.No"].tolist()
     clinical_data = clinical_data[clinical_data["INCLUDE_NENAH"] == 1]
-    clinical_excluded_subjects = clinical_data[clinical_data["INCLUDE_NENAH"] == 0]["Study.No"].tolist()
+
     return clinical_data, clinical_excluded_subjects
 
 clinical_data, clinical_excluded_subjects = load_clinical_data(clinical_scores)
@@ -59,13 +60,13 @@ clinical_data, clinical_excluded_subjects = load_clinical_data(clinical_scores)
 # print some data for checking
 print("This is just some data for making sure everything seems fine:")
 print("")
-print("Excluding these subjects according to clinical scores:")
+print("Excluding these subjects on basis of clinical data:")
 counter = 0
 for sID in clinical_excluded_subjects:
     print(sID)
     counter+=1
 
-print(f"Total= {counter} subjects excluded on basis of clinical data.")
+print(f"Total of {counter} subjects excluded.")
 print("")
 print(f"Control group matrices: {len(control_matrices)}")
 print(f"Subject group matrices: {len(subject_matrices)}")
