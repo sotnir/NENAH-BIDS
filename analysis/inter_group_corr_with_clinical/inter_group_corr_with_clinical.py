@@ -6,7 +6,7 @@ import pandas as pd
 # default params
 studydir = os.getcwd()  # Assuming the script is run from the study directory
 data_dir = os.path.join(studydir, "derivatives", "dMRI")  # Directory with all the subject folders
-clinical_scores = os.path.join(studydir, "code", "NENAH-BIDS", "analysis", "clinical_scores", "RIO_NENAH_SchoolAge_memory_FSIQ_18July2024.xlsx")
+clinical_scores = os.path.join(studydir, "code", "NENAH-BIDS", "analysis", "clical_scores", "RIO_NENAH_SchoolAge_memory_FSIQ_18July2024.xlsx")
 skip_subjects_mri = os.path.join(studydir, "code", "NENAH-BIDS", "dMRI", "skip_subjects.txt")
 
 
@@ -15,7 +15,7 @@ def load_connectivity_matrices(data_dir, skip_subjects):
     control_matrices = {}
     subject_matrices = {}
 
-    print("Loading connectivity matrices for eligible subjects.")
+    print("Loading connectivity matrices for eligible subjects:")
     with open(skip_subjects, 'r') as file:
         skip_subjects = [line.strip() for line in file]
     print("Skipped subjects from MRI data:")
@@ -42,29 +42,30 @@ control_matrices, subject_matrices = load_connectivity_matrices(data_dir, skip_s
 
 
 
-def load_clinical_data(clinical_scores_file):
-    df = pd.read_excel(clinical_scores_file)
+def load_clinical_data(clinical_scores_xl_file):
+    df = pd.read_excel(clinical_scores_xl_file)
     # coloumns to use in analysis
-    columns_to_use = ["Study.No", "INCLUDE_NENAH", "Group", "sex", "WISC_VSI_CompScore", "WISC_WMI_CompScore", "CMS_GenMem_IndScore", "RBMT_Total_Score"]
-    clinical_data = df[columns_to_use]
-    # Filter out subjects not included in analysis
+    columns = ["Study.No", "INCLUDE_NENAH", "Group", "sex", "WISC_VSI_CompScore", "WISC_WMI_CompScore", "CMS_GenMem_IndScore", "RBMT_Total_Score"]
+    clinical_data = df[columns]
+    # filter out subjects not to be included 
     clinical_data = clinical_data[clinical_data["INCLUDE_NENAH"] == 1]
-    return clinical_data
+    clinical_excluded_subjects = clinical_data[clinical_data["INCLUDE_NENAH"] == 0]["Study.No"].tolist()
+    print("Excluding these subjects according to file:")
+    counter = 0
+    for sID in clinical_excluded_subjects:
+        print(sID)
+        counter+=1
 
-clinical_data = load_clinical_data(clinical_scores)
+    print(f"Total= {counter} subjects excluded on basis of clinical data.")
+    return clinical_data, clinical_excluded_subjects
+
+clinical_data, clinical_excluded_subjects = load_clinical_data(clinical_scores)
+
+
 
 # print some data for checking
 print("This is just some data for making sure everything seems fine:")
 print(f"Control group matrices: {len(control_matrices)}")
-for key in control_matrices.keys(): 
-    print(key)
-
-
 print(f"Subject group matrices: {len(subject_matrices)}")
-
-for key in subject_matrices.keys(): 
-    print(key)
-
-
 print(clinical_data.head())
 
