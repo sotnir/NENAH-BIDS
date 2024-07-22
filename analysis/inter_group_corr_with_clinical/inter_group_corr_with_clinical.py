@@ -50,13 +50,6 @@ def load_clinical_data(clinical_scores_xl_file):
     # filter out subjects not to be included 
     clinical_data = clinical_data[clinical_data["INCLUDE_NENAH"] == 1]
     clinical_excluded_subjects = clinical_data[clinical_data["INCLUDE_NENAH"] == 0]["Study.No"].tolist()
-    print("Excluding these subjects according to file:")
-    counter = 0
-    for sID in clinical_excluded_subjects:
-        print(sID)
-        counter+=1
-
-    print(f"Total= {counter} subjects excluded on basis of clinical data.")
     return clinical_data, clinical_excluded_subjects
 
 clinical_data, clinical_excluded_subjects = load_clinical_data(clinical_scores)
@@ -65,6 +58,15 @@ clinical_data, clinical_excluded_subjects = load_clinical_data(clinical_scores)
 
 # print some data for checking
 print("This is just some data for making sure everything seems fine:")
+print("")
+print("Excluding these subjects according to clinical scores:")
+counter = 0
+for sID in clinical_excluded_subjects:
+    print(sID)
+    counter+=1
+
+print(f"Total= {counter} subjects excluded on basis of clinical data.")
+print("")
 print(f"Control group matrices: {len(control_matrices)}")
 print(f"Subject group matrices: {len(subject_matrices)}")
 print(clinical_data.head())
