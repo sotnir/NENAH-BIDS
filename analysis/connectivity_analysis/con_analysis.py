@@ -5,23 +5,15 @@ import pandas as pd
 
 # default params
 studydir = os.getcwd()  # Assuming the script is run from the study directory
-data_dir = os.path.join(studydir, "dMRI")  # Directory with all the subject folders
+data_dir = os.path.join(studydir, "derivatives", "dMRI")  # Directory with all the subject folders
 clinical_scores = os.path.join(studydir, "code", "NENAH-BIDS", "analysis", "clinical_scores", "RIO_NENAH_SchoolAge_memory_FSIQ_18July2024.xlsx")
 skip_subjects_mri = os.path.join(studydir, "code", "NENAH-BIDS", "dMRI", "skip_subjects.txt")
 
 
-# datadir=PATH, skip_subjects=LIST
+# datadir=PATH, skip_subjects=LIST. Creates two dictionaries with NENAHXXX and NENAHCXXX as keys pointing to corresponding connecvitity matrix. 
 def load_connectivity_matrices(data_dir, skip_subjects):
-    control_matrices = []
-    subject_matrices = []
-    subject_ids = []
-
-    with open(skip_subjects, 'r') as file:
-        skip_subjects = [line.strip() for line in file]
-    print("Skipped subjects:")
-    for sID in skip_subjects:
-        print(sID)
-    print("")
+    control_matrices = {}
+    subject_matrices = {}
 
     for sub_dir in glob.glob(os.path.join(data_dir, "sub-*")):
         sub_id = os.path.basename(sub_dir)
@@ -31,15 +23,15 @@ def load_connectivity_matrices(data_dir, skip_subjects):
             con_path = os.path.join(sub_dir, "dwi", "connectome", "whole_brain_10M_sift2_space-anat_thalamus_lobes_connectome.csv")
             if os.path.isfile(con_path):
                 matrix = pd.read_csv(con_path, header=None).values
-                subject_ids.append(sID)
                 if "C" in sID:  # only controls have C in their ID
-                    control_matrices.append(matrix)
+                    control_matrices[sID] = matrix
                 else:
-                    subject_matrices.append(matrix)
+                    subject_matrices[sID] = matrix
     
-    return subject_ids, control_matrices, subject_matrices
+    return control_matrices, subject_matrices
 
-subject_ids, control_matrices, subject_matrices = load_connectivity_matrices(data_dir, skip_subjects_mri)
+control_matrices, subject_matrices = load_connectivity_matrices(data_dir, skip_subjects_mri)
+
 
 
 def load_clinical_data(clinical_scores_file):
