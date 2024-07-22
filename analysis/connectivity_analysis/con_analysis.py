@@ -46,7 +46,6 @@ def load_clinical_data(clinical_scores_file):
 clinical_data = load_clinical_data(clinical_scores)
 
 # print some data for checking
-print(f"Loaded {len(subject_ids)} subjects.")
 print(f"Control group matrices: {len(control_matrices)}")
 print(f"Subject group matrices: {len(subject_matrices)}")
 print(clinical_data.head())
