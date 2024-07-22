@@ -20,7 +20,7 @@ def load_connectivity_matrices(data_dir):
         file_path = os.path.join(sub_dir, "dwi", "connectome", "whole_brain_10M_sift2_space-anat_thalamus_lobes_connectome.csv")
         if os.path.isfile(file_path):
             matrix = pd.read_csv(file_path, header=None).values
-            if "C" in sID:  # only controls have C in their name 
+            if "C" in sID:  # only controls have C in their ID
                 control_matrices.append(matrix)
             else:
                 subject_matrices.append(matrix)
