@@ -60,23 +60,24 @@ Options:
   -d / -data-dir        <directory> The directory used to output the preprocessed files (default: derivatives/dMRI/sub-sID)
   -h / -help / --help   Print usage.
 ```
-For the usage, input arguments/options and the processing steps are understood. For more details, as well as more information on output, can be found in the script.
+For the usage, input arguments/options and the processing steps are understood. More details, as well as more information on output, can be found in the script.
 
 ## Overview of scripts in the dMRI pipeline
 Scripts should be run in the following order:
 
 - preprocess_QC.sh
 - response.sh
-- (average_response.sh)
-- (upsample_dwi.sh)
+- average_response.sh
+- upsample_dwi.sh
 - csd.sh
-- (normalisation.sh)
+- dti.sh
+  
 
 Need 5TT from sMRI
 - registration.sh
 - 5tt.sh
 - tractography.sh
-- connectome.sh
+- thalamic_connectome.sh
 
 A book-keeping, `derivatives/dMRI/Subject_Tracker_dMRI_pipeline.csv`, is used for keeping track of the status for each subjects in the dMRI pipeline.  
 
