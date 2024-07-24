@@ -10,7 +10,8 @@ import pandas as pd
 studydir = os.getcwd()  # Assuming the script is run from the study directory
 data_dir = os.path.join(studydir, "derivatives", "dMRI")  # Directory with all the subject folders
 clinical_scores = os.path.join(studydir, "code", "NENAH-BIDS", "analysis", "clinical_data", "RIO_NENAH_SchoolAge_memory_FSIQ_18July2024.xlsx")
-mri_excluded_subjects = os.path.join(studydir, "code", "NENAH-BIDS", "dMRI", "skip_subjects.txt")
+mri_excluded_subjects = os.path.join(studydir, "code", "NENAH-BIDS", "analysis","clinical_data" "mri_excluded_subjects.txt")
+subjects_no_clinical_data= os.path.join(studydir, "code", "NENAH-BIDS", "analysis","clinical_data" "clinical_excluded_subjects.txt")
 dataset = os.path.join(studydir, "code", "NENAH-BIDS", "analysis", "clinical_data", "RIO_NENAH_SchoolAge_23July2024.xlsx")
 
 
@@ -25,10 +26,15 @@ def exclude_subjects(excl_mri, clinical_data):
 
     for sub_dir in glob.glob(os.path.join(data_dir, "sub-*")):
         sub_id = os.path.basename(sub_dir)
-        sID = sub_id.replace("sub-", "")
+        sID = sub_id.replace("sub-", "").strip()
 
-        if sID not in excl_mri and sID in clinical_included_subjects:
-            included_subjects.append(sID)
+        with open(excl_mri, 'r') as file:
+            lines = file.readlines()
+
+        for line in lines:
+            sID = line.strip()  # Strip any extra whitespace or newlines
+            if sID not in excl_mri and sID in clinical_included_subjects:
+                included_subjects.append(sID)
 
     return included_subjects, clinical_excluded_subjects
 
