@@ -47,6 +47,8 @@ def load_connectivity_matrices(subjects, connectome):
                 control_matrices[sID] = matrix
             else:
                 subject_matrices[sID] = matrix
+        else:
+            print(f"{sID} does not have connectome-file")
                 
     return control_matrices, subject_matrices
 
