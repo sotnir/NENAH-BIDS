@@ -91,6 +91,13 @@ for sID in skip_subjects:
 print(f"Total of {counter} subjects excluded")
 print("")
 ##
+print("These subjects are included:")
+counter=0
+for sID in included_subjects:
+    print(sID)
+    counter+=1
+print(f"Total of {counter} subjects included. ")
+##
 print(f"Control group matrices: {len(control_matrices)}")
 print(f"Subject group matrices: {len(subject_matrices)}")
 print(clinical_data.head())
