@@ -28,7 +28,8 @@ Output:
 # defaults
 studydir=$PWD
 codedir="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
-datadir=derivatives/dMRI/sub-NENAHGRP/dwi/response
+datadir=derivatives/dMRI/
+output_dir=$studydir/$datadir/sub-NENAHGRP/dwi/response
 qc_dMRI_file="derivatives/dMRI/QC_dMRI_pipeline.tsv"
 qc_sMRI_file="derivatives/sMRI_fs-segmentation/QC_fs-segmentation.tsv"
 response=dhollander
@@ -91,11 +92,17 @@ printf "%s\n" "${subjects[@]}"
 run_response_calculation() {
   local subjects=("$@")
   for sID in "${subjects[@]}"; do
-    "$codedir/response.sh" "$sID" -response $response
+    if [ ! -d "${datadir}/sub-${sID}/dwi/response" ]; then
+      "$codedir/response.sh" "$sID" -response $response
+      echo ""
+      echo "Could not find response files for $sID, running reponse.sh for this subject:"
+    else
+      echo "Will use existing response-files for $sID"
+    fi
   done
 }
 
-output_dir=$studydir/$datadir
+
 if [ ! -d $output_dir ]; then mkdir -p $output_dir; fi
 
 # function to calculate group average response 

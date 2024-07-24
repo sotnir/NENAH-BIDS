@@ -2,7 +2,7 @@
 
 usage() {
   echo "Usage: $0 [-d data-dir] [-v voxel-size] [-QC qc-file] [-h help] sID"
-  echo "Script to upsample DWI data and use it to generate meanb1000 and create brain masks"
+  echo "Script to upsample DWI data to and use it to generate meanb1000 and create brain masks"
   echo ""
   echo "Arguments:"
   echo "  sID              Subject ID (e.g. NENAHC001)"
@@ -19,7 +19,7 @@ usage() {
 studydir=$PWD
 codedir="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 voxel_size=1.25
-datadir=derivatives/dMRI/sub-sID/dwi
+datadir=derivatives/dMRI/
 qc_file=$codedir/../QC/QC_dwi.csv
 
 # return usage if no input arguments
@@ -59,15 +59,14 @@ if [ -z "$sID" ]; then
   exit 1
 fi
 
-# # update datadir with subject ID
-datadir=derivatives/dMRI/sub-$sID/dwi
+# # update subject dir with subject ID
+subject_dir="${datadir}/sub-${sID}/"
 
 # ################ UPSAMPLING ################
 
 # # perform upsampling for the subject
-subject_dir="$studydir/$datadir"
-input_file="$subject_dir/dwi_preproc.mif.gz"
-output_file="$subject_dir/dwi_preproc_hires.mif.gz"
+input_file="$subject_dir/dwi/dwi_preproc.mif.gz"
+output_file="$subject_dir/dwi/dwi_preproc_hires.mif.gz"
 
 # check input file exists
 if [[ ! -f "$input_file" ]]; then
@@ -85,7 +84,7 @@ mrgrid "$input_file" regrid -vox "$voxel_size" "$output_file"
 # generate meanb0 and meanb1000 from the upsampled DWI data
 
 
-cd $subject_dir
+cd $subject_dir/dwi
 
 # assign upsampled DWI file
 upsampled_dwi="dwi_preproc_hires"
