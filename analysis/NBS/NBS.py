@@ -18,9 +18,8 @@ dataset = os.path.join(studydir, "code", "NENAH-BIDS", "analysis", "clinical_dat
 def exclude_subjects(excl_mri, clinical_data):
     df = pd.read_excel(clinical_data)
 
-    all_subjects = df["Study.No"]
-    clinical_included_subjects = all_subjects[all_subjects["INCLUDE_NENAH"] == 1].tolist()
-    clinical_excluded_subjects = all_subjects[all_subjects["INCLUDE_NENAH"] == 0].tolist()
+    clinical_included_subjects = df[df["INCLUDE_NENAH"] == 1]["Study.No"].tolist()
+    clinical_excluded_subjects = df[df["INCLUDE_NENAH"] == 0]["Study.No"].tolist()
 
     included_subjects=[]
 
