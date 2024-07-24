@@ -135,7 +135,7 @@ for sID in mri_excluded_subjects:
 print(f"Total of {counter} subjects excluded")
 print("")
 ##
-print("These subjects are included:")
+
 counter=0
 for sID in included_subjects:
     counter+=1
@@ -143,5 +143,7 @@ print(f"Total of {counter} subjects included. ")
 ##
 print(f"Control group matrices: {len(control_matrices)}")
 print(f"Subject group matrices: {len(subject_matrices)}")
+print("")
+print("First 5 lines of clinical data:")
 print(clinical_data.head())
 
