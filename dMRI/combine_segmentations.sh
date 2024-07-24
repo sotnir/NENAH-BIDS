@@ -70,5 +70,5 @@ right_thomas="${studydir}/derivatives/sMRI_thalamic_thomas/$sID/right/thomasr.mi
 new_segmentation="${outputdir}/new_file_name" #fyll i här
 
 if [ ! -f $new_segmentation ]; then
-    labelconvert - | tcksample $tract - $mean_FA_per_streamline -stat_tck mean
+    labelconvert $aparc_aseg $fs_lut $wm_convert - | labelconvert  - $mean_FA_per_streamline -stat_tck mean
 
