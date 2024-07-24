@@ -65,7 +65,7 @@ fi
 
 echo "Preprocessing for sMRI data using FreeSurfer
 Subject:       $sID 
-T1:	       $t1w 
+T1:	           $t1w 
 threads:       $threads 
 Directory:     $datadir 
 $BASH_SOURCE   $command
