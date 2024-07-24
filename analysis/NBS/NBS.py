@@ -9,7 +9,7 @@ import pandas as pd
 # default params
 studydir = os.getcwd()  # Assuming the script is run from the study directory
 data_dir = os.path.join(studydir, "derivatives", "dMRI")  # Directory with all the subject folders
-clinical_scores = os.path.join(studydir, "code", "NENAH-BIDS", "analysis", "clinical_data", "RIO_NENAH_SchoolAge_memory_FSIQ_18July2024.xlsx")
+clinical_scores = os.path.join(studydir, "code", "NENAH-BIDS", "analysis", "clinical_data", "NENAH_SchoolAge_memory_FSIQ.xlsx")
 mri_excluded_subjects = ["NENAH02", "NENAHC004", "NENAH052", "NENAH017", "NENAH008", "NENAH014", "NENAH036"]
 dataset = os.path.join(studydir, "code", "NENAH-BIDS", "analysis", "clinical_data", "RIO_NENAH_SchoolAge_23July2024.xlsx")
 
