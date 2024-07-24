@@ -130,6 +130,7 @@ print("")
 counter=0
 print("Excluding these subjects on basis of MRI data:")
 for sID in mri_excluded_subjects:
+    print(sID)
     counter+=1
 print(f"Total of {counter} subjects excluded")
 print("")
@@ -137,7 +138,6 @@ print("")
 print("These subjects are included:")
 counter=0
 for sID in included_subjects:
-    print(sID)
     counter+=1
 print(f"Total of {counter} subjects included. ")
 ##
