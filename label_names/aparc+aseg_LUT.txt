@@ -1,9 +1,10 @@
+0 Unknown                           0 0 0 0
 1 Left-Cerebral-White-Matter        245 245 245 0  
 2 Left-Lateral-Ventricle            120 18 134 0       
 3 Left-Inf-Lat-Vent                 196 58 250 0
 4 Left-Cerebellum-White-Matter      220 248 164 0
 5 Left-Cerebellum-Cortex            230 148 34 0       
-6 Left-Cerebral-White-Matter        245 245 245 0  
+1 Left-Thalamus                     245 245 245 0  
 7 Left-Caudate                      122 186 220 0
 8 Left-Putamen                      236 13 176 0
 9 Left-Pallidum                     12 48 255 0
@@ -21,7 +22,7 @@
 21 Right-Inf-Lat-Vent               196 58 250 0
 22 Right-Cerebellum-White-Matter    220 248 164 0
 23 Right-Cerebellum-Cortex          230 148 34 0
-24 Left-Cerebral-White-Matter       245 245 245 0
+1 Right-Thalamus                    245 245 245 0
 25 Right-Caudate                    122 186 220 0
 26 Right-Putamen                    236 13 176 0
 27 Right-Pallidum                   13 48 255 0
