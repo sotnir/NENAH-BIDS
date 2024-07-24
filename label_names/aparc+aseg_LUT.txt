@@ -3,7 +3,7 @@
 3 Left-Inf-Lat-Vent
 4 Left-Cerebellum-White-Matter
 5 Left-Cerebellum-Cortex
-1 Left-Thalamus
+6 Left-Cerebral-White-Matter
 7 Left-Caudate
 8 Left-Putamen
 9 Left-Pallidum
@@ -21,7 +21,7 @@
 21 Right-Inf-Lat-Vent
 22 Right-Cerebellum-White-Matter
 23 Right-Cerebellum-Cortex
-1 Right-Thalamus
+24 Left-Cerebral-White-Matter
 25 Right-Caudete
 26 Right-Putamen
 27 Right-Pallidum
