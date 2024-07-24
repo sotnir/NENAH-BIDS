@@ -84,10 +84,8 @@ print(f"Total of {counter} subjects excluded.")
 print("")
 ##
 counter=0
-with open(mri_excluded_subjects, 'r') as file:
-    skip_subjects = [line.strip() for line in file]
 print("Excluding these subjects on basis of MRI data:")
-for sID in skip_subjects:
+for sID in mri_excluded_subjects:
     print(sID)
     counter+=1
 print(f"Total of {counter} subjects excluded")
