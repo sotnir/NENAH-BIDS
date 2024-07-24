@@ -2,9 +2,6 @@ import os
 import glob
 import pandas as pd
 
-#Borde göra en function som bestämmer listan included_subjects, och sedan göra clinical data och con matriser från den listan istället! Gör det simpelt. 
-
-
 
 # default params
 studydir = os.getcwd()  # Assuming the script is run from the study directory
@@ -14,7 +11,7 @@ mri_excluded_subjects = ["NENAH02", "NENAHC004", "NENAH052", "NENAH017", "NENAH0
 dataset = os.path.join(studydir, "code", "NENAH-BIDS", "analysis", "clinical_data", "RIO_NENAH_SchoolAge_23July2024.xlsx")
 
 
-
+# 
 def exclude_subjects(excl_mri, clinical_data):
     df = pd.read_excel(clinical_data)
 
@@ -33,6 +30,31 @@ def exclude_subjects(excl_mri, clinical_data):
     return included_subjects, clinical_excluded_subjects
 
 included_subjects, clinical_excluded_subjects = exclude_subjects(mri_excluded_subjects, clinical_scores)
+
+
+def get_subject_ages(dataset_path):
+
+    df = pd.read_excel(dataset_path)
+
+    subject_ages = {}
+
+    for index, row in df.iterrows():
+        subject_id = row['Study.No']
+        age_mri = row['Age_MRI']
+        mri2_date = row['MRI2_NENAH_DATE']
+
+        if pd.isna(mri2_date):
+            subject_ages[subject_id] = age_mri
+        else:
+            mri1_date = pd.to_datetime(row['MRI2_NENAH_DATE'])
+            mri2_date = pd.to_datetime(mri2_date)
+            time_diff = (mri2_date - mri1_date).days / 365.25
+
+            age_at_mri2 = age_mri + time_diff
+            subject_ages[subject_id] = age_at_mri2
+    return subject_ages
+
+
 
 # datadir=PATH, skip_subjects=LIST. Creates two dictionaries with NENAHXXX and NENAHCXXX as keys pointing to corresponding connecvitity matrix. 
 def load_connectivity_matrices(subjects, connectome):
@@ -68,13 +90,35 @@ def load_clinical_data(subjects, clinical_scores_xl_file):
 clinical_data = load_clinical_data(included_subjects, clinical_scores)
 
 
+### Create a design matrix 
+# score-type can be one of "WISC_VSI_CompScore", "WISC_WMI_CompScore", "CMS_GenMem_IndScore", "RBMT_Total_Score"
+
+def generate_design_matrix(clinical_data, mri_ages,score_type):
+    
+    design_matrix = pd.DataFrame()
+
+    # add intercept (column of ones)
+    design_matrix['Intercept'] = 1
+
+    # add group column (0 for controls, 1 for subjects)
+    design_matrix['Group'] = clinical_data['Group']
+
+    # add sex column (0 for female, 1 for male)
+    design_matrix['Sex'] = clinical_data['sex']
+
+    # add age column (age at the time of MRI scan)
+    design_matrix['Age'] = clinical_data['Study.No'].map(mri_ages)
+
+    # add clinical score (select one score for the analysis)
+    design_matrix['Clinical_Score'] = clinical_data[score_type]
+
+    return design_matrix
+
 
 
 
 # print some data for checking
-print("This is just some data for making sure everything seems fine:")
 print("")
-##
 print("Excluding these subjects on basis of clinical data:")
 counter = 0
 for sID in clinical_excluded_subjects:
@@ -86,7 +130,6 @@ print("")
 counter=0
 print("Excluding these subjects on basis of MRI data:")
 for sID in mri_excluded_subjects:
-    print(sID)
     counter+=1
 print(f"Total of {counter} subjects excluded")
 print("")
