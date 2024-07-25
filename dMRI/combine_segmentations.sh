@@ -30,7 +30,6 @@ while [[ $# -gt 0 ]]; do
       datadir=$2
       shift 2
       ;;
-      ;;
     -h|-help)
       usage
       ;;
