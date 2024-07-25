@@ -52,29 +52,29 @@ done
 
 # default params
 studydir=$PWD
-datadir="${studydir}/derivatives/dMRI"
+datadir="${studydir}/derivatives/dMRI/$sID"
 
 # LUTS
-fs_lut="../software/freesurfer/FreeSurferColorLUT.txt"
+fs_lut="$FREESURFER/FreeSurferColorLUT.txt"
 fs_convert="${studydir}/code/NENAH-BIDS/labels_names/convert_fs_thalamus_to_wm.txt"
-thomas_lut="../software/hipsthomas/Thomas.lut"
+thomas_lut="~/software/hipsthomas/Thomas.lut"
 
 
 # segmentations
 aparc_aseg="${studydir}/derivatives/sMRI-fs_segmentation/$sID/aparc+aseg.mgz"
-left_thomas_segm="${datadir}/derivatives/sMRI_thalamic_thomas/$sID/left/thomasfull.nii.gz"
-right_thomas_segm="${datadir}/derivatives/sMRI_thalamic_thomas/$sID/right/thomasfull.nii.gz"
+left_thomas_segm="${studydir}/derivatives/sMRI_thalamic_thomas/$sID/left/thomasfull.nii.gz"
+right_thomas_segm="${studydir}/derivatives/sMRI_thalamic_thomas/$sID/right/thomasfull.nii.gz"
 
 
 
 #tmp-files
-tmp_left_thomas="${datadir}/derivatives/dMRI/$sID/anat/tmp_thomas_left.mif"
-tmp_right_thomas="${datadir}/derivatives/dMRI/$sID/anat/tmp_thomas_right.mif"
-tmp_left_right_thomas="${datadir}/derivatives/dMRI/$sID/anat/tmp_thomas_full.mif"
+tmp_left_thomas="${studydir}/derivatives/dMRI/$sID/anat/tmp_thomas_left.mif"
+tmp_right_thomas="${studydir}/derivatives/dMRI/$sID/anat/tmp_thomas_right.mif"
+tmp_left_right_thomas="${studydir}/derivatives/dMRI/$sID/anat/tmp_thomas_full.mif"
 
 
 # outputs
-combined_segm="${datadir}/derivatives/dMRI/$sID/anat/aparc+aseg_thomas-thalamic.mif.gz" #fyll i här
+combined_segm="${datadir}/anat/aparc+aseg_thomas-thalamic.mif.gz" #fyll i här
 
 
 ### Lägg in combination of left/right thomas från thal_con här ist
