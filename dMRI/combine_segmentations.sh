@@ -56,7 +56,7 @@ datadir="${studydir}/derivatives/dMRI"
 
 # LUTS
 fs_lut="../software/freesurfer/FreeSurferColorLUT.txt"
-fs_default="../software/mrtri3/share/mrtrix3/labelconvert/fs_default.txt"
+fs_convert="${studydir}/code/NENAH-BIDS/labels_names/convert_fs_thalamus_to_wm.txt"
 thomas_lut="../software/hipsthomas/Thomas.lut"
 
 
@@ -75,7 +75,7 @@ coimbined_segm="${outputdir}/new_file_name.mgz" #fyll i här
 
 
 if [ ! -f $new_segmentation ]; then
-  labelconvert $aparc_aseg $fs_lut $fs_default - | \
+  labelconvert $aparc_aseg $fs_lut $fs_convert - | \
   labelconvert - $fs_default $wm_convert - | \
   mrcalc - 0 -gt $thomas_segm - -if $combined_segm
 
