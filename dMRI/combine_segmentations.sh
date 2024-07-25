@@ -116,15 +116,15 @@ if [ ! -f $combined_segm ]; then
   if [ -f $combined_segm ]; then
     echo "Segmentations combined successfully. Output in /datadir/anat/."
     echo ""
-    #echo "Removing tmp. files..."
-    #rm $tmp_left_thomas
-    #rm $tmp_right_thomas
-    #rm $tmp_left_right_thomas
-    #rm $tmp_fs_thalamus_is_wm
-   # rm $tmp_left_mask
-    #rm $tmp_right_mask
-    #rm $tmp_mask_full
-    #rm $tmp_fs_no_thalamus
+    echo "Removing tmp. files..."
+    rm $tmp_left_thomas
+    rm $tmp_right_thomas
+    rm $tmp_left_right_thomas
+    rm $tmp_fs_thalamus_is_wm
+    rm $tmp_left_mask
+    rm $tmp_right_mask
+    rm $tmp_mask_full
+    rm $tmp_fs_no_thalamus
     echo ""
   else
     echo "Could not combine segmentations for $sID"
