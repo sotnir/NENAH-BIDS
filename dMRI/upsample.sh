@@ -139,7 +139,7 @@ mrconvert meanb1000tmp_0p${optimal_bet}_mask.nii.gz $mask_file
 # clean up temp. files
 rm meanb1000tmp.nii.gz meanb1000tmp_0p${optimal_bet}_mask.nii.gz
 
-# visual checking (is this needed?)
+# visual checking
 echo "Visually check the brain mask:"
 echo "mrview $meanb1000_file -roi.load $mask_file -roi.opacity 0.5 -mode 2"
 

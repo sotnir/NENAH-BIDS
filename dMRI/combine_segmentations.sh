@@ -81,8 +81,14 @@ tmp_fs_no_thalamus="${studydir}/derivatives/dMRI/sub-$sID/anat/tmp_fs_no_thalamu
 # outputs
 combined_segm="${datadir}/anat/aparc+aseg_thomas-thalamic.mif.gz" #fyll i här
 
+#aparc_aseg_gmfix="${datadir}/anat/aparc+aseg_gmfix.mif.gz"
 
 ### Lägg in combination of left/right thomas från thal_con här ist
+
+#if [ ! -f $aparc_aseg_gmfix ]; then
+
+#fi
+
 
 
 if [ ! -f $combined_segm ]; then
@@ -99,7 +105,7 @@ if [ ! -f $combined_segm ]; then
 
   labelconvert $aparc_aseg $fs_lut $fs_convert $tmp_fs_thalamus_is_wm
 
-  mrcalc $tmp_fs_thalamus_is_wm $tmp_mask_full -mult $tmp_fs_no_thalamus
+  mrcalc $tmp_fs_thalamus_is_wm 0 -eq $tmp_mask_full -mult $tmp_fs_no_thalamus
   mrcalc $tmp_fs_no_thalamus $tmp_left_right_thomas -add $combined_segm
 
 fi
