@@ -92,6 +92,7 @@ if [ ! -f $new_segmentation ]; then
   mrcalc - $fs_no_wm -mult - | \
   mrcalc - $tmp_left_right_thomas -add $combined_segm
 
+fi
 
 
 
