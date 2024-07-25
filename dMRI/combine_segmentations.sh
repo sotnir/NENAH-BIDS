@@ -52,7 +52,7 @@ done
 
 # default params
 studydir=$PWD
-datadir="${studydir}/derivatives/dMRI/$sID"
+datadir="${studydir}/derivatives/dMRI/sub-$sID"
 
 # LUTS
 fs_lut="$FREESURFER/FreeSurferColorLUT.txt"
@@ -61,16 +61,16 @@ thomas_lut="~/software/hipsthomas/Thomas.lut"
 
 
 # segmentations
-aparc_aseg="${studydir}/derivatives/sMRI-fs_segmentation/$sID/aparc+aseg.mgz"
-left_thomas_segm="${studydir}/derivatives/sMRI_thalamic_thomas/$sID/left/thomasfull.nii.gz"
-right_thomas_segm="${studydir}/derivatives/sMRI_thalamic_thomas/$sID/right/thomasfull.nii.gz"
+aparc_aseg="${studydir}/derivatives/sMRI-fs_segmentation/sub-$sID/aparc+aseg.mgz"
+left_thomas_segm="${studydir}/derivatives/sMRI_thalamic_thomas/sub-$sID/left/thomasfull.nii.gz"
+right_thomas_segm="${studydir}/derivatives/sMRI_thalamic_thomas/sub-$sID/right/thomasfull.nii.gz"
 
 
 
 #tmp-files
-tmp_left_thomas="${studydir}/derivatives/dMRI/$sID/anat/tmp_thomas_left.mif"
-tmp_right_thomas="${studydir}/derivatives/dMRI/$sID/anat/tmp_thomas_right.mif"
-tmp_left_right_thomas="${studydir}/derivatives/dMRI/$sID/anat/tmp_thomas_full.mif"
+tmp_left_thomas="${studydir}/derivatives/dMRI/sub-$sID/anat/tmp_thomas_left.mif"
+tmp_right_thomas="${studydir}/derivatives/dMRI/sub-$sID/anat/tmp_thomas_right.mif"
+tmp_left_right_thomas="${studydir}/derivatives/dMRI/sub-$sID/anat/tmp_thomas_full.mif"
 
 
 # outputs
