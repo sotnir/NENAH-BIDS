@@ -71,7 +71,7 @@ right_thomas_segm="${studydir}/derivatives/sMRI_thalamic_thomas/sub-$sID/right/t
 tmp_left_thomas="${studydir}/derivatives/dMRI/sub-$sID/anat/tmp_thomas_left.mif"
 tmp_right_thomas="${studydir}/derivatives/dMRI/sub-$sID/anat/tmp_thomas_right.mif"
 tmp_left_right_thomas="${studydir}/derivatives/dMRI/sub-$sID/anat/tmp_thomas_full.mif"
-
+tmp_fs_no_wm="${studydir}/derivatives/dMRI/sub-$sID/anat/tmp_fs_no_wm.mif"
 
 # outputs
 combined_segm="${datadir}/anat/aparc+aseg_thomas-thalamic.mif.gz" #fyll i här
@@ -86,10 +86,10 @@ if [ ! -f $combined_segm ]; then
   mrcalc $right_thomas_segm 15022 -add  $tmp_right_thomas
   mrcalc $tmp_left_thomas $tmp_right_thomas -add $tmp_left_right_thomas
 
-  labelconvert $aparc_aseg $fs_lut $fs_convert $fs_no_wm
+  labelconvert $aparc_aseg $fs_lut $fs_convert $tmp_fs_no_wm
 
   mrcalc $tmp_left_right_thomas 1 -lt - | \
-  mrcalc - $fs_no_wm -mult - | \
+  mrcalc - $tmp_fs_no_wm -mult - | \
   mrcalc - $tmp_left_right_thomas -add $combined_segm
 
 fi
