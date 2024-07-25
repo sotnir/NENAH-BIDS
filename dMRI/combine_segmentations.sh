@@ -56,7 +56,7 @@ datadir="${studydir}/derivatives/dMRI/sub-$sID"
 
 # LUTS
 fs_lut="$FREESURFER/FreeSurferColorLUT.txt"
-fs_convert="${studydir}/code/NENAH-BIDS/labels_names/convert_fs_thalamus_to_wm.txt"
+fs_convert="${studydir}/code/NENAH-BIDS/label_names/convert_fs_thalamus_to_wm.txt"
 thomas_lut="~/software/hipsthomas/Thomas.lut"
 
 
