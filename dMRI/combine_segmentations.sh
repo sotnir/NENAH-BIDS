@@ -56,25 +56,30 @@ datadir="${studydir}/derivatives/dMRI"
 
 # LUTS
 fs_lut="../software/freesurfer/FreeSurferColorLUT.txt"
-wm_convert="${studydir}/code/NENAH-BIDS/analysis/convert_fs_thalamus_to_wm.txt"
+fs_default="../software/mrtri3/share/mrtrix3/labelconvert/fs_default.txt"
 thomas_lut="../software/hipsthomas/Thomas.lut"
 
 
 # segmentations
+
+
 aparc_aseg="${studydir}/derivatives/sMRI-fs_segmentation/$sID/aparc+aseg.mgz"
-left_thomas="${studydir}/derivatives/sMRI_thalamic_thomas/$sID/left/thomasl.mif"
-right_thomas="${studydir}/derivatives/sMRI_thalamic_thomas/$sID/right/thomasr.mif"
+thomas_segm="${datadir}/derivatives/dMRI/$sID/thalamus.mif"
+
 
 # outputs
-new_segmentation="${outputdir}/new_file_name" #fyll i här
+coimbined_segm="${outputdir}/new_file_name.mgz" #fyll i här
 
 
-
-
-
-
+### Lägg in combination of left/right thomas från thal_con här ist
 
 
 if [ ! -f $new_segmentation ]; then
-    labelconvert $aparc_aseg $fs_lut $wm_convert - | labelconvert - $mean_FA_per_streamline -stat_tck mean
+  labelconvert $aparc_aseg $fs_lut $fs_default - | \
+  labelconvert - $fs_default $wm_convert - | \
+  mrcalc - 0 -gt $thomas_segm - -if $combined_segm
+
+
+    
+
 
