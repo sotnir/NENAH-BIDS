@@ -61,23 +61,40 @@ thomas_lut="../software/hipsthomas/Thomas.lut"
 
 
 # segmentations
-
-
 aparc_aseg="${studydir}/derivatives/sMRI-fs_segmentation/$sID/aparc+aseg.mgz"
-thomas_segm="${datadir}/derivatives/dMRI/$sID/thalamus.mif"
+left_thomas_segm="${datadir}/derivatives/sMRI_thalamic_thomas/$sID/left/thomasfull.nii.gz"
+right_thomas_segm="${datadir}/derivatives/sMRI_thalamic_thomas/$sID/right/thomasfull.nii.gz"
+
+
+
+#tmp-files
+tmp_left_thomas="${datadir}/derivatives/dMRI/$sID/anat/tmp_thomas_left.mif"
+tmp_right_thomas="${datadir}/derivatives/dMRI/$sID/anat/tmp_thomas_right.mif"
+tmp_left_right_thomas="${datadir}/derivatives/dMRI/$sID/anat/tmp_thomas_full.mif"
 
 
 # outputs
-coimbined_segm="${outputdir}/new_file_name.mgz" #fyll i här
+combined_segm="${datadir}/derivatives/dMRI/$sID/anat/aparc+aseg_thomas-thalamic.mif.gz" #fyll i här
 
 
 ### Lägg in combination of left/right thomas från thal_con här ist
 
 
 if [ ! -f $new_segmentation ]; then
-  labelconvert $aparc_aseg $fs_lut $fs_convert - | \
-  labelconvert - $fs_default $wm_convert - | \
-  mrcalc - 0 -gt $thomas_segm - -if $combined_segm
+
+  mrcalc $left_thomas_segm  15000 -add $tmp_left_thomas
+  mrcalc $right_thomas_segm 15022 -add  $tmp_right_thomas
+  mrcalc $tmp_left_thomas $tmp_right_thomas -add $tmp_left_right_thomas
+
+  labelconvert $aparc_aseg $fs_lut $fs_convert $fs_no_wm
+
+  mrcalc $tmp_left_right_thomas 1 -lt - | \
+  mrcalc - $fs_no_wm -mult - | \
+  mrcalc - $tmp_left_right_thomas -add $combined_segm
+
+
+
+
 
 
     
