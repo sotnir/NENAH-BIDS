@@ -105,7 +105,7 @@ if [ ! -f $combined_segm ]; then
 
   labelconvert $aparc_aseg $fs_lut $fs_convert $tmp_fs_thalamus_is_wm
 
-  mrcalc $tmp_mask_full 0 -eq $tmp_fs_thalamus_is_wm 0 -if $tmp_fs_thalamus_is_wm $tmp_fs_no_thalamus
+  mrcalc $tmp_mask_full 0 -eq $tmp_fs_thalamus_is_wm -mult $tmp_fs_no_thalamus
   mrcalc $tmp_fs_no_thalamus $tmp_left_right_thomas -add $combined_segm
 
 fi
