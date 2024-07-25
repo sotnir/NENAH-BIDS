@@ -80,8 +80,8 @@ combined_segm="${datadir}/derivatives/dMRI/$sID/anat/aparc+aseg_thomas-thalamic.
 ### Lägg in combination of left/right thomas från thal_con här ist
 
 
-if [ ! -f $new_segmentation ]; then
-
+if [ ! -f $combined_segm ]; then
+  echo "kör"
   mrcalc $left_thomas_segm  15000 -add $tmp_left_thomas
   mrcalc $right_thomas_segm 15022 -add  $tmp_right_thomas
   mrcalc $tmp_left_thomas $tmp_right_thomas -add $tmp_left_right_thomas
