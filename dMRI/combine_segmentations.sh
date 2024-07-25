@@ -63,7 +63,7 @@ thomas_lut="~/software/hipsthomas/Thomas.lut"
 # segmentations
 aparc_aseg="${studydir}/derivatives/sMRI-fs_segmentation/sub-$sID/aparc+aseg.mgz"
 left_thomas_segm="${studydir}/derivatives/sMRI_thalamic_thomas/sub-$sID/left/thomasfull.nii.gz"
-right_thomas_segm="${studydir}/derivatives/sMRI_thalamic_thomas/sub-$sID/right/thomasfull.nii.gz"
+right_thomas_segm="${studydir}/derivatives/sMRI_thalamic_thomas/sub-$sID/right/thomasrfull.nii.gz"
 
 
 
