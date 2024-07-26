@@ -125,7 +125,7 @@ if [ "$space" == "anat" ]; then
 
     if [ ! -f "$five_TT_image" ]; then
         labelconvert $segm $segm_LUT $convert $tmp_image
-        5ttgen -force freesurfer -sgm_amyg_hipp $tmp_image $five_TT_image
+        5ttgen freesurfer $tmp_image $five_TT_image -force -sgm_amyg_hipp
         if [ -f $five_TT_image ]; then
             echo ""
             echo "5ttgen for $sID complete!"
@@ -140,11 +140,11 @@ if [ "$space" == "anat" ]; then
 
         # Create for visualisation 
     if [[ ! -f "$five_TT_vis" && -f "$five_TT_image" ]]; then
-        5tt2vis -force ${datadir}/anat/5tt/5tt_space-anat.mif.gz ${datadir}/anat/5tt/5tt_space-anat_vis.mif.gz
+        5tt2vis -force $five_TT_image $five_TT_vis
     fi
     # and GM/WM boundary
     if [[ ! -f "$five_TT_gmwm" && -f "$five_TT_image" ]]; then
-        5tt2gmwmi -force ${datadir}/anat/5tt/5tt_space-anat.mif.gz ${datadir}/anat/5tt/5tt_space-anat_gmwmi.mif.gz
+        5tt2gmwmi -force $five_TT_image $five_TT_gmwm
     fi
 fi
 
