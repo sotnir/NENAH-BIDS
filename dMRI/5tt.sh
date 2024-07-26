@@ -117,20 +117,15 @@ if [ "$space" == "anat" ]; then
     convert="../../../../../code/NENAH-BIDS/label_names/convert_thomas-thalamic_to_fs.txt"
     segm="../aparc+aseg_thomas-thalamic_gmfix.mif.gz"
 
-    #outputs
-    five_tt_image=5tt_space-anat.mif.gz
-    five_TT_vis=5ttvis.mif.gz
-    five_TT_gmwm=5ttgmwm.mif.gz
-    tmp_image=thomas-thalamic_is_fs_tmp.mif.gz
 
-    if [ ! -f "$five_TT_image" ]; then
-        labelconvert $segm $segm_LUT $convert $tmp_image
-        5ttgen freesurfer $tmp_image $five_TT_image -force -sgm_amyg_hipp
-        if [ -f $five_TT_image ]; then
+    if [ ! -f "5tt_space-anat.mif.gz" ]; then
+        labelconvert $segm $segm_LUT $convert thomas-thalamic_is_fs_tmp.mif.gz
+        5ttgen -force freesurfer -sgm_amyg_hipp thomas-thalamic_is_fs_tmp.mif.gz 5tt_space-anat.mif.gz 
+        if [ -f "5tt_space-anat.mif.gz" ]; then
             echo ""
             echo "5ttgen for $sID complete!"
             echo "Removing tmp. files"
-            rm $tmp_image
+            rm thomas-thalamic_is_fs_tmp.mif.gz
         else
             echo ""
             echo "5ttgen couldn't be done for $sID"
@@ -139,12 +134,12 @@ if [ "$space" == "anat" ]; then
     fi
 
         # Create for visualisation 
-    if [[ ! -f "$five_TT_vis" && -f "$five_TT_image" ]]; then
-        5tt2vis -force $five_TT_image $five_TT_vis
+    if [[ ! -f "5ttvis.mif.gz" && -f "5tt_space-anat.mif.gz" ]]; then
+        5tt2vis -force 5tt_space-anat.mif.gz 5ttvis.mif.gz
     fi
     # and GM/WM boundary
-    if [[ ! -f "$five_TT_gmwm" && -f "$five_TT_image" ]]; then
-        5tt2gmwmi -force $five_TT_image $five_TT_gmwm
+    if [[ ! -f "5ttgmwm.mif.gz" && -f "5tt_space-anat.mif.gz" ]]; then
+        5tt2gmwmi -force 5tt_space-anat.mif.gz 5ttgmwm.mif.gz
     fi
 fi
 
