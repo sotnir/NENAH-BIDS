@@ -81,8 +81,7 @@ if [ ! -d $datadir/anat ]; then mkdir -p $datadir/anat; fi
 # 1. Generate 5TT image and files for visualisation 
 #
 
-segm_LUT="${studydir}/code/NENAH-BIDS/label_names/fs_thomas-thalamic_LUT.txt"
-convert="${studydir}/code/NENAH-BIDS/label_names/convert_thomas-thalamic_to_fs.txt"
+
 
 
 if [ "$space" == "dwi" ]; then
@@ -113,7 +112,12 @@ if [ "$space" == "anat" ]; then
     fi
     cd $datadir/anat/5tt
 
+    # inputs
+    segm_LUT="../../../../../code/NENAH-BIDS/label_names/fs_thomas-thalamic_LUT.txt"
+    convert="../../../../../code/NENAH-BIDS/label_names/convert_thomas-thalamic_to_fs.txt"
+    segm="../aparc+aseg_thomas-thalamic_gmfix.mif.gz"
 
+    #outputs
     5tt_image=5tt_space-anat.mif.gz
     5tt_vis=5ttvis.mif.gz
     5tt_gmwm=5ttgmwm.mif.gz
