@@ -118,15 +118,15 @@ if [ "$space" == "anat" ]; then
     segm="../aparc+aseg_thomas-thalamic_gmfix.mif.gz"
 
     #outputs
-    5tt_image=5tt_space-anat.mif.gz
-    5tt_vis=5ttvis.mif.gz
-    5tt_gmwm=5ttgmwm.mif.gz
+    five_tt_image=5tt_space-anat.mif.gz
+    five_TT_vis=5ttvis.mif.gz
+    five_TT_gmwm=5ttgmwm.mif.gz
     tmp_image=thomas-thalamic_is_fs_tmp.mif.gz
 
-    if [ ! -f $5tt_image ]; then
+    if [ ! -f "$five_TT_image" ]; then
         labelconvert $segm $segm_LUT $convert $tmp_image
-        5ttgen -force freesurfer -sgm_amyg_hipp $tmp_image $5tt_image
-        if [ -f $5tt_image ]; then
+        5ttgen -force freesurfer -sgm_amyg_hipp $tmp_image $five_TT_image
+        if [ -f $five_TT_image ]; then
             echo ""
             echo "5ttgen for $sID complete!"
             echo "Removing tmp. files"
@@ -139,11 +139,11 @@ if [ "$space" == "anat" ]; then
     fi
 
         # Create for visualisation 
-    if [ ! -f $5tt_vis && -f $5tt_image ]; then
+    if [[ ! -f "$five_TT_vis" && -f "$five_TT_image" ]]; then
         5tt2vis -force ${datadir}/anat/5tt/5tt_space-anat.mif.gz ${datadir}/anat/5tt/5tt_space-anat_vis.mif.gz
     fi
     # and GM/WM boundary
-    if [ ! -f $5tt_gmwm && -f $5tt_image ]; then
+    if [[ ! -f "$five_TT_gmwm" && -f "$five_TT_image" ]]; then
         5tt2gmwmi -force ${datadir}/anat/5tt/5tt_space-anat.mif.gz ${datadir}/anat/5tt/5tt_space-anat_gmwmi.mif.gz
     fi
 fi
