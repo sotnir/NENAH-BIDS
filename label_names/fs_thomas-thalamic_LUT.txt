@@ -1456,7 +1456,7 @@
 15017 rh-ventral-lateral-posterior            214  94   0   0
 15018 rh-ventral-posterolateral               153 117 242   0
 15019 rh-pulvinar                             204   0 115   0
-15020 rh-letarl-geniculate-nucleus            255 199 158   0
+15020 rh-lateral-geniculate-nucleus            255 199 158   0
 15021 rh-medial-geniculate-nucleus            209 181  59   0
 15022 rh-centromedian                          51 204 204   0
 15023 rh-mediodorsal                          143 235   0   0
