@@ -111,11 +111,13 @@ if [ "$space" == "anat" ]; then
     if [ ! -d "$datadir/anat/5tt" ]; then 
         mkdir -p "$datadir/anat/5tt"
     fi
+    cd $datadir/anat/5tt
 
-    5tt_image="${datadir}/anat/5tt/5tt_space-anat.mif.gz"
-    5tt_vis="${datadir}/anat/5tt/5ttvis.mif.gz"
-    5tt_gmwm="${datadir}/anat/5tt/5ttgmwm.mif.gz"
-    tmp_image="${datadir}/anat/5tt/thomas-thalamic_is_fs_tmp.mif.gz"
+
+    5tt_image=5tt_space-anat.mif.gz
+    5tt_vis=5ttvis.mif.gz
+    5tt_gmwm=5ttgmwm.mif.gz
+    tmp_image=thomas-thalamic_is_fs_tmp.mif.gz
 
     if [ ! -f $5tt_image ]; then
         labelconvert $segm $segm_LUT $convert $tmp_image
