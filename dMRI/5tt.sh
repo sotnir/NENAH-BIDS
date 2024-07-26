@@ -110,9 +110,12 @@ if [ "$space" == "anat" ]; then
 
     if [ ! -d $datadir/anat/5tt ]; then mkdir -p $datadir/dwi/5tt; fi
 
+    5tt_image="${datadir}/anat/5tt/5tt_space-anat.mif.gz"
+
+
     if [ ! -f 5tt_space-anat.mif.gz ]; then
-        labelconvert ${datadir}/anat/aparc+aseg_thomas-thalamic_gmfix.mif.gz $segm_LUT $convert - | \
-        5ttgen -force freesurfer -sgm_amyg_hipp - ${datadir}/anat/5tt/5tt_space-anat.mif.gz
+        labelconvert $segm $segm_LUT $convert - | \
+        5ttgen -force freesurfer - $5tt_image -sgm_amyg_hipp
     fi
 
         # Create for visualisation 
