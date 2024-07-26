@@ -73,13 +73,13 @@ tmp_fs_no_thalamus="${studydir}/derivatives/dMRI/sub-$sID/anat/tmp_fs_no_thalamu
 # outputs
 combined_segm="${datadir}/anat/aparc+aseg_thomas-thalamic_gmfix.mif.gz"
 
-#### Replace the sub-cortical grey matter structure delineations in aparc+aseg.mgz using FSL FIRST ###
+#### Replace the sub-cortical gray matter structure delineations in aparc+aseg.mgz using FSL FIRST ###
 echo ""
 echo "Running 'combine_segmentations.sh' for $sID:"
 echo ""
 
 if [ ! -f $aparc_aseg_gmfix ]; then
-  echo "Replacing sub-cortical gm structure delineations using FSL FIRST in 'aparc+aseg.mgz':"
+  echo "Replacing sub-cortical gray matter structure delineations using FSL FIRST in 'aparc+aseg.mgz':"
   labelsgmfix $aparc_aseg $T1_image $fs_lut $aparc_aseg_gmfix -sgm_amyg_hipp
   echo ""
 else  
