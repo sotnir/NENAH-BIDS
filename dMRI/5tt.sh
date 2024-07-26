@@ -108,7 +108,9 @@ fi
 
 if [ "$space" == "anat" ]; then
 
-    if [ ! -d $datadir/anat/5tt ]; then mkdir -p $datadir/dwi/5tt; fi
+    if [ ! -d "$datadir/anat/5tt" ]; then 
+        mkdir -p "$datadir/dwi/5tt"
+    fi
 
     5tt_image="${datadir}/anat/5tt/5tt_space-anat.mif.gz"
 
