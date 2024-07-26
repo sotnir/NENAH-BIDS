@@ -78,18 +78,16 @@ echo
 if [ ! -d $datadir/anat ]; then mkdir -p $datadir/anat; fi
 
 ##################################################################################
-# 1. Generate 5TT image and extra files (directly in dMRI space)
+# 1. Generate 5TT image and files for visualisation 
 #
 
 segm_LUT="${studydir}/code/NENAH-BIDS/label_names/fs_thomas-thalamic_LUT.txt"
 convert="${studydir}/code/NENAH-BIDS/label_names/convert_thomas-thalamic_to_fs.txt"
 
 
-if [ ! -d $datadir/dwi/5tt ]; then mkdir -p $datadir/dwi/5tt; fi
-cd $datadir/dwi/5tt
-
 if [ "$space" == "dwi" ]; then
-    
+    if [ ! -d $datadir/dwi/5tt ]; then mkdir -p $datadir/dwi/5tt; fi
+    cd $datadir/dwi/5tt
 
 
     # Generate 5tt and transform into dMRI space directly
@@ -110,20 +108,20 @@ fi
 
 if [ "$space" == "anat" ]; then
 
-
+    if [ ! -d $datadir/anat/5tt ]; then mkdir -p $datadir/dwi/5tt; fi
 
     if [ ! -f 5tt_space-anat.mif.gz ]; then
-        labelconvert $segm $segm_LUT $convert - | \
-        5ttgen -force freesurfer -sgm_amyg_hipp - 5tt_space-anat.mif.gz
+        labelconvert ${datadir}/anat/aparc+aseg_thomas-thalamic_gmfix.mif.gz $segm_LUT $convert - | \
+        5ttgen -force freesurfer -sgm_amyg_hipp - ${datadir}/anat/5tt/5tt_space-anat.mif.gz
     fi
 
         # Create for visualisation 
     if [ ! -f 5ttvis.mif.gz ]; then
-        5tt2vis -force 5tt_space-anat.mif.gz 5tt_space-anat_vis.mif.gz
+        5tt2vis -force ${datadir}/anat/5tt/5tt_space-anat.mif.gz ${datadir}/anat/5tt/5tt_space-anat_vis.mif.gz
     fi
     # and GM/WM boundary
     if [ ! -f 5ttgmwm.mif.gz ]; then
-        5tt2gmwmi -force 5tt_space-anat.mif.gz 5tt_space-anat_gmwmi.mif.gz
+        5tt2gmwmi -force ${datadir}/anat/5tt/5tt_space-anat.mif.gz ${datadir}/anat/5tt/5tt_space-anat_gmwmi.mif.gz
     fi
 fi
 
