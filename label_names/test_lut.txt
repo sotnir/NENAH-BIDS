@@ -93,27 +93,27 @@
 84    R.CER   Right-Cerebellum-Cortex         230 148 34  255
 
 
-85    lh-anteroventral                          0 115 178   0
-86    lh-laterodorsal_unused                  199 235 255   0
-87    lh-ventral-anterior-nucleus             166  5  41    0
-88    lh-ventral-lateral-anterior               0 161 115   0
-89    lh-ventral-lateral-posterior            214  94   0   0
-90    lh-ventral-posterolateral               153 117 242   0
-91    lh-pulvinar                             204   0 115   0
-92    lh-letarl-geniculate-nucleus            255 199 158   0
-93    lh-medial-geniculate-nucleus            209 181  59   0
-94    lh-centromedian                          51 204 204   0
-95    lh-mediodorsal                          143 235   0   0
-96    lh-habenula                             255 115 115   0
-97    rh-anteroventral                          0 115 178   0
-98    rh-laterodorsal_unused                  199 235 255   0
-99    rh-ventral-anterior-nucleus             166   5  41   0
-100   rh-ventral-lateral-anterior               0 161 115   0
-101   rh-ventral-lateral-posterior            214  94   0   0
-102   rh-ventral-posterolateral               153 117 242   0
-103   rh-pulvinar                             204   0 115   0
-104   rh-letarl-geniculate-nucleus            255 199 158   0
-105   rh-medial-geniculate-nucleus            209 181  59   0
-106   rh-centromedian                          51 204 204   0
-107   rh-mediodorsal                          143 235   0   0
-108   rh-habenula                             255 115 115   0
+85    L.AV    lh-anteroventral                  0 115 178 255
+86    L.LD    lh-laterodorsal_unused          199 235 255 255
+87    L.VA    lh-ventral-anterior-nucleus      166  5  41 255
+88    L.VLA   lh-ventral-lateral-anterior       0 161 115 255
+89    L.VLP   lh-ventral-lateral-posterior    214  94   0 255
+90    L.VPL   lh-ventral-posterolateral       153 117 242 255
+91    L.P     lh-pulvinar                     204   0 115 255
+92    L.LGN   lh-letarl-geniculate-nucleus    255 199 158 255
+93    L.MGN   lh-medial-geniculate-nucleus    209 181  59 255
+94    L.CM    lh-centromedian                  51 204 204 255
+95    L.MD    lh-mediodorsal                  143 235   0 255
+96    L.HB    lh-habenula                     255 115 115 255
+97    R.AV    rh-anteroventral                  0 115 178 255
+98    R.LD    rh-laterodorsal_unused          199 235 255 255
+99    R.VA    rh-ventral-anterior-nucleus     166   5  41 255
+100   R.VLA   rh-ventral-lateral-anterior       0 161 115 255
+101   R.VLP   rh-ventral-lateral-posterior    214  94   0 255
+102   R.VPL   rh-ventral-posterolateral       153 117 242 255
+103   R.P     rh-pulvinar                     204   0 115 255
+104   R.LGN   rh-letarl-geniculate-nucleus    255 199 158 255
+105   R.MGN   rh-medial-geniculate-nucleus    209 181  59 255
+106   R.CM    rh-centromedian                  51 204 204 255
+107   R.MD    rh-mediodorsal                  143 235   0 255
+108   R.HB    rh-habenula                     255 115 115 255
