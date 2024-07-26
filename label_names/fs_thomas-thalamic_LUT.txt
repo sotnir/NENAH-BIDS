@@ -1437,29 +1437,33 @@
 # Values and labels for the thalamic segmentation from HIPS-THOMAS. Created with docker-version: https://github.com/thalamicseg/hipsthomasdocker
 # Reference: Vidal JP, Danet L, Péran P, Pariente J, Bach Cuadra M, Zahr NM, Barbeau EJ, Saranathan M. Robust thalamic nuclei segmentation from T1-weighted MRI using polynomial intensity transformation. *Brain Structure and Function*; 2024 
 
+15001 lh-anteroventral                          0 115 178   0
+15002 lh-laterodorsal_unused                  199 235 255   0
+15003 lh-ventral-anterior-nucleus             166  5  41    0
+15004 lh-ventral-lateral-anterior               0 161 115   0
+15005 lh-ventral-lateral-posterior            214  94   0   0
+15006 lh-ventral-posterolateral               153 117 242   0
+15007 lh-pulvinar                             204   0 115   0
+15008 lh-letarl-geniculate-nucleus            255 199 158   0
+15009 lh-medial-geniculate-nucleus            209 181  59   0
+15010 lh-centromedian                          51 204 204   0
+15011 lh-mediodorsal                          143 235   0   0
+15012 lh-habenula                             255 115 115   0
+15013 rh-anteroventral                          0 115 178   0
+15014 rh-laterodorsal_unused                  199 235 255   0
+15015 rh-ventral-anterior-nucleus             166   5  41   0
+15016 rh-ventral-lateral-anterior               0 161 115   0
+15017 rh-ventral-lateral-posterior            214  94   0   0
+15018 rh-ventral-posterolateral               153 117 242   0
+15019 rh-pulvinar                             204   0 115   0
+15020 rh-letarl-geniculate-nucleus            255 199 158   0
+15021 rh-medial-geniculate-nucleus            209 181  59   0
+15022 rh-centromedian                          51 204 204   0
+15023 rh-mediodorsal                          143 235   0   0
+15024 rh-habenula                             255 115 115   0
 
-15001 lh-anteroventral
-15002 lh-laterodorsal_unused
-15003 lh-ventral-anterior-nucleus
-15004 lh-ventral-lateral-anterior
-15005 lh-ventral-lateral-posterior
-15006 lh-ventral-posterolateral
-15007 lh-pulvinar
-15008 lh-letarl-geniculate-nucleus
-15009 lh-medial-geniculate-nucleus
-15010 lh-centromedian
-15011 lh-mediodorsal
-15012 lh-habenula
-15013 rh-anteroventral
-15014 rh-laterodorsal_unused
-15015 rh-ventral-anterior-nucleus
-15016 rh-ventral-lateral-anterior
-15017 rh-ventral-lateral-posterior
-15018 rh-ventral-posterolateral
-15019 rh-pulvinar
-15020 rh-letarl-geniculate-nucleus
-15021 rh-medial-geniculate-nucleus
-15022 rh-centromedian
-15023 rh-mediodorsal
-15024 rh-habenula
+
+
+
+
 
