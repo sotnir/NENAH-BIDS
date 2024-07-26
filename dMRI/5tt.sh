@@ -5,12 +5,12 @@ usage()
 {
   base=$(basename "$0")
   echo "usage: $base subjectID [options]
-Create 5tt image from FreeSurfer segmentation
-and keep in anatomical space or transform into DWI-space(requires that registration.sh has been run to create transformation between T1w <-> dMRI)
+Create 5tt image from FreeSurfer segmentation and keep in anatomical space or transform into DWI-space
+(requires that registration.sh has been run to create transformation between T1w <-> dMRI)
 
 Arguments:
   sID				Subject ID (e.g. NENAHC012) 
-  space     Choose whether output to dwi-space or anat-space
+  space             Choose whether output to dwi-space or anat-space
 Options:
   -segm				Segmentation from FreeSurfer (default: derivatives/dMRI/sub-ID/)
   -d / -data-dir  <directory>   The directory used to output the preprocessed files (default: derivatives/dMRI/sub-sID)
@@ -135,11 +135,11 @@ if [ "$space" == "anat" ]; then
 
         # Create for visualisation 
     if [[ ! -f "5ttvis.mif.gz" && -f "5tt_space-anat.mif.gz" ]]; then
-        5tt2vis -force 5tt_space-anat.mif.gz 5ttvis.mif.gz
+        5tt2vis -force 5tt_space-anat.mif.gz 5tt_space-anat_vis.mif.gz
     fi
     # and GM/WM boundary
-    if [[ ! -f "5ttgmwm.mif.gz" && -f "5tt_space-anat.mif.gz" ]]; then
-        5tt2gmwmi -force 5tt_space-anat.mif.gz 5ttgmwm.mif.gz
+    if [[ ! -f "5ttgmwmi.mif.gz" && -f "5tt_space-anat.mif.gz" ]]; then
+        5tt2gmwmi -force 5tt_space-anat.mif.gz 5tt_space-anat_gmwmi.mif.gz
     fi
 fi
 
