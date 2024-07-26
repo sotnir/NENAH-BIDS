@@ -120,7 +120,7 @@ if [ "$space" == "anat" ]; then
 
     if [ ! -f "5tt_space-anat.mif.gz" ]; then
         #labelconvert $segm $segm_LUT $convert thomas-thalamic_is_fs_tmp.mif.gz
-        5ttgen -force freesurfer -sgm_amyg_hipp $segm 5tt_space-anat.mif.gz -lut $segm_lut
+        5ttgen -force freesurfer -sgm_amyg_hipp $segm 5tt_space-anat.mif.gz $segm_lut -lut
         if [[ -f "5tt_space-anat.mif.gz" ]]; then
             echo ""
             echo "5ttgen for $sID complete!"
