@@ -109,23 +109,35 @@ fi
 if [ "$space" == "anat" ]; then
 
     if [ ! -d "$datadir/anat/5tt" ]; then 
-        mkdir -p "$datadir/dwi/5tt"
+        mkdir -p "$datadir/anat/5tt"
     fi
 
     5tt_image="${datadir}/anat/5tt/5tt_space-anat.mif.gz"
+    5tt_vis="${datadir}/anat/5tt/5ttvis.mif.gz"
+    5tt_gmwm="${datadir}/anat/5tt/5ttgmwm.mif.gz"
+    tmp_image="${datadir}/anat/5tt/thomas-thalamic_is_fs_tmp.mif.gz"
 
-
-    if [ ! -f 5tt_space-anat.mif.gz ]; then
-        labelconvert $segm $segm_LUT $convert - | \
-        5ttgen -force freesurfer - $5tt_image -sgm_amyg_hipp
+    if [ ! -f $5tt_image ]; then
+        labelconvert $segm $segm_LUT $convert $tmp_image
+        5ttgen -force freesurfer -sgm_amyg_hipp $tmp_image $5tt_image
+        if [ -f $5tt_image ]; then
+            echo ""
+            echo "5ttgen for $sID complete!"
+            echo "Removing tmp. files"
+            rm $tmp_image
+        else
+            echo ""
+            echo "5ttgen couldn't be done for $sID"
+            echo ""
+        fi
     fi
 
         # Create for visualisation 
-    if [ ! -f 5ttvis.mif.gz ]; then
+    if [ ! -f $5tt_vis && -f $5tt_image ]; then
         5tt2vis -force ${datadir}/anat/5tt/5tt_space-anat.mif.gz ${datadir}/anat/5tt/5tt_space-anat_vis.mif.gz
     fi
     # and GM/WM boundary
-    if [ ! -f 5ttgmwm.mif.gz ]; then
+    if [ ! -f $5tt_gmwm && -f $5tt_image ]; then
         5tt2gmwmi -force ${datadir}/anat/5tt/5tt_space-anat.mif.gz ${datadir}/anat/5tt/5tt_space-anat_gmwmi.mif.gz
     fi
 fi
