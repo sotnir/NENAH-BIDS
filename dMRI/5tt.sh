@@ -5,15 +5,14 @@ usage()
 {
   base=$(basename "$0")
   echo "usage: $base subjectID [options]
-Transform FreeSurfer segmentation into dMRI space or keep in anatomical space
 Create 5tt image from FreeSurfer segmentation
-and transform into dMRI or anatomical space (requires that registration.sh has been run to create transformation between T1w <-> dMRI)
+and keep in anatomical space or transform into DWI-space(requires that registration.sh has been run to create transformation between T1w <-> dMRI)
 
 Arguments:
   sID				Subject ID (e.g. NENAHC012) 
   space     Choose whether output to dwi-space or anat-space
 Options:
-  -segm				Segmentation from FreeSurfer (default: derivatives/sMRI_fs-segmentation/sub-sID/mri/aparc+aseg.mgz)
+  -segm				Segmentation from FreeSurfer (default: derivatives/dMRI/sub-ID/)
   -d / -data-dir  <directory>   The directory used to output the preprocessed files (default: derivatives/dMRI/sub-sID)
   -h / -help / --help           Print usage.
 "
@@ -34,8 +33,9 @@ shift 2
 studydir=`pwd`
 
 # Defaults
-segm=derivatives/sMRI_fs-segmentation/sub-$sID/mri/aparc+aseg.mgz
+
 datadir=derivatives/dMRI/sub-$sID
+segm="${datadir}/anat/aparc+aseg_thomas-thalamic_gmfix.mif.gz"
 
 while [ $# -gt 0 ]; do
     case "$1" in
@@ -77,13 +77,12 @@ echo
 
 if [ ! -d $datadir/anat ]; then mkdir -p $datadir/anat; fi
 
-if [ ! -f $datadir/anat/fs-segm_aparc+aseg.nii.gz ]; then
-    mrconvert $segm $datadir/anat/fs-segm_aparc+aseg.nii.gz
-fi
-
 ##################################################################################
 # 1. Generate 5TT image and extra files (directly in dMRI space)
 #
+
+segm_LUT="${studydir}/code/NENAH-BIDS/label_names/fs_thomas-thalamic_LUT.txt"
+convert="${studydir}/code/NENAH-BIDS/label_names/convert_thomas-thalamic_to_fs.txt"
 
 
 if [ ! -d $datadir/dwi/5tt ]; then mkdir -p $datadir/dwi/5tt; fi
@@ -110,17 +109,21 @@ if [ "$space" == "dwi" ]; then
 fi
 
 if [ "$space" == "anat" ]; then
+
+
+
     if [ ! -f 5tt_space-anat.mif.gz ]; then
-        5ttgen -force freesurfer -sgm_amyg_hipp ../../anat/fs-segm_aparc+aseg.nii.gz 5tt_space-anat.mif.gz
+        labelconvert $segm $segm_LUT $convert - | \
+        5ttgen -force freesurfer -sgm_amyg_hipp - 5tt_space-anat.mif.gz
     fi
 
         # Create for visualisation 
     if [ ! -f 5ttvis.mif.gz ]; then
-        5tt2vis 5tt_space-anat.mif.gz 5tt_space-anat_vis.mif.gz
+        5tt2vis -force 5tt_space-anat.mif.gz 5tt_space-anat_vis.mif.gz
     fi
     # and GM/WM boundary
     if [ ! -f 5ttgmwm.mif.gz ]; then
-        5tt2gmwmi 5tt_space-anat.mif.gz 5tt_space-anat_gmwmi.mif.gz
+        5tt2gmwmi -force 5tt_space-anat.mif.gz 5tt_space-anat_gmwmi.mif.gz
     fi
 fi
 
