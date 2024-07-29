@@ -48,10 +48,7 @@ Uses inputs from QC-file
 1. MP-PCA Denoising and Gibbs Unringing 
 2. TOPUP and EDDY for motion- and susceptebility image distortion correction
 3. N4 biasfield correction
-4. Brain mask estimation (with FSL's BET using different values for -f => see code)
-5. Normalisation
-6. Creation of a mean B0, B1000 and B2600 images (as average from normalised unwarped b0s)
-7. Calculation of tensor and tensor maps (FA, MD etc) using b0 and b1000 shells only
+4. Brain mask estimation (with FSL's BET using different values for -f => see code)  
 
 Arguments:
   sID    Subject ID   (e.g. NENAHC001)
@@ -70,11 +67,12 @@ Scripts should be run in the following order:
 - average_response.sh
 - upsample_dwi.sh
 - csd.sh
-- dti.sh
+
   
 
 Need 5TT from sMRI
 - registration.sh
+- combine_segmentations.sh
 - 5tt.sh
 - tractography.sh
 - thalamic_connectome.sh
@@ -93,32 +91,16 @@ Specific steps:
 1. MP-PCA Denoising and Gibbs Unringing 
 2. TOPUP and EDDY for motion- and susceptebility image distortion correction
 3. N4 biasfield correction
-4. Brain mask estimation (with FSL's BET using different values for -f => see code)
-5. Normalisation
-6. Creation of a mean B0, B1000 and B2600 images (as average from normalised unwarped b0s)
-7. Calculation of tensor and tensor maps (FA, MD etc) using b0 and b1000 shells only
+4. Brain mask estimation (with FSL's BET using different values for -f => see code)  
+
 
 The output lands in `/dwi`where, specifically, the preprocessing, with intermediate files, are put in `dwi/preproc`:
 
 ```
 dwi
-├── dti         <= DTI tensor-estimation and calculated parametric maps
-│   ├── adc.mif.gz
-│   ├── ad.mif.gz
-│   ├── dt.mif.gz
-│   ├── ev.mif.gz
-│   ├── fa.mif.gz
-│   └── rd.mif.gz
 ├── dwi.mif.gz                  <= original data
 ├── dwi_preproc.mif.gz          <= preprocessed data from /preproc
-├── dwi_preproc_norm-ind.mif.gz <= preprocessed and normalised data
 ├── mask.mif.gz                 <= mask (calculated in /preproc)
-├── meanb0_brain.mif.gz         <= mean b0 shell data (skull-stripped)
-├── meanb0.mif.gz               <= mean b0 shell data
-├── meanb1000_brain.mif.gz      <= mean b1000 shell data (skull-stripped)
-├── meanb1000.mif.gz            <= mean b0 shell data 
-├── meanb2600_brain.mif.gz      <= mean b2600 shell data (skull-stripped)
-├── meanb2600.mif.gz            <= mean b2600 shell data
 ├── orig        <= original data
 │   ├── sub-NENAH$sID_dir-AP_run-1_dwi.bval
 │   ├── sub-NENAH$sID_dir-AP_run-1_dwi.bvec
@@ -145,3 +127,96 @@ dwi
     ├── topup
     └── unring
 ```
+### Response function estimation (response.sh / average_response.sh)
+Estimate response functions for individual subjects and/or calculate the average accross all subjects. 
+
+#### response.sh
+Inputs: `dwi_preproc.mif.gz` and `mask.mif.gz` from preprocessing.  
+Outputs: Response function estimations for white matter, gray matter and CSF in `derivatives/dMRI/sub-ID/dwi/response`. 
+
+```
+Response
+├── dhollander_csf_dwi_preproc.txt
+├── dhollander_gm_dwi_preproc.txt
+├── dhollander_sf_dwi_preproc.mif.gz
+└── dhollander_wm_dwi_preproc.txt
+```
+#### average_response.sh
+Runs response.sh for all subjects (unless relevant files already exists).  
+Calculates the average response function across all subjects.  
+
+Inputs: Each subject-unique response function.  
+Outputs: An average response function for white matter, gray matter and CSF in `derivatives/dMRI/NENAHGRP/dwi/response`.
+
+```
+NENAHGRP
+dwi
+└── response
+    ├── dhollander_csf_dwi_preproc.txt
+    ├── dhollander_gm_dwi_preproc.txt
+    └──dhollander_wm_dwi_preproc.txt
+```
+
+### Upsampling of DWI-data (upsample.sh) 
+Script to upsample DWI data (2x2x2 --> 1.25x1.25x1.25) and use it to generate high resolution meanb1000, create brain masks
+and calculate diffusion tensor and tensor parametric maps. 
+
+Inputs: `dwi_preproc.mif.gz`  
+Outputs: `dwi_preproc_hires.mif.gz` and new 'hires' meanb, mask and DTI files in `derivatives/dMRI/sub-ID/dwi/` and `derivatives/dMRI/sub-ID/dwi/dti` respectively.
+
+dwi  
+├── dwi.mif.gz  
+├── dwi_preproc_hires.mif.gz  
+├── dwi_preproc.mif.gz       
+├── mask.mif.gz  
+├── mask_space-dwi_hires.mif.gz  
+├── meanb0_dwi_preproc_hires.mif.gz  
+├── meanb1000_dwi_preproc_hires.mif.gz  
+├── meanb2600_dwi_preproc_hires.mif.gz  
+├── dti         <= DTI tensor-estimation and calculated parametric maps  
+│   ├── adc_hires.mif.gz  
+│   ├── ad_hires.mif.gz  
+│   ├── dt_hires.mif.gz  
+│   ├── ev_hires.mif.gz  
+│   ├── fa_hires.mif.gz  
+│   └── rd_hires.mif.gz  
+
+
+### csd.sh
+Script to compute the fiber orientation distribution (FOD) using constrained spherical convolution (CSD).
+By running with the script with the '-transform 1' option, the FODs will also be given in anatomical space.
+
+Inputs: The `dwi_preproc_hires` and `mask_space-dwi_hires` files from the upsampling step. Subject-unique response files (from response.sh) or group average response files (average_response.sh)  
+Outputs: Normalised FOD-images for each subjects in (in `derivatives/dMRI/sub-ID/dwi/csd`)
+
+```
+csd
+├── csd-dhollander_csf_dwi_preproc_hires.mif.gz
+├── csd-dhollander_csf_norm_dwi_preproc_hires.mif.gz
+├── csd-dhollander_csf_norm_space-anat.mif.gz
+├── csd-dhollander_gm_dwi_preproc_hires.mif.gz
+├── csd-dhollander_gm_norm_dwi_preproc_hires.mif.gz
+├── csd-dhollander_gm_norm_space-anat.mif.gz
+├── csd-dhollander_wm_dwi_preproc_hires.mif.gz
+├── csd-dhollander_wm_norm_dwi_preproc_hires.mif.gz
+└── csd-dhollander_wm_norm_space-anat.mif.gz
+```
+
+## Scripts running on sMRI-data
+
+Prior to these scripts, the T1-weighted image is segmented using FreeSurfer and HIPS-THOMAS. 
+
+### combine_segmentations.sh
+Script to replace the sub-cortical gray matter structure delineations in the FreeSurfer segmentation with FSL FIRST  
+and then combine the newly enhanced FreeSurfer/FSL FIRST segmentation with HIPS-THOMAS.  
+This script also utilizes LUTs in various re-mapping steps. These can be found here on the GitHub in the `label_names` folder.  
+
+Inputs: FreeSurfers `aparc+aseg.mgz` and HIPS-THOMAS left/right `thomasfull.nii.gz/thomasrfull.nii.gz`  
+Outputs: A combined FreeSurfer and HIPS-THOMAs segmentation with enhanced sub-cortical gray matter structures `aparc+aseg_thomas-thalamic_gmfix.mif.gz`  
+in `derivatives/dMRI/sub-ID/anat`
+
+
+### 5TT.sh
+Script to generate five-tissue-type images
+
+
