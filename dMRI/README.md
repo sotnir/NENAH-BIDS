@@ -70,11 +70,12 @@ Scripts should be run in the following order:
 - average_response.sh
 - upsample_dwi.sh
 - csd.sh
-- dti.sh
+
   
 
 Need 5TT from sMRI
 - registration.sh
+- combine_segmentations.sh
 - 5tt.sh
 - tractography.sh
 - thalamic_connectome.sh
@@ -145,3 +146,62 @@ dwi
     ├── topup
     └── unring
 ```
+### Response function estimation (response.h / average_response.sh)
+Estimate response functions for individual subjects and/or calculate the average accross all subjects. 
+
+# response.sh
+Inputs: `dwi_preproc.mif.gz` and `mask.mif.gz` from preprocessing.
+Outputs: Response function estimations for white matter, gray matter and CSF in `derivatives/dMRI/sub-ID/dwi/response`.
+
+```
+Response
+├── dhollander_csf_dwi_preproc.txt
+├── dhollander_gm_dwi_preproc.txt
+├── dhollander_sf_dwi_preproc.mif.gz
+└── dhollander_wm_dwi_preproc.txt
+```
+# average_response.sh
+Runs response.sh for all subjects (unless relevant files already exists).
+Calculates the average response function across all subjects.
+
+Inputs: Each subject-unique response function
+Outputs: An average response function for white matter, gray matter and CSF in `derivatives/dMRI/NENAHGRP/dwi/response`.
+
+```
+NENAHGRP
+dwi
+└── response
+    ├── dhollander_csf_dwi_preproc.txt
+    ├── dhollander_gm_dwi_preproc.txt
+    └──dhollander_wm_dwi_preproc.txt
+```
+
+### Upsampling of DWI-data. 
+Script to upsample DWI data (2x2x2 --> 1.25x1.25x1.25) and use it to generate high resolution meanb1000, create brain masks 
+and calculate diffusion tensor and tensor parametric maps. 
+
+Inputs: `dwi_preproc.mif.gz`
+Outputs: `dwi_preproc_hires.mif.gz` and new 'hires' meanb, mask and DTI files in `derivatives/dMRI/sub-ID/dwi/` and `derivatives/dMRI/sub-ID/dwi/dti` respectively.
+
+
+### csd.sh
+Script to compute the fiber orientation distribution (FOD) using constrained spherical convolution (CSD).
+By running with the script with the '-transform 1' option, the FODs will also be given in anatomical space.
+
+Inputs: The `dwi_preproc_hires` and `mask_space-dwi_hires` files from the upsampling step. Subject-unique response files (from response.sh) or group average response files (average_response.sh)
+Outputs: Normalised FOD-images for each subjects in (in `derivatives/dMRI/sub-ID/dwi/csd`)
+
+```
+csd
+├── csd-dhollander_csf_dwi_preproc_hires.mif.gz
+├── csd-dhollander_csf_norm_dwi_preproc_hires.mif.gz
+├── csd-dhollander_csf_norm_space-anat.mif.gz
+├── csd-dhollander_gm_dwi_preproc_hires.mif.gz
+├── csd-dhollander_gm_norm_dwi_preproc_hires.mif.gz
+├── csd-dhollander_gm_norm_space-anat.mif.gz
+├── csd-dhollander_wm_dwi_preproc_hires.mif.gz
+├── csd-dhollander_wm_norm_dwi_preproc_hires.mif.gz
+└── csd-dhollander_wm_norm_space-anat.mif.gz
+```
+
+
