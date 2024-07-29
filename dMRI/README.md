@@ -166,20 +166,20 @@ Outputs: `dwi_preproc_hires.mif.gz` and new 'hires' meanb, mask and DTI files in
 
 dwi
 ├── dwi.mif.gz  
-├── dwi_preproc_hires.mif.gz
-├── dwi_preproc.mif.gz         
-├── mask.mif.gz
-├── mask_space-dwi_hires.mif.gz
-├── meanb0_dwi_preproc_hires.mif.gz
-├── meanb1000_dwi_preproc_hires.mif.gz
-├── meanb2600_dwi_preproc_hires.mif.gz
-├── dti         <= DTI tensor-estimation and calculated parametric maps
-│   ├── adc_hires.mif.gz
-│   ├── ad_hires.mif.gz
-│   ├── dt_hires.mif.gz
-│   ├── ev_hires.mif.gz
-│   ├── fa_hires.mif.gz
-│   └── rd_hires.mif.gz
+├── dwi_preproc_hires.mif.gz  
+├── dwi_preproc.mif.gz       
+├── mask.mif.gz  
+├── mask_space-dwi_hires.mif.gz  
+├── meanb0_dwi_preproc_hires.mif.gz  
+├── meanb1000_dwi_preproc_hires.mif.gz  
+├── meanb2600_dwi_preproc_hires.mif.gz  
+├── dti         <= DTI tensor-estimation and calculated parametric maps  
+│   ├── adc_hires.mif.gz  
+│   ├── ad_hires.mif.gz  
+│   ├── dt_hires.mif.gz  
+│   ├── ev_hires.mif.gz  
+│   ├── fa_hires.mif.gz  
+│   └── rd_hires.mif.gz  
 
 
 ### csd.sh
