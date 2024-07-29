@@ -2,7 +2,8 @@
 
 usage() {
   echo "Usage: $0 [-d data-dir] [-v voxel-size] [-QC qc-file] [-h help] sID"
-  echo "Script to upsample DWI data to and use it to generate meanb1000 and create brain masks"
+  echo "Script to upsample DWI data to and use it to generate meanb1000, create brain masks"
+  echo "and calculate diffusion tensor and tensor parametric maps (DTI) on upsampled data."
   echo ""
   echo "Arguments:"
   echo "  sID              Subject ID (e.g. NENAHC001)"
@@ -15,12 +16,6 @@ usage() {
   exit 1
 }
 
-# default parameters
-studydir=$PWD
-codedir="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
-voxel_size=1.25
-datadir=derivatives/dMRI/
-qc_file=$codedir/../QC/QC_dwi.csv
 
 # return usage if no input arguments
 if [ $# -eq 0 ]; then
@@ -59,14 +54,19 @@ if [ -z "$sID" ]; then
   exit 1
 fi
 
-# # update subject dir with subject ID
-subject_dir="${datadir}/sub-${sID}/"
+# default parameters
+studydir=$PWD
+codedir="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+voxel_size=1.25
+datadir=derivatives/dMRI/sub-${sID}
+qc_file=$codedir/../QC/QC_dwi.csv
+
 
 # ################ UPSAMPLING ################
 
 # # perform upsampling for the subject
-input_file="$subject_dir/dwi/dwi_preproc.mif.gz"
-output_file="$subject_dir/dwi/dwi_preproc_hires.mif.gz"
+input_file="$datadir/dwi/dwi_preproc.mif.gz"
+output_file="$datadir/dwi/dwi_preproc_hires.mif.gz"
 
 # check input file exists
 if [[ ! -f "$input_file" ]]; then
@@ -84,7 +84,7 @@ mrgrid "$input_file" regrid -vox "$voxel_size" "$output_file"
 # generate meanb0 and meanb1000 from the upsampled DWI data
 
 
-cd $subject_dir/dwi
+cd $datadir/dwi
 
 # assign upsampled DWI file
 upsampled_dwi="dwi_preproc_hires"
@@ -147,3 +147,20 @@ echo "Brain mask created for subject $sID at $subject_dir/$mask_file"
 
 # Create brain extracted meanb1000
 mrcalc $meanb1000_file $mask_file -mul $subject_dir/meanb1000_brain_$upsampled_dwi.mif.gz
+
+
+
+### Calculate diffusion tensor and tensor metrics
+
+cd $datadir/dwi
+
+
+if [ ! -d dti ]; then mkdir dti; fi
+
+if [ ! -f dti/dt_hires.mif.gz ]; then
+    dwiextract -shells 0,1000 $upsampled_dwi.mif.gz - | dwi2tensor -mask mask.mif.gz - dti/dt_hires.mif.gz
+    cd dti
+    tensor2metric -force -fa fa_hires.mif.gz -adc adc_hires.mif.gz -rd rd_hires.mif.gz -ad ad_hires.mif.gz -vector ev_hires.mif.gz dt_hires.mif.gz
+fi
+
+cd $currdir

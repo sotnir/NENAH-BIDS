@@ -6,7 +6,7 @@
 
 usage() {
   echo "Usage: $0 [-d data-dir] [-h help] sID"
-  echo "Script to replace the sub-cortical grey matter structure delineations in aparc+aseg.mgz using FSL FIRST and "
+  echo "Script to replace the sub-cortical gray matter structure delineations in aparc+aseg.mgz using FSL FIRST and "
   echo "then combine the resulting segmentation-image with the HIPS-THOMAS segmentation of thalamus."
   echo "Arguments:"
   echo "  sID              Subject ID (e.g. NENAHC001)"

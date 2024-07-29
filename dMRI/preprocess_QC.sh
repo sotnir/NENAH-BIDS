@@ -12,9 +12,7 @@ Uses inputs from QC-file
 2. TOPUP and EDDY for motion- and susceptebility image distortion correction
 3. N4 biasfield correction
 4. Brain mask estimation (with FSL's BET using different values for -f => see code)
-5. Normalisation 
-6. Creation of a mean B0, B1000 and B2600 images (as average from normalised unwarped b0s)
-7. Calculation of tensor and tensor maps (FA, MD etc) using b0 and b1000 shells only
+
 
 Arguments:
   sID    Subject ID   (e.g. NENAHC001) 
@@ -265,49 +263,48 @@ dwipreproclast=${dwi}_unbiased.mif.gz
 
 cd $currdir
 
+
 ##################################################################################
 ## 4. B0-normalisation (individual/participant level)
 cd $datadir/dwi
 
-echo "Normalisation (participant level), meanb0 generation and tensor estimation"
+#echo "Normalisation (participant level), meanb0 generation and tensor estimation"
 
-# Create symbolic links to last file in preproc and mask.mif.gz and put this in $datadir
-#ln -s preproc/$dwipreproclast dwi_preproc.mif.gz
-# symbolic links do not work with rsync, so better to hard copy using mrconvert to retain command history
+
 mrconvert preproc/$dwipreproclast dwi_preproc.mif.gz
-#ln -s preproc/mask.mif.gz mask.mif.gz
+
 mrconvert preproc/mask.mif.gz mask.mif.gz
 
 dwi=dwi_preproc
 
-# B0-normalisation
-if [ ! -f ${dwi}_norm-ind.mif.gz ]; then
-    dwinormalise individual -nthreads $threads $dwi.mif.gz mask.mif.gz ${dwi}_norm-ind.mif.gz
-fi
+## B0-normalisation
+#if [ ! -f ${dwi}_norm-ind.mif.gz ]; then
+#    dwinormalise individual -nthreads $threads $dwi.mif.gz mask.mif.gz ${dwi}_norm-ind.mif.gz
+#fi
 
-dwi=dwi_preproc_norm-ind
+#dwi=dwi_preproc_norm-ind
 cd $currdir
 
 
 ##################################################################################
 # 5. meanb0, meanb1000 and meanb2600 generation
-cd $datadir/dwi
-dwi=dwi_preproc_norm-ind
+#cd $datadir/dwi
+#dwi=dwi_preproc_norm-ind
 
-if [ ! -f meanb0_brain_$dwi.mif.gz ]; then
-    dwiextract -shells 0 $dwi.mif.gz - |  mrmath -force -axis 3 - mean meanb0_$dwi.mif.gz
-    mrcalc meanb0_$dwi.mif.gz mask.mif.gz -mul meanb0_brain_$dwi.mif.gz
-fi
-if [ ! -f meanb1000_brain_$dwi.mif.gz ]; then
-    dwiextract -shells 1000  $dwi.mif.gz - |  mrmath -force -axis 3 - mean meanb1000_$dwi.mif.gz
-    mrcalc meanb1000_$dwi.mif.gz mask.mif.gz -mul meanb1000_brain_$dwi.mif.gz
-fi
-if [ ! -f meanb2600_brain_$dwi.mif.gz ]; then
-    dwiextract -shells 2600 $dwi.mif.gz - |  mrmath -force -axis 3 - mean meanb2600_$dwi.mif.gz
-    mrcalc meanb2600_$dwi.mif.gz mask.mif.gz -mul meanb2600_brain_$dwi.mif.gz
-fi
-    echo "Visually check the meann b-files"
-    echo "mrview meanb*_brain.nii.gz -mode 2"
+#if [ ! -f meanb0_brain_$dwi.mif.gz ]; then
+#    dwiextract -shells 0 $dwi.mif.gz - |  mrmath -force -axis 3 - mean meanb0_$dwi.mif.gz
+#    mrcalc meanb0_$dwi.mif.gz mask.mif.gz -mul meanb0_brain_$dwi.mif.gz
+#fi
+#if [ ! -f meanb1000_brain_$dwi.mif.gz ]; then
+#    dwiextract -shells 1000  $dwi.mif.gz - |  mrmath -force -axis 3 - mean meanb1000_$dwi.mif.gz
+#    mrcalc meanb1000_$dwi.mif.gz mask.mif.gz -mul meanb1000_brain_$dwi.mif.gz
+#fi
+#if [ ! -f meanb2600_brain_$dwi.mif.gz ]; then
+#    dwiextract -shells 2600 $dwi.mif.gz - |  mrmath -force -axis 3 - mean meanb2600_$dwi.mif.gz
+#    mrcalc meanb2600_$dwi.mif.gz mask.mif.gz -mul meanb2600_brain_$dwi.mif.gz
+#fi
+#    echo "Visually check the meann b-files"
+#    echo "mrview meanb*_brain.nii.gz -mode 2"
 
 cd $currdir
 
@@ -322,5 +319,6 @@ if [ ! -f dti/dt.mif.gz ]; then
     cd dti
     tensor2metric -force -fa fa.mif.gz -adc adc.mif.gz -rd rd.mif.gz -ad ad.mif.gz -vector ev.mif.gz dt.mif.gz
 fi
+
 
 cd $currdir
