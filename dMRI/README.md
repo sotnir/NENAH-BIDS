@@ -48,10 +48,7 @@ Uses inputs from QC-file
 1. MP-PCA Denoising and Gibbs Unringing 
 2. TOPUP and EDDY for motion- and susceptebility image distortion correction
 3. N4 biasfield correction
-4. Brain mask estimation (with FSL's BET using different values for -f => see code)
-5. Normalisation
-6. Creation of a mean B0, B1000 and B2600 images (as average from normalised unwarped b0s)
-7. Calculation of tensor and tensor maps (FA, MD etc) using b0 and b1000 shells only
+4. Brain mask estimation (with FSL's BET using different values for -f => see code)  
 
 Arguments:
   sID    Subject ID   (e.g. NENAHC001)
@@ -94,32 +91,16 @@ Specific steps:
 1. MP-PCA Denoising and Gibbs Unringing 
 2. TOPUP and EDDY for motion- and susceptebility image distortion correction
 3. N4 biasfield correction
-4. Brain mask estimation (with FSL's BET using different values for -f => see code)
-5. Normalisation
-6. Creation of a mean B0, B1000 and B2600 images (as average from normalised unwarped b0s)
-7. Calculation of tensor and tensor maps (FA, MD etc) using b0 and b1000 shells only
+4. Brain mask estimation (with FSL's BET using different values for -f => see code)  
+
 
 The output lands in `/dwi`where, specifically, the preprocessing, with intermediate files, are put in `dwi/preproc`:
 
 ```
 dwi
-├── dti         <= DTI tensor-estimation and calculated parametric maps
-│   ├── adc.mif.gz
-│   ├── ad.mif.gz
-│   ├── dt.mif.gz
-│   ├── ev.mif.gz
-│   ├── fa.mif.gz
-│   └── rd.mif.gz
 ├── dwi.mif.gz                  <= original data
 ├── dwi_preproc.mif.gz          <= preprocessed data from /preproc
-├── dwi_preproc_norm-ind.mif.gz <= preprocessed and normalised data
 ├── mask.mif.gz                 <= mask (calculated in /preproc)
-├── meanb0_brain.mif.gz         <= mean b0 shell data (skull-stripped)
-├── meanb0.mif.gz               <= mean b0 shell data
-├── meanb1000_brain.mif.gz      <= mean b1000 shell data (skull-stripped)
-├── meanb1000.mif.gz            <= mean b0 shell data 
-├── meanb2600_brain.mif.gz      <= mean b2600 shell data (skull-stripped)
-├── meanb2600.mif.gz            <= mean b2600 shell data
 ├── orig        <= original data
 │   ├── sub-NENAH$sID_dir-AP_run-1_dwi.bval
 │   ├── sub-NENAH$sID_dir-AP_run-1_dwi.bvec
@@ -183,6 +164,23 @@ and calculate diffusion tensor and tensor parametric maps.
 Inputs: `dwi_preproc.mif.gz`  
 Outputs: `dwi_preproc_hires.mif.gz` and new 'hires' meanb, mask and DTI files in `derivatives/dMRI/sub-ID/dwi/` and `derivatives/dMRI/sub-ID/dwi/dti` respectively.
 
+dwi
+├── dwi.mif.gz  
+├── dwi_preproc_hires.mif.gz
+├── dwi_preproc.mif.gz         
+├── mask.mif.gz
+├── mask_space-dwi_hires.mif.gz
+├── meanb0_dwi_preproc_hires.mif.gz
+├── meanb1000_dwi_preproc_hires.mif.gz
+├── meanb2600_dwi_preproc_hires.mif.gz
+├── dti         <= DTI tensor-estimation and calculated parametric maps
+│   ├── adc_hires.mif.gz
+│   ├── ad_hires.mif.gz
+│   ├── dt_hires.mif.gz
+│   ├── ev_hires.mif.gz
+│   ├── fa_hires.mif.gz
+│   └── rd_hires.mif.gz
+
 
 ### csd.sh
 Script to compute the fiber orientation distribution (FOD) using constrained spherical convolution (CSD).
@@ -203,5 +201,22 @@ csd
 ├── csd-dhollander_wm_norm_dwi_preproc_hires.mif.gz
 └── csd-dhollander_wm_norm_space-anat.mif.gz
 ```
+
+## Scripts running on sMRI-data
+
+Prior to these scripts, the T1-weighted image is segmented using FreeSurfer and HIPS-THOMAS. 
+
+### combine_segmentations.sh
+Script to replace the sub-cortical gray matter structure delineations in the FreeSurfer segmentation with FSL FIRST  
+and then combine the newly enhanced FreeSurfer/FSL FIRST segmentation with HIPS-THOMAS.  
+This script also utilizes LUTs in various re-mapping steps. These can be found here on the GitHub in the `label_names` folder.  
+
+Inputs: FreeSurfers `aparc+aseg.mgz` and HIPS-THOMAS left/right `thomasfull.nii.gz/thomasrfull.nii.gz`  
+Outputs: A combined FreeSurfer and HIPS-THOMAs segmentation with enhanced sub-cortical gray matter structures `aparc+aseg_thomas-thalamic_gmfix.mif.gz`  
+in `derivatives/dMRI/sub-ID/anat`
+
+
+### 5TT.sh
+Script to generate five-tissue-type images
 
 
