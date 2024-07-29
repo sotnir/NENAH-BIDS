@@ -146,7 +146,7 @@ dwi
     ├── topup
     └── unring
 ```
-### Response function estimation (response.h / average_response.sh)
+### Response function estimation (response.sh / average_response.sh)
 Estimate response functions for individual subjects and/or calculate the average accross all subjects. 
 
 #### response.sh
@@ -176,7 +176,7 @@ dwi
     └──dhollander_wm_dwi_preproc.txt
 ```
 
-### Upsampling of DWI-data. 
+### Upsampling of DWI-data (upsample.sh) 
 Script to upsample DWI data (2x2x2 --> 1.25x1.25x1.25) and use it to generate high resolution meanb1000, create brain masks
 and calculate diffusion tensor and tensor parametric maps. 
 
