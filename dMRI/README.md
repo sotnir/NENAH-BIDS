@@ -164,7 +164,7 @@ and calculate diffusion tensor and tensor parametric maps.
 Inputs: `dwi_preproc.mif.gz`  
 Outputs: `dwi_preproc_hires.mif.gz` and new 'hires' meanb, mask and DTI files in `derivatives/dMRI/sub-ID/dwi/` and `derivatives/dMRI/sub-ID/dwi/dti` respectively.
 
-dwi
+dwi  
 ├── dwi.mif.gz  
 ├── dwi_preproc_hires.mif.gz  
 ├── dwi_preproc.mif.gz       
