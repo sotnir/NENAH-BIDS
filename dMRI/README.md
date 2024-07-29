@@ -150,8 +150,8 @@ dwi
 Estimate response functions for individual subjects and/or calculate the average accross all subjects. 
 
 # response.sh
-Inputs: `dwi_preproc.mif.gz` and `mask.mif.gz` from preprocessing.
-Outputs: Response function estimations for white matter, gray matter and CSF in `derivatives/dMRI/sub-ID/dwi/response`.
+Inputs: `dwi_preproc.mif.gz` and `mask.mif.gz` from preprocessing.  
+Outputs: Response function estimations for white matter, gray matter and CSF in `derivatives/dMRI/sub-ID/dwi/response`. 
 
 ```
 Response
@@ -161,10 +161,10 @@ Response
 └── dhollander_wm_dwi_preproc.txt
 ```
 # average_response.sh
-Runs response.sh for all subjects (unless relevant files already exists).
-Calculates the average response function across all subjects.
+Runs response.sh for all subjects (unless relevant files already exists).  
+Calculates the average response function across all subjects.  
 
-Inputs: Each subject-unique response function
+Inputs: Each subject-unique response function.  
 Outputs: An average response function for white matter, gray matter and CSF in `derivatives/dMRI/NENAHGRP/dwi/response`.
 
 ```
@@ -188,7 +188,7 @@ Outputs: `dwi_preproc_hires.mif.gz` and new 'hires' meanb, mask and DTI files in
 Script to compute the fiber orientation distribution (FOD) using constrained spherical convolution (CSD).
 By running with the script with the '-transform 1' option, the FODs will also be given in anatomical space.
 
-Inputs: The `dwi_preproc_hires` and `mask_space-dwi_hires` files from the upsampling step. Subject-unique response files (from response.sh) or group average response files (average_response.sh)
+Inputs: The `dwi_preproc_hires` and `mask_space-dwi_hires` files from the upsampling step. Subject-unique response files (from response.sh) or group average response files (average_response.sh)  
 Outputs: Normalised FOD-images for each subjects in (in `derivatives/dMRI/sub-ID/dwi/csd`)
 
 ```
