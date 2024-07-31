@@ -212,7 +212,7 @@ and then combine the newly enhanced FreeSurfer/FSL FIRST segmentation with HIPS-
 This script also utilizes LUTs in various re-mapping steps. These can be found here on the GitHub in the `label_names` folder.  
 
 Inputs: FreeSurfers `aparc+aseg.mgz` and HIPS-THOMAS left/right `thomasfull.nii.gz/thomasrfull.nii.gz`  
-Outputs: A combined FreeSurfer and HIPS-THOMAs segmentation with enhanced sub-cortical gray matter structures `aparc+aseg_thomas-thalamic_gmfix.mif.gz`  
+Outputs: A combined FreeSurfer and HIPS-THOMAs segmentation with enhanced sub-cortical gray matter structures `aparc+aseg_thomas-thalamic_gmfix.mif.gz`
 in `derivatives/dMRI/sub-ID/anat`
 
 
