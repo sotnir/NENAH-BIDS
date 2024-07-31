@@ -235,11 +235,11 @@ Outputs: A 5TT image with accompanying files for visualisation and a mask of the
 
 ### tractography.sh
 
-Performs whole-brain tractography and SIFT(2)-filtering. Can be done in either anatomical (default) or diffusion space (with `-space dwi`).  
+Performs whole-brain tractography and SIFT/SIFT2-filtering. Can be done in either anatomical (default) or diffusion space (with `-space dwi`).  
 This script has the following options:  
 ```
 Options:
-  -space            Do tractography in another space, either diffusion or anatomical (dwi or anat) (default: anat)
+  -space      Do tractography in another space, either diffusion or anatomical (dwi or anat) (default: anat)
   -csd				CSD mif.gz-file in (default: derivatives/dMRI/sub-sID/SPACE/csd/csd-dhollander_wm_norm_space-SPACE.mif.gz)
   -5TT				5TT mif.gz-file  (default: derivatives/dMRI/sub-sID/SPACE/5tt/5tt_space-SPACE.mif.gz)
   -sift				SIFT-method [1=sift or 2=sift2] (default: 2)
@@ -251,7 +251,7 @@ Options:
 ```
 
 Inputs: The FOD from csd.sh `csd-dhollander_wm_norm_space-anat.mif.gz`, the 5TT image `5tt_space-anat.mif.gz` and the gmwm mask `5tt_space-anat_gmwmi.mif.gz` from 5tt.sh.  
-Outputs: The streamlines file `whole_brain_10M_space-anat.tck` together with the SIFT/SIFT2 filtering, a file with only 10% streamlines for visualisation and the SIFT proportionality coefficient (mu) as a text file in `derivatives/dMRI/sub-ID/anat/tractography`.  
+Outputs: The streamlines file `whole_brain_10M_space-anat.tck` together with the SIFT/SIFT2 filtering, a file with only 10% streamlines for visualisation and the SIFT proportionality coefficient (mu) as a text file in `derivatives/dMRI/sub-ID/anat/tractography` (or the dwi-folder if done in diffusion space).  
 
 ```
 tractography
