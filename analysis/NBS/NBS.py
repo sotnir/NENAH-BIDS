@@ -123,7 +123,7 @@ def generate_design_matrix(clinical_data, mri_ages, score_type):
     return design_matrix
 
 
-output_dir = "NBS/design_matrices"
+output_dir = "code/NENAH-BIDS/analysis/NBS/design_matrices"
 
 if not os.path.exists(output_dir):
     os.makedirs(output_dir, exist_ok=True)
