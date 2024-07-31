@@ -48,7 +48,7 @@ while [ $# -gt 0 ]; do
     shift
 done
 
-echo "Create 5tt image from FreeSurfer and HIPS-THOMAS segmentation and ouptu in ${space}-space
+echo "Create 5tt image from FreeSurfer and HIPS-THOMAS segmentation and output in ${space}-space
 Subject:       	   $sID 
 FS segm:	       $segm
 Space:             $space
@@ -120,12 +120,12 @@ if [ "$space" == "anat" ]; then
 
     if [ ! -f "5tt_space-anat.mif.gz" ]; then
         labelconvert $segm $segm_LUT $convert thomas-thalamic_is_fs_tmp.mif.gz
-        5ttgen -force freesurfer -sgm_amyg_hipp "$segm" 5tt_space-anat.mif.gz
+        5ttgen -force freesurfer -sgm_amyg_hipp thomas-thalamic_is_fs_tmp.mif.gz 5tt_space-anat.mif.gz
         if [[ -f "5tt_space-anat.mif.gz" ]]; then
             echo ""
             echo "5ttgen for $sID complete!"
             echo "Removing tmp. files"
-            #rm thomas-thalamic_is_fs_tmp.mif.gz
+            rm thomas-thalamic_is_fs_tmp.mif.gz
         else
             echo ""
             echo "5ttgen couldn't be done for $sID"
