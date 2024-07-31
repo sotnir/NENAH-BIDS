@@ -74,6 +74,8 @@ Need 5TT from sMRI
 - registration.sh
 - combine_segmentations.sh
 - 5tt.sh
+
+Scripts incorporating the outputs from sMRI and dMRI above:
 - tractography.sh
 - thalamic_connectome.sh
 
@@ -217,6 +219,17 @@ in `derivatives/dMRI/sub-ID/anat`.
 
 
 ### 5TT.sh
-Script to generate five-tissue-type images
+Script to generate five-tissue-type (5TT) images of the combined segmentations.  
+To be called with the desired output-space (e.g. diffusion (dwi) or anatomical (anat)).
 
+Inputs: The combined segmentation `aparc+aseg_gmfix.mif.gz` from `combine_segmentations.sh`.  
+Outputs: A 5TT image with accompanying files for visualisation, output in either `derivatives/dMRI/sub-ID/dwi/5tt` or `derivatives/dMRI/sub-ID/anat/5tt`.  
+
+```
+5tt
+├── 5tt_space-anat_gmwmi.mif.gz
+├── 5tt_space-anat.mif.gz
+└── 5tt_space-anat_vis.mif.gz
+```
+### 
 
