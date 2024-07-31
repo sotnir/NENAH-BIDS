@@ -119,7 +119,7 @@ def generate_design_matrix(clinical_data, mri_ages, score_type):
 
     return design_matrix
 
-design_matrix = generate_design_matrix(clinical_data, subject_ages, "WISC_VSI_compScore")
+design_matrix = generate_design_matrix(clinical_data, subject_ages, "WISC_VSI_CompScore")
 
 
 # print some data for checking
