@@ -142,7 +142,7 @@ if not os.path.exists(output_dir):
 
     for name, matrix in design_matrices.items():
         file_path = os.path.join(output_dir, f"{name}.txt")
-        matrix.to_string(file_path, header=False, index=False)
+        matrix.to_string(file_path, header=False, index=True)
 
 # create COG.mat
 
@@ -180,9 +180,4 @@ print(f"Subject group matrices: {len(subject_matrices)}")
 print("")
 print("First 10 rows of clinical data:")
 for index, row in clinical_data.head(10).iterrows():
-    print(row.tolist())
-
-
-print("First 10 rows of the design matrix:")
-for index, row in design_matrix.head(10).iterrows():
     print(row.tolist())
