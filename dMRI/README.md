@@ -223,7 +223,7 @@ Script to generate five-tissue-type (5TT) images of the combined segmentations.
 To be called with the desired output-space (e.g. diffusion (dwi) or anatomical (anat)).
 
 Inputs: The combined segmentation `aparc+aseg_gmfix.mif.gz` from `combine_segmentations.sh`.  
-Outputs: A 5TT image with accompanying files for visualisation, output in either `derivatives/dMRI/sub-ID/dwi/5tt` or `derivatives/dMRI/sub-ID/anat/5tt`.  
+Outputs: A 5TT image with accompanying files for visualisation and a mask of the gray and white matter interface, output in either `derivatives/dMRI/sub-ID/dwi/5tt` or `derivatives/dMRI/sub-ID/anat/5tt`.  
 
 ```
 5tt
@@ -231,5 +231,24 @@ Outputs: A 5TT image with accompanying files for visualisation, output in either
 ├── 5tt_space-anat.mif.gz
 └── 5tt_space-anat_vis.mif.gz
 ```
-### 
+## Tractography and generating connectivity matrices
+
+### tractography.sh
+
+Performs whole-brain tractography and SIFT(2)-filtering. Can be done in either anatomical (default) or diffusion space (with `-space dwi`).  
+
+Inputs: The FOD from csd.sh `csd-dhollander_wm_norm_space-anat.mif.gz`, the 5TT image `5tt_space-anat.mif.gz` and the gmwm mask `5tt_space-anat_gmwmi.mif.gz` from 5tt.sh.  
+Outputs: The streamlines file `whole_brain_10M_space-anat.tck` together with the SIFT/SIFT2 filtering, a file with only 10% streamlines for visualisation and the SIFT proportionality coefficient (mu) as a text file. 
+
+```
+tractography
+├── whole_brain_10M_sift2_space-anat_mu.txt
+├── whole_brain_10M_space-anat_edit100k.tck
+├── whole_brain_10M_space-anat_sift2.txt
+└── whole_brain_10M_space-anat.tck
+
+```
+
+
+
 
