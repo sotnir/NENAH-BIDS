@@ -32,7 +32,10 @@ def exclude_subjects(excl_mri, clinical_data):
 included_subjects, clinical_excluded_subjects = exclude_subjects(mri_excluded_subjects, clinical_scores)
 
 
-def get_subject_ages(dataset_path):
+
+# if subject have been scanned once, take that age. If the subject have been scanned twice calculate age of 
+# subject on date of second scan. 
+def get_subject_ages(dataset_path, subjects):
 
     df = pd.read_excel(dataset_path)
 
@@ -40,21 +43,23 @@ def get_subject_ages(dataset_path):
 
     for index, row in df.iterrows():
         subject_id = row['Study.No']
-        age_mri = row['Age_MRI']
-        mri2_date = row['MRI2_NENAH_DATE']
+        
+        if subject_id in subjects:
+            age_mri = row['Age_MRI']
+            mri2_date = row['MRI2_NENAH_DATE']
 
-        if pd.isna(mri2_date):
-            subject_ages[subject_id] = age_mri
-        else:
-            mri1_date = pd.to_datetime(row['MRI2_NENAH_DATE'])
-            mri2_date = pd.to_datetime(mri2_date)
-            time_diff = (mri2_date - mri1_date).days / 365.25
+            if pd.isna(mri2_date):
+                subject_ages[subject_id] = age_mri
+            else:
+                mri1_date = pd.to_datetime(row['MRI2_NENAH_DATE'])
+                mri2_date = pd.to_datetime(mri2_date)
+                time_diff = (mri2_date - mri1_date).days / 365.25
 
-            age_at_mri2 = age_mri + time_diff
-            subject_ages[subject_id] = age_at_mri2
+                age_at_mri2 = age_mri + time_diff
+                subject_ages[subject_id] = age_at_mri2
     return subject_ages
 
-
+subject_ages = get_subject_ages(dataset, included_subjects)
 
 # datadir=PATH, skip_subjects=LIST. Creates two dictionaries with NENAHXXX and NENAHCXXX as keys pointing to corresponding connecvitity matrix. 
 def load_connectivity_matrices(subjects, connectome):
@@ -90,10 +95,10 @@ def load_clinical_data(subjects, clinical_scores_xl_file):
 clinical_data = load_clinical_data(included_subjects, clinical_scores)
 
 
-### Create a design matrix 
+### create a design matrix 
 # score-type can be one of "WISC_VSI_CompScore", "WISC_WMI_CompScore", "CMS_GenMem_IndScore", "RBMT_Total_Score"
 
-def generate_design_matrix(clinical_data, mri_ages,score_type):
+def generate_design_matrix(clinical_data, mri_ages, score_type):
     
     design_matrix = pd.DataFrame()
 
@@ -103,7 +108,7 @@ def generate_design_matrix(clinical_data, mri_ages,score_type):
     # add group column (0 for controls, 1 for subjects)
     design_matrix['Group'] = clinical_data['Group']
 
-    # add sex column (0 for female, 1 for male)
+    # add sex column
     design_matrix['Sex'] = clinical_data['sex']
 
     # add age column (age at the time of MRI scan)
@@ -114,7 +119,7 @@ def generate_design_matrix(clinical_data, mri_ages,score_type):
 
     return design_matrix
 
-
+design_matrix = generate_design_matrix(clinical_data, subject_ages, "WISC_VSI_compScore")
 
 
 # print some data for checking
@@ -147,3 +152,5 @@ print("")
 print("First 5 lines of clinical data:")
 print(clinical_data.head())
 
+print("First 10 rows of the design matrix:")
+print(design_matrix.head(10))

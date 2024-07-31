@@ -310,15 +310,15 @@ cd $currdir
 
 ##################################################################################
 # 6. Calculate diffusion tensor and tensor metrics
-cd $datadir/dwi
+#cd $datadir/dwi
 
-if [ ! -d dti ]; then mkdir dti; fi
+#if [ ! -d dti ]; then mkdir dti; fi
 
-if [ ! -f dti/dt.mif.gz ]; then
-    dwiextract -shells 0,1000 $dwi.mif.gz - | dwi2tensor -mask mask.mif.gz - dti/dt.mif.gz
-    cd dti
-    tensor2metric -force -fa fa.mif.gz -adc adc.mif.gz -rd rd.mif.gz -ad ad.mif.gz -vector ev.mif.gz dt.mif.gz
-fi
+#if [ ! -f dti/dt.mif.gz ]; then
+#    dwiextract -shells 0,1000 $dwi.mif.gz - | dwi2tensor -mask mask.mif.gz - dti/dt.mif.gz
+#    cd dti
+#    tensor2metric -force -fa fa.mif.gz -adc adc.mif.gz -rd rd.mif.gz -ad ad.mif.gz -vector ev.mif.gz dt.mif.gz
+#fi
 
 
 cd $currdir

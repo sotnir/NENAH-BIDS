@@ -107,47 +107,48 @@ fi
 ################ BRAIN MASK GENERATION ################
 
 # subjects without optimal BET-value will not be processed
+if [ ! -f $mask_file ]; then
 
-if [ ! -f "$qc_file" ]; then
-  echo "QC file $qc_file not found!"
-  exit 1
+  if [ ! -f "$qc_file" ]; then
+    echo "QC file $qc_file not found!"
+    exit 1
+  fi
+
+  # {print $NF} takes the value of the last col, maybe bad if we are to add coloumns to qc-file 
+  # in the future
+  optimal_bet=$(awk -F, -v id="$sID" '$1 == id {print $NF}' "$qc_file")
+
+  if [ -z "$optimal_bet" ]; then
+    echo "Optimal BET f-value not found for subject $sID in QC file."
+    exit 1
+  fi
+
+  echo "Using optimal BET f-value of $optimal_bet for subject $sID"
+
+
+  # create brain mask
+  meanb1000_file="$subject_dir/meanb1000_$upsampled_dwi.mif.gz"
+  mask_file="mask_space-dwi_hires.mif.gz"
+  temp_meanb1000="meanb1000tmp.nii.gz"
+
+  mrconvert $meanb1000_file $temp_meanb1000
+  bet $temp_meanb1000 meanb1000tmp_0p${optimal_bet} -R -m -f $optimal_bet
+
+  # convert the BET mask to mif format
+  mrconvert meanb1000tmp_0p${optimal_bet}_mask.nii.gz $mask_file
+
+  # clean up temp. files
+  rm meanb1000tmp.nii.gz meanb1000tmp_0p${optimal_bet}_mask.nii.gz
+
+  # visual checking
+  echo "Visually check the brain mask:"
+  echo "mrview $meanb1000_file -roi.load $mask_file -roi.opacity 0.5 -mode 2"
+
+  echo "Brain mask created for subject $sID at $subject_dir/$mask_file"
+
+  # Create brain extracted meanb1000
+  mrcalc $meanb1000_file $mask_file -mul $subject_dir/meanb1000_brain_$upsampled_dwi.mif.gz
 fi
-
-# {print $NF} takes the value of the last col, maybe bad if we are to add coloumns to qc-file 
-# in the future
-optimal_bet=$(awk -F, -v id="$sID" '$1 == id {print $NF}' "$qc_file")
-
-if [ -z "$optimal_bet" ]; then
-  echo "Optimal BET f-value not found for subject $sID in QC file."
-  exit 1
-fi
-
-echo "Using optimal BET f-value of $optimal_bet for subject $sID"
-
-
-# create brain mask
-meanb1000_file="$subject_dir/meanb1000_$upsampled_dwi.mif.gz"
-mask_file="mask_space-dwi_hires.mif.gz"
-temp_meanb1000="meanb1000tmp.nii.gz"
-
-mrconvert $meanb1000_file $temp_meanb1000
-bet $temp_meanb1000 meanb1000tmp_0p${optimal_bet} -R -m -f $optimal_bet
-
-# convert the BET mask to mif format
-mrconvert meanb1000tmp_0p${optimal_bet}_mask.nii.gz $mask_file
-
-# clean up temp. files
-rm meanb1000tmp.nii.gz meanb1000tmp_0p${optimal_bet}_mask.nii.gz
-
-# visual checking
-echo "Visually check the brain mask:"
-echo "mrview $meanb1000_file -roi.load $mask_file -roi.opacity 0.5 -mode 2"
-
-echo "Brain mask created for subject $sID at $subject_dir/$mask_file"
-
-# Create brain extracted meanb1000
-mrcalc $meanb1000_file $mask_file -mul $subject_dir/meanb1000_brain_$upsampled_dwi.mif.gz
-
 
 
 ### Calculate diffusion tensor and tensor metrics

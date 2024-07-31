@@ -5,20 +5,45 @@ import os
 import pathlib
 import subprocess
 
-parser = argparse.ArgumentParser(description='Script for performing AMICO NODDI estimation. Output written into folder AMICO/NODDI_dPar')
+# Usage
+help_message = """
+Scripts to calculate NODDI maps for subjects in the NENAH study.
+Arguments: 
+    sID         Subject ID (e.g. NENAHC004)
+
+Options: 
+    -h/-help /--help        
+
+    --dpar     The axial diffusivity to use in the NODDI model (default: 1.7e-3)
+ 
+The directories used are:
+- The PWD as studydir (e.g. data/iridis/NENAH_BIDS)
+- Datadir as path to subject data (default: studydir/derivatives/dMRI/sub-ID)
+The files used are:
+- dMRI MRtrix file (default: datadir/dwi/dwi_preproc_hires.mif.gz)
+- Brain mask MRtrix file (default: datadir/dwi/mask_space-dwi_hires.mif.gz)
+- dMRI bvecs file (default: datadir/dwi/orig/sub-ID_dir-AP_run-1_dwi.bvec)
+- dMRI bvals file (default: datadir/dwi/orig/sub-ID_dir-AP_run-1_dwi.bval)
+
+"""
+
+# Argument parser setup
+parser = argparse.ArgumentParser(description=help_message, formatter_class=argparse.RawTextHelpFormatter)
 parser.add_argument('--sID', help='Subject ID (e.g. NENAHC004)', required=True)
+parser.add_argument('--dpar', help='The axial diffusivity to use in the NODDI model (default: 1.7e-3)', required=False)
 args = vars(parser.parse_args())
+
 
 sID = args['sID']
 studydir = os.getcwd()
 datadir = os.path.join(studydir, "derivatives", "dMRI", sID)
-dpar = 1.7e-3
+dpar = args['dpar'] if args['dpar'] is not None else 1.7e-3
 
 # define paths to necessary files
 dwi = os.path.join(datadir, "dwi", "dwi_preproc_hires.mif.gz")
 mask = os.path.join(datadir, "dwi", "mask_space-dwi_hires.mif.gz")
-bvec = os.path.join(datadir, "dwi", "orig", f"{sID}_dir-AP_run-1_dwi.bvec")
-bval = os.path.join(datadir, "dwi", "orig", f"{sID}_dir-AP_run-1_dwi.bval")
+bvec = os.path.join(datadir, "dwi", "orig", f"sub-{sID}_dir-AP_run-1_dwi.bvec")
+bval = os.path.join(datadir, "dwi", "orig", f"sub-{sID}_dir-AP_run-1_dwi.bval")
 
 # create output directory for NODDI results
 output_dir = os.path.join(datadir,'dwi', 'noddi')
@@ -37,7 +62,7 @@ import numpy as np
 
 
 # Setup AMICO once (if not already done)
-# amico.setup() # Uncomment if AMICO setup is needed
+# amico.setup()
 
 # save gradient scheme
 scheme_file = os.path.join(output_dir, f"{sID}_dwi.scheme")
