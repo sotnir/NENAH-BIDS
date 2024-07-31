@@ -74,6 +74,8 @@ Need 5TT from sMRI
 - registration.sh
 - combine_segmentations.sh
 - 5tt.sh
+
+Scripts incorporating the outputs from sMRI and dMRI above:
 - tractography.sh
 - thalamic_connectome.sh
 
@@ -217,6 +219,49 @@ in `derivatives/dMRI/sub-ID/anat`.
 
 
 ### 5TT.sh
-Script to generate five-tissue-type images
+Script to generate five-tissue-type (5TT) images of the combined segmentations.  
+To be called with the desired output-space (e.g. diffusion (dwi) or anatomical (anat)).
+
+Inputs: The combined segmentation `aparc+aseg_gmfix.mif.gz` from `combine_segmentations.sh`.  
+Outputs: A 5TT image with accompanying files for visualisation and a mask of the gray and white matter interface, output in either `derivatives/dMRI/sub-ID/dwi/5tt` or `derivatives/dMRI/sub-ID/anat/5tt`.  
+
+```
+5tt
+├── 5tt_space-anat_gmwmi.mif.gz
+├── 5tt_space-anat.mif.gz
+└── 5tt_space-anat_vis.mif.gz
+```
+## Tractography and generating connectivity matrices
+
+### tractography.sh
+
+Performs whole-brain tractography and SIFT(2)-filtering. Can be done in either anatomical (default) or diffusion space (with `-space dwi`).  
+This script has the following options:  
+```
+Options:
+  -space            Do tractography in another space, either diffusion or anatomical (dwi or anat) (default: anat)
+  -csd				CSD mif.gz-file in (default: derivatives/dMRI/sub-sID/SPACE/csd/csd-dhollander_wm_norm_space-SPACE.mif.gz)
+  -5TT				5TT mif.gz-file  (default: derivatives/dMRI/sub-sID/SPACE/5tt/5tt_space-SPACE.mif.gz)
+  -sift				SIFT-method [1=sift or 2=sift2] (default: 2)
+  -nbr				Number of streamlines in whole-brain tractogram (default: 10M)
+  -threads			Number of threads for parallell processing (default: 18)
+  -d / -data-dir  <directory>   The directory used to output the preprocessed files (default: derivatives/dMRI/sub-sID)
+  -h / -help / --help           Print usage.
+"
+```
+
+Inputs: The FOD from csd.sh `csd-dhollander_wm_norm_space-anat.mif.gz`, the 5TT image `5tt_space-anat.mif.gz` and the gmwm mask `5tt_space-anat_gmwmi.mif.gz` from 5tt.sh.  
+Outputs: The streamlines file `whole_brain_10M_space-anat.tck` together with the SIFT/SIFT2 filtering, a file with only 10% streamlines for visualisation and the SIFT proportionality coefficient (mu) as a text file. 
+
+```
+tractography
+├── whole_brain_10M_sift2_space-anat_mu.txt
+├── whole_brain_10M_space-anat_edit100k.tck
+├── whole_brain_10M_space-anat_sift2.txt
+└── whole_brain_10M_space-anat.tck
+
+```
+
+
 
 
