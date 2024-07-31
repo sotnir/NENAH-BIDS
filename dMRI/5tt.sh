@@ -5,14 +5,14 @@ usage()
 {
   base=$(basename "$0")
   echo "usage: $base subjectID [options]
-Create 5tt image from FreeSurfer segmentation and keep in anatomical space or transform into DWI-space
+Create 5tt image from FreeSurfer and HIPS-THOMAS segmentation and keep in anatomical space or transform into DWI-space
 (requires that registration.sh has been run to create transformation between T1w <-> dMRI)
 
 Arguments:
   sID				Subject ID (e.g. NENAHC012) 
   space             Choose whether output to dwi-space or anat-space
 Options:
-  -segm				Segmentation from FreeSurfer (default: derivatives/dMRI/sub-ID/)
+  -segm				Segmentation from FreeSurfer (default: derivatives/dMRI/sub-ID/dwi/aparc+aseg_thomas-thalamic_gmfix.mif.gz)
   -d / -data-dir  <directory>   The directory used to output the preprocessed files (default: derivatives/dMRI/sub-sID)
   -h / -help / --help           Print usage.
 "
@@ -48,7 +48,7 @@ while [ $# -gt 0 ]; do
     shift
 done
 
-echo "Registration of dMRI and sMRI and transformation into ${space}-space
+echo "Create 5tt image from FreeSurfer and HIPS-THOMAS segmentation and ouptu in ${space}-space
 Subject:       	   $sID 
 FS segm:	       $segm
 Space:             $space
