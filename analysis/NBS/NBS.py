@@ -142,7 +142,7 @@ if not os.path.exists(output_dir):
 
     for name, matrix in design_matrices.items():
         file_path = os.path.join(output_dir, f"{name}.txt")
-        matrix.to_string(file_path, header=False, index=True)
+        matrix.to_string(file_path, header=False, index=False)
 
 # create COG.mat
 
