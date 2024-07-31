@@ -125,7 +125,7 @@ if [ "$space" == "anat" ]; then
             echo ""
             echo "5ttgen for $sID complete!"
             echo "Removing tmp. files"
-            rm thomas-thalamic_is_fs_tmp.mif.gz
+            #rm thomas-thalamic_is_fs_tmp.mif.gz
         else
             echo ""
             echo "5ttgen couldn't be done for $sID"
