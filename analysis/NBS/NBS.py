@@ -2,6 +2,9 @@ import os
 import glob
 import pandas as pd
 
+# This is a script to organize data for statistical analysis using the NBS matlab toolbox within the NENAH-study. 
+
+
 
 # default params
 studydir = os.getcwd()  
@@ -119,8 +122,13 @@ def generate_design_matrix(clinical_data, mri_ages, score_type):
 
     return design_matrix
 
-design_matrix = generate_design_matrix(clinical_data, subject_ages, "WISC_VSI_CompScore")
+design_matrix_wisc_vsi_compscore = generate_design_matrix(clinical_data, subject_ages, "WISC_VSI_CompScore")
+design_matrix_wisc_wmi_compscore = generate_design_matrix(clinical_data, subject_ages, "WISC_WMI_CompScore")
+design_matrix_cms_genmem_indscore = generate_design_matrix(clinical_data, subject_ages, "CMS_GenMem_IndScore")
+design_matrix_rbmt_total_score = generate_design_matrix(clinical_data, subject_ages, "RBMT_Total_Score")
 
+
+# sätt matriser som 1 1 1 1 1 och spara i NBS/design_matrices
 
 # create COG.mat
 

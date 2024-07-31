@@ -134,11 +134,11 @@ if [ "$space" == "anat" ]; then
     fi
 
         # Create for visualisation 
-    if [[ ! -f "5ttvis.mif.gz" && -f "5tt_space-anat.mif.gz" ]]; then
+    if [[ ! -f "5tt_space-anat_vis.mif.gz" && -f "5tt_space-anat.mif.gz" ]]; then
         5tt2vis -force 5tt_space-anat.mif.gz 5tt_space-anat_vis.mif.gz
     fi
     # and GM/WM boundary
-    if [[ ! -f "5ttgmwmi.mif.gz" && -f "5tt_space-anat.mif.gz" ]]; then
+    if [[ ! -f "5tt_space-anat_gmwmi.mif.gz" && -f "5tt_space-anat.mif.gz" ]]; then
         5tt2gmwmi -force 5tt_space-anat.mif.gz 5tt_space-anat_gmwmi.mif.gz
     fi
 fi
