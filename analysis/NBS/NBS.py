@@ -122,13 +122,27 @@ def generate_design_matrix(clinical_data, mri_ages, score_type):
 
     return design_matrix
 
-design_matrix_wisc_vsi_compscore = generate_design_matrix(clinical_data, subject_ages, "WISC_VSI_CompScore")
-design_matrix_wisc_wmi_compscore = generate_design_matrix(clinical_data, subject_ages, "WISC_WMI_CompScore")
-design_matrix_cms_genmem_indscore = generate_design_matrix(clinical_data, subject_ages, "CMS_GenMem_IndScore")
-design_matrix_rbmt_total_score = generate_design_matrix(clinical_data, subject_ages, "RBMT_Total_Score")
 
+output_dir = "NBS/design_matrices"
 
-# sätt matriser som 1 1 1 1 1 och spara i NBS/design_matrices
+if not os.path.exists(output_dir):
+    os.makedirs(output_dir, exist_ok=True)
+
+    design_matrix_wisc_vsi_compscore = generate_design_matrix(clinical_data, subject_ages, "WISC_VSI_CompScore")
+    design_matrix_wisc_wmi_compscore = generate_design_matrix(clinical_data, subject_ages, "WISC_WMI_CompScore")
+    design_matrix_cms_genmem_indscore = generate_design_matrix(clinical_data, subject_ages, "CMS_GenMem_IndScore")
+    design_matrix_rbmt_total_score = generate_design_matrix(clinical_data, subject_ages, "RBMT_Total_Score")
+
+    design_matrices = {
+        "design_matrix_wisc_vsi_compscore": design_matrix_wisc_vsi_compscore,
+        "design_matrix_wisc_wmi_compscore": design_matrix_wisc_wmi_compscore,
+        "design_matrix_cms_genmem_indscore": design_matrix_cms_genmem_indscore,
+        "design_matrix_rbmt_total_score": design_matrix_rbmt_total_score,
+    }
+
+    for name, matrix in design_matrices.items():
+        file_path = os.path.join(output_dir, f"{name}.txt")
+        matrix.to_string(file_path, header=False, index=False)
 
 # create COG.mat
 
