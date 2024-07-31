@@ -213,7 +213,7 @@ This script also utilizes LUTs in various re-mapping steps. These can be found h
 
 Inputs: FreeSurfers `aparc+aseg.mgz` and HIPS-THOMAS left/right `thomasfull.nii.gz/thomasrfull.nii.gz`  
 Outputs: A combined FreeSurfer and HIPS-THOMAs segmentation with enhanced sub-cortical gray matter structures `aparc+aseg_thomas-thalamic_gmfix.mif.gz`
-in `derivatives/dMRI/sub-ID/anat`
+in `derivatives/dMRI/sub-ID/anat`.
 
 
 ### 5TT.sh
