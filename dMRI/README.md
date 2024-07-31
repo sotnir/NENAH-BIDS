@@ -251,7 +251,7 @@ Options:
 ```
 
 Inputs: The FOD from csd.sh `csd-dhollander_wm_norm_space-anat.mif.gz`, the 5TT image `5tt_space-anat.mif.gz` and the gmwm mask `5tt_space-anat_gmwmi.mif.gz` from 5tt.sh.  
-Outputs: The streamlines file `whole_brain_10M_space-anat.tck` together with the SIFT/SIFT2 filtering, a file with only 10% streamlines for visualisation and the SIFT proportionality coefficient (mu) as a text file. 
+Outputs: The streamlines file `whole_brain_10M_space-anat.tck` together with the SIFT/SIFT2 filtering, a file with only 10% streamlines for visualisation and the SIFT proportionality coefficient (mu) as a text file in `derivatives/dMRI/sub-ID/anat/tractography`.  
 
 ```
 tractography
@@ -262,6 +262,19 @@ tractography
 
 ```
 
+### thalamic_connectome.sh
+Script to, as of now, generate two connectomes. One default connectome in which connectivity is quantified as the sum of streamline weights from the SIFT2 filtering and one where the value of connectivity is the mean fractional anisotropy (FA). At the moment this script generates connectivity between thalamus and the lobes.   
 
+This is done by the following steps (also see image below):  
+- The FreeSurfer parcellation image is re-mapped to only include the cortex
+and sub-cortical structures excluding the thalamus.  
+- The HIPS-THOMAS parcellation image is likewise re-mapped to match a
+LUT containing labels for both the lobes and thalamus.
+- The images are combined into a single thalamo-cortical parcellation image,
+giving priority to the HIPS-THOMAS image if there are any voxels with
+overlap.
 
+The LUTs used in this conversion is also located in the `label_names` folder here on GitHub. 
+
+![bild](https://github.com/user-attachments/assets/e8109a97-ebf3-4209-bea8-f71f1b275e57)
 
