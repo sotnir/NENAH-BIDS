@@ -122,6 +122,13 @@ def generate_design_matrix(clinical_data, mri_ages, score_type):
 design_matrix = generate_design_matrix(clinical_data, subject_ages, "WISC_VSI_CompScore")
 
 
+# create COG.mat
+
+# nodes labels for NBS
+
+
+
+
 # print some data for checking
 print("")
 print("Excluding these subjects on basis of clinical data:")
@@ -149,8 +156,10 @@ print(f"Total of {counter} subjects included. ")
 print(f"Control group matrices: {len(control_matrices)}")
 print(f"Subject group matrices: {len(subject_matrices)}")
 print("")
-print("First 5 lines of clinical data:")
-print(clinical_data.head())
+print("First 10 rows of clinical data:")
+for index, row in clinical_data.head(10).iterrows():
+    print(row.tolist())
+
 
 print("First 10 rows of the design matrix:")
 for index, row in design_matrix.head(10).iterrows():
