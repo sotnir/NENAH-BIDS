@@ -153,4 +153,5 @@ print("First 5 lines of clinical data:")
 print(clinical_data.head())
 
 print("First 10 rows of the design matrix:")
-print(design_matrix.head(10))
+for index, row in design_matrix.head(10).iterrows():
+    print(row.tolist())
