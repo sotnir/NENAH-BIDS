@@ -100,7 +100,7 @@ clinical_data = load_clinical_data(included_subjects, clinical_scores)
 
 def generate_design_matrix(clinical_data, mri_ages, score_type):
     
-    design_matrix = pd.DataFrame()
+    design_matrix = pd.DataFrame(index=clinical_data.index)
 
     # add intercept (column of ones)
     design_matrix['Intercept'] = 1
