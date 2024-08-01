@@ -103,23 +103,25 @@ clinical_data = load_clinical_data(included_subjects, clinical_scores)
 # score-type can be one of "WISC_VSI_CompScore", "WISC_WMI_CompScore", "CMS_GenMem_IndScore", "RBMT_Total_Score"
 
 def generate_design_matrix(clinical_data, mri_ages, score_type):
+
+    clinical_data_sorted = clinical_data.sort_values(by='Study.No')
     
-    design_matrix = pd.DataFrame(index=clinical_data.index)
+    design_matrix = pd.DataFrame(index=clinical_data_sorted.index)
 
     # add intercept (column of ones)
     design_matrix['Intercept'] = 1
 
     # add group column (0 for controls, 1 for subjects)
-    design_matrix['Group'] = clinical_data['Group']
+    design_matrix['Group'] = clinical_data_sorted['Group']
 
     # add sex column
-    design_matrix['Sex'] = clinical_data['sex']
+    design_matrix['Sex'] = clinical_data_sorted['sex']
 
     # add age column (age at the time of MRI scan)
-    design_matrix['Age'] = clinical_data['Study.No'].map(mri_ages)
+    design_matrix['Age'] = clinical_data_sorted['Study.No'].map(mri_ages)
 
     # add clinical score (select one score for the analysis)
-    design_matrix['Clinical_Score'] = clinical_data[score_type]
+    design_matrix['Clinical_Score'] = clinical_data_sorted[score_type]
 
     return design_matrix
 
