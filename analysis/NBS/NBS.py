@@ -1,20 +1,22 @@
 import os
 import glob
 import pandas as pd
+import numpy as np
 
 # This is a script to organize data for statistical analysis using the NBS matlab toolbox within the NENAH-study. 
-
-
 
 # default params
 studydir = os.getcwd()  
 data_dir = os.path.join(studydir, "derivatives", "dMRI")  
 clinical_scores = os.path.join(studydir, "code", "NENAH-BIDS", "analysis", "clinical_data", "NENAH_SchoolAge_memory_FSIQ.xlsx")
-mri_excluded_subjects = ["NENAH02", "NENAHC004", "NENAH052", "NENAH017", "NENAH008", "NENAH014", "NENAH036"]
 dataset = os.path.join(studydir, "code", "NENAH-BIDS", "analysis", "clinical_data", "NENAH_SchoolAge_full_dataset.xlsx")
 
+# hardcoded list of subjecs who did not pass quality control for MRI data.
+mri_excluded_subjects = ["NENAH02", "NENAHC004", "NENAH052", "NENAH017", "NENAH008", "NENAH014", "NENAH036"]
 
-# 
+
+
+# exclude subjects with faulty clinical data
 def exclude_subjects(excl_mri, clinical_data):
     df = pd.read_excel(clinical_data)
 
@@ -82,7 +84,6 @@ def load_connectivity_matrices(subjects, connectome):
                 
     return control_matrices, subject_matrices
 
-control_matrices, subject_matrices = load_connectivity_matrices(included_subjects, "whole_brain_10M_sift2_space-anat_thalamus_lobes_connectome.csv" )
 
 
 
@@ -123,10 +124,10 @@ def generate_design_matrix(clinical_data, mri_ages, score_type):
     return design_matrix
 
 
-output_dir = "code/NENAH-BIDS/analysis/NBS/design_matrices"
+design_matrices_dir = "code/NENAH-BIDS/analysis/NBS/design_matrices"
 
-if not os.path.exists(output_dir):
-    os.makedirs(output_dir, exist_ok=True)
+if not os.path.exists(design_matrices_dir):
+    os.makedirs(design_matrices_dir, exist_ok=True)
 
     design_matrix_wisc_vsi_compscore = generate_design_matrix(clinical_data, subject_ages, "WISC_VSI_CompScore")
     design_matrix_wisc_wmi_compscore = generate_design_matrix(clinical_data, subject_ages, "WISC_WMI_CompScore")
@@ -143,6 +144,27 @@ if not os.path.exists(output_dir):
     for name, matrix in design_matrices.items():
         file_path = os.path.join(output_dir, f"{name}.txt")
         matrix.to_string(file_path, header=False, index=False)
+
+conn_matrices_dir = "code/NENAH-BIDS/analysis/NBS/connectivity_matrices"
+
+if not os.path.exists(conn_matrices_dir):
+    os.makedirs(conn_matrices_dir, exist_ok=True)
+
+    control_matrices, subject_matrices = load_connectivity_matrices(included_subjects, "whole_brain_10M_sift2_space-anat_thalamus_lobes_connectome.csv" )
+
+    for _, row in clinical_data.iterrows():
+        subject_id = row['Study.No']
+        if subject_id in control_matrices:
+            matrix = control_matrices[subject_id]
+        elif subject_id in subject_matrices:
+            matrix = subject_matrices[subject_id]
+        else:
+            print(f"Matrix for {subject_id} not found!")
+            continue
+
+        file_path = os.path.join(conn_matrices_dir, f"{subject_id}.txt")
+
+        np.savetxt(file_path, matrix, fmt='%g')
 
 # create COG.mat
 
