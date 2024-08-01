@@ -144,7 +144,7 @@ if not os.path.exists(design_matrices_dir):
     }
 
     for name, matrix in design_matrices.items():
-        file_path = os.path.join(output_dir, f"{name}.txt")
+        file_path = os.path.join(design_matrices_dir, f"{name}.txt")
         matrix.to_string(file_path, header=False, index=False)
 
 conn_matrices_dir = "code/NENAH-BIDS/analysis/NBS/connectivity_matrices"
