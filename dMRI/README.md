@@ -57,7 +57,13 @@ Options:
   -d / -data-dir        <directory> The directory used to output the preprocessed files (default: derivatives/dMRI/sub-sID)
   -h / -help / --help   Print usage.
 ```
-For the usage, input arguments/options and the processing steps are understood. More details, as well as more information on output, can be found in the script.
+For the usage, input arguments/options and the processing steps are understood. More details, as well as more information on output, can be found in the script.  
+
+## Visualisation of pipeline
+
+![bild](https://github.com/user-attachments/assets/21ef6512-8209-435b-ad99-1cfb53624e5d)
+
+
 
 ## Overview of scripts in the dMRI pipeline
 Scripts should be run in the following order:
