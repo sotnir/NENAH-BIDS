@@ -63,7 +63,7 @@ import numpy as np
 
 
 # Setup AMICO once (if not already done)
-# amico.setup()
+amico.setup()
 
 # save gradient scheme
 scheme_file = os.path.join(output_dir, f"{sID}_dwi.scheme")

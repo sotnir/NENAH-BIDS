@@ -87,18 +87,8 @@ def load_connectivity_matrices(subjects, connectome):
                 
     return control_matrices, subject_matrices
 
-def generate_corr_matrix(connectivity_matrices):
-    corr_matrices = {}
-    
-    for subject_id, matrix in connectivity_matrices.items():
 
-        corr_matrix = np.corrcoef(matrix)
-        
-
-        corr_matrices[subject_id] = corr_matrix
-    
-    return corr_matrices
-
+# generera correlations matriser...
 
 
 def load_clinical_data(subjects, clinical_scores_xl_file):
