@@ -43,8 +43,7 @@ dpar = args['dpar'] if args['dpar'] is not None else 1.7e-3
 # define paths to necessary files
 dwi = os.path.join(datadir, "dwi", "dwi_preproc_hires.mif.gz")
 mask = os.path.join(datadir, "dwi", "mask_space-dwi_hires.mif.gz")
-# bvec = os.path.join(datadir, "dwi", "orig", f"sub-{sID}_dir-AP_run-1_dwi.bvec")
-# bval = os.path.join(datadir, "dwi", "orig", f"sub-{sID}_dir-AP_run-1_dwi.bval")
+
 
 # create output directory for NODDI results
 output_dir = os.path.join(datadir,'dwi', 'noddi')
@@ -57,6 +56,14 @@ mask_nii = os.path.join(output_dir, "mask_space-dwi_hires.nii")
 subprocess.run(['mrconvert', dwi, dwi_nii])
 subprocess.run(['mrconvert', mask, mask_nii])
 
+# generating bvecs/bvals from preproc_hires
+bvec = os.path.join(datadir, "dwi", f"tmp_dwi_preproc_hires.bvec")
+bval = os.path.join(datadir, "dwi", f"tmp_dwi_preproc_hires.bval")
+
+subprocess.run(['mrconvert', dwi, '-export_grad_fsl', bvec, bval])
+
+
+
 import amico
 import numpy as np
 
@@ -65,12 +72,13 @@ import numpy as np
 # Setup AMICO once (if not already done)
 amico.setup()
 
-# save gradient scheme
-scheme_file = os.path.join(output_dir, f"{sID}_dwi.scheme")
-amico.util.fsl2scheme(bval, bvec, scheme_file)
 
 # initialize the Evaluation object
 ae = amico.Evaluation(studydir, os.path.join("derivatives", "dMRI", sID))
+
+# save gradient scheme
+scheme_file = os.path.join(output_dir, f"{sID}_dwi.scheme")
+amico.util.fsl2scheme(bval, bvec, scheme_file)
 
 # load data
 ae.load_data(
