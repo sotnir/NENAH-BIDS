@@ -2,6 +2,7 @@ import os
 import glob
 import pandas as pd
 import numpy as np
+import subprocess
 
 # This is a script to organize data for statistical analysis using the NBS matlab toolbox within the NENAH-study. 
 
@@ -10,6 +11,8 @@ studydir = os.getcwd()
 data_dir = os.path.join(studydir, "derivatives", "dMRI")  
 clinical_scores = os.path.join(studydir, "code", "NENAH-BIDS", "analysis", "clinical_data", "NENAH_SchoolAge_memory_FSIQ.xlsx")
 dataset = os.path.join(studydir, "code", "NENAH-BIDS", "analysis", "clinical_data", "NENAH_SchoolAge_full_dataset.xlsx")
+thalamo_cortical_parc = os.path.join("derivatives", "dMRI", "analysis", "NBS", )
+
 
 # hardcoded list of subjecs who did not pass quality control for MRI data.
 mri_excluded_subjects = ["NENAH02", "NENAHC004", "NENAH052", "NENAH017", "NENAH008", "NENAH014", "NENAH036"]
@@ -84,6 +87,17 @@ def load_connectivity_matrices(subjects, connectome):
                 
     return control_matrices, subject_matrices
 
+def generate_corr_matrix(connectivity_matrices):
+    corr_matrices = {}
+    
+    for subject_id, matrix in connectivity_matrices.items():
+
+        corr_matrix = np.corrcoef(matrix)
+        
+
+        corr_matrices[subject_id] = corr_matrix
+    
+    return corr_matrices
 
 
 
@@ -169,6 +183,14 @@ if not os.path.exists(conn_matrices_dir):
         np.savetxt(file_path, matrix, fmt='%g')
 
 # create COG.mat
+
+parcellation_images = "code/NENAH-BIDS/analysis/NBS/parcellation_images"
+
+
+if not os.path.exists(parcellation_images):
+    os.makedirs(parcellation_images, exist_ok=True)
+
+
 
 # nodes labels for NBS
 

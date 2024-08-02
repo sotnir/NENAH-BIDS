@@ -34,6 +34,7 @@ parser.add_argument('--dpar', help='The axial diffusivity to use in the NODDI mo
 args = vars(parser.parse_args())
 
 
+
 sID = args['sID']
 studydir = os.getcwd()
 datadir = os.path.join(studydir, "derivatives", "dMRI", sID)
@@ -42,8 +43,8 @@ dpar = args['dpar'] if args['dpar'] is not None else 1.7e-3
 # define paths to necessary files
 dwi = os.path.join(datadir, "dwi", "dwi_preproc_hires.mif.gz")
 mask = os.path.join(datadir, "dwi", "mask_space-dwi_hires.mif.gz")
-bvec = os.path.join(datadir, "dwi", "orig", f"sub-{sID}_dir-AP_run-1_dwi.bvec")
-bval = os.path.join(datadir, "dwi", "orig", f"sub-{sID}_dir-AP_run-1_dwi.bval")
+# bvec = os.path.join(datadir, "dwi", "orig", f"sub-{sID}_dir-AP_run-1_dwi.bvec")
+# bval = os.path.join(datadir, "dwi", "orig", f"sub-{sID}_dir-AP_run-1_dwi.bval")
 
 # create output directory for NODDI results
 output_dir = os.path.join(datadir,'dwi', 'noddi')

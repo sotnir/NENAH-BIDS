@@ -1,0 +1,11 @@
+2 lh-anteroventral                          0 115 178   0
+4 lh-ventral-anterior-nucleus             166  5  41    0
+5 lh-ventral-lateral-anterior               0 161 115   0
+6 lh-ventral-lateral-posterior            214  94   0   0
+7 lh-ventral-posterolateral               153 117 242   0
+8 lh-pulvinar                             204   0 115   0
+9 lh-letarl-geniculate-nucleus            255 199 158   0
+10 lh-medial-geniculate-nucleus           209 181  59   0
+11 lh-centromedian                         51 204 204   0
+12 lh-mediodorsal                         143 235   0   0
+13 lh-habenula                            255 115 115   0
