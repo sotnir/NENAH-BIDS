@@ -22,8 +22,6 @@ The directories used are:
 The files used are:
 - dMRI MRtrix file (default: datadir/dwi/dwi_preproc_hires.mif.gz)
 - Brain mask MRtrix file (default: datadir/dwi/mask_space-dwi_hires.mif.gz)
-- dMRI bvecs file (default: datadir/dwi/orig/sub-ID_dir-AP_run-1_dwi.bvec)
-- dMRI bvals file (default: datadir/dwi/orig/sub-ID_dir-AP_run-1_dwi.bval)
 
 """
 
@@ -58,7 +56,7 @@ dwi_nii = os.path.join(datadir,'dwi', "tmp_dwi_preproc_hires.nii")
 mask_nii = os.path.join(datadir,'dwi', "tmp_mask_space-dwi_hires.nii")
 
 # tmp
-tmp_dwi_output = os.path.join(datadir,'dwi', "tmp_dwiextract_output.mif")
+tmp_dwi_output = os.path.join(datadir,'dwi', "tmp_dwiextract_output.nii")
 
 
 subprocess.run(['mrconvert', dwi, dwi_nii])
@@ -90,7 +88,7 @@ amico.util.fsl2scheme(bval, bvec, scheme_file)
 
 # load data
 ae.load_data(
-    dwi_filename=dwi_nii,
+    dwi_filename=tmp_dwi_output,
     scheme_filename=scheme_file,
     mask_filename=mask_nii,
     b0_thr=0
