@@ -41,7 +41,7 @@ dpar = args['dpar'] if args['dpar'] is not None else 1.7e-3
 # define paths to necessary files
 dwi = os.path.join(datadir, "dwi", "dwi_preproc_hires.mif.gz")
 mask = os.path.join(datadir, "dwi", "mask_space-dwi_hires.mif.gz")
-meanb0_file = os.path.join(datadir, "dwi", "meanbo_dwi_preproc_hires.mif.gz")
+meanb0_file = os.path.join(datadir, "dwi", "meanb0_dwi_preproc_hires.mif.gz")
 
 
 # create output directory for NODDI results
