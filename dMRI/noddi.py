@@ -57,6 +57,10 @@ os.makedirs(output_dir, exist_ok=True)
 dwi_nii = os.path.join(datadir,'dwi', "tmp_dwi_preproc_hires.nii")
 mask_nii = os.path.join(datadir,'dwi', "tmp_mask_space-dwi_hires.nii")
 
+# tmp
+tmp_dwi_output = os.path.join(datadir,'dwi', "tmp_dwiextract_output.mif")
+
+
 subprocess.run(['mrconvert', dwi, dwi_nii])
 subprocess.run(['mrconvert', mask, mask_nii])
 
