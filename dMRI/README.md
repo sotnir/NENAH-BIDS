@@ -152,7 +152,7 @@ Response
 ```
 #### average_response.sh
 Runs response.sh for all subjects who passed quality control (unless relevant files already exists).  
-Calculates the average response function across all subjects.  
+Calculates the average response function across subjects who passed quality control.  
 
 Inputs: Each subject-unique response function.  
 Outputs: An average response function for white matter, gray matter and CSF in `derivatives/dMRI/NENAHGRP/dwi/response`.
