@@ -57,8 +57,8 @@ subprocess.run(['mrconvert', dwi, dwi_nii])
 subprocess.run(['mrconvert', mask, mask_nii])
 
 # generating bvecs/bvals from preproc_hires
-bvec = os.path.join(datadir, "dwi", f"tmp_dwi_preproc_hires.bvec")
-bval = os.path.join(datadir, "dwi", f"tmp_dwi_preproc_hires.bval")
+bvec = os.path.join(datadir, "dwi", "tmp_dwi_preproc_hires.bvec")
+bval = os.path.join(datadir, "dwi", "tmp_dwi_preproc_hires.bval")
 
 subprocess.run(['mrconvert', dwi, '-export_grad_fsl', bvec, bval])
 
