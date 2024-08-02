@@ -144,7 +144,7 @@ Response
 └── dhollander_wm_dwi_preproc.txt
 ```
 #### average_response.sh
-Runs response.sh for all subjects (unless relevant files already exists).  
+Runs response.sh for all subjects who passed quality control (unless relevant files already exists).  
 Calculates the average response function across all subjects.  
 
 Inputs: Each subject-unique response function.  
