@@ -88,7 +88,7 @@ def load_connectivity_matrices(subjects, connectome):
     return control_matrices, subject_matrices
 
 
-# generera correlations matriser...
+
 
 
 def load_clinical_data(subjects, clinical_scores_xl_file):
@@ -103,6 +103,17 @@ def load_clinical_data(subjects, clinical_scores_xl_file):
 clinical_data = load_clinical_data(included_subjects, clinical_scores)
 
 
+# generera correlations matriser...
+def generate_corr_matrix(connectivity_matrices, clinical_score):
+    correlation_matrices = {}
+
+    for subject_id, matrix in connectivity_matrices.items():
+        clinical_score = clinical_data.loc[clinical_data['Study.No'] == subject_id, clinical_score].values[0]
+        correlation_matrix = np.corrcoef(matrix, clinical_score, rowvar=False)
+        correlation_matrices[subject_id] = correlation_matrix
+
+    return correlation_matrices
+
 ### create a design matrix 
 # score-type can be one of "WISC_VSI_CompScore", "WISC_WMI_CompScore", "CMS_GenMem_IndScore", "RBMT_Total_Score"
 
@@ -116,7 +127,7 @@ def generate_design_matrix(clinical_data, mri_ages, score_type):
     design_matrix['Intercept'] = 1
 
     # add group column (0 for controls, 1 for subjects)
-    design_matrix['Group'] = clinical_data_sorted['Group']
+    design_matrix['Group'] = clinical_data_sorted['Group'].map({1: 0, 2:1})
 
     # add sex column
     design_matrix['Sex'] = clinical_data_sorted['sex']
@@ -126,6 +137,9 @@ def generate_design_matrix(clinical_data, mri_ages, score_type):
 
     # add clinical score (select one score for the analysis)
     design_matrix['Clinical_Score'] = clinical_data_sorted[score_type]
+
+    # add interaction term (Group * Clinical_Score)
+    design_matrix['Group_by_group_inter'] = design_matrix['Group'] * design_matrix['Clinical_Score']
 
     return design_matrix
 

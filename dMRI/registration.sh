@@ -161,8 +161,3 @@ echo "mrview $datadir/anat/space-dwi_t1w_brain.mif.gz -overlay.load $datadir/dwi
 ####################################################################################################
 ## Do registration into MNI-space to be used when generating connectivity matrices for NBS
 
-
-
-if [ ! -f "${datadir}/xfm/t1w_2_mni.mat"]
-    t1w="derivatives/sMRI_fs-segmentation/sub-${sID}/mri/T1.mgz"
-    flirt -in $t1w -ref MNI152_T1_1mm.nii -omat 
