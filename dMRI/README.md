@@ -59,7 +59,7 @@ Options:
 ```
 For the usage, input arguments/options and the processing steps are understood. More details, as well as more information on output, can be found in the script.  
 
-## Visualisation of pipeline
+## Visualisation of pipelines
 
 ![bild](https://github.com/user-attachments/assets/48c80e21-37e1-4153-abfd-d2026e4ae927)
 
