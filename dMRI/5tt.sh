@@ -118,7 +118,7 @@ if [ "$space" == "anat" ]; then
     segm="../aparc+aseg_thomas-thalamic.mif.gz" # change back to aparc+aseg_thomas-thamalic_gmfix in future
 
 
-    if [ ! -f "5tt_space-anat.mif.gz" ]; then
+    if [ -f "5tt_space-anat.mif.gz" ]; then
         labelconvert $segm $segm_LUT $convert thomas-thalamic_is_fs_tmp.mif.gz
         5ttgen -force freesurfer -sgm_amyg_hipp thomas-thalamic_is_fs_tmp.mif.gz 5tt_space-anat.mif.gz
         if [[ -f "5tt_space-anat.mif.gz" ]]; then
@@ -134,11 +134,11 @@ if [ "$space" == "anat" ]; then
     fi
 
         # Create for visualisation 
-    if [[ ! -f "5tt_space-anat_vis.mif.gz" && -f "5tt_space-anat.mif.gz" ]]; then
+    if [[ -f "5tt_space-anat_vis.mif.gz" && -f "5tt_space-anat.mif.gz" ]]; then
         5tt2vis -force 5tt_space-anat.mif.gz 5tt_space-anat_vis.mif.gz
     fi
     # and GM/WM boundary
-    if [[ ! -f "5tt_space-anat_gmwmi.mif.gz" && -f "5tt_space-anat.mif.gz" ]]; then
+    if [[ -f "5tt_space-anat_gmwmi.mif.gz" && -f "5tt_space-anat.mif.gz" ]]; then
         5tt2gmwmi -force 5tt_space-anat.mif.gz 5tt_space-anat_gmwmi.mif.gz
     fi
 fi
