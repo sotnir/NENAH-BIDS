@@ -66,7 +66,7 @@ subprocess.run(['mrconvert', mask, mask_nii])
 bvec = os.path.join(datadir, "dwi", "tmp_dwi_preproc_hires.bvec")
 bval = os.path.join(datadir, "dwi", "tmp_dwi_preproc_hires.bval")
 
-subprocess.run(['dwiextract', dwi_nii, tmp_dwi_output, '-export_grad_fsl', bvec, bval])
+subprocess.run(['dwiextract', dwi, tmp_dwi_output, '-export_grad_fsl', bvec, bval])
 
 
 
@@ -88,7 +88,7 @@ amico.util.fsl2scheme(bval, bvec, scheme_file)
 
 # load data
 ae.load_data(
-    dwi_filename=dwi_nii,
+    dwi_filename=tmp_dwi_output,
     scheme_filename=scheme_file,
     mask_filename=mask_nii,
     b0_thr=0
