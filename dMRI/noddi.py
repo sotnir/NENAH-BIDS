@@ -88,7 +88,7 @@ amico.util.fsl2scheme(bval, bvec, scheme_file)
 
 # load data
 ae.load_data(
-    dwi_filename=tmp_dwi_output,
+    dwi_filename=dwi_nii,
     scheme_filename=scheme_file,
     mask_filename=mask_nii,
     b0_thr=0
