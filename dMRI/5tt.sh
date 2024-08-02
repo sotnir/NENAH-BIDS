@@ -115,7 +115,7 @@ if [ "$space" == "anat" ]; then
     # inputs
     segm_LUT="../../../../../code/NENAH-BIDS/label_names/fs_thomas-thalamic_LUT.txt"
     convert="../../../../../code/NENAH-BIDS/label_names/convert_thomas-thalamic_to_fs.txt"
-    segm="../aparc+aseg_thomas-thalamic_gmfix.mif.gz"
+    segm="../aparc+aseg_thomas-thalamic.mif.gz" # change back to aparc+aseg_thomas-thamalic_gmfix in future
 
 
     if [ ! -f "5tt_space-anat.mif.gz" ]; then
