@@ -97,7 +97,7 @@ ae.load_data(
     b0_thr=0
 )
 
-ae.DWI[:, :, :, 0] = nib.load(mean_b0_file).get_fdata()
+ae.DWI[:, :, :, 0] = nib.load(meanb0_nii).get_fdata()
 
 # set the NODDI model with specific parameters
 ae.set_model("NODDI")
