@@ -57,7 +57,14 @@ Options:
   -d / -data-dir        <directory> The directory used to output the preprocessed files (default: derivatives/dMRI/sub-sID)
   -h / -help / --help   Print usage.
 ```
-For the usage, input arguments/options and the processing steps are understood. More details, as well as more information on output, can be found in the script.
+For the usage, input arguments/options and the processing steps are understood. More details, as well as more information on output, can be found in the script.  
+
+## Visualisation of pipelines
+
+![bild](https://github.com/user-attachments/assets/48c80e21-37e1-4153-abfd-d2026e4ae927)
+
+
+
 
 ## Overview of scripts in the dMRI pipeline
 Scripts should be run in the following order:
@@ -145,7 +152,7 @@ Response
 ```
 #### average_response.sh
 Runs response.sh for all subjects who passed quality control (unless relevant files already exists).  
-Calculates the average response function across all subjects.  
+Calculates the average response function across subjects who passed quality control.  
 
 Inputs: Each subject-unique response function.  
 Outputs: An average response function for white matter, gray matter and CSF in `derivatives/dMRI/NENAHGRP/dwi/response`.
