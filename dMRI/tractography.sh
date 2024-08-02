@@ -32,7 +32,7 @@ currdir=`pwd`
 # Defaults
 datadir="derivatives/dMRI/sub-$sID"
 space=anat
-csd="derivatives/dMRI/sub-$sID/${space}/csd/csd-dhollander_wm_norm_space-${space}.mif.gz"
+csd="derivatives/dMRI/sub-$sID/dwi/csd/csd-dhollander_wm_norm_space-${space}.mif.gz"
 act5tt="derivatives/dMRI/sub-$sID/${space}/5tt/5tt_space-${space}.mif.gz"
 sift=2
 nbr=10M
@@ -111,7 +111,7 @@ act5tt=`basename $act5tt .mif.gz`
 
 cd $datadir
 
-if [ ! -d "${space}/tractography" ]; then mkdir ${space}/tractography; fi
+if [ ! -d "${space}/tractography" ]; then mkdir "${space}/tractography"; fi
 
 # If a gmwmi mask does not exist, then create one
 if [ ! -f "${space}/5tt/${act5tt}_gmwmi.mif.gz" ];then
@@ -125,7 +125,7 @@ cutofftext=`echo $cutoff | sed 's/\./p/g'`
 inittext=$cutofftext;
 # using above cutoff and init
 if [ ! -f "${space}/tractography/whole_brain_${nbr}_space-${space}.tck" ];then
-    tckgen -nthreads $threads -cutoff $cutoff -seed_cutoff $init -act ${space}/5tt/$act5tt.mif.gz -backtrack -seed_gmwmi ${space}/5tt/${act5tt}_gmwmi.mif.gz -crop_at_gmwmi -select $nbr ${space}/csd/$csd.mif.gz ${space}/tractography/whole_brain_${nbr}_space-${space}.tck
+    tckgen -nthreads $threads -cutoff $cutoff -seed_cutoff $init -act "${space}/5tt/$act5tt.mif.gz" -backtrack -seed_gmwmi "${space}/5tt/${act5tt}_gmwmi.mif.gz" -crop_at_gmwmi -select $nbr "dwi/csd/$csd.mif.gz" "${space}/tractography/whole_brain_${nbr}_space-${space}.tck"
 fi
 if [ ! -f "${space}/tractography/whole_brain_${nbr}_space-${space}_edit100k.tck" ];then
     tckedit "${space}/tractography/whole_brain_${nbr}_space-${space}.tck" -number 100k "${space}/tractography/whole_brain_${nbr}_space-${space}_edit100k.tck"
@@ -146,7 +146,7 @@ fi
 if [ $sift == 2 ]; then 
 # SIFT2-filtering of whole-brain tractogram
     if [ ! -f "${space}/tractography/whole_brain_${nbr}_space-${space}_sift2.txt" ]; then
-        tcksift2 -out_mu "${space}/tractography/whole_brain_${nbr}_sift2_space-${space}_mu.txt" -act "${space}/5tt/$act5tt.mif.gz" "${space}/tractography/whole_brain_${nbr}_space-${space}.tck" "${space}/csd/$csd.mif.gz" "${space}/tractography/whole_brain_${nbr}_space-${space}_sift2.txt"
+        tcksift2 -out_mu "${space}/tractography/whole_brain_${nbr}_sift2_space-${space}_mu.txt" -act "${space}/5tt/$act5tt.mif.gz" "${space}/tractography/whole_brain_${nbr}_space-${space}.tck" "dwi/csd/$csd.mif.gz" "${space}/tractography/whole_brain_${nbr}_space-${space}_sift2.txt"
     fi
 fi 
 cd $currdir
