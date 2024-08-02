@@ -37,7 +37,7 @@ args = vars(parser.parse_args())
 
 sID = args['sID']
 studydir = os.getcwd()
-datadir = os.path.join(studydir, "derivatives", "dMRI", sID)
+datadir = os.path.join(studydir, "derivatives", "dMRI", f"sub-{sID}")
 dpar = args['dpar'] if args['dpar'] is not None else 1.7e-3
 
 # define paths to necessary files
@@ -74,7 +74,7 @@ amico.setup()
 
 
 # initialize the Evaluation object
-ae = amico.Evaluation(studydir, os.path.join("derivatives", "dMRI", sID))
+ae = amico.Evaluation(studydir, os.path.join("derivatives", "dMRI",f"sub-{sID}"))
 
 # save gradient scheme
 scheme_file = os.path.join(output_dir, f"{sID}_dwi.scheme")
