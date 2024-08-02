@@ -70,22 +70,23 @@ tmp_right_mask="${studydir}/derivatives/dMRI/sub-$sID/anat/tmp_right_mask.mif"
 tmp_mask_full="${studydir}/derivatives/dMRI/sub-$sID/anat/tmp_full_mask.mif"
 tmp_fs_no_thalamus="${studydir}/derivatives/dMRI/sub-$sID/anat/tmp_fs_no_thalamus.mif"
 
-# outputs
-combined_segm="${datadir}/anat/aparc+aseg_thomas-thalamic_gmfix.mif.gz"
+# outputs (change back to _gmfix in the future.)
+combined_segm="${datadir}/anat/aparc+aseg_thomas-thalamic.mif.gz"
 
 #### Replace the sub-cortical gray matter structure delineations in aparc+aseg.mgz using FSL FIRST ###
 echo ""
 echo "Running 'combine_segmentations.sh' for $sID:"
 echo ""
 
-if [ ! -f $aparc_aseg_gmfix ]; then
-  echo "Replacing sub-cortical gray matter structure delineations using FSL FIRST in 'aparc+aseg.mgz':"
-  labelsgmfix $aparc_aseg $T1_image $fs_lut $aparc_aseg_gmfix -sgm_amyg_hipp
-  echo ""
-else  
-  echo "'aparc+aseg_gmfix.mif.gz' already exists for $sID skipping 'labelsgmfix'..."
-  echo ""
-fi
+#skipped for now as there are issues with labelsgmfix
+#if [ ! -f $aparc_aseg_gmfix ]; then
+#  echo "Replacing sub-cortical gray matter structure delineations using FSL FIRST in 'aparc+aseg.mgz':"
+#  labelsgmfix $aparc_aseg $T1_image $fs_lut $aparc_aseg_gmfix -sgm_amyg_hipp
+#  echo ""
+#else  
+#  echo "'aparc+aseg_gmfix.mif.gz' already exists for $sID skipping 'labelsgmfix'..."
+#  echo ""
+#fi
 
 
 ### Re-label thalamus as white matter in in the FreeSurfer segmented image and then combine it with HIPS-THOMAS image. ###
@@ -104,8 +105,9 @@ if [ ! -f $combined_segm ]; then
   mrcalc $tmp_left_thomas $tmp_right_thomas -add $tmp_left_right_thomas
   echo ""
 
+  # change aparc_aseg to aparc+aseg_gmfix in future
   echo "Labelling the Thalamus as white matter in FreeSurfers aparc+aseg.mgz"
-  labelconvert $aparc_aseg_gmfix $fs_lut $fs_convert $tmp_fs_thalamus_is_wm
+  labelconvert $aparc_aseg $fs_lut $fs_convert $tmp_fs_thalamus_is_wm
   echo ""
 
   echo "Combining HIPS-THOMAS and FreeSurfer segmentations into aparc+aseg_thomas-thalamic_gmfix.mif.gz:"
