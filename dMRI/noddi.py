@@ -54,8 +54,8 @@ if not os.path.exists(output_dir):
 os.makedirs(output_dir, exist_ok=True)
 
 # converting MRtrix files to NIfTI format
-dwi_nii = os.path.join(datadir,'dwi', "dwi_preproc_hires.nii")
-mask_nii = os.path.join(datadir,'dwi', "mask_space-dwi_hires.nii")
+dwi_nii = os.path.join(datadir,'dwi', "tmp_dwi_preproc_hires.nii")
+mask_nii = os.path.join(datadir,'dwi', "tmp_mask_space-dwi_hires.nii")
 
 subprocess.run(['mrconvert', dwi, dwi_nii])
 subprocess.run(['mrconvert', mask, mask_nii])
@@ -111,3 +111,4 @@ ae.fit()
 
 # save the results
 ae.save_results(output_dir)
+
