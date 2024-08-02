@@ -41,6 +41,7 @@ dpar = args['dpar'] if args['dpar'] is not None else 1.7e-3
 # define paths to necessary files
 dwi = os.path.join(datadir, "dwi", "dwi_preproc_hires.mif.gz")
 mask = os.path.join(datadir, "dwi", "mask_space-dwi_hires.mif.gz")
+meanb0_file = os.path.join(datadir, "dwi", "meanbo_dwi_preproc_hires.mif.gz")
 
 
 # create output directory for NODDI results
@@ -54,6 +55,7 @@ os.makedirs(output_dir, exist_ok=True)
 # converting MRtrix files to NIfTI format
 dwi_nii = os.path.join(datadir,'dwi', "tmp_dwi_preproc_hires.nii")
 mask_nii = os.path.join(datadir,'dwi', "tmp_mask_space-dwi_hires.nii")
+meanb0_nii = os.path.join(datadir,'dwi', "tmp_meanb0_dwi_preproc_hires.nii")
 
 # tmp
 tmp_dwi_output = os.path.join(datadir,'dwi', "tmp_dwiextract_output.nii")
@@ -61,6 +63,7 @@ tmp_dwi_output = os.path.join(datadir,'dwi', "tmp_dwiextract_output.nii")
 
 subprocess.run(['mrconvert', dwi, dwi_nii])
 subprocess.run(['mrconvert', mask, mask_nii])
+subprocess.run(['mrconvert', meanb0_file, meanb0_nii])
 
 # generating bvecs/bvals from preproc_hires
 bvec = os.path.join(datadir, "dwi", "tmp_dwi_preproc_hires.bvec")
@@ -93,6 +96,8 @@ ae.load_data(
     mask_filename=mask_nii,
     b0_thr=0
 )
+
+ae.DWI[:, :, :, 0] = nib.load(mean_b0_file).get_fdata()
 
 # set the NODDI model with specific parameters
 ae.set_model("NODDI")
