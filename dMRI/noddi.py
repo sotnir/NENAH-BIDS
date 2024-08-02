@@ -70,7 +70,7 @@ import numpy as np
 
 
 # Setup AMICO once (if not already done)
-amico.setup()
+#amico.setup()
 
 
 # initialize the Evaluation object
