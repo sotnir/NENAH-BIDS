@@ -47,6 +47,10 @@ mask = os.path.join(datadir, "dwi", "mask_space-dwi_hires.mif.gz")
 
 # create output directory for NODDI results
 output_dir = os.path.join(datadir,'dwi', 'noddi')
+
+if not os.path.exist(output_dir):
+    os.makedirs(output_dir, exist_ok=True)
+
 os.makedirs(output_dir, exist_ok=True)
 
 # converting MRtrix files to NIfTI format
