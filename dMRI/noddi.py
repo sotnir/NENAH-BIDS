@@ -55,9 +55,6 @@ os.makedirs(output_dir, exist_ok=True)
 dwi_nii = os.path.join(datadir,'dwi', "tmp_dwi_preproc_hires.nii")
 mask_nii = os.path.join(datadir,'dwi', "tmp_mask_space-dwi_hires.nii")
 
-# tmp
-tmp_dwi_output = os.path.join(datadir,'dwi', "tmp_dwiextract_output.nii")
-
 
 subprocess.run(['mrconvert', dwi, dwi_nii])
 subprocess.run(['mrconvert', mask, mask_nii])
@@ -67,7 +64,7 @@ subprocess.run(['mrconvert', mask, mask_nii])
 bvec = os.path.join(datadir, "dwi", "tmp_dwi_preproc_hires.bvec")
 bval = os.path.join(datadir, "dwi", "tmp_dwi_preproc_hires.bval")
 
-subprocess.run(['dwiextract', dwi, tmp_dwi_output, '-export_grad_fsl', bvec, bval])
+subprocess.run(['mrinfo', dwi, '-export_grad_fsl', bvec, bval])
 
 
 
@@ -89,7 +86,7 @@ amico.util.fsl2scheme(bval, bvec, scheme_file)
 
 # load data
 ae.load_data(
-    dwi_filename=tmp_dwi_output,
+    dwi_filename=dwi_nii,
     scheme_filename=scheme_file,
     mask_filename=mask_nii,
     b0_thr=0
