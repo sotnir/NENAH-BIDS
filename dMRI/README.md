@@ -137,7 +137,7 @@ dwi
     └── unring
 ```
 ### Response function estimation (response.sh / average_response.sh)
-Estimate response functions for individual subjects and/or calculate the average accross all subjects. 
+Estimate response functions for individual subjects and/or calculate the average accross all valid subjects. 
 
 #### response.sh
 Inputs: `dwi_preproc.mif.gz` and `mask.mif.gz` from preprocessing.  
