@@ -113,3 +113,10 @@ ae.fit()
 # save the results
 ae.save_results()
 
+subprocess.run(['mv', f'{output_dir}/{sID}_dwi.scheme', f'{datadir}/AMICO/NODDI'])
+
+subprocess.run(['rm', dwi_nii ])
+subprocess.run(['rm', mask_nii])
+subprocess.run(['rm', bvec])
+subprocess.run(['rm', bval])
+
