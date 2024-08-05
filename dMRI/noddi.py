@@ -126,7 +126,7 @@ for file_name in os.listdir(source_dir):
 
 
 
-subprocess.run(['rm', '-rf', source_dir ])
+subprocess.run(['rm', '-rf', f'{datadir}/AMICO'])
 
 subprocess.run(['rm', dwi_nii ])
 subprocess.run(['rm', mask_nii])
