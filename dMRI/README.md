@@ -193,7 +193,7 @@ dwi
 
 ### csd.sh
 Script to compute the fiber orientation distribution (FOD) using constrained spherical convolution (CSD).
-By running with the script with the '-transform 1' option, the FODs will also be given in anatomical space.
+By running with the script with the  '-transform 1' option, the FODs will also be given in anatomical space.
 
 Inputs: The `dwi_preproc_hires` and `mask_space-dwi_hires` files from the upsampling step. Subject-unique response files (from response.sh) or group average response files (average_response.sh)  
 Outputs: Normalised FOD-images for each subjects in (in `derivatives/dMRI/sub-ID/dwi/csd`)
