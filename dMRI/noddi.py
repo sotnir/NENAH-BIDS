@@ -1,5 +1,7 @@
 # Script for calculating NODDI maps using the AMICO python package
 
+
+import shutil
 import argparse
 import os
 import pathlib
@@ -52,8 +54,8 @@ if not os.path.exists(output_dir):
 os.makedirs(output_dir, exist_ok=True)
 
 # converting MRtrix files to NIfTI format
-dwi_nii = os.path.join(datadir,'dwi', "tmp_dwi_preproc_hires.nii")
-mask_nii = os.path.join(datadir,'dwi', "tmp_mask_space-dwi_hires.nii")
+dwi_nii = os.path.join(output_dir,'dwi', "tmp_dwi_preproc_hires.nii")
+mask_nii = os.path.join(output_dir,'dwi', "tmp_mask_space-dwi_hires.nii")
 
 
 subprocess.run(['mrconvert', dwi, dwi_nii])
@@ -61,8 +63,8 @@ subprocess.run(['mrconvert', mask, mask_nii])
 
 
 # generating bvecs/bvals from preproc_hires
-bvec = os.path.join(datadir, "dwi", "tmp_dwi_preproc_hires.bvec")
-bval = os.path.join(datadir, "dwi", "tmp_dwi_preproc_hires.bval")
+bvec = os.path.join(output_dir, "dwi", "tmp_dwi_preproc_hires.bvec")
+bval = os.path.join(output_dir, "dwi", "tmp_dwi_preproc_hires.bval")
 
 subprocess.run(['mrinfo', dwi, '-export_grad_fsl', bvec, bval])
 
@@ -113,11 +115,21 @@ ae.fit()
 # save the results
 ae.save_results()
 
-subprocess.run(['mv', f'{output_dir}/{sID}_dwi.scheme', f'{datadir}/AMICO/NODDI'])
+source_dir = os.path.join(datadir, 'AMICO', 'NODDI')
+
+for file_name in os.listdir(source_dir):
+    src_file = os.path.join(source_dir, file_name)
+    out_file = os.path.join(output_dir, f"{sID}_{file_name}")
+    shutil.move(src_file, out_file)
+
+
+
+
+
+subprocess.run(['rm', '-rf', source_dir ])
 
 subprocess.run(['rm', dwi_nii ])
 subprocess.run(['rm', mask_nii])
 subprocess.run(['rm', bvec])
 subprocess.run(['rm', bval])
-subprocess.run(['rm', '-rf', output_dir])
 

@@ -165,10 +165,10 @@ if not os.path.exists(design_matrices_dir):
         file_path = os.path.join(design_matrices_dir, f"{name}.txt")
         matrix.to_string(file_path, header=False, index=False)
 
-conn_matrices_dir = "code/NENAH-BIDS/analysis/NBS/connectivity_matrices"
+thalamo_cortical_matrices = "code/NENAH-BIDS/analysis/NBS/connectivity_matrices/whole_brain_10M_sift2_space-anat_thalamus_lobes_connectome"
 
-if not os.path.exists(conn_matrices_dir):
-    os.makedirs(conn_matrices_dir, exist_ok=True)
+if not os.path.exists(thalamo_cortical_matrices):
+    os.makedirs(thalamo_cortical_matrices, exist_ok=True)
 
     control_matrices, subject_matrices = load_connectivity_matrices(included_subjects, "whole_brain_10M_sift2_space-anat_thalamus_lobes_connectome.csv" )
 
@@ -182,23 +182,38 @@ if not os.path.exists(conn_matrices_dir):
             print(f"Matrix for {subject_id} not found!")
             continue
 
-        file_path = os.path.join(conn_matrices_dir, f"{subject_id}.txt")
+        file_path = os.path.join(thalamo_cortical_matrices, f"{subject_id}.txt")
 
         np.savetxt(file_path, matrix, fmt='%g')
+
+thalamo_cortical_mean_fa_matrices = "code/NENAH-BIDS/analysis/NBS/connectivity_matrices/whole_brain_10M_space-anat_mean_FA_connectome"
+
+if not os.path.exists(thalamo_cortical_mean_fa_matrices):
+    os.makedirs(thalamo_cortical_mean_fa_matrices, exist_ok=True)
+
+    control_matrices, subject_matrices = load_connectivity_matrices(included_subjects, "whole_brain_10M_space-anat_mean_FA_connectome.csv" )
+
+    for _, row in clinical_data.iterrows():
+        subject_id = row['Study.No']
+        if subject_id in control_matrices:
+            matrix = control_matrices[subject_id]
+        elif subject_id in subject_matrices:
+            matrix = subject_matrices[subject_id]
+        else:
+            print(f"Matrix for {subject_id} not found!")
+            continue
+
+        file_path = os.path.join(thalamo_cortical_mean_fa_matrices, f"{subject_id}.txt")
+
+        np.savetxt(file_path, matrix, fmt='%g')
+
 
 # create COG.mat
 
 parcellation_images = "code/NENAH-BIDS/analysis/NBS/parcellation_images"
 
 
-if not os.path.exists(parcellation_images):
-    os.makedirs(parcellation_images, exist_ok=True)
-
-
-
 # nodes labels for NBS
-
-
 
 
 # print some data for checking
@@ -223,11 +238,7 @@ print("")
 counter=0
 for sID in included_subjects:
     counter+=1
-print(f"Total of {counter} subjects included. ")
-##
-print(f"Control group matrices: {len(control_matrices)}")
-print(f"Subject group matrices: {len(subject_matrices)}")
-print("")
+print(f"Total of {counter} subjects included.")
 print("First 10 rows of clinical data:")
 for index, row in clinical_data.head(10).iterrows():
     print(row.tolist())
