@@ -119,4 +119,5 @@ subprocess.run(['rm', dwi_nii ])
 subprocess.run(['rm', mask_nii])
 subprocess.run(['rm', bvec])
 subprocess.run(['rm', bval])
+subprocess.run(['rm', '-rf', output_dir])
 
