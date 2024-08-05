@@ -258,7 +258,7 @@ Options:
 ```
 
 Inputs: The FOD from csd.sh `csd-dhollander_wm_norm_space-anat.mif.gz`, the 5TT image `5tt_space-anat.mif.gz` and the gmwm mask `5tt_space-anat_gmwmi.mif.gz` from 5tt.sh.  
-Outputs: The streamlines file `whole_brain_10M_space-anat.tck` together with the SIFT/SIFT2 filtering, a file with only 10% streamlines for visualisation and the SIFT proportionality coefficient (mu) as a text file in `derivatives/dMRI/sub-ID/anat/tractography` (or the dwi-folder if done in diffusion space).  
+Outputs: The streamlines file `whole_brain_10M_space-anat.tck` together with the SIFT/SIFT2 filtering, a file with only 100 thousand streamlines for visualisation and the SIFT proportionality coefficient (mu) as a text file in `derivatives/dMRI/sub-ID/anat/tractography` (or the dwi-folder if done in diffusion space).  
 
 ```
 tractography
