@@ -111,5 +111,5 @@ ae.load_kernels()
 ae.fit()
 
 # save the results
-ae.save_results(output_dir)
+ae.save_results()
 
