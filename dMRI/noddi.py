@@ -54,8 +54,8 @@ if not os.path.exists(output_dir):
 os.makedirs(output_dir, exist_ok=True)
 
 # converting MRtrix files to NIfTI format
-dwi_nii = os.path.join(output_dir,'dwi', "tmp_dwi_preproc_hires.nii")
-mask_nii = os.path.join(output_dir,'dwi', "tmp_mask_space-dwi_hires.nii")
+dwi_nii = os.path.join(output_dir, "tmp_dwi_preproc_hires.nii")
+mask_nii = os.path.join(output_dir, "tmp_mask_space-dwi_hires.nii")
 
 
 subprocess.run(['mrconvert', dwi, dwi_nii])
@@ -63,8 +63,8 @@ subprocess.run(['mrconvert', mask, mask_nii])
 
 
 # generating bvecs/bvals from preproc_hires
-bvec = os.path.join(output_dir, "dwi", "tmp_dwi_preproc_hires.bvec")
-bval = os.path.join(output_dir, "dwi", "tmp_dwi_preproc_hires.bval")
+bvec = os.path.join(output_dir, "tmp_dwi_preproc_hires.bvec")
+bval = os.path.join(output_dir, "tmp_dwi_preproc_hires.bval")
 
 subprocess.run(['mrinfo', dwi, '-export_grad_fsl', bvec, bval])
 
