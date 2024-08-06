@@ -137,7 +137,7 @@ dwi
     └── unring
 ```
 ### Response function estimation (response.sh / average_response.sh)
-Estimate response functions for individual subjects and/or calculate the average accross all subjects. 
+Estimate response functions for individual subjects and/or calculate the average accross all valid subjects. 
 
 #### response.sh
 Inputs: `dwi_preproc.mif.gz` and `mask.mif.gz` from preprocessing.  
@@ -193,7 +193,7 @@ dwi
 
 ### csd.sh
 Script to compute the fiber orientation distribution (FOD) using constrained spherical convolution (CSD).
-By running with the script with the '-transform 1' option, the FODs will also be given in anatomical space.
+By running with the script with the  '-transform 1' option, the FODs will also be given in anatomical space.
 
 Inputs: The `dwi_preproc_hires` and `mask_space-dwi_hires` files from the upsampling step. Subject-unique response files (from response.sh) or group average response files (average_response.sh)  
 Outputs: Normalised FOD-images for each subjects in (in `derivatives/dMRI/sub-ID/dwi/csd`)
@@ -221,7 +221,7 @@ and then combine the newly enhanced FreeSurfer/FSL FIRST segmentation with HIPS-
 This script also utilizes LUTs in various re-mapping steps. These can be found here on the GitHub in the `label_names` folder.  
 
 Inputs: FreeSurfers `aparc+aseg.mgz` and HIPS-THOMAS left/right `thomasfull.nii.gz/thomasrfull.nii.gz`  
-Outputs: A combined FreeSurfer and HIPS-THOMAs segmentation with enhanced sub-cortical gray matter structures `aparc+aseg_thomas-thalamic_gmfix.mif.gz`
+Outputs: A combined FreeSurfer and HIPS-THOMAS segmentation with enhanced sub-cortical gray matter structures `aparc+aseg_thomas-thalamic_gmfix.mif.gz`
 in `derivatives/dMRI/sub-ID/anat`.
 
 
