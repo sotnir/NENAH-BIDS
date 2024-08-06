@@ -144,10 +144,10 @@ def generate_design_matrix(clinical_data, mri_ages, score_type):
     return design_matrix
 
 
-design_matrices_dir = "code/NENAH-BIDS/analysis/NBS/design_matrices"
+ancova_design_matrices = "code/NENAH-BIDS/analysis/NBS/design_matrices/ancova"
 
-if not os.path.exists(design_matrices_dir):
-    os.makedirs(design_matrices_dir, exist_ok=True)
+if not os.path.exists(ancova_design_matrices):
+    os.makedirs(ancova_design_matrices, exist_ok=True)
 
     design_matrix_wisc_vsi_compscore = generate_design_matrix(clinical_data, subject_ages, "WISC_VSI_CompScore")
     design_matrix_wisc_wmi_compscore = generate_design_matrix(clinical_data, subject_ages, "WISC_WMI_CompScore")
@@ -162,7 +162,7 @@ if not os.path.exists(design_matrices_dir):
     }
 
     for name, matrix in design_matrices.items():
-        file_path = os.path.join(design_matrices_dir, f"{name}.txt")
+        file_path = os.path.join(ancova_design_matrices, f"{name}.txt")
         matrix.to_string(file_path, header=False, index=False)
 
 thalamo_cortical_matrices = "code/NENAH-BIDS/analysis/NBS/connectivity_matrices/whole_brain_10M_sift2_space-anat_thalamus_lobes_connectome"
@@ -209,12 +209,8 @@ if not os.path.exists(thalamo_cortical_mean_fa_matrices):
 
 
 # create COG.mat
-
-parcellation_images = "code/NENAH-BIDS/analysis/NBS/parcellation_images"
-
-
 # nodes labels for NBS
-
+# These two should be done on parcs in MNI-space 
 
 # print some data for checking
 print("")
