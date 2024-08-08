@@ -116,9 +116,11 @@ def generate_corr_matrix(connectivity_matrices, clinical_score):
 
 ### create a design matrix 
 # score-type can be one of "WISC_VSI_CompScore", "WISC_WMI_CompScore", "CMS_GenMem_IndScore", "RBMT_Total_Score"
+# test ancova
 
-def generate_design_matrix(clinical_data, mri_ages, score_type):
+def generate_ancova_design_matrix(clinical_data, mri_ages, score_type):
 
+    
     clinical_data_sorted = clinical_data.sort_values(by='Study.No')
     
     design_matrix = pd.DataFrame(index=clinical_data_sorted.index)
@@ -149,10 +151,10 @@ ancova_design_matrices = "code/NENAH-BIDS/analysis/NBS/design_matrices/ancova"
 if not os.path.exists(ancova_design_matrices):
     os.makedirs(ancova_design_matrices, exist_ok=True)
 
-    design_matrix_wisc_vsi_compscore = generate_design_matrix(clinical_data, subject_ages, "WISC_VSI_CompScore")
-    design_matrix_wisc_wmi_compscore = generate_design_matrix(clinical_data, subject_ages, "WISC_WMI_CompScore")
-    design_matrix_cms_genmem_indscore = generate_design_matrix(clinical_data, subject_ages, "CMS_GenMem_IndScore")
-    design_matrix_rbmt_total_score = generate_design_matrix(clinical_data, subject_ages, "RBMT_Total_Score")
+    design_matrix_wisc_vsi_compscore = generate_ancova_design_matrix(clinical_data, subject_ages, "WISC_VSI_CompScore")
+    design_matrix_wisc_wmi_compscore = generate_ancova_design_matrix(clinical_data, subject_ages, "WISC_WMI_CompScore")
+    design_matrix_cms_genmem_indscore = generate_ancova_design_matrix(clinical_data, subject_ages, "CMS_GenMem_IndScore")
+    design_matrix_rbmt_total_score = generate_ancova_design_matrix(clinical_data, subject_ages, "RBMT_Total_Score")
 
     design_matrices = {
         "design_matrix_wisc_vsi_compscore": design_matrix_wisc_vsi_compscore,
@@ -164,6 +166,35 @@ if not os.path.exists(ancova_design_matrices):
     for name, matrix in design_matrices.items():
         file_path = os.path.join(ancova_design_matrices, f"{name}.txt")
         matrix.to_string(file_path, header=False, index=False)
+
+
+def generate_t_test_matrices(clinical_data):
+
+    clinical_data_sorted=clinical_data.sort_values(by='Study.No')
+
+    design_matrix = pd.DataFrame(index=clinical_data_sorted.index)
+
+    design_matrix['Intercept'] = 1
+
+    design_matrix['Group'] = clinical_data_sorted['Group'].map({1: 0, 2:1})
+
+    return design_matrix
+
+
+
+t_test_matrices = "code/NENAH-BIDS/analysis/NBS/design_matrices/t_test"
+
+if not os.path.exists(t_test_matrices):
+    os.makedirs(t_test_matrices, exists_ok=True)
+
+    t_test_matrix = generate_t_test_matrices(clinical_data)
+
+    file_name = os.path.join(t_test_matrices, 'group_matrix')
+    t_test_matrix.to_string(file_name, header=False, index=False)
+
+
+
+
 
 thalamo_cortical_matrices = "code/NENAH-BIDS/analysis/NBS/connectivity_matrices/whole_brain_10M_sift2_space-anat_thalamus_lobes_connectome"
 
