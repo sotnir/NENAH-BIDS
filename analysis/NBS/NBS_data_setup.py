@@ -185,7 +185,7 @@ def generate_t_test_matrices(clinical_data):
 t_test_matrices = "code/NENAH-BIDS/analysis/NBS/design_matrices/t_test"
 
 if not os.path.exists(t_test_matrices):
-    os.makedirs(t_test_matrices, exists_ok=True)
+    os.makedirs(t_test_matrices, exist_ok=True)
 
     t_test_matrix = generate_t_test_matrices(clinical_data)
 
