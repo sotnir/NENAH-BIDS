@@ -189,7 +189,7 @@ if not os.path.exists(t_test_matrices):
 
     t_test_matrix = generate_t_test_matrices(clinical_data)
 
-    file_name = os.path.join(t_test_matrices, 'group_matrix')
+    file_name = os.path.join(t_test_matrices, 'group_matrix.txt')
     t_test_matrix.to_string(file_name, header=False, index=False)
 
 
