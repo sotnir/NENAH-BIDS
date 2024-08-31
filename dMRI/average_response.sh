@@ -78,7 +78,7 @@ sMRI_subjects=($(subjects_sMRI))
 #
 subjects=()
 
-# loop through the dMRI subjects
+# loop through the dMRI subjects and create a list with subjects who has correct pass-value in both datafiles.
 for subject_id in "${dMRI_subjects[@]}"; do
     if [[ " ${sMRI_subjects[@]} " =~ " $subject_id " ]]; then
         subjects+=("$subject_id")
@@ -105,7 +105,7 @@ run_response_calculation() {
 
 if [ ! -d $output_dir ]; then mkdir -p $output_dir; fi
 
-# function to calculate group average response 
+# function to calculate group average response using responsemean
 calculate_group_average() {
   local tissue=$1
   local output_file="${output_dir}/${response}_${tissue}_dwi_preproc.txt"

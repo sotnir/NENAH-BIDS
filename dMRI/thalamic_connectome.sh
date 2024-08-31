@@ -250,16 +250,16 @@ fi
 
 
 ### Generating connectome matrix where the value of connectivity is the "mean FA"
-
-## Parameters för mean_FA connectome
-mean_FA_per_streamline="${datadir}/dwi/dti/mean_FA_per_streamline.csv"
-mean_FA_connectome="${datadir}/dwi/connectome/whole_brain_10M_space-anat_mean_FA_connectome.csv"
-fa_dwi2anat_transform="${datadir}/xfm/dwi_2_t1w_mrtrix-bbr.mat"
-tract="${datadir}/dwi/tractography/whole_brain_10M_space-anat.tck"
-nodes=$thalamus_lobes_image
-fa_hires_dwi="${datadir}/dwi/dti/fa_hires.mif.gz"
-
 if [ ! -f $mean_FA_connectome ]; then
+    ## Parameters för mean_FA connectome
+    mean_FA_per_streamline="${datadir}/dwi/dti/mean_FA_per_streamline.csv"
+    mean_FA_connectome="${datadir}/dwi/connectome/whole_brain_10M_space-anat_mean_FA_connectome.csv"
+    fa_dwi2anat_transform="${datadir}/xfm/dwi_2_t1w_mrtrix-bbr.mat"
+    tract="${datadir}/dwi/tractography/whole_brain_10M_space-anat.tck"
+    nodes=$thalamus_lobes_image
+    fa_hires_dwi="${datadir}/dwi/dti/fa_hires.mif.gz"
+
+
 
     echo ""
     echo "Generating connectome with mean FA for $sID:"
@@ -286,6 +286,7 @@ else
     echo "Mean FA connectome already exists for $sID"
     echo ""
 fi
+
 
 
 ### Create visualisation

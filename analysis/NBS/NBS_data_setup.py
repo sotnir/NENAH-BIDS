@@ -19,7 +19,7 @@ mri_excluded_subjects = ["NENAH02", "NENAHC004", "NENAH052", "NENAH017", "NENAH0
 
 
 
-# exclude subjects with faulty clinical data
+# exclude subjects with faulty clinical data (i.e depending on their pass (1) or fail (0) in the include_nenah coloumn)
 def exclude_subjects(excl_mri, clinical_data):
     df = pd.read_excel(clinical_data)
 
@@ -69,7 +69,7 @@ def get_subject_ages(dataset_path, subjects):
 
 subject_ages = get_subject_ages(dataset, included_subjects)
 
-# datadir=PATH, skip_subjects=LIST. Creates two dictionaries with NENAHXXX and NENAHCXXX as keys pointing to corresponding connecvitity matrix. 
+# datadir=PATH, skip_subjects=LIST. Creates two dictionaries with NENAHXXX and NENAHCXXX as keys pointing to the subject's unique connectivity matrix. 
 def load_connectivity_matrices(subjects, connectome):
     control_matrices = {}
     subject_matrices = {}
