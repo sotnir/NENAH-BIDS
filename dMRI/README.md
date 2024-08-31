@@ -61,7 +61,8 @@ For the usage, input arguments/options and the processing steps are understood. 
 
 ## Visualisation of pipelines
 
-![bild](https://github.com/user-attachments/assets/48c80e21-37e1-4153-abfd-d2026e4ae927)
+![bild](https://github.com/user-attachments/assets/93b4c079-6054-4e89-b35c-a3f9917ffdf9)
+
 
 
 
