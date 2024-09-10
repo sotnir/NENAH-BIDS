@@ -304,7 +304,7 @@ if [ $visualisation = 1 ]; then
         mkdir -p "$visualisation_dir"
     fi
 
-    if [ ! -f "$vis_nodes"]; then
+    if [ ! -f "$vis_nodes" ]; then
         echo "Generating colored thalamus-lobes parcellation image:"
         label2colour $nodes $vis_nodes
         echo ""
@@ -313,7 +313,7 @@ if [ $visualisation = 1 ]; then
         echo ""
     fi
 
-    if [ ! -f "$$mesh_file"]; then
+    if [ ! -f "$$mesh_file" ]; then
         echo "Creating mesh-file (.obj) for thalamus-lobes parcellation image:"
         label2mesh $nodes $mesh_file
         echo ""
@@ -322,7 +322,7 @@ if [ $visualisation = 1 ]; then
         echo ""
     fi
 
-    if [ ! -f "$exemplars"]; then
+    if [ ! -f "$exemplars" ]; then
         echo "Generating track file for visualising edges as streamlines or streamtubes (exemplars.tck):"
         connectome2tck $tract $assignments $exemplars -files single -exemplars $nodes
         echo ""
