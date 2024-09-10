@@ -291,12 +291,12 @@ fi
 
 ### Create visualisation
 if [ $visualisation = 1 ]; then
-    visualisation_dir="${datadir}/anat/connectome/visualisation/"
+    visualisation_dir="${datadir}/dwi/connectome/visualisation/"
     nodes=$thalamus_lobes_image
     vis_nodes="${visualisation_dir}/vis_thalamus_lobes.mif"
     mesh_file="${visualisation_dir}/mesh_thalamus_lobes.obj"
-    tract="${datadir}/anat/tractography/whole_brain_10M_space-anat.tck"
-    assignments="${datadir}/anat/connectome/assignment_whole_brain_10M_sift2_space-anat_thalamus_lobes_connectome.csv"
+    tract="${datadir}/dwi/tractography/whole_brain_10M_space-anat.tck"
+    assignments="${datadir}/dwi/connectome/assignment_whole_brain_10M_sift2_space-anat_thalamus_lobes_connectome.csv"
     exemplars="${visualisation_dir}/exemplars.tck"
 
 
