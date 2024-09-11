@@ -164,7 +164,7 @@ dwi
 └── response
     ├── dhollander_csf_dwi_preproc.txt
     ├── dhollander_gm_dwi_preproc.txt
-    └──dhollander_wm_dwi_preproc.txt
+    └── dhollander_wm_dwi_preproc.txt
 ```
 
 ### Upsampling of DWI-data (upsample.sh) 
