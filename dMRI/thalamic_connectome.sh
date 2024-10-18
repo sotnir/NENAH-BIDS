@@ -247,10 +247,11 @@ fi
 
 
 ### Generating connectome matrix where the value of connectivity is the "mean FA"
+
+    mean_FA_connectome="${datadir}/anat/connectome/whole_brain_10M_space-anat_mean_FA_connectome.csv"
 if [ ! -f $mean_FA_connectome ]; then
     ## Parameters för mean_FA connectome
     mean_FA_per_streamline="${datadir}/dwi/dti/mean_FA_per_streamline.csv"
-    mean_FA_connectome="${datadir}/anat/connectome/whole_brain_10M_space-anat_mean_FA_connectome.csv"
     fa_dwi2anat_transform="${datadir}/xfm/dwi_2_t1w_mrtrix-bbr.mat"
     tract="${datadir}/anat/tractography/whole_brain_10M_space-anat.tck"
     nodes=$thalamus_lobes_image
