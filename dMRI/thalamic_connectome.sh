@@ -248,7 +248,7 @@ fi
 
 ### Generating connectome matrix where the value of connectivity is the "mean FA"
 
-    mean_FA_connectome="${datadir}/anat/connectome/whole_brain_10M_space-anat_mean_FA_connectome.csv"
+mean_FA_connectome="${datadir}/anat/connectome/whole_brain_10M_space-anat_mean_FA_connectome.csv"
 if [ ! -f $mean_FA_connectome ]; then
     ## Parameters för mean_FA connectome
     mean_FA_per_streamline="${datadir}/dwi/dti/mean_FA_per_streamline.csv"
