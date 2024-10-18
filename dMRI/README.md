@@ -164,7 +164,7 @@ dwi
 └── response
     ├── dhollander_csf_dwi_preproc.txt
     ├── dhollander_gm_dwi_preproc.txt
-    └──dhollander_wm_dwi_preproc.txt
+    └── dhollander_wm_dwi_preproc.txt
 ```
 
 ### Upsampling of DWI-data (upsample.sh) 
@@ -174,6 +174,7 @@ and calculate diffusion tensor and tensor parametric maps.
 Inputs: `dwi_preproc.mif.gz`  
 Outputs: `dwi_preproc_hires.mif.gz` and new 'hires' meanb, mask and DTI files in `derivatives/dMRI/sub-ID/dwi/` and `derivatives/dMRI/sub-ID/dwi/dti` respectively.
 
+```
 dwi  
 ├── dwi.mif.gz  
 ├── dwi_preproc_hires.mif.gz  
@@ -190,7 +191,7 @@ dwi
 │   ├── ev_hires.mif.gz  
 │   ├── fa_hires.mif.gz  
 │   └── rd_hires.mif.gz  
-
+```
 
 ### csd.sh
 Script to compute the fiber orientation distribution (FOD) using constrained spherical convolution (CSD).
