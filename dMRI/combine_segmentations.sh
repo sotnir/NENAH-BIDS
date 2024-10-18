@@ -78,7 +78,7 @@ echo ""
 echo "Running 'combine_segmentations.sh' for $sID:"
 echo ""
 
-#skipped for now as there are issues with labelsgmfix
+# skipped for now as there are issues with labelsgmfix
 #if [ ! -f $aparc_aseg_gmfix ]; then
 #  echo "Replacing sub-cortical gray matter structure delineations using FSL FIRST in 'aparc+aseg.mgz':"
 #  labelsgmfix $aparc_aseg $T1_image $fs_lut $aparc_aseg_gmfix -sgm_amyg_hipp

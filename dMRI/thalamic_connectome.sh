@@ -7,7 +7,7 @@ usage() {
   echo "1) generate thalamo-cortical connectivity matrix (thalamus to lobes)"
   echo "2) generate a connectivity matrix where the value of connectivity is the mean FA."
   echo "This is done by re-mapping the outputs of FreeSurfer segmentation of the lobes and the HIPS-THOMAS segmentation of thalamus, and combining into a single parcellation image."
-  echo "Requires that segmentation of thalamus using HIPS-THOMAS has been performed and that fa_hires has been created using dti.sh"
+  echo "Requires that segmentation of thalamus using HIPS-THOMAS has been performed and that fa_hires has been generated in upsample.sh"
   echo "The LUTs and corresponding labels used for mapping the parcellation images is on the GitHub: https://github.com/sotnir/NENAH-BIDS/tree/RioPhillips-branch/label_names"
   echo ""
   echo "Arguments:"
@@ -213,11 +213,11 @@ if [ ! -f "${datadir}/dwi/connectome/whole_brain_10M_sift2_space-anat_thalamus_l
 
     ### Create the thalamo-cortical connectome
 
-    tract="${datadir}/dwi/tractography/whole_brain_10M_space-anat.tck" 
-    sift2_weights="${datadir}/dwi/tractography/whole_brain_10M_space-anat_sift2.txt"
+    tract="${datadir}/anat/tractography/whole_brain_10M_space-anat.tck" 
+    sift2_weights="${datadir}/anat/tractography/whole_brain_10M_space-anat_sift2.txt"
 
-    output_connectome="${datadir}/dwi/connectome/whole_brain_10M_sift2_space-anat_thalamus_lobes_connectome.csv"
-    output_assignments_connectome="${datadir}/dwi/connectome/assignment_whole_brain_10M_sift2_space-anat_thalamus_lobes_connectome.csv"
+    output_connectome="${datadir}/anat/connectome/whole_brain_10M_sift2_space-anat_thalamus_lobes_connectome.csv"
+    output_assignments_connectome="${datadir}/anat/connectome/assignment_whole_brain_10M_sift2_space-anat_thalamus_lobes_connectome.csv"
 
     connectome_dir=$(dirname "$output_connectome")
 
@@ -253,9 +253,9 @@ fi
 if [ ! -f $mean_FA_connectome ]; then
     ## Parameters för mean_FA connectome
     mean_FA_per_streamline="${datadir}/dwi/dti/mean_FA_per_streamline.csv"
-    mean_FA_connectome="${datadir}/dwi/connectome/whole_brain_10M_space-anat_mean_FA_connectome.csv"
+    mean_FA_connectome="${datadir}/anat/connectome/whole_brain_10M_space-anat_mean_FA_connectome.csv"
     fa_dwi2anat_transform="${datadir}/xfm/dwi_2_t1w_mrtrix-bbr.mat"
-    tract="${datadir}/dwi/tractography/whole_brain_10M_space-anat.tck"
+    tract="${datadir}/anat/tractography/whole_brain_10M_space-anat.tck"
     nodes=$thalamus_lobes_image
     fa_hires_dwi="${datadir}/dwi/dti/fa_hires.mif.gz"
 
@@ -270,7 +270,7 @@ if [ ! -f $mean_FA_connectome ]; then
         exit
     fi
 
-    # transform FA to anatomical space and perform connectome analysis
+    # transform FA to anatomical space and perform connectome generation
     echo "Transforming FA to anatomical space and creating connectome for $sID by piping it through tcksample and tck2connectome:"
     mrtransform $fa_hires_dwi -linear $fa_dwi2anat_transform - | tcksample $tract - $mean_FA_per_streamline -stat_tck mean
     tck2connectome $tract $nodes $mean_FA_connectome -scale_file $mean_FA_per_streamline -stat_edge mean
@@ -279,7 +279,7 @@ if [ ! -f $mean_FA_connectome ]; then
         echo "Mean FA connectome generated successfully!"
         echo ""
     else
-        echo "Connectome analysis failed for $sID, exiting..."
+        echo "Connectome generation failed for $sID, exiting..."
         exit
     fi
 else
