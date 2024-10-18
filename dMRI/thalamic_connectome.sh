@@ -204,7 +204,7 @@ if [ ! -f $thalamus_lobes_image ];then
         else
             echo "### ERROR: Could not create thalamus_lobes.mif for $sID, exiting... ###"
             exit
-        fi
+    fi
 else   
     echo "The file thalamus_lobes.mif already exists for $sID!"
 fi
@@ -328,6 +328,4 @@ if [ $visualisation = 1 ]; then
     fi
 
     echo "If successfull, the three files are in the /dwi/connectome/visualisation/ folder."
-
-
 fi
