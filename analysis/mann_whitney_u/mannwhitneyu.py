@@ -65,7 +65,7 @@ _, corrected_p_values, _, _ = smm.multipletests(flat_p_values, method='fdr_bh')
 # reshape corrected p-values back into a matrix
 corrected_p_matrix = np.zeros_like(p_values)
 corrected_p_matrix[np.triu_indices(p, k=1)] = corrected_p_values
-corrected_p_matrix += corrected_p_matrix.T  # Symmetric matrix
+corrected_p_matrix.T[np.triu_indices(p, k=1)] = corrected_p_matrix[np.triu_indices(p, k=1)]
 
 
 output_dir = "/data/iridis/NENAH_BIDS/code/NENAH-BIDS/analysis/mann_whitney_u/outputs/"
