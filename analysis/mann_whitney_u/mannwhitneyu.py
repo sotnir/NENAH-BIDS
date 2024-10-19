@@ -17,7 +17,7 @@ def load_connectivity_matrices(data_dir):
         sub_id = os.path.basename(sub_dir)
         sID = sub_id.replace("sub-", "")
         
-        file_path = os.path.join(sub_dir, "dwi", "connectome", "whole_brain_10M_sift2_space-anat_thalamus_lobes_connectome.csv")
+        file_path = os.path.join(sub_dir, "anat", "connectome", "whole_brain_10M_sift2_space-anat_thalamus_lobes_connectome.csv")
         if os.path.isfile(file_path):
             matrix = pd.read_csv(file_path, header=None).values
             if "C" in sID:  # only controls have C in their ID
@@ -69,7 +69,7 @@ corrected_p_matrix += corrected_p_matrix.T  # Symmetric matrix
 
 
 output_dir = "/data/iridis/NENAH_BIDS/code/NENAH-BIDS/analysis/mann_whitney_u/outputs/"
-output_file = os.path.join(output_dir, "corrected_p_values_matrix.csv")
+output_file = os.path.join(output_dir, "new_corrected_p_values_matrix.csv")
 
 # save matrix to file
 np.savetxt(output_file, corrected_p_matrix, delimiter=",")
@@ -89,11 +89,11 @@ for i in range(p):
             significant_connections.append((i, j))
 
 
-csv_file = os.path.join(output_dir, "connections.csv")
+csv_file = os.path.join(output_dir, "new_connections.csv")
 
 with open(csv_file, 'w') as f:
     f.write("Region 1,Region 2\n")
     for conn in significant_connections:
         f.write(f"{conn[0]},{conn[1]}\n")
 
-print(f"Significant connections saved to /outputs/connections.csv")
+print(f"Significant connections saved to /outputs/new_connections.csv")
