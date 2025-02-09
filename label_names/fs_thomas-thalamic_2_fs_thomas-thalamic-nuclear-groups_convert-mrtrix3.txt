@@ -1,0 +1,135 @@
+# Copyright (c) 2008-2023 the MRtrix3 contributors.		
+#		
+# This Source Code Form is subject to the terms of the Mozilla Public		
+# License, v. 2.0. If a copy of the MPL was not distributed with this		
+# file, You can obtain one at http://mozilla.org/MPL/2.0/.		
+#		
+"# Covered Software is provided under this License on an ""as is"""		
+# basis, without warranty of any kind, either expressed, implied, or		
+# statutory, including, without limitation, warranties that the		
+# Covered Software is free of defects, merchantable, fit for a		
+# particular purpose or non-infringing.		
+# See the Mozilla Public License v. 2.0 for more details.		
+#		
+# For more details, see http://www.mrtrix.org/.		
+		
+# Lookup table for extracting the relevant grey matter parcellations from the default FreeSurfer segmentation (desikan_killiany)		
+		
+# Combinded the HIPS-THOMAS atlas which replaces the thalamic parcellations		
+		
+0	???	Unknown
+		
+1	L.BSTS	ctx-lh-bankssts
+2	L.CACG	ctx-lh-caudalanteriorcingulate
+3	L.CMFG	ctx-lh-caudalmiddlefrontal
+4	L.CU	ctx-lh-cuneus
+5	L.EC	ctx-lh-entorhinal
+6	L.FG	ctx-lh-fusiform
+7	L.IPG	ctx-lh-inferiorparietal
+8	L.ITG	ctx-lh-inferiortemporal
+9	L.ICG	ctx-lh-isthmuscingulate
+10	L.LOG	ctx-lh-lateraloccipital
+11	L.LOFG	ctx-lh-lateralorbitofrontal
+12	L.LG	ctx-lh-lingual
+13	L.MOFG	ctx-lh-medialorbitofrontal
+14	L.MTG	ctx-lh-middletemporal
+15	L.PHIG	ctx-lh-parahippocampal
+16	L.PaCG	ctx-lh-paracentral
+17	L.POP	ctx-lh-parsopercularis
+18	L.POR	ctx-lh-parsorbitalis
+19	L.PTR	ctx-lh-parstriangularis
+20	L.PCAL	ctx-lh-pericalcarine
+21	L.PoCG	ctx-lh-postcentral
+22	L.PCG	ctx-lh-posteriorcingulate
+23	L.PrCG	ctx-lh-precentral
+24	L.PCU	ctx-lh-precuneus
+25	L.RACG	ctx-lh-rostralanteriorcingulate
+26	L.RMFG	ctx-lh-rostralmiddlefrontal
+27	L.SFG	ctx-lh-superiorfrontal
+28	L.SPG	ctx-lh-superiorparietal
+29	L.STG	ctx-lh-superiortemporal
+30	L.SMG	ctx-lh-supramarginal
+31	L.FP	ctx-lh-frontalpole
+32	L.TP	ctx-lh-temporalpole
+33	L.TTG	ctx-lh-transversetemporal
+34	L.IN	ctx-lh-insula
+35	R.BSTS	ctx-rh-bankssts
+36	R.CACG	ctx-rh-caudalanteriorcingulate
+37	R.CMFG	ctx-rh-caudalmiddlefrontal
+38	R.CU	ctx-rh-cuneus
+39	R.EC	ctx-rh-entorhinal
+40	R.FG	ctx-rh-fusiform
+41	R.IPG	ctx-rh-inferiorparietal
+42	R.ITG	ctx-rh-inferiortemporal
+43	R.ICG	ctx-rh-isthmuscingulate
+44	R.LOG	ctx-rh-lateraloccipital
+45	R.LOFG	ctx-rh-lateralorbitofrontal
+46	R.LG	ctx-rh-lingual
+47	R.MOFG	ctx-rh-medialorbitofrontal
+48	R.MTG	ctx-rh-middletemporal
+49	R.PHIG	ctx-rh-parahippocampal
+50	R.PaCG	ctx-rh-paracentral
+51	R.POP	ctx-rh-parsopercularis
+52	R.POR	ctx-rh-parsorbitalis
+53	R.PTR	ctx-rh-parstriangularis
+54	R.PCAL	ctx-rh-pericalcarine
+55	R.PoCG	ctx-rh-postcentral
+56	R.PCG	ctx-rh-posteriorcingulate
+57	R.PrCG	ctx-rh-precentral
+58	R.PCU	ctx-rh-precuneus
+59	R.RACG	ctx-rh-rostralanteriorcingulate
+60	R.RMFG	ctx-rh-rostralmiddlefrontal
+61	R.SFG	ctx-rh-superiorfrontal
+62	R.SPG	ctx-rh-superiorparietal
+63	R.STG	ctx-rh-superiortemporal
+64	R.SMG	ctx-rh-supramarginal
+65	R.FP	ctx-rh-frontalpole
+66	R.TP	ctx-rh-temporalpole
+67	R.TTG	ctx-rh-transversetemporal
+68	R.IN	ctx-rh-insula
+69	L.CER	Left-Cerebellum-Cortex
+70	R.CER	Right-Cerebellum-Cortex
+71	L.CA	Left-Caudate
+72	L.PU	Left-Putamen
+73	L.PA	Left-Pallidum
+74	L.HI	Left-Hippocampus
+75	L.AM	Left-Amygdala
+76	L.AC	Left-Accumbens-area
+77	R.CA	Right-Caudate
+78	R.PU	Right-Putamen
+79	R.PA	Right-Pallidum
+80	R.HI	Right-Hippocampus
+81	R.AM	Right-Amygdala
+82	R.AC	Right-Accumbens-area
+# Values and labels for the thalamic segmentation from HIPS-THOMAS. Created with docker-version: https://github.com/thalamicseg/hipsthomasdocker		
+# Reference: Vidal JP, Danet L, Péran P, Pariente J, Bach Cuadra M, Zahr NM, Barbeau EJ, Saranathan M. Robust thalamic nuclei segmentation from T1-weighted MRI using polynomial intensity transformation. *Brain Structure and Function*; 2024		
+# mapped 2 L_anterior_thomas_thalamic		
+83	lh-anteroventral	
+# mapped 2 L_lateral_thomas_thalamic		
+84	lh-ventral-anterior-nucleus	
+84	lh-ventral-lateral-anterior	
+84	lh-ventral-lateral-posterior	
+84	lh-ventral-posterolateral	
+# mapped 2 L_posterior_thomas_thalamic		
+85	lh-pulvinar	
+85	lh-letarl-geniculate-nucleus	
+85	lh-medial-geniculate-nucleus	
+# mapped 2 L_medial_thomas_thalamic		
+86	lh-centromedian	
+86	lh-mediodorsal	
+86	lh-habenula	
+# mapped 2 R_anterior_thomas_thalamic		
+87	rh-anteroventral	
+# mapped 2 R_lateral_thomas_thalamic		
+88	rh-ventral-anterior-nucleus	
+88	rh-ventral-lateral-anterior	
+88	rh-ventral-lateral-posterior	
+88	rh-ventral-posterolateral	
+# mapped 2 R_posterior_thomas_thalamic		
+89	rh-pulvinar	
+89	rh-lateral-geniculate-nucleus	
+89	rh-medial-geniculate-nucleus	
+# mapped 2 R_medial_thomas_thalamic		
+90	rh-centromedian	
+90	rh-mediodorsal	
+90	rh-habenula	
