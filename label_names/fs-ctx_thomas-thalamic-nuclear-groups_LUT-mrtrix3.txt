@@ -66,11 +66,11 @@
 66	R.TP	ctx-rh-temporalpole
 67	R.TTG	ctx-rh-transversetemporal
 68	R.IN	ctx-rh-insula	
-69		L_anterior_thomas_thalamic	
-70		L_lateral_thomas_thalamic	
-71		L_posterior_thomas_thalamic	
-72		L_medial_thomas_thalamic	
-73		R_anterior_thomas_thalamic	
-74		R_lateral_thomas_thalamic	
-75		R_posterior_thomas_thalamic	
-76		R_medial_thomas_thalamic	
+69  L.ThANG  L_anterior_thomas_thalamic	
+70  L.ThLNG  L_lateral_thomas_thalamic	
+71  L.ThPNG  L_posterior_thomas_thalamic	
+72  L.ThMNG  L_medial_thomas_thalamic	
+73  R.ThANG  R_anterior_thomas_thalamic	
+74  R.ThLNG  R_lateral_thomas_thalamic	
+75  R.ThPNG  R_posterior_thomas_thalamic	
+76  R.ThMNG  R_medial_thomas_thalamic	
