@@ -16,14 +16,14 @@
 13  R_Parietal_lobe
 14  R_Frontal_lobe
 
-15  L_medial_thomas_thalamic
-16  L_posterior_thomas_thalamic
-17  L_lateral_thomas_thalamic
-18  L_anterior_thomas_thalamic
-19  R_medial_thomas_thalamic
-20  R_posterior_thomas_thalamic
-21  R_lateral_thomas_thalamic
-22  R_anterior_thomas_thalamic
+15  L_anterior_thomas_thalamic	
+16  L_lateral_thomas_thalamic	
+17  L_posterior_thomas_thalamic	
+18  L_medial_thomas_thalamic	
+19  R_anterior_thomas_thalamic	
+20  R_lateral_thomas_thalamic	
+21  R_posterior_thomas_thalamic	
+22  R_medial_thomas_thalamic
 
 23  L_Insula
 24  R_Insula
