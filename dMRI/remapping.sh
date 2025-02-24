@@ -196,7 +196,7 @@ fi
 
 whole_parcellation_image_out="${datadir}/anat/whole_mapped_aparc+aseg_thomas-thalamic.mif.gz"
 
-if [ ! -f $image_out ]; then
+if [ ! -f $whole_parcellation_image_out ]; then
 
     lut_out="${studydir}/code/NENAH-BIDS/label_names/fs_thomas-thalamic_LUT-mrtrix3.txt"
     labelconvert $combined_segm $lut_in $lut_out $whole_parcellation_image_out
