@@ -1,4 +1,43 @@
+#!/bin/bash
 
+
+usage() {
+}
+
+
+# return usage if no input arguments
+if [ $# -eq 0 ]; then
+  usage
+fi
+
+
+# command line arguments
+while [[ $# -gt 0 ]]; do
+  case "$1" in
+    -d|-data-dir)
+      datadir=$2
+      shift 2
+      ;;
+    -m|-mrtrix)
+      MRTRIXHOME=$2
+      shift 2
+      ;;
+    -h|-help)
+      usage
+      ;;
+    *)
+      sID=$1
+      shift
+      ;;
+  esac
+done
+
+#  check sub id has been given
+if [ -z "$sID" ]; then
+  echo "Error: No subject ID provided."
+  usage
+  exit 1
+fi
 
 # This is done by re-mapping the outputs of FreeSurfer segmentation of the lobes and the HIPS-THOMAS segmentation of thalamus, and combining into a single parcellation image.
 # Requires that segmentation of thalamus using HIPS-THOMAS has been performed and that fa_hires has been generated in upsample.sh
