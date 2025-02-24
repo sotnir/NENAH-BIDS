@@ -1,14 +1,14 @@
 #!/bin/bash
 
 
-usage() {
-}
+#usage() {
+#}
 
 
 # return usage if no input arguments
-if [ $# -eq 0 ]; then
-  usage
-fi
+#if [ $# -eq 0 ]; then
+#  usage
+#fi
 
 
 # command line arguments
