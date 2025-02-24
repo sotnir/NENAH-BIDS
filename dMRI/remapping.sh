@@ -47,7 +47,7 @@ fi
 studydir=$PWD
 datadir="${studydir}/derivatives/dMRI/sub-${sID}" 
 combined_segm="${datadir}/anat/aparc+aseg_thomas-thalamic.mif.gz"
-lut_in="${studydir}/code/NENAH-BIDSlabel_names/fs_thomas-thalamic_LUT.txt"
+lut_in="${studydir}/code/NENAH-BIDS/label_names/fs_thomas-thalamic_LUT.txt"
 
 
 
