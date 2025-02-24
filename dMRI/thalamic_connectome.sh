@@ -19,7 +19,7 @@ usage() {
   echo "  -h / -help                    Print usage"
   echo "  -v / -visualize               Will generate a colored thalamus-lobes parcellation image, a mesh-file (.obj) for viewing nodes as 3D sections of the brain and a track file"
   echo "                                which allows the display of edges as streamlines or streamtubes. Visualization files will be but in the /dwi/connectome/visualisation/ folder."
-  echo "                                This is recommended to be used on one or few subjects only, on as-needed basis."
+  echo "                                This is recommended to be used on one or few subjects only since its very resource-heavy."
   exit 1
 }
 
@@ -131,7 +131,7 @@ if [ ! -f $thalamus_lobes_image ];then
         echo "thomasl.mif and thomasr.mif already exists for $sID, skipping convert step..."
         echo ""
     else
-        echo "Converting nii.gz thomas segmentation files to .mif"
+        echo "Converting .nii.gz thomas segmentation files to .mif"
         echo ""
     fi
 
@@ -212,7 +212,7 @@ fi
 
 
 
-    ### Create the thalamo-cortical connectome
+### Create the thalamo-cortical connectome
 
 tract="${datadir}/anat/tractography/whole_brain_10M_space-anat.tck" 
 sift2_weights="${datadir}/anat/tractography/whole_brain_10M_space-anat_sift2.txt"
@@ -244,6 +244,13 @@ else
     echo "Starting with mean FA connectome..."
     echo ""
 fi
+
+### Generatte the entire fs_thomas-thalamic connectome
+
+$image_out = pic.mif
+
+if [ ! -f $image_out]; then
+    image_in = 
 
 
 ### Generating connectome matrix where the value of connectivity is the "mean FA"
@@ -284,6 +291,9 @@ else
     echo "Mean FA connectome already exists for $sID"
     echo ""
 fi
+
+
+
 
 
 
@@ -331,3 +341,6 @@ if [ $visualisation = 1 ]; then
 
     echo "If successfull, the three files are in the /dwi/connectome/visualisation/ folder."
 fi
+
+
+
