@@ -199,11 +199,8 @@ whole_parcellation_image_out="${datadir}/anat/whole_mapped_aparc+aseg_thomas-tha
 if [ ! -f $image_out ]; then
 
     lut_out="${studydir}/code/NENAH-BIDS/label_names/fs_thomas-thalamic_LUT-mrtrix3.txt"
-    labelconvert $combined_segm $lut_in $lut_out $whole_connectome_out
+    labelconvert $combined_segm $lut_in $lut_out $whole_parcellation_image_out
     
-    if [ -f $whole_connectome_out ]; then 
-    echo "Full connectome image ok for ${sID}" 
-    fi
 fi
 
 ###  Remap FreeSurfer + HIPS-Thomas nuclear groups (medial, posterior, lateral, anterior)
