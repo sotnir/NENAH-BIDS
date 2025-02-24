@@ -231,7 +231,7 @@ thalamus_lobes_parcellation_image_out="${datadir}/anat/fs_thomas-thalamic_2_fs-l
 
 if [ ! -f $thalamus_lobes_parcellation_image_out ]; then
     lut_out="${studydir}/code/NENAH-BIDS/label_names/fs_thomas-thalamic_2_fs-lobes_thomas-thalamic-nuclear-groups_convert-mrtrix3.txt"
-    labelconvert $combined_semg $lut_in $lut_out $thalamus_lobes_parcellation_image_out
+    labelconvert $combined_segm $lut_in $lut_out $thalamus_lobes_parcellation_image_out
 fi
 
 
