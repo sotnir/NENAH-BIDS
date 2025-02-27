@@ -2,7 +2,6 @@ import os
 import pandas as pd
 
 # filepaths
-
 studydir = os.getcwd()  
 data_dir = os.path.join(studydir, "derivatives", "sMRI_fs-segmentation")  
 clinical_data = os.path.join(studydir, "code", "NENAH-BIDS", "analysis", "clinical_data", "NENAH_SchoolAge_full_dataset.xlsx")
@@ -11,7 +10,7 @@ clinical_data = os.path.join(studydir, "code", "NENAH-BIDS", "analysis", "clinic
 mri_excluded_subjects = ["NENAH02", "NENAHC004", "NENAH052", "NENAH017", "NENAH008", "NENAH014", "NENAH036"]
 
 # load the clinical data
-df = pd.read_excel(clinical_data, sheet_name=0)
+df = pd.read_excel(clinical_data, header=1)
 
 # extract relevant columns and rename for convenience
 df = df[['Study.No', 'Group', 'AGE_NENAH_Tests', 'sex']]
@@ -66,5 +65,5 @@ df.dropna(subset=['Left_Whole_thalamus', 'Right_Whole_thalamus'], inplace=True)
 print(df.head())
 
 # save the cleaned data to a new file
-output_path = '/path/to/your/directory/cleaned_clinical_data_with_thalamus.csv'
+output_path = os.path.join(studydir, "code", "NENAH-BIDS", "analysis", "volumetric", "data_freesurfer_for_stats.csv")
 df.to_csv(output_path, index=False)
