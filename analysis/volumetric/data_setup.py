@@ -11,10 +11,10 @@ mri_excluded_subjects = ["NENAH02", "NENAHC004", "NENAH052", "NENAH017", "NENAH0
 
 # load the clinical data
 df = pd.read_excel(clinical_data, header=1)
+df.columns = df.columns.str.strip().str.replace(' ', '_').str.replace('(', '').str.replace(')', '')
+df = df[['HIE_Child_ID_NENAH', 'Group_HIE_or_Control', 'Age_MRI_NENAH', 'Sex_at_birth']]
 print(df.columns)
-# extract relevant columns and rename for convenience
-df = df[['Study.No', 'Group', 'AGE_NENAH_Tests', 'sex']]
-df.columns = ['Subject', 'Group', 'Age', 'Sex']
+
 
 # convert columns to appropriate data types
 df['Group'] = df['Group'].astype(int)
@@ -24,16 +24,6 @@ df['Sex'] = df['Sex'].astype(int)
 # exclude subjects who did not pass MRI quality control
 df = df[~df['Subject'].isin(mri_excluded_subjects)]
 
-
-# check for missing values in relevant columns and print the Subject ID if any are found
-missing_data = df[df[['Group', 'Age', 'Sex']].isna().any(axis=1)]
-if not missing_data.empty:
-    print("Subjects with missing Group, Age, or Sex data (will be excluded):")
-    print(missing_data['Subject'].tolist())
-
-
-# drop rows with missing values in the relevant columns
-df.dropna(subset=['Group', 'Age', 'Sex'], inplace=True)
 
 # initialize new columns for thalamus volumes
 df['Left_Whole_thalamus'] = None
