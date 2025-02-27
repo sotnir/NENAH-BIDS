@@ -17,9 +17,9 @@ print(df.columns)
 
 
 # convert columns to appropriate data types
-df['Group'] = df['Group'].astype(int)
-df['Age'] = pd.to_numeric(df['Age'], errors='coerce')
-df['Sex'] = df['Sex'].astype(int)
+df['Group_HIE_or_Control'] = df['Group_HIE_or_Control'].astype(int)
+df['Age_MRI_NENAH'] = pd.to_numeric(df['Age_MRI_NENAH'], errors='coerce')
+df['Sex_at_birth'] = df['Sex_at_birth'].astype(int)
 
 # exclude subjects who did not pass MRI quality control
 df = df[~df['Subject'].isin(mri_excluded_subjects)]
