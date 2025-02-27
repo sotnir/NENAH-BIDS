@@ -22,7 +22,7 @@ df['Age_MRI_NENAH'] = pd.to_numeric(df['Age_MRI_NENAH'], errors='coerce')
 df['Sex_at_birth'] = df['Sex_at_birth'].astype(int)
 
 # exclude subjects who did not pass MRI quality control
-df = df[~df['Subject'].isin(mri_excluded_subjects)]
+df = df[~df['HIE_Child_ID_NENAH'].isin(mri_excluded_subjects)]
 
 
 # initialize new columns for thalamus volumes
