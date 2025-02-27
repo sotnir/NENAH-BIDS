@@ -82,7 +82,7 @@ tract="${datadir}/anat/tractography/whole_brain_10M_space-anat.tck"
 sift2_weights="${datadir}/anat/tractography/whole_brain_10M_space-anat_sift2.txt"
 
 output_connectome="${datadir}/anat/connectome/whole_brain_10M_sift2_space-anat_fs-ctx_thomas-thalamic-nuclear-groups_connectome.csv"
-output_assignments_connectome="${datadir}/anat/connectome/assignment_whole_brain_10M_sift2_space-anat_thalamus_lobes_connectome.csv"
+output_assignments_connectome="${datadir}/anat/connectome/assignment_whole_brain_10M_sift2_space-anat_fs-ctx_thomas-thalamic-nuclear-groups_connectome.csv"
 
 connectome_dir=$(dirname "$output_connectome")
 
@@ -114,7 +114,7 @@ tract="${datadir}/anat/tractography/whole_brain_10M_space-anat.tck"
 sift2_weights="${datadir}/anat/tractography/whole_brain_10M_space-anat_sift2.txt"
 
 output_connectome="${datadir}/anat/connectome/whole_brain_10M_sift2_space-anat_fs_thalamus_connectome.csv"
-output_assignments_connectome="${datadir}/anat/connectome/assignment_whole_brain_10M_sift2_space-anat_thalamus_lobes_connectome.csv"
+output_assignments_connectome="${datadir}/anat/connectome/assignment_whole_brain_10M_sift2_space-anat_fs_thalamus_connectome.csv"
 
 connectome_dir=$(dirname "$output_connectome")
 
