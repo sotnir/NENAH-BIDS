@@ -192,8 +192,6 @@ fi
 
 ### Remap the full FreeSurfer + HIPS-Thomas images. 
 
-
-
 whole_parcellation_image_out="${datadir}/anat/whole_mapped_aparc+aseg_thomas-thalamic.mif.gz"
 
 if [ ! -f $whole_parcellation_image_out ]; then
