@@ -76,6 +76,7 @@ MRTRIXHOME="../software/mrtrix3"
 thalamus_lobes_image="${datadir}/anat/fs_thomas-thalamic_2_fs-lobes_thomas-thalamic-nuclear-groups_aparc+aseg_thomas-thalamic.mif.gz"
 ctx_thalamus_image="${datadir}/anat/fs_thomas-thalamic_2_fs-ctx_thomas-thalamic-nuclear-groups_aparc+aseg_thomas-thalamic.mif.gz"
 full_fs_thalamus_image="${datadir}/anat/whole_mapped_aparc+aseg_thomas-thalamic.mif.gz"
+nuclear_groups_thalamus="${datadir}/anat/fs_thomas-thalamic_2_fs_thomas-thalamic-nuclear-groups_aparc+aseg_thomas-thalamic.mif.gz"
 
 ### Create a fs-ctx_thomas-thalamic-nuclear-groups connectome in the network between the FS's cortical parcellations and the HIPS-THOMAS nuclear groups
 tract="${datadir}/anat/tractography/whole_brain_10M_space-anat.tck" 
@@ -92,7 +93,7 @@ fi
 
 
 if [ ! -f $output_connectome ]; then
-    echo "Creating thalamo-cortical connectome from whole_brain_10M_space-anat.tck with Sift2 weights for $sID"
+    echo "Creating fs-ctx-thomas-thalamic-nuclear-groups connectome from whole_brain_10M_space-anat.tck with Sift2 weights for $sID"
     echo ""
     tck2connectome -symmetric -zero_diagonal -scale_invnodevol $tract $ctx_thalamus_image $output_connectome -out_assignment $output_assignments_connectome -tck_weights_in $sift2_weights
 
@@ -104,14 +105,40 @@ if [ ! -f $output_connectome ]; then
         echo ""
     fi
 else
-    echo "Default thalamic connectome exists for $sID"
+    echo "The connectome exists for $sID"
     echo "Starting with mean FA connectome..."
     echo ""
 fi
+### Create a fs_thomas-thalamic-nuclear-groups connectome with HIPS-THOMAS segmentation into "medial", "posterior", "lateral" and "anterior" nuclear groups
 
+output_connectome="${datadir}/anat/connectome/whole_brain_10M_sift2_space-anat_fs_thomas-thalamic-nuclear-groups_connectome.csv"
+output_assignments_connectome="${datadir}/anat/connectome/assignment_whole_brain_10M_sift2_space-anat_fs_thomas-thalamic-nuclear-groups_connectome.csv"
+
+connectome_dir=$(dirname "$output_connectome")
+
+if [ ! -d "$connectome_dir" ]; then  
+    mkdir -p "$connectome_dir"
+fi
+
+
+if [ ! -f $output_connectome ]; then
+    echo "Creating fs_thomas-thalamic-nuclear-groups connectome from whole_brain_10M_space-anat.tck with Sift2 weights for $sID"
+    echo ""
+    tck2connectome -symmetric -zero_diagonal -scale_invnodevol $tract $nuclear_groups_thalamus $output_connectome -out_assignment $output_assignments_connectome -tck_weights_in $sift2_weights
+
+    if [ -f $output_connectome ]; then
+        echo "Connectome created successfully!"
+        echo ""
+    else   
+        echo "### Failed to create connectome for $sID ###"
+        echo ""
+    fi
+else
+    echo "The connectome exists for $sID"
+    echo "Starting with mean FA connectome..."
+    echo ""
+fi
 ### Create the full FreeSurfer + HIPS-Thomas connectome
-tract="${datadir}/anat/tractography/whole_brain_10M_space-anat.tck" 
-sift2_weights="${datadir}/anat/tractography/whole_brain_10M_space-anat_sift2.txt"
 
 output_connectome="${datadir}/anat/connectome/whole_brain_10M_sift2_space-anat_fs_thalamus_connectome.csv"
 output_assignments_connectome="${datadir}/anat/connectome/assignment_whole_brain_10M_sift2_space-anat_fs_thalamus_connectome.csv"
@@ -124,7 +151,7 @@ fi
 
 
 if [ ! -f $output_connectome ]; then
-    echo "Creating thalamo-cortical connectome from whole_brain_10M_space-anat.tck with Sift2 weights for $sID"
+    echo "Creating fs-thalamus connectome from whole_brain_10M_space-anat.tck with Sift2 weights for $sID"
     echo ""
     tck2connectome -symmetric -zero_diagonal -scale_invnodevol $tract $full_fs_thalamus_image $output_connectome -out_assignment $output_assignments_connectome -tck_weights_in $sift2_weights
 
@@ -136,14 +163,12 @@ if [ ! -f $output_connectome ]; then
         echo ""
     fi
 else
-    echo "Default thalamic connectome exists for $sID"
+    echo "The connectome exists for $sID"
     echo "Starting with mean FA connectome..."
     echo ""
 fi
-### Create the thalamo-lobes connectome
 
-tract="${datadir}/anat/tractography/whole_brain_10M_space-anat.tck" 
-sift2_weights="${datadir}/anat/tractography/whole_brain_10M_space-anat_sift2.txt"
+### Create the thalamo-lobes connectome
 
 output_connectome="${datadir}/anat/connectome/whole_brain_10M_sift2_space-anat_thalamus_lobes_connectome.csv"
 output_assignments_connectome="${datadir}/anat/connectome/assignment_whole_brain_10M_sift2_space-anat_thalamus_lobes_connectome.csv"
@@ -156,19 +181,19 @@ fi
 
 
 if [ ! -f $output_connectome ]; then
-    echo "Creating thalamo-cortical connectome from whole_brain_10M_space-anat.tck with Sift2 weights for $sID"
+    echo "Creating thalamus-lobes connectome from whole_brain_10M_space-anat.tck with Sift2 weights for $sID"
     echo ""
     tck2connectome -symmetric -zero_diagonal -scale_invnodevol $tract $thalamus_lobes_image $output_connectome -out_assignment $output_assignments_connectome -tck_weights_in $sift2_weights
 
     if [ -f $output_connectome ]; then
         echo "Connectome created successfully!"
         echo ""
-    else   
+    else
         echo "### Failed to create connectome for $sID ###"
         echo ""
     fi
 else
-    echo "Default thalamic connectome exists for $sID"
+    echo "The connectome exists for $sID"
     echo "Starting with mean FA connectome..."
     echo ""
 fi
