@@ -31,7 +31,7 @@ df['Right_Whole_thalamus'] = None
 
 # loop through the subjects
 for index, row in df.iterrows():
-    sub_id = row['Subject']
+    sub_id = row['HIE_Child_ID_NENAH']
     sub_dir = os.path.join(data_dir, f"sub-{sub_id}", "mri")
     thalamus_file = os.path.join(sub_dir, "ThalamicNuclei.v13.T1.volumes.txt")
 
