@@ -173,13 +173,6 @@ else
     echo ""
 fi
 
-### Generatte the entire fs_thomas-thalamic connectome
-
-$image_out = pic.mif
-
-if [ ! -f $image_out]; then
-    image_in = 
-
 
 ### Generating connectome matrix where the value of connectivity is the "mean FA"
 
