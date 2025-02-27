@@ -11,7 +11,7 @@ mri_excluded_subjects = ["NENAH02", "NENAHC004", "NENAH052", "NENAH017", "NENAH0
 
 # load the clinical data
 df = pd.read_excel(clinical_data, header=1)
-
+print(df.columns)
 # extract relevant columns and rename for convenience
 df = df[['Study.No', 'Group', 'AGE_NENAH_Tests', 'sex']]
 df.columns = ['Subject', 'Group', 'Age', 'Sex']
