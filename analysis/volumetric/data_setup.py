@@ -2,9 +2,10 @@ import os
 import pandas as pd
 
 # filepaths
-clinical_data = "filepath2"  # path to the clinical Excel file
+
 studydir = os.getcwd()  
-data_dir = os.path.join(studydir, "derivatives", "dMRI")  
+data_dir = os.path.join(studydir, "derivatives", "sMRI_fs-segmentation")  
+clinical_data = os.path.join(studydir, "code", "NENAH-BIDS", "analysis", "clinical_data", "NENAH_SchoolAge_full_dataset.xlsx")
 
 # hardcoded list of subjects who did not pass quality control for MRI data
 mri_excluded_subjects = ["NENAH02", "NENAHC004", "NENAH052", "NENAH017", "NENAH008", "NENAH014", "NENAH036"]
