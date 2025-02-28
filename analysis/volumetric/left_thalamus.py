@@ -23,7 +23,7 @@ os.chdir(datadir)  # Change this path to the folder where your data is stored
 # READ THE DATASET (CHANGE FILE NAME IF USING NEW DATA)
 # ============================
 # Read CSV file, assuming `;` is the separator and `,` is the decimal format (change if different)
-data = pd.read_csv("data_freesurfer_for_stats_LEFT.csv", sep=';', decimal=',')
+data = pd.read_csv("data_freesurfer_for_stats.csv", sep=';', decimal=',')
 
 # ============================
 # DATA PREPROCESSING
