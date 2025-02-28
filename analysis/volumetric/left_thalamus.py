@@ -23,13 +23,8 @@ os.chdir(datadir)  # Change this path to the folder where your data is stored
 # READ THE DATASET (CHANGE FILE NAME IF USING NEW DATA)
 # ============================
 # Read CSV file, assuming `;` is the separator and `,` is the decimal format (change if different)
-data = pd.read_csv("data_freesurfer_for_stats.csv", sep=';', decimal=',')
-
-data.rename(columns={
-    'Age_MRI_NENAH': 'Age',
-    'Sex_at_birth': 'Sex',
-    'Group_HIE_or_Control': 'Group'
-}, inplace=True)
+data = pd.read_csv("data_freesurfer_for_stats.csv", sep='\s+', decimal=',')
+data.columns = data.columns.str.strip()
 
 # ============================
 # DATA PREPROCESSING
