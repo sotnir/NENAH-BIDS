@@ -39,12 +39,12 @@ data.columns = data.columns.str.replace('-', '_')
 
 # Exclude rows where the "Age" column has values 1, 2, 3, or 4
 # (If age filtering criteria change, modify this list)
-data = data[~data["Age"].isin([1, 2, 3, 4])]
+data = data[~data["Age_MRI_NENAH"].isin([1, 2, 3, 4])]
 
 # Separate the dataset into two groups: Controls (0) and Patients (1)
 # Ensure the "Group" column exists and contains 0 (controls) and 1 (patients)
-controls = data[data["Group"] == 0]
-patients = data[data["Group"] == 1]
+controls = data[data["Group_HIE_or_Control"] == 0]
+patients = data[data["Group_HIE_or_Control"] == 1]
 
 # ============================
 # DEFINE STRUCTURE NAMES FOR ANALYSIS
@@ -70,11 +70,11 @@ for structure in structure_names:
 
     # ANCOVA model: Predict structure volume based on Group, Age, Sex, and Whole Thalamus Volume
     # Ensure 'Left_Whole_thalamus' exists in the dataset, change column name if needed
-    model = ols(f"Q('{structure}') ~ Group + Age + Sex + Q('Left_Whole_thalamus')", data=filtered_data).fit()
+    model = ols(f"Q('{structure}') ~ Group_HIE_or_Control + Age_MRI_NENAH + Sex_at_birth + Q('Left_Whole_thalamus')", data=filtered_data).fit()
 
     # Perform ANOVA on the model to extract statistical significance of Group (patients vs controls)
     anova_table = sm.stats.anova_lm(model, typ=2)
-    p_value = anova_table.loc["Group", "PR(>F)"]
+    p_value = anova_table.loc["Group_HIE_or_Control", "PR(>F)"]
 
     # ============================
     # PRINT RESULTS (SIGNIFICANCE TEST)
