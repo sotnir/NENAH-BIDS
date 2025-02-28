@@ -25,6 +25,7 @@ os.chdir(datadir)  # Change this path to the folder where your data is stored
 # Read CSV file, assuming `;` is the separator and `,` is the decimal format (change if different)
 data = pd.read_csv("data_freesurfer_for_stats.csv", sep='\s+', decimal=',')
 data.columns = data.columns.str.strip()
+print(data.columns)
 
 # ============================
 # DATA PREPROCESSING
