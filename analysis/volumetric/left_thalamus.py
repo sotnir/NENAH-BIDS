@@ -67,7 +67,7 @@ for structure in structure_names:
 
     # ANCOVA model: Predict structure volume based on Group, Age, Sex, and Whole Thalamus Volume
     # Ensure 'Left_Whole_thalamus' exists in the dataset, change column name if needed
-    model = ols(f"Q('{structure}') ~ Group_HIE_or_Control + Age_MRI_NENAH + Sex_at_birth + Q('Right_Whole_thalamus')", data=filtered_data).fit()
+    model = ols(f"Q('{structure}') ~ Group_HIE_or_Control + Age_MRI_NENAH + Sex_at_birth + Q('Left_Whole_thalamus')", data=filtered_data).fit()
 
     # Perform ANOVA on the model to extract statistical significance of Group (patients vs controls)
     anova_table = sm.stats.anova_lm(model, typ=2)
