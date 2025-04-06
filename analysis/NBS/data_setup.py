@@ -50,8 +50,8 @@ def extract_connectomes(connectome_filename):
 
 
 # === GENERATE DESIGN MATRIX ===
-def create_design_matrix():
-    matrix_dir = os.path.join(studydir, "code", "NENAH-BIDS", "analysis", "NBS", "design_matrices")
+def create_design_matrix(from_dir):
+    matrix_dir = os.path.join(output_base, from_dir)
     subject_files = sorted([f for f in os.listdir(matrix_dir) if f.endswith(".txt")])
     control_counter = 0
     patient_counter = 0
@@ -67,7 +67,7 @@ def create_design_matrix():
             design_matrix.append([1, 0])
             patient_counter += 1
 
-    design_path = os.path.join(matrix_dir, "design_matrix_ttest.txt")
+    design_path = os.path.join(studydir, "code", "NENAH-BIDS", "analysis", "NBS", "design_matrices", "design_matrix_ttest.txt")
     np.savetxt(design_path, design_matrix, fmt="%d")
 
         # Ensure no extra blank line is present
@@ -80,4 +80,4 @@ def create_design_matrix():
     print(f"Controls: {control_counter} \n Patients: {patient_counter}")
 
 # run design matrix generation for one folder
-create_design_matrix()
+create_design_matrix("thalamus_lobes_connectome")
