@@ -59,7 +59,7 @@ def create_design_matrix(from_dir):
         subject_id = fname.replace(".txt", "")
         if "C" in subject_id:
             # control: [0, 1]
-            design_matrix.append([0, 1])
+            design_matrix.append([1, 1])
         else:
             # patient: [1, 0]
             design_matrix.append([1, 0])
