@@ -27,45 +27,30 @@ def read_lut(lut_path):
 # --- User settings ---
 # update these paths accordingly:
 studydir = os.getcwd()
-lut_path = os.path.join(studydir, "code", "NENAH-BIDS", "label_names", "fs_thomas-thalamic_2_fs-lobes_thomas-thalamic-nuclear-groups_convert-mrtrix3.txt")
-output_path = os.path.join(studydir, "code", "NENAH-BIDS", "analysis", "NBS", "results",  "thalamus_lobes_significant_connections.txt")
+lut_path = os.path.join(studydir, "code", "NENAH-BIDS", "label_names", "fs_thomas-thalamic_LUT-mrtrix3.txt")
+output_path = os.path.join(studydir, "code", "NENAH-BIDS", "analysis", "NBS", "results",  "whole_brain_significant_connections.txt")
 
 # list of significant edges: (source index, target index, test statistic)
 # these are obtained by running this script in the MATLAB terminal after running the NBS:
-# >> global nbs;
+# global nbs;
 # [i, j] = find(nbs.NBS.con_mat{1});
 # for n = 1:length(i)
-#     % Use node labels if available; otherwise, use indices
-#     if isfield(nbs.NBS, 'node_label') && ~isempty(nbs.NBS.node_label)
-#         i_lab = nbs.NBS.node_label{i(n)};
-#         j_lab = nbs.NBS.node_label{j(n)};
-#     else
-#         i_lab = num2str(i(n));
-#         j_lab = num2str(j(n));
-#     end
 #     stat = nbs.NBS.test_stat(i(n), j(n));
-#     fprintf('Edge: %s to %s. Test stat: %0.2f\n', i_lab, j_lab, stat);
+#     fprintf('    (%d, %d, %.2f),\n', i(n), j(n), stat);
 # end
 
+# todo: write script to extract edges from matlab
+
 edges = [
-    (1, 5, 3.36),
-    (2, 5, 3.61),
-    (1, 7, 2.21),
-    (1, 10, 3.10),
-    (1, 12, 2.40),
-    (9, 12, 2.15),
-    (10, 14, 4.02),
-    (7, 15, 2.77),
-    (11, 15, 2.14),
-    (1, 17, 2.62),
-    (7, 17, 2.58),
-    (11, 17, 2.36),
-    (7, 18, 2.04),
-    (8, 19, 4.02),
-    (1, 20, 2.34),
-    (8, 20, 2.55),
-    (8, 21, 2.29),
-    (8, 22, 3.67)
+    (61, 78, 3.16),
+    (77, 80, 3.16),
+    (78, 80, 3.90),
+    (79, 80, 3.11),
+    (68, 82, 3.64),
+    (78, 82, 3.19),
+    (77, 95, 3.58),
+    (61, 98, 3.22),
+
 ]
 
 # --- Process LUT and map edges ---
