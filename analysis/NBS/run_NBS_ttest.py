@@ -22,17 +22,17 @@ def read_lut(lut_path):
 def build_ui_struct(connectome_path, design_path, contrast, size_method, threshold):
     return f"""
     UI.method = 'Run NBS';
-    UI.test ='t-test';
-    UI.size ='{size_method}';
-    UI.thresh ='{threshold}';
-    UI.perms ='5000';
-    UI.alpha ='0.05';
-    UI.contrast ='{contrast}';
-    UI.design ='{design_path}';
-    UI.exchange ='';
-    UI.matrices ='{connectome_path}';
-    UI.node_label ='';
-    UI.node_coor ='';
+    UI.test = 't-test';
+    UI.size = {size_method};
+    UI.thresh = {threshold};
+    UI.perms = 5000;
+    UI.alpha = 0.05;
+    UI.contrast = {contrast};
+    UI.design = '{design_path}';
+    UI.exchange = '';
+    UI.matrices = '{connectome_path}';
+    UI.node_label = '';
+    UI.node_coor = '';
     """
 
 def run_matlab_script(script_text):
