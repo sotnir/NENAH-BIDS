@@ -24,35 +24,15 @@ def build_ui_struct(connectome_path, design_path, contrast, size_method, thresho
     UI.method.ui='Run NBS';
     UI.test.ui='t-test';
     UI.size.ui='{size_method}';
-    UI.thresh.ui='{threshold}';
+    UI.thresh.ui={threshold};
     UI.perms.ui='5000';
     UI.alpha.ui='0.05';
-    UI.contrast.ui='{contrast}';
+    UI.contrast.ui={contrast};
     UI.design.ui='{design_path}';
     UI.exchange.ui='';
     UI.matrices.ui='{connectome_path}';
     UI.node_label.ui='';
     UI.node_coor.ui='';
-
-
-        % === DEBUG: Print out the UI struct ===
-    disp('=== UI STRUCT ===');
-    disp(UI);
-    disp('Fields and types:');
-    disp(['contrast: ', class(UI.contrast.ui), ' → ', UI.contrast.ui]);
-    disp(['design: ', class(UI.design.ui), ' → ', UI.design.ui]);
-    disp(['thresh: ', class(UI.thresh.ui), ' → ', UI.thresh.ui]);
-    disp(['size: ', class(UI.size.ui), ' → ', UI.size.ui]);
-    disp(['matrices: ', class(UI.matrices.ui), ' → ', UI.matrices.ui]);
-
-    % === Optional Fix for contrast ===
-    try
-        UI.contrast.ui = str2num(UI.contrast.ui);  % Convert string to numeric vector
-    catch
-        disp('⚠️ Failed to convert contrast to numeric');
-    end
-
-    NBSrun(UI);
     """
 
 def run_matlab_script(script_text):
