@@ -24,10 +24,10 @@ def build_ui_struct(connectome_path, design_path, contrast, size_method, thresho
     UI.method.ui='Run NBS';
     UI.test.ui='t-test';
     UI.size.ui='{size_method}';
-    UI.thresh.ui={threshold};
+    UI.thresh.ui='{threshold}';
     UI.perms.ui='5000';
     UI.alpha.ui='0.05';
-    UI.contrast.ui={contrast};
+    UI.contrast.ui='{contrast}';
     UI.design.ui='{design_path}';
     UI.exchange.ui='';
     UI.matrices.ui='{connectome_path}';
@@ -98,7 +98,7 @@ def main():
                 size,
                 thresh,
             )
-            matlab_code += """
+            matlab_code2 = """
             global nbs;
             NBSrun(UI);
             [i,j]=find(nbs.NBS.con_mat{1});
@@ -109,6 +109,7 @@ def main():
             fclose(fid);
             """
             run_matlab_script(matlab_code)
+            run_matlab_script(matlab_code2)
             edges = parse_nbs_output()
             if edges:
                 save_results(thresh, connectome_name, edges, lut, size.lower(), args.output_dir)
