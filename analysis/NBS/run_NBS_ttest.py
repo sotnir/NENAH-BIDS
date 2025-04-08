@@ -31,7 +31,6 @@ def build_ui_struct(connectome_path, design_path, contrast, size_method, thresho
     UI.design.ui='{design_path}';
     UI.exchange.ui='';
     UI.matrices.ui='{connectome_path}';
-    UI.node_label.ui='{node_labels_path}';
     """
 
 def run_matlab_script(script_text):
