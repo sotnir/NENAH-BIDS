@@ -19,7 +19,7 @@ def read_lut(lut_path):
                 continue
     return lut
 
-def build_ui_struct(connectome_path, design_path, contrast, size_method, threshold, node_labels_path):
+def build_ui_struct(connectome_path, design_path, contrast, size_method, threshold):
     return f"""
     UI.method.ui='Run NBS';
     UI.test.ui='t-test';
