@@ -100,7 +100,6 @@ def main():
             )
             matlab_code2 = """
             global nbs;
-            NBSrun(UI);
             [i,j]=find(nbs.NBS.con_mat{1});
             fid = fopen('nbs_edges_temp.txt','w');
             for n=1:length(i)
