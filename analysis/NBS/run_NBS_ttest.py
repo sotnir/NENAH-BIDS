@@ -110,6 +110,10 @@ def main():
             fclose(fid);
             """
             run_matlab_script(matlab_code)
+            print("------ MATLAB SCRIPT START ------")
+            print(matlab_code)
+            print("------ MATLAB SCRIPT END ------")
+
             edges = parse_nbs_output()
             if edges:
                 save_results(thresh, connectome_name, edges, lut, size.lower(), args.output_dir)
