@@ -23,7 +23,7 @@ def build_ui_struct(connectome_path, design_path, contrast, size_method, thresho
     return f"""
     UI.method = 'Run NBS';
     UI.test = 't-test';
-    UI.size = {size_method};
+    UI.size = '{size_method}';
     UI.thresh = {threshold};
     UI.perms = 5000;
     UI.alpha = 0.05;
