@@ -99,6 +99,7 @@ def main():
                 thresh,
             )
             matlab_code2 = """
+            NBSrun(UI);
             global nbs;
             [i,j]=find(nbs.NBS.con_mat{1});
             fid = fopen('nbs_edges_temp.txt','w');
