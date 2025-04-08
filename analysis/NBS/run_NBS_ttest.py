@@ -107,7 +107,7 @@ def main():
             end
             fclose(fid);
             """
-            run_matlab_script(matlab_code)
+            subprocess.run(matlab_code, shell=True)
             run_matlab_script(matlab_code2)
             edges = parse_nbs_output()
             if edges:
