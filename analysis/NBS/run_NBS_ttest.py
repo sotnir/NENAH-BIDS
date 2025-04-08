@@ -76,13 +76,12 @@ def save_results(threshold, connectome_name, edges, lut, method, out_dir):
 
 def main():
     parser = argparse.ArgumentParser()
-    parser.add_argument('--connectome_path', type=str, required=False, default='matrices.mat')
-    parser.add_argument('--LUT', type=str, required=False, default='LUT.txt')
-    parser.add_argument('--threshold', nargs='*', type=float, default=[2.5, 2.6, 2.7, 2.8, 2.9, 3])
+    parser.add_argument('--connectome_path', type=str, required=False, default='/data/iridis/NENAH_BIDS/code/NENAH-BIDS/analysis/NBS/connectivity_matrices/thalamus_lobes_connectome/NENAH002.txt')
+    parser.add_argument('--LUT', type=str, required=False, default='/data/iridis/NENAH_BIDS/code/NENAH-BIDS/label_names/fs-lobes_thomas-thalamic-nuclear-groups_LUT-mrtrix3.txt')
+    parser.add_argument('--threshold', nargs='*', type=float, default=[2.5, 2.6, 2.7, 2.8, 2.9, 3.0])
     parser.add_argument('--contrast_vector', type=str, default='[0,-1]')
-    parser.add_argument('--design_matrix', type=str, default='design.txt')
-    parser.add_argument('--node_labels', type=str, default='nodeLabels.txt')
-    parser.add_argument('--output_dir', type=str, default='results')
+    parser.add_argument('--design_matrix', type=str, default='/data/iridis/NENAH_BIDS/code/NENAH-BIDS/analysis/NBS/design_matrices/design_matrix_ttest.txt')
+    parser.add_argument('--output_dir', type=str, default='/data/iridis/NENAH_BIDS/code/NENAH-BIDS/analysis/NBS/results/thalamus_lobes_connectome')
     args = parser.parse_args()
 
     os.makedirs(args.output_dir, exist_ok=True)
@@ -97,7 +96,6 @@ def main():
                 args.contrast_vector,
                 size,
                 thresh,
-                args.node_labels
             )
             matlab_code += """
             global nbs;
