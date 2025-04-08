@@ -100,7 +100,7 @@ def main():
             )
             matlab_code += """
             global nbs;
-            NBSrun(UI);
+            nbs.NBS = nbs_BCT(UI);
 
             [i,j]=find(nbs.NBS.con_mat{1});
             fid = fopen('nbs_edges_temp.txt','w');
@@ -113,7 +113,6 @@ def main():
             print("------ MATLAB SCRIPT START ------")
             print(matlab_code)
             print("------ MATLAB SCRIPT END ------")
-
             edges = parse_nbs_output()
             if edges:
                 save_results(thresh, connectome_name, edges, lut, size.lower(), args.output_dir)
