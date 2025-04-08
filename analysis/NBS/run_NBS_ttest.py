@@ -98,7 +98,7 @@ def main():
                 size,
                 thresh,
             )
-            matlab_code2 = """
+            matlab_code += """
             global nbs;
             NBSrun(UI);
 
@@ -110,7 +110,6 @@ def main():
             fclose(fid);
             """
             run_matlab_script(matlab_code)
-            run_matlab_script(matlab_code2)
             edges = parse_nbs_output()
             if edges:
                 save_results(thresh, connectome_name, edges, lut, size.lower(), args.output_dir)
