@@ -24,11 +24,11 @@ def read_lut(lut_path):
                 continue
     return lut
 
-# --- User settings ---
+
 # update these paths accordingly:
 studydir = os.getcwd()
 lut_path = os.path.join(studydir, "code", "NENAH-BIDS", "label_names", "fs-lobes_thomas-thalamic-nuclear-groups_LUT-mrtrix3.txt")
-output_path = os.path.join(studydir, "code", "NENAH-BIDS", "analysis", "NBS", "results",  "thalamus_lobes_significant_connections_threshold_3.txt")
+output_path = os.path.join(studydir, "code", "NENAH-BIDS", "analysis", "NBS", "results",  "2-5_threshold_thalamus_lobes_significant_connections.txt")
 
 # list of significant edges: (source index, target index, test statistic)
 # these are obtained by running this script in the MATLAB terminal after running the NBS:
@@ -46,7 +46,9 @@ edges = [
     (2, 5, 3.61),
     (1, 10, 3.10),
     (10, 14, 4.02),
-
+    (7, 15, 2.77),
+    (1, 17, 2.62),
+    (7, 17, 2.58),
 ]
 
 # --- Process LUT and map edges ---
