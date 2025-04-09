@@ -1,17 +1,20 @@
 % run_NBS.m
-% Add path to NBS if needed
+% add path to NBS if needed
 
-% Global var for output
-global nbs
+addpath('/data/iridis/software/matlab_toolboxes/NBS1.2')
 
-% --- Input paths ---
+
+% global var for output
+global nbs;
+
+% --- input paths ---
 matrices_path = '/data/iridis/NENAH_BIDS/code/NENAH-BIDS/analysis/NBS/connectivity_matrices/thalamus_lobes_connectome/NENAH002.txt';
 design_path = '/data/iridis/NENAH_BIDS/code/NENAH-BIDS/analysis/NBS/design_matrices/design_matrix_ttest.txt';
 contrast = '[0,-1]';
 node_coor_path = '';
 node_label_path = '';
 
-% --- Parameters ---
+% --- parameters ---
 thresholds = [2.5, 3.0, 3.5, 4.0, 4.5];
 sizes = {'Extent', 'Intensity'};
 output_dir = '/data/iridis/NENAH_BIDS/code/NENAH-BIDS/analysis/NBS/results/thalamus_lobes_connectome';
