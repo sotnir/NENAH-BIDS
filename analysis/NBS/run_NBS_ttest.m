@@ -7,6 +7,9 @@ addpath('/data/iridis/software/matlab_toolboxes/NBS1.2')
 % global var for output
 global nbs;
 
+% initialize default nbs values
+NBSdefaults
+
 % --- input paths ---
 matrices_path = '/data/iridis/NENAH_BIDS/code/NENAH-BIDS/analysis/NBS/connectivity_matrices/thalamus_lobes_connectome/NENAH002.txt';
 design_path = '/data/iridis/NENAH_BIDS/code/NENAH-BIDS/analysis/NBS/design_matrices/design_matrix_ttest.txt';
