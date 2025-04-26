@@ -27,7 +27,7 @@ def read_lut(lut_path):
 
 # update these paths accordingly:
 studydir = os.getcwd()
-lut_path = os.path.join(studydir, "code", "NENAH-BIDS", "label_names", "fs_thomas-thalamic-nuclear-group_LUT-mrtrix3.txt")
+lut_path = os.path.join(studydir, "code", "NENAH-BIDS", "label_names", "fs_thomas-thalamic-nuclear-groups_LUT-mrtrix3.txt")
 output_path = os.path.join(studydir, "code", "NENAH-BIDS", "analysis", "NBS", "results", "fs-thomas_nuclear_groups_connectome", "2-5_fs-thomas_nuclear_groups_connectome_significant_connections.txt")
 
 # list of significant edges: (source index, target index, test statistic)
