@@ -170,8 +170,8 @@ fi
 
 ### Create the thalamo-lobes connectome
 
-output_connectome="${datadir}/anat/connectome/whole_brain_10M_sift2_space-anat_thalamus_lobes_connectome.csv"
-output_assignments_connectome="${datadir}/anat/connectome/assignment_whole_brain_10M_sift2_space-anat_thalamus_lobes_connectome.csv"
+output_connectome="${datadir}/anat/connectome/whole_brain_10M_sift2_space-anat_thalamus_lobes_connectome_2.csv"
+output_assignments_connectome="${datadir}/anat/connectome/assignment_whole_brain_10M_sift2_space-anat_thalamus_lobes_connectome_2.csv"
 
 connectome_dir=$(dirname "$output_connectome")
 
