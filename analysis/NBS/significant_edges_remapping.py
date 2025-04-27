@@ -28,7 +28,7 @@ def read_lut(lut_path):
 # update these paths accordingly:
 studydir = os.getcwd()
 lut_path = os.path.join(studydir, "code", "NENAH-BIDS", "label_names", "fs-lobes_thomas-thalamic-nuclear-groups_LUT-mrtrix3.txt")
-output_path = os.path.join(studydir, "code", "NENAH-BIDS", "analysis", "NBS", "results", "fs-thomas_whole_brain_connectome", "2-5_fs-thomas_thalamus_lobes_2_significant_connections.txt")
+output_path = os.path.join(studydir, "code", "NENAH-BIDS", "analysis", "NBS", "results", "fs-thomas_thalamus_lobes_2_connectome", "2-5_fs-thomas_thalamus_lobes_2_significant_connections.txt")
 
 # list of significant edges: (source index, target index, test statistic)
 # these are obtained by running this script in the MATLAB terminal after running the NBS:
