@@ -10,11 +10,12 @@ output_base = os.path.join(studydir, "code", "NENAH-BIDS", "analysis", "NBS", "c
 
 # define connectomes to export (remove prefix when naming folders)
 connectomes = [
-    "whole_brain_10M_sift2_space-anat_thalamus_lobes_connectome.csv",
-    "whole_brain_10M_sift2_space-anat_fs_thomas-thalamic-nuclear-groups_connectome.csv",
-    "whole_brain_10M_sift2_space-anat_fs_thalamus_connectome.csv",
-    "whole_brain_10M_sift2_space-anat_fs-ctx_thomas-thalamic-nuclear-groups_connectome.csv",
-    "whole_brain_10M_space-anat_mean_FA_connectome.csv"
+    #"whole_brain_10M_sift2_space-anat_thalamus_lobes_connectome.csv",
+    #"whole_brain_10M_sift2_space-anat_fs_thomas-thalamic-nuclear-groups_connectome.csv",
+    #"whole_brain_10M_sift2_space-anat_fs_thalamus_connectome.csv",
+    #"whole_brain_10M_sift2_space-anat_fs-ctx_thomas-thalamic-nuclear-groups_connectome.csv",
+    #"whole_brain_10M_space-anat_mean_FA_connectome.csv"
+    "whole_brain_10M_sift2_space-anat_thalamus_lobes_connectome_2.csv"
 ]
 
 # subjects excluded from mri stage
