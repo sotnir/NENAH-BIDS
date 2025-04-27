@@ -46,8 +46,8 @@ def extract_connectomes(connectome_filename):
             print(f" Missing file for {sID}: {connectome_filename}")
 
 # === RUN ===
-#for conn in connectomes:
-#    extract_connectomes(conn)
+for conn in connectomes:
+    extract_connectomes(conn)
 
 
 # === GENERATE DESIGN MATRIX ===
@@ -81,4 +81,4 @@ def create_design_matrix(from_dir):
     print(f"Controls: {control_counter} \n Patients: {patient_counter}")
 
 # run design matrix generation for one folder
-create_design_matrix("thalamus_lobes_connectome")
+#create_design_matrix("thalamus_lobes_connectome")
