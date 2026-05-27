@@ -10,6 +10,8 @@ This project is to streamline a Brain Imaging Data Structure ([BIDS](https://bid
 
 
 
+<img width="1244" height="2962" alt="Poster___visuals-1" src="https://github.com/user-attachments/assets/231e972b-fec6-46a5-be8e-c29c24a17cfe" />
+
 
 
 
